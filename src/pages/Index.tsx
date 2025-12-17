@@ -7,7 +7,16 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import AboutSection from "@/components/AboutSection";
 import CTASection from "@/components/CTASection";
 import Footer from "@/components/Footer";
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
 import "aos/dist/aos.css";
+
+
+
+
+
+
 const Index = () => {
   return (
     <>
@@ -54,7 +63,7 @@ const Index = () => {
           <HowItWorksSection />
           <TestimonialsSection />
           <AboutSection />
-          <CTASection />
+          <CTASection  />
         </main>
         <Footer />
       </div>

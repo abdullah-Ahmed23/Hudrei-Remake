@@ -11,7 +11,7 @@ import {
 import { Button } from "@/components/ui/button";
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-
+import { Link, NavLink } from "react-router-dom";
 const SellingOptions = () => {
   return (
     <main className="bg-[#faf9f6]">
@@ -188,7 +188,7 @@ const SellingOptions = () => {
             {/* Right */}
             <div
               className="glass-card p-6 sm:p-8 rounded-2xl border"
-              data-aos="fade-left"
+              data-aos="fade-right"
             >
               <h4 className="font-semibold mb-3">Delay Protection</h4>
               <p className="text-muted-foreground mb-4">
@@ -214,9 +214,11 @@ const SellingOptions = () => {
         <p className="text-muted-foreground mb-6" data-aos="fade-right">
           We’ll help you decide — no pressure, no obligation.
         </p>
-        <Button size="lg" className="bg-accent text-accent-foreground" data-aos="fade-left">
+        <Link to={"/#contact"}>
+        <Button size="lg" className="bg-accent text-accent-foreground" data-aos="fade-right">
           Get My Cash Offer
         </Button>
+        </Link>
       </section>
 
       <Footer />

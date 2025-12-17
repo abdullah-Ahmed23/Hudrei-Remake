@@ -5,6 +5,8 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SellingOptions from "./pages/SelllingOptions";
+import ScrollToHash from "./components/ScrollToHash";
+
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -30,6 +32,7 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
+         <ScrollToHash />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/selling-options" element={<SellingOptions />} />
