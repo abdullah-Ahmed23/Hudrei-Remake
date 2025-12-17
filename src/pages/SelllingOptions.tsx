@@ -193,7 +193,7 @@ const SellingOptions = () => {
             </div>
 
             <div
-              data-aos="fade-left"
+              data-aos="zoom-out"
               className="glass-card p-6 rounded-2xl border"
             >
               <h4 className="font-semibold mb-3">Delay Protection</h4>
