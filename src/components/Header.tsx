@@ -1,23 +1,45 @@
 import { useEffect, useState } from "react";
-import { Menu, X, Phone } from "lucide-react";
+import {
+  Menu,
+  X,
+  Phone,
+  ChevronDown,
+  Home,
+  DollarSign,
+  Hammer,
+  ShieldCheck,
+  Landmark,
+  Building,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import hudReiLogo from "@/assets/hudrei-logo.png";
 import { Link, NavLink } from "react-router-dom";
 
+
+const sellingDropdown = [
+  { label: "Sell As-Is", to: "/selling-options#offer-1", icon: Home },
+  { label: "Become The Bank", to: "/selling-options#offer-2", icon: Landmark },
+  { label: "Max Equity Offer", to: "/selling-options#offer-3", icon: DollarSign },
+  { label: "Mortgage Relief Offer", to: "/selling-options#offer-4", icon: ShieldCheck },
+  { label: "List With HudREI", to: "/selling-options#offer-5", icon: Building },
+];
+
+
+
+const navLinks = [
+  { label: "Who Are We", to: "/who-are-we" },
+  { label: "Testimonials", to: "/testimonials" },
+  { label: "Contact", to: "/contact" },
+  { label: "Careers", to: "/careers" },
+  { label: "FAQ", to: "/faq" },
+];
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [mobileSellingOpen, setMobileSellingOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
-  const navLinks = [
-    { label: "Selling Options", to: "/selling-options" },
-    { label: "Who Are We", to: "/about" },
-    { label: "Testimonials", to: "/testimonials" },
-    { label: "Contact", to: "/contact" },
-    { label: "Careers", to: "/careers" },
-    { label: "FAQ", to: "/faq" },
-  ];
-
-  /* Detect scroll */
+  /* Scroll effect */
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
@@ -26,108 +48,195 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ease-out
-        ${scrolled ? "bg-background/80 backdrop-blur-xl shadow-lg" : "bg-transparent"}
-      `}
+      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300
+      ${scrolled ? "bg-background/90 backdrop-blur-xl shadow-lg" : "bg-transparent"}`}
     >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 md:h-20">
+      <div className="container mx-auto px-4 h-16 md:h-20 flex items-center justify-between">
+        {/* Logo */}
+        <Link to="/">
+          <img src={hudReiLogo} alt="HudREI" className="h-10 md:h-12" />
+        </Link>
 
-          {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <img
-              src={hudReiLogo}
-              alt="HudREI"
-              className="h-10 md:h-12 w-auto rounded"
-            />
-          </Link>
+        {/* ================= DESKTOP NAV ================= */}
+        <nav className="hidden md:flex items-center gap-8">
+          {/* Selling Options (hover-safe) */}
+         {/* Selling Options (hover-safe, no flicker) */}
+<div className="relative group">
+  {/* Trigger */}
+  <div className="flex items-center gap-1 cursor-pointer">
+    <NavLink
+      to="/selling-options"
+      className={`text-sm font-medium ${
+        scrolled ? "text-white" : "text-black/80 hover:text-black"
+      }`}
+    >
+      Selling Options
+    </NavLink>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navLinks.map((link) => (
-              <NavLink
-                key={link.label}
-                to={link.to}
-                className={({ isActive }) =>
-                  `text-sm font-medium transition-colors duration-200
-                  ${
-                    isActive
-                      ? "text-accent"
-                      : scrolled
-                      ? "text-white hover:text-white/80"
-                      : "text-black/80 hover:text-black"
-                  }`
-                }
-              >
-                {link.label}
-              </NavLink>
-            ))}
-          </nav>
+    <ChevronDown
+      className={`w-4 h-4 transition-transform duration-300
+      group-hover:rotate-180
+      ${scrolled ? "text-white" : "text-black"}`}
+    />
+  </div>
 
-          {/* Desktop CTA */}
-          <div className="hidden md:flex items-center gap-4">
-            <a
-              href="tel:+13177951990"
-              className={`flex items-center gap-2 transition-colors
-                ${scrolled ? "text-white" : "text-black/80 hover:text-black"}
-              `}
+  {/* 🔥 Hover bridge (THIS IS THE KEY) */}
+  <div className="absolute left-0 top-full h-6 w-full" />
+
+  {/* Dropdown */}
+  <div
+    className={`absolute left-0 top-[calc(100%+1.25rem)]
+    w-64 rounded-xl bg-white shadow-xl overflow-hidden
+    opacity-0 scale-95 pointer-events-none
+    transition-all duration-200 origin-top
+    group-hover:opacity-100
+    group-hover:scale-100
+    group-hover:pointer-events-auto`}
+  >
+    {sellingDropdown.map((item, i) => {
+      const Icon = item.icon;
+      return (
+        <Link
+          key={item.label}
+          to={item.to}
+          className="flex items-center gap-3 px-5 py-4 text-black hover:bg-muted transition   hover:text-white"
+          style={{ transitionDelay: `${i * 40}ms` }}
+        >
+          <Icon className="w-5 h-5 text-accent" />
+          <span className="text-sm font-medium   ">
+            {item.label}
+          </span>
+        </Link>
+      );
+    })}
+  </div>
+</div>
+
+          {/* Other desktop links */}
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.label}
+              to={link.to}
+              className={({ isActive }) =>
+                `text-sm font-medium transition-colors ${
+                  isActive
+                    ? "text-accent"
+                    : scrolled
+                    ? "text-white hover:text-white/80"
+                    : "text-black/80 hover:text-black"
+                }`
+              }
             >
-              <Phone className="w-4 h-4" />
-              <span className="text-sm">317-795-1990</span>
-            </a>
+              {link.label}
+            </NavLink>
+          ))}
+        </nav>
 
-            <Button
-              asChild
-              className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
-            >
-              <Link to="/contact">Get My Cash Offer</Link>
-            </Button>
-          </div>
-
-          {/* Mobile Menu Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className={`md:hidden p-2 transition-colors ${
-              scrolled ? "text-white" : "text-black"
+        {/* Desktop CTA */}
+        <div className="hidden md:flex items-center gap-4">
+          <a
+            href="tel:+13177951990"
+            className={`flex items-center gap-2 ${
+              scrolled ? "text-white" : "text-black/80"
             }`}
-            aria-label="Toggle menu"
           >
-            {isMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-          </button>
+            <Phone className="w-4 h-4" />
+            <span className="text-sm">317-795-1990</span>
+          </a>
+
+          <Button asChild>
+            <Link to="/contact">Get My Cash Offer</Link>
+          </Button>
         </div>
+
+        {/* Mobile toggle */}
+        <button
+          onClick={() => setIsMenuOpen((p) => !p)}
+          className={`md:hidden ${scrolled ? "text-white" : "text-black"}`}
+        >
+          {isMenuOpen ? <X /> : <Menu />}
+        </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* ================= MOBILE MENU ================= */}
       {isMenuOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-xl border-t border-border animate-fade-in">
-          <div className="container mx-auto px-4 py-4">
-            <nav className="flex flex-col gap-4">
-              {navLinks.map((link) => (
-                <NavLink
-                  key={link.label}
-                  to={link.to}
-                  onClick={() => setIsMenuOpen(false)}
-                  className={({ isActive }) =>
-                    `py-2 text-lg transition-colors
-                    ${isActive ? "text-accent" : "text-white hover:text-white/80"}`
-                  }
-                >
-                  {link.label}
-                </NavLink>
-              ))}
-
-              <Button
-                asChild
-                className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold mt-2"
+        <div className="md:hidden bg-background/95 backdrop-blur-xl px-4 py-6 space-y-4">
+          {/* Selling Options mobile dropdown */}
+          <div>
+            <div className="flex items-center justify-between">
+              <Link
+                to="/selling-options"
+                onClick={() => setIsMenuOpen(false)}
+                className="text-lg font-medium text-white"
               >
-                <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
-                  Get My Cash Offer
-                </Link>
-              </Button>
-            </nav>
+                Selling Options
+              </Link>
+
+              <button
+                onClick={() => setMobileSellingOpen((p) => !p)}
+                className="p-2 text-white"
+              >
+                <ChevronDown
+                  className={`w-5 h-5 transition-transform duration-300 ${
+                    mobileSellingOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+            </div>
+
+            <div
+              className={`ml-4 mt-2 overflow-hidden transition-all duration-300
+              ${mobileSellingOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
+            >
+              {sellingDropdown.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <Link
+                    key={item.label}
+                    to={item.to}
+                    onClick={() => setIsMenuOpen(false)}
+                    className="flex items-center gap-3 py-2 text-white/90"
+                  >
+                    <Icon className="w-4 h-4 text-accent" />
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
           </div>
+
+          {navLinks.map((link) => (
+            <NavLink
+              key={link.label}
+              to={link.to}
+              onClick={() => setIsMenuOpen(false)}
+              className="block py-2 text-lg text-white hover:text-white/80"
+            >
+              {link.label}
+            </NavLink>
+          ))}
+
+          <Button asChild className="w-full mt-4">
+            <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+              Get My Cash Offer
+            </Link>
+          </Button>
         </div>
       )}
+
+      {/* Animation keyframes */}
+      <style>{`
+        @keyframes fadeSlideIn {
+          from {
+            opacity: 0;
+            transform: translateY(6px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
     </header>
   );
 };

@@ -6,7 +6,8 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SellingOptions from "./pages/SelllingOptions";
 import ScrollToHash from "./components/ScrollToHash";
-
+import ScrollToTop from "./components/ScrollToTop";
+import WhoWeAre from "./pages/WhoWeAre";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -33,10 +34,13 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
+        <ScrollToTop />
          <ScrollToHash />
+
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/selling-options" element={<SellingOptions />} />
+            <Route path="/who-are-we" element={<WhoWeAre />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
