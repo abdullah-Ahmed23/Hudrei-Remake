@@ -283,10 +283,10 @@ const SellingOptions = () => {
         {/* Hero Section */}
         <section className=" lg:py-28 bg-white" >
           <div className="container py-20 mx-auto px-4 sm:px-6 lg:px-8 text-center"  data-aos="fade-down"
-          data-aos-duration="900">
+          data-aos-duration="500">
             <div className="w-16 h-16 rounded-xl bg-accent/20 flex items-center justify-center mx-auto mb-6">
               <Home className="w-8 h-8 text-accent"  data-aos="fade-up"
-          data-aos-duration="900" />
+          data-aos-duration="500" />
             </div>
             <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-black mb-6">
               Your Selling Options
@@ -311,14 +311,14 @@ const SellingOptions = () => {
           data-aos-duration="900">
                 Get Cash Offers
               </h2>
-              <p className=" max-w-2xl text-black text-2xl  mx-auto"  data-aos="fade-left"
+              <p className=" max-w-2xl text-black text-2xl  mx-auto"  data-aos="fade-down"
           data-aos-duration="900">
                 Explore our range of selling solutions designed to meet your specific needs and timeline.
               </p>
             </div>
 
-            <div className="space-y-8"  data-aos="fade-left"
-          data-aos-duration="900">
+            <div className="space-y-8"  data-aos="fade-down"
+          data-aos-duration="500">
               {offers.map((offer, index) => (
                 <OfferCard key={offer.id} offer={offer} index={index} />
               ))}
@@ -329,7 +329,7 @@ const SellingOptions = () => {
         {/* How It Works Section */}
         <section className="py-20 bg-[#fffff0]">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 "  data-aos="fade-up"
-          data-aos-duration="900">
+          data-aos-duration="500">
             <div className="text-center mb-16">
               <h2 className="text-3xl md:text-4xl font-bold text-black mb-4">
                 It's Easy With Us...
@@ -337,8 +337,8 @@ const SellingOptions = () => {
               <p className="text-black">How it works in 5 easy steps.</p>
             </div>
 
-            <div className="grid md:grid-cols-5 gap-6"  data-aos="fade-left"
-          data-aos-duration="900">
+            <div className="grid md:grid-cols-5 gap-6"  data-aos="fade-right"
+          data-aos-duration="500">
               {steps.map((step, index) => (
                 <div key={step.number} className="relative">
                   <div className="bg-card border border-border rounded-xl p-6 text-center h-full hover-lift">
@@ -358,7 +358,7 @@ const SellingOptions = () => {
             </div>
 
             <div className="mt-12 text-center"  data-aos="fade-down"
-          data-aos-duration="900">
+          data-aos-duration="500">
               <p className="text-lg text-black font-semibold mb-2">That's It!</p>
               <p className="text-black mb-6">Some customers can even stay in the home after closing!</p>
               <div className="inline-block bg-accent/10 border border-accent/30 rounded-xl px-8 py-4">
@@ -371,7 +371,7 @@ const SellingOptions = () => {
         {/* Contact CTA Section */}
         <section id="contact" className="py-20 bg-primary">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8"  data-aos="zoom-in"
-          data-aos-duration="900">
+          data-aos-duration="500">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               <div>
                 <h2 className="text-3xl md:text-4xl font-bold text-primary-foreground mb-6">
