@@ -8,6 +8,7 @@ import SellingOptions from "./pages/SelllingOptions";
 import ScrollToHash from "./components/ScrollToHash";
 import ScrollToTop from "./components/ScrollToTop";
 import WhoWeAre from "./pages/WhoWeAre";
+import Contact from "./pages/Contact";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -41,6 +42,7 @@ const App = () => {
             <Route path="/" element={<Index />} />
             <Route path="/selling-options" element={<SellingOptions />} />
             <Route path="/who-are-we" element={<WhoWeAre />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
