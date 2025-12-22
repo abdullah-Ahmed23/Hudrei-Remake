@@ -8,6 +8,8 @@ import png1 from "@/assets/Omar.png"
 import png2 from "@/assets/Samar.png"
 import png3 from "@/assets/WALE.jpg"
 import png4 from "@/assets/Hamid.png"
+import png5 from "@/assets/gomaa.png"
+import png6 from "@/assets/F1.jpg"
 import { 
   Users, 
   Heart, 
@@ -32,7 +34,7 @@ const teamLeaders = [
   {
     name: "Abdullah Tarek",
     role: "Lead Manger",
-    image: "https://www.istockphoto.com/photos/professional-profile-photo",
+    image: [png6],
   },
   {
     name: "Omar Lorenzo",
@@ -40,10 +42,16 @@ const teamLeaders = [
     image: [png1],
   },
   {
+    name: "Ahmed Gomma",
+    role: "Data specialist",
+    image: [png5],
+  },
+  {
     name: "Hamid Nosir",
     role: "Acquisition Manager",
     image: [png4],
   },
+
 ];
 
 const careers = [
