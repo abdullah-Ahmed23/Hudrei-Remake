@@ -5,6 +5,8 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+                import { Link, NavLink } from "react-router-dom";
+
 
 interface OfferOption {
   id: number;
@@ -381,9 +383,11 @@ const SellingOptions = () => {
                   If you're ready to sell your Houston property, call us today and get your offer ASAP. 
                   Depending on the circumstances, you can get a cash offer in much less time than you might think.
                 </p>
+<Link to="/contact">
                 <Button className="bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-8 py-6" asChild>
-                  <a href="tel:+1234567890">Get Cash Offers</a>
+                  <a>Get Cash Offers</a>
                 </Button>
+                </Link>
               </div>
 
               <div className="bg-card/10 backdrop-blur-sm border border-primary-foreground/20 rounded-2xl p-8">

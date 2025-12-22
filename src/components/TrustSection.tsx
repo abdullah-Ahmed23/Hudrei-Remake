@@ -1,5 +1,6 @@
 import { DollarSign, Wrench, Calendar, Zap } from "lucide-react";
-
+                import { Link, NavLink } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 const TrustSection = () => {
   const benefits = [
     {
@@ -113,8 +114,13 @@ const TrustSection = () => {
             </div>
           ))}
         </div>
-
+         
       </div>
+       <div className="flex justify-center mt-10 relative z-999">
+            <Link to="/contact">
+            <Button size="lg">Get My Cash Offer</Button>
+            </Link>
+            </div>
     </section>
   );
 };

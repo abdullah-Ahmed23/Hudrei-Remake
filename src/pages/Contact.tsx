@@ -8,21 +8,30 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import hudReiLogo from "@/assets/hudrei-logo.png";
 import contactbg from "@/assets/bg-contact.webp";
+import { useLocation } from "react-router-dom";
+
+
+
 const Contact = () => {
   const { toast } = useToast();
-  const [formData, setFormData] = useState({
-    fullName: "",
-    phone: "",
-    email: "",
+  const location = useLocation();
+  const incoming = location.state as any;
+    const [formData, setFormData] = useState({
+    fullName: incoming?.fullName || "",
+    phone: incoming?.phone || "",
+    email: incoming?.email || "",
     address: "",
-    streetAddress: "",
-    city: "",
-    state: "",
-    timeline: "",
+    streetAddress: incoming?.streetAddress || "",
+    city: incoming?.city || "",
+    state: incoming?.state || "",
+    timeline: incoming?.timeline || "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -296,19 +305,7 @@ const Contact = () => {
                       />
                     </div>
 
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Address *
-                      </label>
-                      <Input
-                        name="address"
-                        value={formData.address}
-                        onChange={handleChange}
-                        placeholder="Search address"
-                        required
-                        className="border-accent/30 focus:border-accent"
-                      />
-                    </div>
+                  
 
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">

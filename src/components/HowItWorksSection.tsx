@@ -1,6 +1,7 @@
 import { ClipboardList, BadgeDollarSignIcon, Key } from "lucide-react";
 import bgImage from "@/media/tmpnr42prtp.webp";
-
+import { Link, NavLink } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const HowItWorksSection = () => {
   const steps = [
@@ -110,6 +111,11 @@ const HowItWorksSection = () => {
               </div>
             ))}
           </div>
+                <div className="flex justify-center mt-10">
+            <Link to="/contact">
+            <Button size="lg">Get My Cash Offer</Button>
+            </Link>
+            </div>
         </div>
       </div>
     </section>

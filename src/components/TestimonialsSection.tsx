@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Star, User } from "lucide-react";
+import { Link, NavLink } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const TestimonialsSection = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -122,13 +124,20 @@ const TestimonialsSection = () => {
                     {review.name}
                   </div>
                 </div>
+    
               </div>
             ))}
+            
           </div>
         </div>
 
       </div>
-
+             <div className="flex justify-center mt-10">
+            <Link to="/contact">
+            <Button size="lg">Get My Cash Offer</Button>
+            </Link>
+            </div>
+            
       {/* STAR ANIMATION */}
       <style>{`
         @keyframes starPop {

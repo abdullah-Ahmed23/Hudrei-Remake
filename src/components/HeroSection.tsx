@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import hero1 from "@/media/hero-1.mp4";
 import hero2 from "@/media/hero-2.mp4";
 import hero3 from "@/media/hero-3.mp4";
+import { Link, NavLink } from "react-router-dom";
 
 const HeroSection = () => {
   const videoRef = useRef(null);
@@ -132,8 +133,11 @@ const HeroSection = () => {
                 </div>
               ))}
             </div>
-
+            <div>
+            <Link to="/contact">
             <Button size="lg">Get My Cash Offer</Button>
+            </Link>
+            </div>
           </div>
 
           {/* RIGHT – VIDEO SLIDER */}

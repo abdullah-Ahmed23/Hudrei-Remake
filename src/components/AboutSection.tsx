@@ -1,5 +1,7 @@
 import { Shield, Heart, Users, Award } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { Button } from "@/components/ui/button";
 
 const AboutSection = () => {
   const sectionRef = useRef<HTMLElement>(null);
@@ -151,12 +153,18 @@ const AboutSection = () => {
                 <p className="text-sm text-white/70">
                   {value.description}
                 </p>
+                  <div className="flex justify-center mt-10">
+            <Link to="/contact">
+            <Button size="lg">Get My Cash Offer</Button>
+            </Link>
+            </div>
               </div>
             ))}
           </div>
 
         </div>
       </div>
+     
     </section>
   );
 };

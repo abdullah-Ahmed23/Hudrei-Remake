@@ -1,11 +1,14 @@
+
 import { useState } from "react";
 import { Send, CheckCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { useNavigate } from "react-router-dom";
 
 const CTASection = () => {
   const { toast } = useToast();
+  const navigate = useNavigate();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const [formData, setFormData] = useState({
@@ -20,11 +23,8 @@ const CTASection = () => {
     consent: false,
   });
 
-  /* 🔥 PLACEHOLDERS + TEXT FIX */
   const fieldClass =
-    "h-12 rounded-xl bg-white text-black border border-border \
-     placeholder:text-black focus:ring-2 focus:ring-accent \
-     focus:border-accent transition-all appearance-none";
+    "h-12 rounded-xl bg-white text-black border border-border placeholder:text-black focus:ring-2 focus:ring-accent focus:border-accent transition-all appearance-none";
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -37,31 +37,21 @@ const CTASection = () => {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.consent) return;
 
-    setIsSubmitting(true);
-    await new Promise((r) => setTimeout(r, 1500));
-
-    toast({
-      title: "Request Submitted!",
-      description: "We'll contact you within 24 hours with your cash offer.",
+    navigate("/contact", {
+      state: {
+        fullName: formData.fullName,
+        phone: formData.phone,
+        email: formData.email,
+        streetAddress: formData.street,
+        city: formData.city,
+        state: formData.state,
+        timeline: formData.timeline,
+      },
     });
-
-    setFormData({
-      fullName: "",
-      phone: "",
-      email: "",
-      street: "",
-      city: "",
-      state: "",
-      timeline: "",
-      source: "",
-      consent: false,
-    });
-
-    setIsSubmitting(false);
   };
 
   return (
