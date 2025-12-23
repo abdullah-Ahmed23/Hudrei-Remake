@@ -221,7 +221,7 @@ The Safest Way To Sell Your Home  <span className="text-accent">Get Your Cash Of
     />
 
     {addressResults.length > 0 && (
-      <div className="absolute z-50 w-full bg-white border rounded-md shadow-md mt-1 max-h-60 overflow-auto">
+      <div className="absolute z-1001 w-full bg-white border rounded-md shadow-md mt-1 max-h-60 overflow-auto">
         {addressResults.map((item) => (
           <div
             key={item.place_id}
