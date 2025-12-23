@@ -194,21 +194,20 @@ useEffect(() => {
       ref={sectionRef}
       className="main min-h-screen flex items-center pt-20 relative overflow-hidden"
     >
+
       <div className="container mx-auto px-4 relative z-10">
+        
         <div className="grid lg:grid-cols-2 gap-12 items-center">
 
           {/* LEFT */}
+          
           <div
             className={`space-y-8 text-black text-center lg:text-left
               transition-all duration-700 ease-out
               ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
             `}
           >
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold">
-The Safest Way To Sell Your Home  <span className="text-accent">Get Your Cash Offer Today.</span>
-            </h1>
-
-            <div className="flex flex-wrap justify-center lg:justify-start gap-4">
+              <div className="flex flex-wrap justify-center lg:justify-start gap-4">
               {benefits.map((b) => (
                 <div key={b} className="flex items-center gap-2 text-sm">
                   <CheckCircle className="w-5 h-5 text-accent" />
@@ -216,6 +215,11 @@ The Safest Way To Sell Your Home  <span className="text-accent">Get Your Cash Of
                 </div>
               ))}
             </div>
+            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold">
+The Safest Way To Sell Your Home  <span className="text-accent">Get Your Cash Offer Today.</span>
+            </h1>
+
+          
 
             {/* FORM */}
          <form onSubmit={handleSubmit} className="space-y-3">
