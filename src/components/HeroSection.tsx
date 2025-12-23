@@ -20,12 +20,17 @@ const HeroSection = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
   const navigate = useNavigate();
 
+
+
+
   const [formData, setFormData] = useState({
     fullName: "",
     phone: "",
     email: "",
     streetAddress: "",
   });
+const [addressQuery, setAddressQuery] = useState(formData.streetAddress);
+const [addressResults, setAddressResults] = useState([]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -91,6 +96,37 @@ const HeroSection = () => {
       setIsPlaying(false);
     }
   };
+  // autocomplet------------adresss------
+  useEffect(() => {
+  if (addressQuery.length < 3) {
+    setAddressResults([]);
+    return;
+  }
+
+  const timeout = setTimeout(async () => {
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&q=${addressQuery}`,
+        {
+          headers: {
+            "User-Agent": "hudrei-form",
+          },
+        }
+      );
+      const data = await res.json();
+      setAddressResults(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }, 400); // debounce
+
+  return () => clearTimeout(timeout);
+}, [addressQuery]);
+
+
+
+
+
 
   /* ---------------- SLIDE CHANGE ---------------- */
   const changeSlide = (dir: "next" | "prev") => {
@@ -148,7 +184,7 @@ const HeroSection = () => {
             `}
           >
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold">
-              Sell Your Home <span className="text-accent">Fast.</span>
+The Safest Way To Sell Your Home  <span className="text-accent">Get Your Cash Offer Today.</span>
             </h1>
 
             <div className="flex flex-wrap justify-center lg:justify-start gap-4">
@@ -161,23 +197,57 @@ const HeroSection = () => {
             </div>
 
             {/* FORM */}
-            <div className="glass-card rounded-2xl p-6">
-              <h3 className="text-lg text-white font-semibold mb-4">
-                Get Your Cash Offer
-              </h3>
+         <form onSubmit={handleSubmit} className="space-y-3">
+  <Input className="text-white" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Full Name *" required />
 
-              <form onSubmit={handleSubmit} className="space-y-3">
-                <Input name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Full Name *" required />
-                <Input name="phone" type="tel" value={formData.phone} onChange={handleChange} placeholder="Phone *" required />
-                <Input name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Email *" required />
-                <Input name="streetAddress" value={formData.streetAddress} onChange={handleChange} placeholder="Street Address *" required />
+  <Input className="text-white" name="phone" type="tel" value={formData.phone} onChange={handleChange} placeholder="Phone *" required />
 
-                <Button type="submit" className="w-full bg-accent text-accent-foreground py-5 font-semibold">
-                  <Send className="w-4 h-4 mr-2" />
-                  Get My Cash Offer
-                </Button>
-              </form>
-            </div>
+  <Input className="text-white" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Email *" required />
+
+  {/* Address Autocomplete */}
+  <div className="relative">
+    <Input className="text-white"
+      name="streetAddress"
+      value={addressQuery}
+      placeholder="Street Address *"
+      required
+      onChange={(e) => {
+        setAddressQuery(e.target.value);
+        setFormData({
+          ...formData,
+          streetAddress: e.target.value,
+        });
+      }}
+    />
+
+    {addressResults.length > 0 && (
+      <div className="absolute z-50 w-full bg-white border rounded-md shadow-md mt-1 max-h-60 overflow-auto">
+        {addressResults.map((item) => (
+          <div
+            key={item.place_id}
+            className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-sm"
+            onClick={() => {
+              setAddressQuery(item.display_name);
+              setFormData({
+                ...formData,
+                streetAddress: item.display_name,
+              });
+              setAddressResults([]);
+            }}
+          >
+            {item.display_name}
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
+
+  <Button type="submit" className="w-full bg-accent text-accent-foreground py-5 font-semibold">
+    <Send className="w-4 h-4 mr-2" />
+    Get My Cash Offer
+  </Button>
+</form>
+
           </div>
 
           {/* RIGHT – VIDEO SLIDER (UNCHANGED) */}

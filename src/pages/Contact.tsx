@@ -26,6 +26,7 @@ const Contact = () => {
     city: incoming?.city || "",
     state: incoming?.state || "",
     timeline: incoming?.timeline || "",
+    consent: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -63,6 +64,7 @@ useEffect(() => {
       city: "",
       state: "",
       timeline: "",
+      consent: false,
     });
     setIsSubmitting(false);
   };
@@ -93,7 +95,34 @@ useEffect(() => {
     "No Hidden Costs – We cover the closing fee",
   ];
 
+  const [addressQuery, setAddressQuery] = useState(formData.streetAddress);
+const [addressResults, setAddressResults] = useState([]);
   
+  useEffect(() => {
+  if (addressQuery.length < 3) {
+    setAddressResults([]);
+    return;
+  }
+
+  const timeout = setTimeout(async () => {
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&q=${addressQuery}`,
+        {
+          headers: {
+            "User-Agent": "hudrei-form",
+          },
+        }
+      );
+      const data = await res.json();
+      setAddressResults(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }, 400); // debounce
+
+  return () => clearTimeout(timeout);
+}, [addressQuery]);
 
   return (
     <>
@@ -325,18 +354,45 @@ useEffect(() => {
 
                   
 
-                    <div>
+                   <div className="relative">
                       <label className="block text-sm font-medium text-gray-700 mb-1">
-                        Street Address
+                        streetAddress
                       </label>
-                      <Input
-                        name="streetAddress"
-                        value={formData.streetAddress}
-                        onChange={handleChange}
-                        placeholder="Address"
-                        className="border-accent/30 focus:border-accent"
-                      />
-                    </div>
+    <Input className="text-white"
+      name="streetAddress"
+      value={addressQuery}
+      placeholder="Street Address *"
+      required
+      onChange={(e) => {
+        setAddressQuery(e.target.value);
+        setFormData({
+          ...formData,
+          streetAddress: e.target.value,
+        });
+      }}
+    />
+
+    {addressResults.length > 0 && (
+      <div className="absolute z-50 w-full bg-white text-black border rounded-md shadow-md mt-1 max-h-60 overflow-auto">
+        {addressResults.map((item) => (
+          <div
+            key={item.place_id}
+            className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-sm"
+            onClick={() => {
+              setAddressQuery(item.display_name);
+              setFormData({
+                ...formData,
+                streetAddress: item.display_name,
+              });
+              setAddressResults([]);
+            }}
+          >
+            {item.display_name}
+          </div>
+        ))}
+      </div>
+    )}
+  </div>
 
                     <div className="grid grid-cols-2 gap-4">
                       <div>
@@ -378,13 +434,19 @@ useEffect(() => {
                         <option value="">Select timeline</option>
                         <option value="asap">As soon as possible</option>
                         <option value="30days">Within 30 days</option>
-                        <option value="60days">Within 60 days</option>
-                        <option value="flexible">I'm flexible</option>
+                        <option value="60days">Within 60-90 days</option>
+                        <option value="JustExploring">Just Exploring</option>
                       </select>
                     </div>
 
                     <div className="flex items-start gap-2 text-sm text-gray-500">
-                      <input type="checkbox" className="mt-1" />
+                     <input
+  type="checkbox"
+  name="consent"
+  checked={formData.consent}
+  onChange={handleChange}
+  className="mt-1"
+/>
                       <span>
                         Free offer, no pressure. Your info stays private. Submit to be contacted
                         opt out anytime.

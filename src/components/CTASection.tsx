@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState , useEffect } from "react";
 import { Send, CheckCircle, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,27 +15,36 @@ const CTASection = () => {
     fullName: "",
     phone: "",
     email: "",
-    street: "",
+    streetAddress: "",
     city: "",
     state: "",
     timeline: "",
     source: "",
     consent: false,
   });
+  
 
   const fieldClass =
     "h-12 rounded-xl bg-white text-black border border-border placeholder:text-black focus:ring-2 focus:ring-accent focus:border-accent transition-all appearance-none";
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value, type } = e.target;
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+) => {
+  const { name, value, type } = e.target;
 
+  if (type === "checkbox") {
     setFormData((prev) => ({
       ...prev,
-      [name]: type === "checkbox" ? !prev.consent : value,
+      [name]: (e.target as HTMLInputElement).checked,
     }));
-  };
+  } else {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  }
+};
+
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -46,13 +55,43 @@ const CTASection = () => {
         fullName: formData.fullName,
         phone: formData.phone,
         email: formData.email,
-        streetAddress: formData.street,
+        streetAddress: formData.streetAddress,
         city: formData.city,
         state: formData.state,
         timeline: formData.timeline,
       },
     });
   };
+
+  const [addressQuery, setAddressQuery] = useState(formData.streetAddress);
+const [addressResults, setAddressResults] = useState([]);
+
+
+ useEffect(() => {
+  if (addressQuery.length < 3) {
+    setAddressResults([]);
+    return;
+  }
+
+  const timeout = setTimeout(async () => {
+    try {
+      const res = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&q=${addressQuery}`,
+        {
+          headers: {
+            "User-Agent": "hudrei-form",
+          },
+        }
+      );
+      const data = await res.json();
+      setAddressResults(data);
+    } catch (err) {
+      console.error(err);
+    }
+  }, 400); // debounce
+
+  return () => clearTimeout(timeout);
+}, [addressQuery]);
 
   return (
     <section id="contact" className="py-20 md:py-28 bg-[#fffefd]">
@@ -129,15 +168,45 @@ const CTASection = () => {
                   required
                   className={fieldClass}
                 />
+<div className="relative">
+  <Input
+    name="streetAddress"
+    value={addressQuery}
+    placeholder="Street Address *"
+    className="text-black placeholder:text-gray-400 bg-white border-gray-300"
+    onChange={(e) => {
+        setAddressQuery(e.target.value);
+        setFormData({
+          ...formData,
+          streetAddress: e.target.value,
+        });
+      }}
+    required
+  />
 
-                <Input
-                  name="street"
-                  placeholder="Street Address *"
-                  value={formData.street}
-                  onChange={handleChange}
-                  required
-                  className={fieldClass}
-                />
+  {addressResults.length > 0 && (
+    <div className="absolute z-[9999] top-full left-0 w-full bg-white border border-gray-200 rounded-md shadow-lg mt-1 max-h-56 overflow-auto">
+      {addressResults.map((item) => (
+        <div
+          key={item.place_id}
+          className="px-4 py-2 cursor-pointer text-sm text-gray-800 hover:bg-gray-100"
+         onClick={() => {
+              setAddressQuery(item.display_name);
+              setFormData({
+                ...formData,
+                streetAddress: item.display_name,
+              });
+              setAddressResults([]);
+            }}
+        >
+          {item.display_name}
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
+
 
                 <div className="grid sm:grid-cols-2 gap-4">
                   <Input
@@ -167,41 +236,15 @@ const CTASection = () => {
                   <option value="" className="text-black">
                     How Soon Do You Want To Sell?
                   </option>
-                  <option className="text-black">Immediately</option>
-                  <option className="text-black">30 Days</option>
-                  <option className="text-black">60–90 Days</option>
-                  <option className="text-black">Just Exploring</option>
+                  <option value="asap"  className="text-black">Immediately</option>
+                  <option value="30days" className="text-black">30 Days</option>
+                  <option value="60days" className="text-black">60–90 Days</option>
+                  <option value="JustExploring" className="text-black">Just Exploring</option>
                 </select>
 
-                <select
-                  name="source"
-                  value={formData.source}
-                  onChange={handleChange}
-                  className={`w-full px-3 text-black ${fieldClass}`}
-                >
-                  <option value="" className="text-black">
-                    How did you hear about us?
-                  </option>
-                  <option className="text-black">Google</option>
-                  <option className="text-black">Facebook</option>
-                  <option className="text-black">Referral</option>
-                  <option className="text-black">Other</option>
-                </select>
+                
 
-                <label className="flex items-start gap-3 text-sm text-muted-foreground mt-4">
-                  <input
-                    type="checkbox"
-                    name="consent"
-                    checked={formData.consent}
-                    onChange={handleChange}
-                    required
-                    className="mt-1 accent-accent"
-                  />
-                  <span className="text-black">
-                    Free offer, no pressure. Your info stays private.
-                    Opt out anytime.
-                  </span>
-                </label>
+              
 
                 <Button
                   type="submit"
