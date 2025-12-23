@@ -4,18 +4,45 @@ import {
   ChevronRight,
   VolumeX,
   Volume2,
+  Send,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { useEffect, useRef, useState } from "react";
 
 import hero1 from "@/media/hero-1.mp4";
 import hero2 from "@/media/hero-2.mp4";
 import hero3 from "@/media/hero-3.mp4";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
-  const videoRef = useRef(null);
-  const sectionRef = useRef(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const navigate = useNavigate();
+
+  const [formData, setFormData] = useState({
+    fullName: "",
+    phone: "",
+    email: "",
+    streetAddress: "",
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+   navigate("/contact", {
+  state: {
+    fullName: formData.fullName,
+    phone: formData.phone,
+    email: formData.email,
+    streetAddress: formData.streetAddress,
+  },
+});
+
+  };
 
   const videos = [
     { title: "How We Help Homeowners", src: hero1 },
@@ -49,7 +76,6 @@ const HeroSection = () => {
     );
 
     if (sectionRef.current) observer.observe(sectionRef.current);
-
     return () => observer.disconnect();
   }, []);
 
@@ -67,7 +93,7 @@ const HeroSection = () => {
   };
 
   /* ---------------- SLIDE CHANGE ---------------- */
-  const changeSlide = (dir) => {
+  const changeSlide = (dir: "next" | "prev") => {
     if (animating) return;
     setAnimating(true);
     setIsPlaying(false);
@@ -133,14 +159,28 @@ const HeroSection = () => {
                 </div>
               ))}
             </div>
-            <div>
-            <Link to="/contact">
-            <Button size="lg">Get My Cash Offer</Button>
-            </Link>
+
+            {/* FORM */}
+            <div className="glass-card rounded-2xl p-6">
+              <h3 className="text-lg text-white font-semibold mb-4">
+                Get Your Cash Offer
+              </h3>
+
+              <form onSubmit={handleSubmit} className="space-y-3">
+                <Input name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Full Name *" required />
+                <Input name="phone" type="tel" value={formData.phone} onChange={handleChange} placeholder="Phone *" required />
+                <Input name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Email *" required />
+                <Input name="streetAddress" value={formData.streetAddress} onChange={handleChange} placeholder="Street Address *" required />
+
+                <Button type="submit" className="w-full bg-accent text-accent-foreground py-5 font-semibold">
+                  <Send className="w-4 h-4 mr-2" />
+                  Get My Cash Offer
+                </Button>
+              </form>
             </div>
           </div>
 
-          {/* RIGHT – VIDEO SLIDER */}
+          {/* RIGHT – VIDEO SLIDER (UNCHANGED) */}
           <div
             className={`relative h-[520px] md:h-[600px] lg:h-[650px] rounded-2xl overflow-hidden glass-card
               transition-all duration-700 ease-out delay-200
@@ -170,15 +210,13 @@ const HeroSection = () => {
               `}
             />
 
-    
-
             {/* TITLE */}
-            <div className="absolute top-0 left-0 right-0 bg-black/50 py-2 z-30 text-center text-white text-sm font-semibold uppercase">
+            <div className="absolute top-0 inset-x-0 bg-black/50 py-2 z-30 text-center text-white text-sm font-semibold uppercase">
               {videos[current].title}
             </div>
 
-            {/* PROGRESS BAR */}
-            <div className="absolute bottom-0 left-0 right-0 h-1 bg-white/20 z-30">
+            {/* PROGRESS */}
+            <div className="absolute bottom-0 inset-x-0 h-1 bg-white/20 z-30">
               <div
                 className="h-full bg-accent transition-all"
                 style={{ width: `${progress}%` }}
@@ -190,11 +228,7 @@ const HeroSection = () => {
               onClick={() => setMuted(!muted)}
               className="absolute bottom-4 right-4 bg-black/60 p-2 rounded-full z-30"
             >
-              {muted ? (
-                <VolumeX className="text-white w-5 h-5" />
-              ) : (
-                <Volume2 className="text-white w-5 h-5" />
-              )}
+              {muted ? <VolumeX className="text-white w-5 h-5" /> : <Volume2 className="text-white w-5 h-5" />}
             </button>
 
             {/* CONTROLS */}
@@ -212,6 +246,7 @@ const HeroSection = () => {
               <ChevronRight className="text-white" />
             </button>
           </div>
+
         </div>
       </div>
     </section>

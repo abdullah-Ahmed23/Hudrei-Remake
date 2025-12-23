@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import hudReiLogo from "@/assets/hudrei-logo.png";
 import contactbg from "@/assets/bg-contact.webp";
 import { useLocation } from "react-router-dom";
+import { useEffect, useRef } from "react";
 
 
 
@@ -27,6 +28,16 @@ const Contact = () => {
     timeline: incoming?.timeline || "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const formRef = useRef<HTMLDivElement | null>(null);
+useEffect(() => {
+  if (incoming && formRef.current) {
+    formRef.current.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }
+}, [incoming]);
 
   
   const handleChange = (
@@ -81,6 +92,8 @@ const Contact = () => {
     "Flexible Closings – You choose the date that works best for you",
     "No Hidden Costs – We cover the closing fee",
   ];
+
+  
 
   return (
     <>
@@ -259,7 +272,12 @@ const Contact = () => {
                 </div>
 
                 {/* Contact Form */}
-                <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8"  data-aos="zoom-in">
+       <div
+  ref={formRef}
+  className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 scroll-mt-12"
+  data-aos="zoom-in"
+>
+
                   <form onSubmit={handleSubmit} className="space-y-4">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
