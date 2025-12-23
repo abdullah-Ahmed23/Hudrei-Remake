@@ -205,8 +205,8 @@ The Safest Way To Sell Your Home  <span className="text-accent">Get Your Cash Of
   <Input className="text-white" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Email *" required />
 
   {/* Address Autocomplete */}
-  <div className="relative z-1000">
-    <Input className="text-white"
+  <div className="relative">
+    <Input 
       name="streetAddress"
       value={addressQuery}
       placeholder="Street Address *"
@@ -221,7 +221,7 @@ The Safest Way To Sell Your Home  <span className="text-accent">Get Your Cash Of
     />
 
     {addressResults.length > 0 && (
-      <div className="absolute z-1001 w-full bg-white border rounded-md shadow-md mt-1 max-h-60 overflow-auto">
+      <div className="absolute z-50 w-full bg-white border rounded-md shadow-md mt-1 max-h-60 overflow-auto">
         {addressResults.map((item) => (
           <div
             key={item.place_id}
