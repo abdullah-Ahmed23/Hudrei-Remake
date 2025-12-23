@@ -9,6 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect, useRef, useState } from "react";
+import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
 
 import hero1 from "@/media/hero-1.mp4";
 import hero2 from "@/media/hero-2.mp4";
@@ -168,6 +169,26 @@ const [addressResults, setAddressResults] = useState([]);
     videoRef.current?.load();
   }, [current]);
 
+  const inputRef = useRef<HTMLInputElement | null>(null);
+const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
+
+
+useEffect(() => {
+  if (!inputRef.current || addressResults.length === 0) return;
+
+  const rect = inputRef.current.getBoundingClientRect();
+
+  setDropdownStyle({
+    position: "absolute",
+    top: rect.bottom + window.scrollY + 6,
+    left: rect.left + window.scrollX,
+    width: rect.width,
+    zIndex: 99999,
+  });
+}, [addressResults]);
+
+
+
   return (
     <section
       ref={sectionRef}
@@ -205,41 +226,36 @@ The Safest Way To Sell Your Home  <span className="text-accent">Get Your Cash Of
   <Input className="text-white" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Email *" required />
 
   {/* Address Autocomplete */}
-  <div className="relative">
-    <Input 
-      name="streetAddress"
-      value={addressQuery}
-      placeholder="Street Address *"
-      required
-      onChange={(e) => {
-        setAddressQuery(e.target.value);
-        setFormData({
-          ...formData,
-          streetAddress: e.target.value,
-        });
-      }}
-    />
+  <div className="relative overflow-visible">
+   <Input
+  ref={inputRef}
+  className="text-white"
+  name="streetAddress"
+  value={addressQuery}
+  placeholder="Street Address *"
+  required
+  onChange={(e) => {
+    setAddressQuery(e.target.value);
+    setFormData({
+      ...formData,
+      streetAddress: e.target.value,
+    });
+  }}
+/>
 
-    {addressResults.length > 0 && (
-      <div className="absolute z-50 w-full bg-white border rounded-md shadow-md mt-1 max-h-60 overflow-auto">
-        {addressResults.map((item) => (
-          <div
-            key={item.place_id}
-            className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-sm"
-            onClick={() => {
-              setAddressQuery(item.display_name);
-              setFormData({
-                ...formData,
-                streetAddress: item.display_name,
-              });
-              setAddressResults([]);
-            }}
-          >
-            {item.display_name}
-          </div>
-        ))}
-      </div>
-    )}
+   <AddressAutocompletePortal 
+  anchorRef={inputRef}
+  results={addressResults}
+  onSelect={(value) => {
+    setAddressQuery(value);
+    setFormData({
+      ...formData,
+      streetAddress: value,
+    });
+    setAddressResults([]);
+  }}
+  onClose={() => setAddressResults([])}
+/>
   </div>
 
   <Button type="submit" className="w-full bg-accent text-accent-foreground py-5 font-semibold">
