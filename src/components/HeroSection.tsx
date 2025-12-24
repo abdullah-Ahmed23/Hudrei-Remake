@@ -193,12 +193,13 @@ useEffect(() => {
     
     <section
       ref={sectionRef}
-      className="main  min-h-screen md:pt-20 pt-16 relative overflow-hidden"
+      className="main  min-h-screen md:pt-[80px] pt-16 relative overflow-hidden"
     >
   <div className="relative z-10 w-full bg-[#0b434a] py-2 text-center text-white font-semibold text-sm">
-        The Safest & Easiest Way to sell your home.
+        The Most Transparent & Easier Way To Sell Your Home.
+
       </div>
-      <div className="container mx-auto md:pt-20 mt-10 px-4 relative z-10">
+      <div className="container mx-auto md:pt-10 mt-10 px-4 relative z-10">
         
         <div className="grid lg:grid-cols-2 gap-12 items-center">
 
