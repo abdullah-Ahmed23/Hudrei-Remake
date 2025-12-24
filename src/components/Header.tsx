@@ -51,14 +51,14 @@ const Header = () => {
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300
       ${scrolled ? "bg-background/90 backdrop-blur-xl shadow-lg" : "bg-white"}`}
     >
-      <div className="container mx-auto px-4 h-16 md:h-20 flex items-center justify-between">
+      <div className="relative container mx-auto px-4 h-16 md:h-20 flex items-center justify-between">
         {/* Logo */}
         <Link to="/">
           <img src={hudReiLogo} alt="HudREI" className="h-10 md:h-12" />
         </Link>
 
         {/* ✅ Mobile Center CTA (NOT in toggle) */}
-<div className=" flex items-center justify-center md:hidden">
+<div className=" absolute left-[35%] flex items-center justify-center md:hidden">
   <Button asChild size="sm" className="px-5 font-semibold">
     <Link to="/contact">Get My Cash Offer</Link>
   </Button>
