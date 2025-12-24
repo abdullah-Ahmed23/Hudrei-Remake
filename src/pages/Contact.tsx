@@ -124,6 +124,21 @@ const [addressResults, setAddressResults] = useState([]);
   return () => clearTimeout(timeout);
 }, [addressQuery]);
 
+ // 🔗 Get address from Hero
+  useEffect(() => {
+    if (location.state?.streetAddress) {
+      setFormData((prev) => ({
+        ...prev,
+        streetAddress: location.state.streetAddress,
+      }));
+
+      setTimeout(() => {
+        formRef.current?.scrollIntoView({ behavior: "smooth" });
+      }, 300);
+    }
+  }, [location.state]);
+
+
   return (
     <>
       <Helmet>

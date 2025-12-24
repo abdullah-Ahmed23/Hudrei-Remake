@@ -5,12 +5,12 @@ import {
   VolumeX,
   Volume2,
   Send,
+  Info,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect, useRef, useState } from "react";
 import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
-
 import hero1 from "@/media/hero-1.mp4";
 import hero2 from "@/media/hero-2.mp4";
 import hero3 from "@/media/hero-3.mp4";
@@ -190,12 +190,15 @@ useEffect(() => {
 
 
   return (
+    
     <section
       ref={sectionRef}
-      className="main min-h-screen flex items-center pt-20 relative overflow-hidden"
+      className="main min-h-screen  pt-20 relative overflow-hidden"
     >
-
-      <div className="container mx-auto px-4 relative z-10">
+  <div className="relative z-10 w-full bg-[#0b434a] py-2 text-center text-white font-semibold text-sm">
+        The Safest & Easiest Way to sell your home.
+      </div>
+      <div className="container mx-auto mt-20 px-4 relative z-10">
         
         <div className="grid lg:grid-cols-2 gap-12 items-center">
 
@@ -216,27 +219,23 @@ useEffect(() => {
               ))}
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold">
-The Safest Way To Sell Your Home  <span className="text-accent">Get Your Cash Offer Today.</span>
+Sell Your House In Indiana So Fast <span className="text-accent">Get Your Cash Offer Today.</span>
             </h1>
 
           
 
             {/* FORM */}
          <form onSubmit={handleSubmit} className="space-y-3">
-  <Input className="text-white" name="fullName" value={formData.fullName} onChange={handleChange} placeholder="Full Name *" required />
-
-  <Input className="text-white" name="phone" type="tel" value={formData.phone} onChange={handleChange} placeholder="Phone *" required />
-
-  <Input className="text-white" name="email" type="email" value={formData.email} onChange={handleChange} placeholder="Email *" required />
 
   {/* Address Autocomplete */}
   <div className="relative overflow-visible">
+    
    <Input
   ref={inputRef}
-  className="text-white"
+  className="text-black bg-white"
   name="streetAddress"
   value={addressQuery}
-  placeholder="Street Address *"
+  placeholder="Enter Your Address"
   required
   onChange={(e) => {
     setAddressQuery(e.target.value);
@@ -264,8 +263,9 @@ The Safest Way To Sell Your Home  <span className="text-accent">Get Your Cash Of
 
   <Button type="submit" className="w-full bg-accent text-accent-foreground py-5 font-semibold">
     <Send className="w-4 h-4 mr-2" />
-    Get My Cash Offer
+    Start
   </Button>
+  
 </form>
 
           </div>

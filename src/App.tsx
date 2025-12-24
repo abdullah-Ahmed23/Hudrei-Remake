@@ -26,7 +26,6 @@ const App = () => {
       easing: "ease-out-cubic",
       once: true,
       offset: 120,
-      disable: "mobile",
     });
   }, []);
 

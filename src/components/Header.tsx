@@ -49,7 +49,7 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 inset-x-0 z-50 transition-all duration-300
-      ${scrolled ? "bg-background/90 backdrop-blur-xl shadow-lg" : "bg-transparent"}`}
+      ${scrolled ? "bg-background/90 backdrop-blur-xl shadow-lg" : "bg-white"}`}
     >
       <div className="container mx-auto px-4 h-16 md:h-20 flex items-center justify-between">
         {/* Logo */}

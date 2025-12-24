@@ -6,6 +6,7 @@ import HowItWorksSection from "@/components/HowItWorksSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import AboutSection from "@/components/AboutSection";
 import CTASection from "@/components/CTASection";
+
 import Footer from "@/components/Footer";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
@@ -58,6 +59,7 @@ const Index = () => {
       <div className="min-h-screen bg-background text-foreground">
         <Header />
         <main>
+          
           <HeroSection />
           <TrustSection />
           <HowItWorksSection />
