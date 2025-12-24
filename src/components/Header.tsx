@@ -57,6 +57,13 @@ const Header = () => {
           <img src={hudReiLogo} alt="HudREI" className="h-10 md:h-12" />
         </Link>
 
+        {/* ✅ Mobile Center CTA (NOT in toggle) */}
+<div className=" flex items-center justify-center md:hidden">
+  <Button asChild size="sm" className="px-5 font-semibold">
+    <Link to="/contact">Get My Cash Offer</Link>
+  </Button>
+</div>
+
         {/* ================= DESKTOP NAV ================= */}
         <nav className="hidden md:flex items-center gap-8">
           {/* Selling Options (hover-safe) */}
@@ -216,11 +223,7 @@ const Header = () => {
             </NavLink>
           ))}
 
-          <Button asChild className="w-full mt-4">
-            <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
-              Get My Cash Offer
-            </Link>
-          </Button>
+        
         </div>
       )}
 

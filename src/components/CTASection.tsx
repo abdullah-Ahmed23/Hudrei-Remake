@@ -249,7 +249,7 @@ const [addressResults, setAddressResults] = useState([]);
                 <Button
                   type="submit"
                   size="lg"
-                  disabled={isSubmitting || !formData.consent}
+                 
                   className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-14 rounded-xl mt-4"
                 >
                   {isSubmitting ? (

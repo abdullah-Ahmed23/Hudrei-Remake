@@ -57,8 +57,8 @@ const [addressResults, setAddressResults] = useState([]);
   ];
 
   const benefits = [
-    "No repairs needed",
-    "Close in 7–14 days",
+    "Sell As-Is",
+    "Close Super Fast",
     "Zero fees or commissions",
   ];
 
@@ -193,7 +193,7 @@ useEffect(() => {
     
     <section
       ref={sectionRef}
-      className="main min-h-screen  pt-20 relative overflow-hidden"
+      className="main min-h-screen md:pt-20 pt-16 relative overflow-hidden"
     >
   <div className="relative z-10 w-full bg-[#0b434a] py-2 text-center text-white font-semibold text-sm">
         The Safest & Easiest Way to sell your home.
@@ -219,7 +219,7 @@ useEffect(() => {
               ))}
             </div>
             <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold">
-Sell Your House In Indiana So Fast <span className="text-accent">Get Your Cash Offer Today.</span>
+<span className="text-accent">Get Your Cash Offer Today.</span>
             </h1>
 
           
