@@ -58,7 +58,7 @@ const Header = () => {
         </Link>
 
         {/* ✅ Mobile Center CTA (NOT in toggle) */}
-<div className=" absolute left-[35%] flex items-center justify-center md:hidden">
+<div className="  flex items-center justify-center md:hidden">
   <Button asChild size="sm" className="px-5 font-semibold">
     <Link to="/contact">Get My Cash Offer</Link>
   </Button>
