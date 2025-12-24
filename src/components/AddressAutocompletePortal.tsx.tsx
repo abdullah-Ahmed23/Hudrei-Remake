@@ -1,5 +1,6 @@
 import { useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { MapPin } from "lucide-react";
 
 interface Props {
   anchorRef: React.RefObject<HTMLInputElement>;
@@ -17,7 +18,7 @@ const AddressAutocompletePortal = ({
   const dropdownRef = useRef<HTMLDivElement>(null);
   const rect = anchorRef.current?.getBoundingClientRect();
 
-  // Close on outside click
+  /* Close on outside click */
   useEffect(() => {
     const handler = (e: MouseEvent) => {
       if (
@@ -36,24 +37,51 @@ const AddressAutocompletePortal = ({
 
   return createPortal(
     <div
-     
       ref={dropdownRef}
       style={{
         position: "fixed",
-        top: rect.bottom + 6,
+        top: rect.bottom + 8,
         left: rect.left,
         width: rect.width,
         zIndex: 99999,
       }}
-      className="bg-white text-black border rounded-md shadow-2xl max-h-60 overflow-y-auto"
+      className="
+        rounded-2xl bg-white text-black
+        shadow-xl border border-black/5
+        backdrop-blur-xl
+        max-h-72 overflow-y-auto
+        animate-[fadeSlideIn_0.15s_ease-out]
+      "
     >
-      {results.map((item) => (
-        <div
-          key={item.place_id}
-          className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-sm"
-          onClick={() => onSelect(item.display_name)}
-        >
-          {item.display_name}
+      {results.map((item, index) => (
+        <div key={item.place_id}>
+          <button
+            type="button"
+            onClick={() => onSelect(item.display_name)}
+            className="
+              w-full flex items-start gap-3 px-5 py-4 text-left
+              transition-colors
+              hover:bg-accent/10
+              focus:bg-accent/10
+              focus:outline-none
+            "
+          >
+            <MapPin className="w-4 h-4 text-accent mt-1 shrink-0" />
+
+            <div className="flex flex-col">
+              <span className="text-sm font-semibold leading-tight">
+                {item.display_name.split(",")[0]}
+              </span>
+              <span className="text-xs text-black/60">
+                {item.display_name.split(",").slice(1).join(",")}
+              </span>
+            </div>
+          </button>
+
+          {/* subtle divider */}
+          {index !== results.length - 1 && (
+            <div className="h-px bg-black/5 mx-4" />
+          )}
         </div>
       ))}
     </div>,

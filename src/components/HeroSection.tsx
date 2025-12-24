@@ -193,7 +193,7 @@ useEffect(() => {
     
     <section
       ref={sectionRef}
-      className="main min-h-screen md:pt-20 pt-16 relative overflow-hidden"
+      className="main  min-h-screen md:pt-20 pt-16 relative overflow-hidden"
     >
   <div className="relative z-10 w-full bg-[#0b434a] py-2 text-center text-white font-semibold text-sm">
         The Safest & Easiest Way to sell your home.
@@ -227,44 +227,52 @@ useEffect(() => {
             {/* FORM */}
          <form onSubmit={handleSubmit} className="space-y-3">
 
-  {/* Address Autocomplete */}
-  <div className="relative overflow-visible">
-    
-   <Input
-  ref={inputRef}
-  className="text-black bg-white"
-  name="streetAddress"
-  value={addressQuery}
-  placeholder="Enter Your Address"
-  required
-  onChange={(e) => {
-    setAddressQuery(e.target.value);
-    setFormData({
-      ...formData,
-      streetAddress: e.target.value,
-    });
-  }}
-/>
+  {/* Address + Button Wrapper */}
+<div className="relative w-full">
 
-   <AddressAutocompletePortal 
-  anchorRef={inputRef}
-  results={addressResults}
-  onSelect={(value) => {
-    setAddressQuery(value);
-    setFormData({
-      ...formData,
-      streetAddress: value,
-    });
-    setAddressResults([]);
-  }}
-  onClose={() => setAddressResults([])}
-/>
-  </div>
+  {/* Address Input */}
+  <Input
+    ref={inputRef}
+    name="streetAddress"
+    value={addressQuery}
+    placeholder="Enter Home Address"
+    required
+    className="h-14 pr-28 rounded-full text-black bg-white"
+    onChange={(e) => {
+      setAddressQuery(e.target.value);
+      setFormData({
+        ...formData,
+        streetAddress: e.target.value,
+      });
+    }}
+  />
 
-  <Button type="submit" className="w-full bg-accent text-accent-foreground py-5 font-semibold">
-    <Send className="w-4 h-4 mr-2" />
-    Start
+  {/* START Button INSIDE input */}
+  <Button
+    type="submit"
+    className="absolute right-1 top-1/2 -translate-y-1/2
+               h-12 px-8 rounded-full bg-accent
+               text-accent-foreground font-bold"
+  >
+    START
   </Button>
+
+  {/* Autocomplete dropdown */}
+  <AddressAutocompletePortal
+    anchorRef={inputRef}
+    results={addressResults}
+    onSelect={(value) => {
+      setAddressQuery(value);
+      setFormData({
+        ...formData,
+        streetAddress: value,
+      });
+      setAddressResults([]);
+    }}
+    onClose={() => setAddressResults([])}
+  />
+</div>
+
   
 </form>
 

@@ -333,7 +333,7 @@ const [addressResults, setAddressResults] = useState([]);
                         onChange={handleChange}
                         placeholder="Full Name"
                         required
-                        className="border-accent/30 focus:border-accent"
+                        className="border-accent/30 focus:border-accent text-black bg-white "
                       />
                     </div>
 
@@ -348,7 +348,7 @@ const [addressResults, setAddressResults] = useState([]);
                         onChange={handleChange}
                         placeholder="Phone"
                         required
-                        className="border-accent/30 focus:border-accent"
+                        className="border-accent/30 focus:border-accent text-black bg-white"
                       />
                     </div>
 
@@ -363,7 +363,7 @@ const [addressResults, setAddressResults] = useState([]);
                         onChange={handleChange}
                         placeholder="Email"
                         required
-                        className="border-accent/30 focus:border-accent"
+                        className="border-accent/30 focus:border-accen text-black bg-white "
                       />
                     </div>
 
@@ -373,7 +373,7 @@ const [addressResults, setAddressResults] = useState([]);
                       <label className="block text-sm font-medium text-gray-700 mb-1">
                         streetAddress
                       </label>
-    <Input className="text-white"
+    <Input className="text-black bg-white "
       name="streetAddress"
       value={addressQuery}
       placeholder="Street Address *"
@@ -419,7 +419,7 @@ const [addressResults, setAddressResults] = useState([]);
                           value={formData.city}
                           onChange={handleChange}
                           placeholder="City"
-                          className="border-accent/30 focus:border-accent"
+                          className="border-accent/30 focus:border-accent text-black bg-white"
                         />
                       </div>
                       <div>
@@ -431,7 +431,7 @@ const [addressResults, setAddressResults] = useState([]);
                           value={formData.state}
                           onChange={handleChange}
                           placeholder="State"
-                          className="border-accent/30 focus:border-accent"
+                          className="border-accent/30 focus:border-accent text-black bg-white"
                         />
                       </div>
                     </div>
@@ -444,7 +444,7 @@ const [addressResults, setAddressResults] = useState([]);
                         name="timeline"
                         value={formData.timeline}
                         onChange={handleChange}
-                        className="w-full h-10 rounded-md border border-accent/30 bg-background px-3 py-2 text-sm focus:border-accent focus:outline-none"
+                        className="w-full h-10 rounded-md border border-accent/30 bg-background px-3 py-2 text-sm focus:border-accent focus:outline-none text-black bg-white"
                       >
                         <option value="">Select timeline</option>
                         <option value="asap">As soon as possible</option>
