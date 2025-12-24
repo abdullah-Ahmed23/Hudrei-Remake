@@ -27,7 +27,7 @@ const sellingDropdown = [
 
 
 const navLinks = [
-  { label: "Who Are We", to: "/who-are-we" },
+  { label: "Who We Are ", to: "/who-are-we" },
   { label: "Testimonials", to: "/testimonials" },
   { label: "Contact", to: "/contact" },
   { label: "Careers", to: "/careers" },
@@ -58,11 +58,20 @@ const Header = () => {
         </Link>
 
         {/* ✅ Mobile Center CTA (NOT in toggle) */}
-<div className="  flex items-center justify-center md:hidden">
+<div
+  className="
+    absolute
+    left-1/2 -translate-x-1/2
+    flex items-center justify-center
+    md:hidden
+  "
+>
   <Button asChild size="sm" className="px-5 font-semibold">
     <Link to="/contact">Get My Cash Offer</Link>
   </Button>
 </div>
+
+
 
         {/* ================= DESKTOP NAV ================= */}
         <nav className="hidden md:flex items-center gap-8">

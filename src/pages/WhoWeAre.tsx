@@ -127,29 +127,111 @@ useEffect(() => {
               </Button>
             </div>
 
+           
             {/* Trust Badges */}
-            <div className="mt-16 flex flex-wrap justify-center items-center gap-8 animate-on-scroll opacity-0 translate-y-8 transition-all duration-700 delay-200">
-              <div className="flex items-center gap-2 bg-white shadow-md border border-gray-100 px-4 py-2 rounded-full">
-                <span className="font-semibold text-gray-900">Google</span>
-                <div className="flex text-yellow-400">
-                  {"★★★★★".split("").map((star, i) => (
-                    <span key={i}>{star}</span>
-                  ))}
-                </div>
-              </div>
-              <div className="flex items-center gap-2 bg-white shadow-md border border-gray-100 px-4 py-2 rounded-full">
-                <span className="font-semibold text-gray-900">YouTube</span>
-                <span className="text-red-500">▶</span>
-              </div>
-              <div className="flex items-center gap-2 bg-white shadow-md border border-gray-100 px-4 py-2 rounded-full">
-                <span className="font-semibold text-gray-900">Facebook</span>
-                <div className="flex text-yellow-400">
-                  {"★★★★★".split("").map((star, i) => (
-                    <span key={i}>{star}</span>
-                  ))}
-                </div>
-              </div>
-            </div>
+{/* Trust Badges */}
+<div className="mt-16 flex flex-wrap justify-center items-center gap-6
+                animate-on-scroll opacity-0 translate-y-8
+                transition-all duration-700 delay-200">
+
+  {/* ===== Google ===== */}
+  <a
+    href="https://www.google.com/search?q=hudrei"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="group flex items-center gap-3
+               bg-white/90 backdrop-blur
+               border border-black/5
+               px-5 py-3 rounded-2xl
+               shadow-sm hover:shadow-xl
+               hover:-translate-y-1
+               transition-all duration-300"
+  >
+    {/* Google Logo */}
+    <img
+      src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png"
+      alt="Google"
+      className="w-5 h-5"
+    />
+
+    <span className="font-semibold text-gray-900">Google</span>
+
+    {/* Stars */}
+    <div className="flex text-yellow-400">
+      {[...Array(5)].map((_, i) => (
+        <span
+          key={i}
+          className="group-hover:animate-starPulse"
+          style={{ animationDelay: `${i * 80}ms` }}
+        >
+          ★
+        </span>
+      ))}
+    </div>
+  </a>
+
+  {/* ===== YouTube ===== */}
+  <a
+    href="https://www.youtube.com/@HudREI"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="group flex items-center gap-3
+               bg-white/90 backdrop-blur
+               border border-black/5
+               px-5 py-3 rounded-2xl
+               shadow-sm hover:shadow-xl
+               hover:-translate-y-1
+               transition-all duration-300"
+  >
+    {/* YouTube Logo */}
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg"
+      alt="YouTube"
+      className="w-6"
+    />
+
+    <span className="font-semibold text-gray-900">YouTube</span>
+  </a>
+
+  {/* ===== Facebook ===== */}
+  <a
+    href="https://www.facebook.com/profile.php?id=61562781720104"
+    target="_blank"
+    rel="noopener noreferrer"
+    className="group flex items-center gap-3
+               bg-white/90 backdrop-blur
+               border border-black/5
+               px-5 py-3 rounded-2xl
+               shadow-sm hover:shadow-xl
+               hover:-translate-y-1
+               transition-all duration-300"
+  >
+    {/* Facebook Logo */}
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg"
+      alt="Facebook"
+      className="w-5 h-5"
+    />
+
+    <span className="font-semibold text-gray-900">Facebook</span>
+
+    {/* Stars */}
+    <div className="flex text-yellow-400">
+      {[...Array(5)].map((_, i) => (
+        <span
+          key={i}
+          className="group-hover:animate-starPulse"
+          style={{ animationDelay: `${i * 80}ms` }}
+        >
+          ★
+        </span>
+      ))}
+    </div>
+  </a>
+
+</div>
+
+
           </div>
         </section>
 

@@ -198,7 +198,7 @@ useEffect(() => {
   <div className="relative z-10 w-full bg-[#0b434a] py-2 text-center text-white font-semibold text-sm">
         The Safest & Easiest Way to sell your home.
       </div>
-      <div className="container mx-auto mt-20 px-4 relative z-10">
+      <div className="container mx-auto md:pt-20 mt-10 px-4 relative z-10">
         
         <div className="grid lg:grid-cols-2 gap-12 items-center">
 
