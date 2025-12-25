@@ -6,6 +6,7 @@ import HowItWorksSection from "@/components/HowItWorksSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import AboutSection from "@/components/AboutSection";
 import CTASection from "@/components/CTASection";
+import Question from "@/components/QuestionsSection";
 
 import Footer from "@/components/Footer";
 import { useEffect } from "react";
@@ -66,6 +67,7 @@ const Index = () => {
           <TestimonialsSection />
           <AboutSection />
           <CTASection  />
+          <Question  />
         </main>
         <Footer />
       </div>
