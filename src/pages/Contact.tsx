@@ -150,7 +150,7 @@ const [addressResults, setAddressResults] = useState([]);
       </Helmet>
 
       <div className="min-h-screen bg-white">
-        <Header />
+       
 
         {/* Hero Section */}
         <section className="relative min-h-[500px] py-20 flex items-center overflow-hidden">
@@ -492,7 +492,7 @@ const [addressResults, setAddressResults] = useState([]);
           </div>
         </section>
 
-        <Footer />
+       
       </div>
     </>
   );

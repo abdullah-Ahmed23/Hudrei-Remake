@@ -3,13 +3,15 @@ import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import SellingOptions from "./pages/SelllingOptions";
 import ScrollToHash from "./components/ScrollToHash";
 import ScrollToTop from "./components/ScrollToTop";
 import WhoWeAre from "./pages/WhoWeAre";
 import Contact from "./pages/Contact";
+import Blog from "./pages/blog";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -35,6 +37,7 @@ const App = () => {
         <Toaster />
         <Sonner />
         <BrowserRouter>
+        <Header />
         <ScrollToTop />
          <ScrollToHash />
 
@@ -43,10 +46,12 @@ const App = () => {
             <Route path="/selling-options" element={<SellingOptions />} />
             <Route path="/who-are-we" element={<WhoWeAre />} />
             <Route path="/contact" element={<Contact />} />
+            <Route path="/Blog" element={<Blog />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
+      <Footer />
     </QueryClientProvider>
   );
 };

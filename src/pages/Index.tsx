@@ -58,7 +58,7 @@ const Index = () => {
       </Helmet>
 
       <div className="min-h-screen bg-background text-foreground">
-        <Header />
+       
         <main>
           
           <HeroSection />
@@ -69,7 +69,7 @@ const Index = () => {
           <CTASection  />
           <Question  />
         </main>
-        <Footer />
+       
       </div>
     </>
   );

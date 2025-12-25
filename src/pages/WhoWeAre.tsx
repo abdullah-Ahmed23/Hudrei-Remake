@@ -95,7 +95,7 @@ useEffect(() => {
         />
       </Helmet>
 
-      <Header />
+      
 
       <main className="min-h-screen bg-white">
         {/* Hero Vision Section */}
@@ -421,7 +421,7 @@ useEffect(() => {
         </section>
       </main>
 
-      <Footer />
+      
     </>
   );
 };

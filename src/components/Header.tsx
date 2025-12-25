@@ -29,7 +29,7 @@ const mainLinks = [
 
 const learnDropdown = [
   { label: "FAQ", to: "/faq", icon: HelpCircle, desc: "Common questions answered" },
-  { label: "Blog", to: "/blog", icon: BookOpen, desc: "Latest news & insights" },
+  { label: "Blog", to: "/Blog", icon: BookOpen, desc: "Latest news & insights" },
   { label: "Careers", to: "/careers", icon: Briefcase, desc: "Join our team" },
   { label: "Contact Us", to: "/contact", icon: Mail, desc: "Get in touch with us" },
 ];
@@ -87,7 +87,7 @@ const Header = () => {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out",
           scrolled
-            ? "bg-white/80 backdrop-blur-xl shadow-lg shadow-black/5 border-b border-black/5"
+            ? "bg-white/80 backdrop-blur-xl shadow-lg shadow-black/5  border-black/5"
             : "bg-white"
         )}
       >

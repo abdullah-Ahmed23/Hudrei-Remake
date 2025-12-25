@@ -279,7 +279,7 @@ const SellingOptions = () => {
         <meta name="description" content="Choose the selling path that's best for you. Multiple cash offers, become the bank, max equity, mortgage relief, or list with us." />
       </Helmet>
 
-      <Header />
+      
 
       <main>
         {/* Hero Section */}
@@ -418,7 +418,7 @@ const SellingOptions = () => {
         </section>
       </main>
 
-      <Footer />
+      
     </>
   );
 };
