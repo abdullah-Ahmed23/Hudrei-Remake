@@ -113,3 +113,6 @@
 .animate-float {
   animation: float 12s ease-in-out infinite;
 }
+.btnsQ{
+  align-items: center;
+}

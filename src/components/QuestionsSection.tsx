@@ -1,4 +1,4 @@
-import { Phone, Mail, HelpCircle } from "lucide-react";
+import { Phone, Mail, HelpCircle,PhoneCall  } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
@@ -24,28 +24,31 @@ const QuestionsSection = () => {
 
       <div className="container mx-auto px-4 relative z-10">
         {/* Main content */}
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-14 mb-20">
+        <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-14 mb-20">
           {/* Left */}
           <div className="max-w-md">
             <h2 className="text-4xl text-black md:text-5xl font-bold leading-tight">
-              Need to sell your house fast?
+              Don’t settle for a generic cash offer.
+
 
               <br />
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-4xl text-transparent">
-Get a fair cash offer no repairs, no fees.
+We re-imagined the process to give you options.
+
               </span>
             </h2>
 
             <p className="text-black text-lg mt-4">
-              Tell us about your property and timeline. HudREI buys homes as-is and closes on your schedule.
+            Speed. Max Value. Debt Relief.
+Tell us your goal, and we will build the offer that gets you there.
             </p>
           </div>
 
           {/* Right - CTAs */}
-          <div className="flex flex-wrap flex-col gap-4">
+          <div className="btnsQ flex flex-col gap-4 items-center lg:items-start text-center lg:text-left">
             <Button
               asChild
-              className="rounded-full px-8 py-6 text-base font-medium shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
+             className="w-full sm:w-auto rounded-full px-8 py-6 text-base font-medium shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
             >
               <a href="tel:+13177951990">
                 <Phone className="w-4 h-4 mr-2" />
@@ -56,7 +59,7 @@ Get a fair cash offer no repairs, no fees.
             <Button
               asChild
               variant="secondary"
-              className="rounded-full px-8 py-6 text-base font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all"
+             className="w-full sm:w-auto rounded-full px-8 py-6 text-base font-medium shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
             >
               <a href="mailto:office@hudrei.com">
                 <Mail className="w-4 h-4 mr-2" />
@@ -67,11 +70,11 @@ Get a fair cash offer no repairs, no fees.
             <Button
               asChild
               variant="outline"
-              className="rounded-full px-8 py-6 text-base font-medium border-accent text-accent hover:bg-accent hover:text-accent-foreground transition-all"
+              className="w-full sm:w-auto rounded-full px-8 py-6 text-base font-medium shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
             >
               <a href="/contact">
-                <HelpCircle className="w-4 h-4 mr-2" />
-                Contact Us!
+                <PhoneCall className="w-4 h-4 mr-2" />
+                Request a Call
               </a>
             </Button>
           </div>
