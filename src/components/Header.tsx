@@ -1,255 +1,419 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import {
   Menu,
   X,
   Phone,
   ChevronDown,
-  Home,
-  DollarSign,
-  Hammer,
-  ShieldCheck,
-  Landmark,
+  HelpCircle,
+  BookOpen,
+  Briefcase,
+  Mail,
+  Users,
   Building,
+  Landmark,
+  Home,
+  ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import hudReiLogo from "@/assets/hudrei-logo.png";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
+import { cn } from "@/lib/utils";
 
+/* ================= NAV DATA ================= */
 
-const sellingDropdown = [
-  { label: "Sell As-Is", to: "/selling-options#offer-1", icon: Home },
-  { label: "Become The Bank", to: "/selling-options#offer-2", icon: Landmark },
-  { label: "Max Equity Offer", to: "/selling-options#offer-3", icon: DollarSign },
-  { label: "Mortgage Relief Offer", to: "/selling-options#offer-4", icon: ShieldCheck },
-  { label: "List With HudREI", to: "/selling-options#offer-5", icon: Building },
-];
-
-
-
-const navLinks = [
-  { label: "Who We Are ", to: "/who-are-we" },
+const mainLinks = [
+  { label: "Selling Options", to: "/selling-options" },
+  { label: "About Us", to: "/who-are-we" },
   { label: "Testimonials", to: "/testimonials" },
-  { label: "Contact", to: "/contact" },
-  { label: "Careers", to: "/careers" },
-  { label: "FAQ", to: "/faq" },
 ];
+
+const learnDropdown = [
+  { label: "FAQ", to: "/faq", icon: HelpCircle, desc: "Common questions answered" },
+  { label: "Blog", to: "/blog", icon: BookOpen, desc: "Latest news & insights" },
+  { label: "Careers", to: "/careers", icon: Briefcase, desc: "Join our team" },
+  { label: "Contact Us", to: "/contact", icon: Mail, desc: "Get in touch with us" },
+];
+
+const partnersDropdown = [
+  { label: "Agents", to: "/partners/agents", icon: Users, desc: "Real estate professionals" },
+  { label: "Wholesalers", to: "/partners/wholesalers", icon: Landmark, desc: "Investment partners" },
+  { label: "Local Investors", to: "/partners/local-investors", icon: Building, desc: "Community investors" },
+  { label: "Title Companies", to: "/partners/title-companies", icon: Home, desc: "Closing partners" },
+  { label: "More", to: "/partners", icon: ArrowRight, desc: "Explore all partners" },
+];
+
+/* ================= COMPONENT ================= */
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [mobileSellingOpen, setMobileSellingOpen] = useState(false);
+  const [learnOpen, setLearnOpen] = useState(false);
+  const [partnersOpen, setPartnersOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const learnRef = useRef<HTMLDivElement>(null);
+  const partnersRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
-  /* Scroll effect */
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", onScroll);
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Close dropdowns when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (learnRef.current && !learnRef.current.contains(e.target as Node)) {
+        setLearnOpen(false);
+      }
+      if (partnersRef.current && !partnersRef.current.contains(e.target as Node)) {
+        setPartnersOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const go = (to: string) => {
+    navigate(to);
+    setIsMenuOpen(false);
+    setLearnOpen(false);
+    setPartnersOpen(false);
+  };
+
   return (
-    <header
-      className={`fixed top-0 inset-x-0 z-50 transition-all duration-300
-      ${scrolled ? "bg-background/90 backdrop-blur-xl shadow-lg" : "bg-white"}`}
-    >
-      <div className="relative container mx-auto px-4 h-16 md:h-20 flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/">
-          <img src={hudReiLogo} alt="HudREI" className="h-10 md:h-12" />
-        </Link>
+    <>
+      {/* ================= HEADER ================= */}
+      <header
+        className={cn(
+          "fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out",
+          scrolled
+            ? "bg-white/80 backdrop-blur-xl shadow-lg shadow-black/5 border-b border-black/5"
+            : "bg-white"
+        )}
+      >
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16 md:h-20">
+            {/* Logo */}
+            <Link to="/" className="flex-shrink-0 relative z-10">
+              <img
+                src={hudReiLogo}
+                alt="HudRei Logo"
+                className="h-10 md:h-12 w-auto transition-transform duration-300 hover:scale-105"
+              />
+            </Link>
 
-        {/* ✅ Mobile Center CTA (NOT in toggle) */}
-<div
-  className="
-    absolute
-    left-1/2 -translate-x-1/2
-    flex items-center justify-center
-    md:hidden
-  "
->
-  <Button asChild size="sm" className="px-5 font-semibold">
-    <Link to="/contact">Get My Cash Offer</Link>
-  </Button>
-</div>
+            {/* Desktop Nav */}
+            <nav className="hidden lg:flex items-center gap-1">
+              {mainLinks.map((l) => (
+                <NavLink
+                  key={l.to}
+                  to={l.to}
+                  className={({ isActive }) =>
+                    cn(
+                      "px-4 py-2 text-sm font-medium rounded-full transition-all duration-300",
+                      isActive
+                        ? "text-primary bg-primary/10"
+                        : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                    )
+                  }
+                >
+                  {l.label}
+                </NavLink>
+              ))}
 
+              {/* Learn Dropdown */}
+              <div ref={learnRef} className="relative">
+                <button
+                  onClick={() => {
+                    setLearnOpen(!learnOpen);
+                    setPartnersOpen(false);
+                  }}
+                  className={cn(
+                    "flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-full transition-all duration-300",
+                    learnOpen
+                      ? "text-primary bg-primary/10"
+                      : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                  )}
+                >
+                  Learn
+                  <ChevronDown
+                    className={cn(
+                      "w-4 h-4 transition-transform duration-300",
+                      learnOpen && "rotate-180"
+                    )}
+                  />
+                </button>
 
+                {/* Dropdown Panel */}
+                <div
+                  className={cn(
+                    "absolute top-full left-0 mt-2 w-72 origin-top-left transition-all duration-300 ease-out",
+                    learnOpen
+                      ? "opacity-100 scale-100 translate-y-0"
+                      : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                  )}
+                >
+                  <div className="bg-white rounded-2xl shadow-xl shadow-black/10 border border-gray-100 p-2 overflow-hidden">
+                    {learnDropdown.map((item, idx) => (
+                      <button
+                        key={item.to}
+                        onClick={() => go(item.to)}
+                        className="w-full flex items-start gap-3 p-3 rounded-xl text-left transition-all duration-200 hover:bg-gray-50 group"
+                        style={{ animationDelay: `${idx * 50}ms` }}
+                      >
+                        <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center transition-colors duration-200 group-hover:bg-primary/20">
+                          <item.icon className="w-5 h-5 text-primary" />
+                        </div>
+                        <div>
+                          <div className="text-sm font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                            {item.label}
+                          </div>
+                          <div className="text-xs text-gray-500 mt-0.5">
+                            {item.desc}
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
 
-        {/* ================= DESKTOP NAV ================= */}
-        <nav className="hidden md:flex items-center gap-8">
-          {/* Selling Options (hover-safe) */}
-         {/* Selling Options (hover-safe, no flicker) */}
-<div className="relative group">
-  {/* Trigger */}
-  <div className="flex items-center gap-1 cursor-pointer">
-    <NavLink
-      to="/selling-options"
-      className={`text-sm font-medium ${
-        scrolled ? "text-white" : "text-black/80 hover:text-black"
-      }`}
-    >
-      Selling Options
-    </NavLink>
+              {/* Partners Dropdown */}
+              <div ref={partnersRef} className="relative">
+                <button
+                  onClick={() => {
+                    setPartnersOpen(!partnersOpen);
+                    setLearnOpen(false);
+                  }}
+                  className={cn(
+                    "flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-full transition-all duration-300",
+                    partnersOpen
+                      ? "text-primary bg-primary/10"
+                      : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                  )}
+                >
+                  Partners
+                  <ChevronDown
+                    className={cn(
+                      "w-4 h-4 transition-transform duration-300",
+                      partnersOpen && "rotate-180"
+                    )}
+                  />
+                </button>
 
-    <ChevronDown
-      className={`w-4 h-4 transition-transform duration-300
-      group-hover:rotate-180
-      ${scrolled ? "text-white" : "text-black"}`}
-    />
-  </div>
+                {/* Dropdown Panel */}
+                <div
+                  className={cn(
+                    "absolute top-full left-0 mt-2 w-72 origin-top-left transition-all duration-300 ease-out",
+                    partnersOpen
+                      ? "opacity-100 scale-100 translate-y-0"
+                      : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
+                  )}
+                >
+                  <div className="bg-white rounded-2xl shadow-xl shadow-black/10 border border-gray-100 p-2 overflow-hidden">
+                    {partnersDropdown.map((item, idx) => (
+                      <button
+                        key={item.to}
+                        onClick={() => go(item.to)}
+                        className="w-full flex items-start gap-3 p-3 rounded-xl text-left transition-all duration-200 hover:bg-gray-50 group"
+                        style={{ animationDelay: `${idx * 50}ms` }}
+                      >
+                        <div className="flex-shrink-0 w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center transition-colors duration-200 group-hover:bg-primary/20">
+                          <item.icon className="w-5 h-5 text-primary" />
+                        </div>
+                        <div>
+                          <div className="text-sm font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                            {item.label}
+                          </div>
+                          <div className="text-xs text-gray-500 mt-0.5">
+                            {item.desc}
+                          </div>
+                        </div>
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </nav>
 
-  {/* 🔥 Hover bridge (THIS IS THE KEY) */}
-  <div className="absolute left-0 top-full h-6 w-full" />
-
-  {/* Dropdown */}
-  <div
-    className={`absolute left-0 top-[calc(100%+1.25rem)]
-    w-64 rounded-xl bg-white shadow-xl overflow-hidden
-    opacity-0 scale-95 pointer-events-none
-    transition-all duration-200 origin-top
-    group-hover:opacity-100
-    group-hover:scale-100
-    group-hover:pointer-events-auto`}
-  >
-    {sellingDropdown.map((item, i) => {
-      const Icon = item.icon;
-      return (
-        <Link
-          key={item.label}
-          to={item.to}
-          className="flex items-center gap-3 px-5 py-4 text-black hover:bg-muted transition   hover:text-white"
-          style={{ transitionDelay: `${i * 40}ms` }}
-        >
-          <Icon className="w-5 h-5 text-accent" />
-          <span className="text-sm font-medium   ">
-            {item.label}
-          </span>
-        </Link>
-      );
-    })}
-  </div>
-</div>
-
-          {/* Other desktop links */}
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.label}
-              to={link.to}
-              className={({ isActive }) =>
-                `text-sm font-medium transition-colors ${
-                  isActive
-                    ? "text-accent"
-                    : scrolled
-                    ? "text-white hover:text-white/80"
-                    : "text-black/80 hover:text-black"
-                }`
-              }
-            >
-              {link.label}
-            </NavLink>
-          ))}
-        </nav>
-
-        {/* Desktop CTA */}
-        <div className="hidden md:flex items-center gap-4">
-          <a
-            href="tel:+13177951990"
-            className={`flex items-center gap-2 ${
-              scrolled ? "text-white" : "text-black/80"
-            }`}
-          >
-            <Phone className="w-4 h-4" />
-            <span className="text-sm">317-795-1990</span>
-          </a>
-
-          <Button asChild>
-            <Link to="/contact">Get My Cash Offer</Link>
-          </Button>
-        </div>
-
-        {/* Mobile toggle */}
-        <button
-          onClick={() => setIsMenuOpen((p) => !p)}
-          className={`md:hidden ${scrolled ? "text-white" : "text-black"}`}
-        >
-          {isMenuOpen ? <X /> : <Menu />}
-        </button>
-      </div>
-
-      {/* ================= MOBILE MENU ================= */}
-      {isMenuOpen && (
-        <div className="md:hidden bg-background/95 backdrop-blur-xl px-4 py-6 space-y-4">
-          {/* Selling Options mobile dropdown */}
-          <div>
-            <div className="flex items-center justify-between">
-              <Link
-                to="/selling-options"
-                onClick={() => setIsMenuOpen(false)}
-                className="text-lg font-medium text-white"
+            {/* Desktop CTA */}
+            <div className="hidden lg:flex items-center gap-3">
+              <a
+                href="tel:317-795-1990"
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-primary transition-colors duration-300"
               >
-                Selling Options
-              </Link>
+                <Phone className="w-4 h-4" />
+                <span>317-795-1990</span>
+              </a>
+              <Button
+                asChild
+                className="rounded-full px-6 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 hover:-translate-y-0.5"
+              >
+                <Link to="/contact">Get My Cash Offer</Link>
+              </Button>
+            </div>
 
+            {/* Mobile CTA + Toggle */}
+            <div className="flex lg:hidden items-center gap-2">
+              <Button
+                asChild
+                size="sm"
+                className="rounded-full text-xs px-4 shadow-md"
+              >
+                <Link to="/contact">Get My Cash Offer</Link>
+              </Button>
               <button
-                onClick={() => setMobileSellingOpen((p) => !p)}
-                className="p-2 text-white"
+                onClick={() => setIsMenuOpen(true)}
+                className="p-2 rounded-full hover:bg-gray-100 transition-colors"
               >
-                <ChevronDown
-                  className={`w-5 h-5 transition-transform duration-300 ${
-                    mobileSellingOpen ? "rotate-180" : ""
-                  }`}
-                />
+                <Menu className="w-6 h-6 text-gray-700" />
+              </button>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      {/* ================= MOBILE SLIDE MENU ================= */}
+      <div
+        className={cn(
+          "fixed inset-0 z-[60] lg:hidden transition-all duration-500",
+          isMenuOpen ? "pointer-events-auto" : "pointer-events-none"
+        )}
+      >
+        {/* Overlay */}
+        <div
+          onClick={() => setIsMenuOpen(false)}
+          className={cn(
+            "absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-500",
+            isMenuOpen ? "opacity-100" : "opacity-0"
+          )}
+        />
+
+        {/* Panel */}
+        <div
+          className={cn(
+            "absolute right-0 top-0 bottom-0 w-full max-w-sm bg-white shadow-2xl transition-transform duration-500 ease-out",
+            isMenuOpen ? "translate-x-0" : "translate-x-full"
+          )}
+        >
+          <div className="flex flex-col h-full">
+            {/* Header */}
+            <div className="flex items-center justify-between p-4 border-b border-gray-100">
+              <img src={hudReiLogo} alt="Logo" className="h-8" />
+              <button
+                onClick={() => setIsMenuOpen(false)}
+                className="p-2 rounded-full hover:bg-gray-100 transition-colors"
+              >
+                <X className="w-6 h-6 text-gray-700" />
               </button>
             </div>
 
-            <div
-              className={`ml-4 mt-2 overflow-hidden transition-all duration-300
-              ${mobileSellingOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"}`}
-            >
-              {sellingDropdown.map((item) => {
-                const Icon = item.icon;
-                return (
-                  <Link
-                    key={item.label}
-                    to={item.to}
-                    onClick={() => setIsMenuOpen(false)}
-                    className="flex items-center gap-3 py-2 text-white/90"
-                  >
-                    <Icon className="w-4 h-4 text-accent" />
-                    {item.label}
-                  </Link>
-                );
-              })}
+            {/* Links */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-1">
+              {mainLinks.map((l, idx) => (
+                <button
+                  key={l.to}
+                  onClick={() => go(l.to)}
+                  className={cn(
+                    "w-full text-left px-4 py-3 text-base font-medium text-gray-700 rounded-xl hover:bg-gray-50 transition-all duration-300",
+                    isMenuOpen && "animate-fade-in"
+                  )}
+                  style={{ animationDelay: `${idx * 100}ms` }}
+                >
+                  {l.label}
+                </button>
+              ))}
+
+              {/* Learn Accordion */}
+              <div className="pt-2">
+                <button
+                  onClick={() => setLearnOpen(!learnOpen)}
+                  className="w-full flex items-center justify-between px-4 py-3 text-base font-medium text-gray-700 rounded-xl hover:bg-gray-50 transition-all"
+                >
+                  Learn
+                  <ChevronDown
+                    className={cn(
+                      "w-5 h-5 transition-transform duration-300",
+                      learnOpen && "rotate-180"
+                    )}
+                  />
+                </button>
+                <div
+                  className={cn(
+                    "overflow-hidden transition-all duration-300 ease-out",
+                    learnOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                  )}
+                >
+                  <div className="pl-4 py-2 space-y-1">
+                    {learnDropdown.map((item) => (
+                      <button
+                        key={item.to}
+                        onClick={() => go(item.to)}
+                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-600 rounded-xl hover:bg-gray-50 transition-colors"
+                      >
+                        <item.icon className="w-5 h-5 text-primary" />
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+
+              {/* Partners Accordion */}
+              <div>
+                <button
+                  onClick={() => setPartnersOpen(!partnersOpen)}
+                  className="w-full flex items-center justify-between px-4 py-3 text-base font-medium text-gray-700 rounded-xl hover:bg-gray-50 transition-all"
+                >
+                  Partners
+                  <ChevronDown
+                    className={cn(
+                      "w-5 h-5 transition-transform duration-300",
+                      partnersOpen && "rotate-180"
+                    )}
+                  />
+                </button>
+                <div
+                  className={cn(
+                    "overflow-hidden transition-all duration-300 ease-out",
+                    partnersOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                  )}
+                >
+                  <div className="pl-4 py-2 space-y-1">
+                    {partnersDropdown.map((item) => (
+                      <button
+                        key={item.to}
+                        onClick={() => go(item.to)}
+                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-600 rounded-xl hover:bg-gray-50 transition-colors"
+                      >
+                        <item.icon className="w-5 h-5 text-primary" />
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {/* Footer CTA */}
+            <div className="p-4 border-t border-gray-100 space-y-3">
+              <a
+                href="tel:317-795-1990"
+                className="flex items-center justify-center gap-2 py-3 text-gray-700 font-medium rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors"
+              >
+                <Phone className="w-5 h-5" />
+                317-795-1990
+              </a>
+              <Button asChild className="w-full rounded-xl py-6 text-base">
+                <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
+                  Get My Cash Offer
+                </Link>
+              </Button>
             </div>
           </div>
-
-          {navLinks.map((link) => (
-            <NavLink
-              key={link.label}
-              to={link.to}
-              onClick={() => setIsMenuOpen(false)}
-              className="block py-2 text-lg text-white hover:text-white/80"
-            >
-              {link.label}
-            </NavLink>
-          ))}
-
-        
         </div>
-      )}
-
-      {/* Animation keyframes */}
-      <style>{`
-        @keyframes fadeSlideIn {
-          from {
-            opacity: 0;
-            transform: translateY(6px);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0);
-          }
-        }
-      `}</style>
-    </header>
+      </div>
+    </>
   );
 };
 
