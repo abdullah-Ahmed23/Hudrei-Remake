@@ -28,7 +28,7 @@ const mainLinks = [
 ];
 
 const learnDropdown = [
-  { label: "FAQ", to: "/faq", icon: HelpCircle, desc: "Common questions answered" },
+  { label: "FAQ", to: "/Faq", icon: HelpCircle, desc: "Common questions answered" },
   { label: "Blog", to: "/Blog", icon: BookOpen, desc: "Latest news & insights" },
   { label: "Careers", to: "/careers", icon: Briefcase, desc: "Join our team" },
   { label: "Contact Us", to: "/contact", icon: Mail, desc: "Get in touch with us" },

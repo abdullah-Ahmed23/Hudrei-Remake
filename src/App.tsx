@@ -12,6 +12,7 @@ import ScrollToTop from "./components/ScrollToTop";
 import WhoWeAre from "./pages/WhoWeAre";
 import Contact from "./pages/Contact";
 import Blog from "./pages/blog";
+import Faq from "./pages/Faq";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -47,6 +48,7 @@ const App = () => {
             <Route path="/who-are-we" element={<WhoWeAre />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/Blog" element={<Blog />} />
+            <Route path="/Faq" element={<Faq />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

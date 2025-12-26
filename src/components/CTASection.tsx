@@ -48,7 +48,7 @@ const CTASection = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!formData.consent) return;
+    
 
     navigate("/contact", {
       state: {
@@ -209,6 +209,7 @@ const [addressResults, setAddressResults] = useState([]);
 
 
                 <div className="grid sm:grid-cols-2 gap-4">
+                     
                   <Input
                     name="city"
                     placeholder="City"

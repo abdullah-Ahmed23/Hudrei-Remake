@@ -12,10 +12,9 @@ const Footer = () => {
       { label: "Contact", href: "#contact" },
     ],
     resources: [
-      { label: "FAQ", href: "#" },
-      { label: "Blog", href: "#" },
-      { label: "Selling Tips", href: "#" },
-      { label: "Market Insights", href: "#" },
+      { label: "FAQ", href: "/faq" },
+      { label: "Blog", to: "/Blog" },
+      
     ],
   };
 
@@ -32,16 +31,16 @@ const Footer = () => {
             />
             <p className="text-muted-foreground text-sm mb-6 max-w-xs">
               Helping homeowners sell their properties quickly and hassle-free 
-              since 2018.
+              since 2024.
             </p>
             <div className="space-y-3">
               <a href="tel:+1234567890" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors">
                 <Phone className="w-4 h-4 text-accent" />
-                (123) 456-7890
+                317-795-1990
               </a>
               <a href="mailto:info@hudrei.com" className="flex items-center gap-3 text-sm text-muted-foreground hover:text-foreground transition-colors">
                 <Mail className="w-4 h-4 text-accent" />
-                info@hudrei.com
+                Office@hudrei.com
               </a>
               <div className="flex items-center gap-3 text-sm text-muted-foreground">
                 <MapPin className="w-4 h-4 text-accent" />
@@ -88,11 +87,11 @@ const Footer = () => {
           <div>
             <h4 className="font-semibold mb-4">Areas We Serve</h4>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              <li>Houston, TX</li>
-              <li>Dallas, TX</li>
-              <li>Austin, TX</li>
-              <li>San Antonio, TX</li>
-              <li>Fort Worth, TX</li>
+              <li>Kokomo, IN</li>
+              <li>Fort Wayne, IN</li>
+              <li>Indianapolis, IN</li>
+              <li>South Bend, IN</li>
+              <li>Mishawaka, IN</li>
             </ul>
           </div>
         </div>

@@ -1,6 +1,6 @@
 import { Helmet } from "react-helmet";
 import { useState } from "react";
-import { Phone, Mail, CheckCircle2, ArrowRight } from "lucide-react";
+import { Phone, Mail, CheckCircle2, ArrowRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
@@ -10,7 +10,7 @@ import hudReiLogo from "@/assets/hudrei-logo.png";
 import contactbg from "@/assets/bg-contact.webp";
 import { useLocation } from "react-router-dom";
 import { useEffect, useRef } from "react";
-
+import { motion, AnimatePresence } from "framer-motion";
 
 
 const Contact = () => {
@@ -137,6 +137,20 @@ const [addressResults, setAddressResults] = useState([]);
       }, 300);
     }
   }, [location.state]);
+
+ const [isComparisonOpen, setIsComparisonOpen] = useState(false);
+
+  const comparisonData = [
+    { label: "Commissions / Fees:", agent: "6% on average is paid by you, the seller", hudrei: "NONE" },
+    { label: "Who Pays Closing Costs?:", agent: "2% on average is paid by you, the seller", hudrei: "NONE – We pay all costs" },
+    { label: "Inspection & Financing Contingency*:", agent: "Yes, sales can fall through", hudrei: "NONE" },
+    { label: "Appraisal Needed:", agent: "Yes, the sale is often subject to appraisal", hudrei: "NONE – We make cash offers" },
+    { label: "Average Days Until Sold:", agent: "+/- 91 Days", hudrei: "IMMEDIATE CASH OFFER" },
+    { label: "Number of Showings:", agent: "It Depends", hudrei: "1 (Just Us)" },
+    { label: "Closing Date:", agent: "30-60 +/- days after accepting buyers offer", hudrei: "The Date Of YOUR CHOICE" },
+    { label: "Who Pays For Repairs?:", agent: "Negotiated During Inspection Period", hudrei: "NONE – We pay for all repairs" },
+  ];
+
 
 
   return (
@@ -295,7 +309,7 @@ const [addressResults, setAddressResults] = useState([]);
               </div>
 
               {/* Right - Comparison Card + Form */}
-              <div className="space-y-8">
+              <div className="">
                 {/* Comparison Card */}
                 <div className="bg-gradient-to-br from-primary to-emerald-600 rounded-2xl p-8 text-white"  data-aos="fade-right">
                   <h3 className="text-2xl font-bold mb-4">Listing vs. Selling To Us</h3>
@@ -306,23 +320,113 @@ const [addressResults, setAddressResults] = useState([]);
                     <br />
                     Has less hassle?
                   </p>
-                  <Button
+                 <Button
                     variant="secondary"
                     className="bg-white text-primary hover:bg-gray-100 font-semibold"
+                    onClick={() => setIsComparisonOpen(true)}
                   >
                     See The Difference here
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>
                 </div>
 
+
+                  {/* Comparison Modal */}
+                <AnimatePresence>
+                  {isComparisonOpen && (
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      className="fixed inset-0 space-y-0  backdrop-blur-sm  z-50 flex items-center justify-center p-4"
+                      onClick={() => setIsComparisonOpen(false)}
+                    >
+                      <motion.div
+                        initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                        animate={{ opacity: 1, scale: 1, y: 0 }}
+                        exit={{ opacity: 0, scale: 0.9, y: 20 }}
+                        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+                        className="bg-white rounded-2xl shadow-2xl  w-full max-h-[90vh] overflow-auto"
+                        onClick={(e) => e.stopPropagation()}
+                      >
+                        {/* Modal Header */}
+                        <div className="flex items-center justify-between p-6 border-b border-gray-200">
+                          <h3 className="text-2xl font-bold text-gray-900">
+                            Listing vs. Selling To HudREI
+                          </h3>
+                          <button
+                            onClick={() => setIsComparisonOpen(false)}
+                            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+                          >
+                            <X className="w-6 h-6 text-gray-500" />
+                          </button>
+                        </div>
+
+                        {/* Comparison Table */}
+                        <div className="p-6">
+                          <div className="overflow-x-auto">
+                            <table className="w-full">
+                              <thead>
+                                <tr className="border-b-2 border-gray-200">
+                                  <th className="text-left py-4 px-4 font-bold text-gray-900"></th>
+                                  <th className="text-left py-4 px-4 font-bold text-gray-700">
+                                    Selling w/ An Agent
+                                  </th>
+                                  <th className="text-left py-4 px-4">
+                                    <div className="flex flex-col items-start">
+                                      <span className="text-sm text-gray-500 font-medium">SOLD To</span>
+                                      <span className="text-2xl font-bold text-primary">HudREI</span>
+                                    </div>
+                                  </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {comparisonData.map((row, index) => (
+                                  <motion.tr
+                                    key={index}
+                                    initial={{ opacity: 0, x: -20 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    transition={{ delay: index * 0.05 }}
+                                    className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
+                                  >
+                                    <td className="py-4 px-4 font-semibold text-gray-900">
+                                      {row.label}
+                                    </td>
+                                    <td className="py-4 px-4 text-gray-600 italic">
+                                      {row.agent}
+                                    </td>
+                                    <td className="py-4 px-4 text-primary font-medium">
+                                      {row.hudrei}
+                                    </td>
+                                  </motion.tr>
+                                ))}
+                              </tbody>
+                            </table>
+                          </div>
+
+                          {/* CTA */}
+                          <div className="mt-8 text-center">
+                            <Button
+                              onClick={() => setIsComparisonOpen(false)}
+                              className="bg-accent hover:bg-accent/90 text-white font-semibold px-8 py-3"
+                            >
+                              Get My Cash Offer Now!
+                            </Button>
+                          </div>
+                        </div>
+                      </motion.div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+
                 {/* Contact Form */}
        <div
   ref={formRef}
-  className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 scroll-mt-12"
+  className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 mt-6 scroll-mt-12"
   data-aos="zoom-in"
 >
 
-                  <form onSubmit={handleSubmit} className="space-y-4">
+                  <form onSubmit={handleSubmit} className="space-y-4 ">
                     <div>
                       <label className="block text-sm font-medium text-gray-700 mb-1">
                         Full Name *
