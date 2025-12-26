@@ -193,7 +193,7 @@ const FAQ = () => {
         </section>
       </main>
 
-      <Footer />
+      
     </>
   );
 };

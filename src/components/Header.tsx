@@ -80,6 +80,10 @@ const Header = () => {
     setPartnersOpen(false);
   };
 
+  const [mobileLearnOpen, setMobileLearnOpen] = useState(false);
+const [mobilePartnersOpen, setMobilePartnersOpen] = useState(false);
+
+
   return (
     <>
       {/* ================= HEADER ================= */}
@@ -327,7 +331,7 @@ const Header = () => {
               {/* Learn Accordion */}
               <div className="pt-2">
                 <button
-                  onClick={() => setLearnOpen(!learnOpen)}
+                 onClick={() => setMobileLearnOpen((p) => !p)}
                   className="w-full flex items-center justify-between px-4 py-3 text-base font-medium text-gray-700 rounded-xl hover:bg-gray-50 transition-all"
                 >
                   Learn
@@ -341,7 +345,7 @@ const Header = () => {
                 <div
                   className={cn(
                     "overflow-hidden transition-all duration-300 ease-out",
-                    learnOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                    mobileLearnOpen  ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                   )}
                 >
                   <div className="pl-4 py-2 space-y-1">
@@ -362,7 +366,7 @@ const Header = () => {
               {/* Partners Accordion */}
               <div>
                 <button
-                  onClick={() => setPartnersOpen(!partnersOpen)}
+                 onClick={() => setMobilePartnersOpen((p) => !p)}
                   className="w-full flex items-center justify-between px-4 py-3 text-base font-medium text-gray-700 rounded-xl hover:bg-gray-50 transition-all"
                 >
                   Partners
@@ -376,7 +380,7 @@ const Header = () => {
                 <div
                   className={cn(
                     "overflow-hidden transition-all duration-300 ease-out",
-                    partnersOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                    mobilePartnersOpen  ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                   )}
                 >
                   <div className="pl-4 py-2 space-y-1">
