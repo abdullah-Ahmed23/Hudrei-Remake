@@ -1,126 +1,134 @@
-import { MapPin, Check } from "lucide-react";
-import heroImg from "@/assets/2025-07-28.webp";
+import { CheckCircle } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
+import TextType from "@/components/TextType";
 
-interface AddressResult {
-  display_name: string;
-  place_id: number;
-}
-
-const HeroCashOffer = () => {
+const HeroV2 = () => {
   const navigate = useNavigate();
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState<AddressResult[]>([]);
+  const [addressQuery, setAddressQuery] = useState("");
+  const [addressResults, setAddressResults] = useState<any[]>([]);
 
-  // 🔎 OpenStreetMap Autocomplete
+  /* ---------- Address Autocomplete ---------- */
   useEffect(() => {
-    if (query.length < 3) {
-      setResults([]);
+    if (addressQuery.length < 3) {
+      setAddressResults([]);
       return;
     }
 
-    const controller = new AbortController();
+    const timeout = setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&limit=5&q=${addressQuery}`,
+          { headers: { "User-Agent": "hudrei-app" } }
+        );
+        const data = await res.json();
+        setAddressResults(data);
+      } catch (err) {
+        console.error(err);
+      }
+    }, 400);
 
-    fetch(
-      `https://nominatim.openstreetmap.org/search?format=json&q=${query}`,
-      { signal: controller.signal }
-    )
-      .then((res) => res.json())
-      .then((data) => setResults(data))
-      .catch(() => {});
+    return () => clearTimeout(timeout);
+  }, [addressQuery]);
 
-    return () => controller.abort();
-  }, [query]);
-
-  const handleStart = () => {
-    if (!query) return;
-
+  /* ---------- Submit ---------- */
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     navigate("/contact", {
-      state: {
-        streetAddress: query,
-      },
+      state: { streetAddress: addressQuery },
     });
   };
 
   return (
-    <section className="relative sm:mt-20 mt-16 w-full h-[85vh] min-h-[700px] overflow-hidden">
-      {/* Background */}
-      <div
-        className="absolute inset-0 bg-cover bg-center bg-[#09373d]"
-        
-      />
-      <div className="absolute inset-0 bg-black/30" />
-
-      {/* Top Bar */}
-      <div className="relative z-10 w-full bg-[#0b434a] py-2 text-center text-white font-semibold text-sm">
-        The Safest & Easiest Way to sell your home.
+    <section className="relative min-h-[90vh] bg-white overflow-hidden">
+      {/* Top strip */}
+      <div className="relative z-10 mt-16 md:mt-20 bg-accent text-accent-foreground text-center py-2 text-xs sm:text-sm font-semibold">
+        The Most Transparent & Easier Way To Sell Your Home.
       </div>
 
       {/* Content */}
-      <div className="relative z-10 flex items-center justify-center h-full px-4">
-        <div className="w-full max-w-3xl rounded-2xl bg-white/20 backdrop-blur-xl border border-white/30 shadow-2xl px-6 md:px-10 py-10 text-center">
-          <h1 className="text-white text-3xl md:text-5xl lg:text-6xl font-extrabold tracking-widest">
-            GET YOUR CASH OFFER Today!
+      <div className="container mx-auto px-4 min-h-[calc(90vh-40px)] flex items-center">
+        <div className="w-full flex flex-col items-center gap-16 text-center">
+
+          {/* HEADLINE */}
+          <h1 className="text-4xl sm:text-5xl lg:text-8xl font-extrabold uppercase text-black">
+            <TextType
+              text={["Get Your Cash Offer", "Today!"]}
+              typingSpeed={30}
+              deletingSpeed={30}
+              pauseDuration={2200}
+              loop={true}
+              showCursor={true}
+              hideCursorWhileTyping={false}
+              cursorCharacter="|"
+              cursorClassName="text-black"
+              textColors={["inherit", "#318174"]}
+            />
           </h1>
 
-          {/* Benefits */}
-          <div className="mt-6 flex justify-center">
-            <ul className="space-y-2 text-white text-left">
-              {["Free, no obligation", "No showings", "Free local move"].map(
-                (item) => (
-                  <li key={item} className="flex items-center gap-2">
-                    <Check className="text-green-400" size={18} />
-                    {item}
-                  </li>
-                )
-              )}
-            </ul>
+          {/* INFO CARD */}
+          <div className="w-full max-w-2xl">
+            <div className="bg-white rounded-3xl shadow-2xl p-8">
+              <h3 className="text-2xl font-semibold text-black mb-6">
+                Why Homeowners Choose HudREI
+              </h3>
+
+              <ul className="space-y-5 text-gray-700 text-xl">
+                <li className="flex gap-3 justify-center">
+                  <CheckCircle className="text-accent w-5 h-5 mt-1" />
+                  Cash offers without financing delays
+                </li>
+                <li className="flex gap-3 justify-center">
+                  <CheckCircle className="text-accent w-5 h-5 mt-1" />
+                  Close in as little as 7–14 days
+                </li>
+                <li className="flex gap-3 justify-center">
+                  <CheckCircle className="text-accent w-5 h-5 mt-1" />
+                  No repairs, no fees, no stress
+                </li>
+              </ul>
+            </div>
           </div>
 
-          {/* 🔎 Address Input */}
-          <div className="relative mt-8">
-            <div className="flex w-full overflow-hidden rounded-full bg-white shadow-xl">
-              <div className="flex items-center px-4 text-gray-400">
-                <MapPin size={20} />
-              </div>
-              <input
-                value={query}
-                onChange={(e) => setQuery(e.target.value)}
+          {/* ADDRESS FORM */}
+          <form onSubmit={handleSubmit} className="w-full max-w-xl">
+            <div className="relative">
+              <Input
+                ref={inputRef}
+                value={addressQuery}
                 placeholder="Enter Home Address"
-                className="flex-1 py-4 px-2 text-black outline-none"
+                required
+                className="h-14 pr-32 rounded-full bg-white text-black shadow-md"
+                onChange={(e) => setAddressQuery(e.target.value)}
               />
-              <button
-                onClick={handleStart}
-                className="bg-[#0b434a] hover:bg-[#062f33] text-white font-bold px-8"
+
+              <Button
+                type="submit"
+                className="absolute right-1 top-1/2 -translate-y-1/2 h-12 px-8 rounded-full bg-accent font-bold"
               >
                 START
-              </button>
-            </div>
+              </Button>
 
-            {/* Autocomplete Dropdown */}
-            {results.length > 0 && (
-              <div className="absolute top-full left-0 w-full bg-white text-black rounded-xl shadow-lg mt-2 max-h-60 overflow-auto z-50 text-left">
-                {results.map((item) => (
-                  <div
-                    key={item.place_id}
-                    className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-sm"
-                    onClick={() => {
-                      setQuery(item.display_name);
-                      setResults([]);
-                    }}
-                  >
-                    {item.display_name}
-                  </div>
-                ))}
-              </div>
-            )}
-          </div>
+              <AddressAutocompletePortal
+                anchorRef={inputRef}
+                results={addressResults}
+                onSelect={(value) => {
+                  setAddressQuery(value);
+                  setAddressResults([]);
+                }}
+                onClose={() => setAddressResults([])}
+              />
+            </div>
+          </form>
         </div>
       </div>
     </section>
   );
 };
 
-export default HeroCashOffer;
+export default HeroV2;

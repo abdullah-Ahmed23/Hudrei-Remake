@@ -23,13 +23,15 @@ import { cn } from "@/lib/utils";
 
 const mainLinks = [
   { label: "Selling Options", to: "/selling-options" },
+  { label: "How It Works", to: "/Howit" },
   { label: "About Us", to: "/who-are-we" },
   { label: "Testimonials", to: "/testimonials" },
+  
 ];
 
 const learnDropdown = [
   { label: "FAQ", to: "/Faq", icon: HelpCircle, desc: "Common questions answered" },
-  { label: "Blog", to: "/Blog", icon: BookOpen, desc: "Latest news & insights" },
+  { label: "Blog", to: "/blog", icon: BookOpen, desc: "Latest news & insights" },
   { label: "Careers", to: "/careers", icon: Briefcase, desc: "Join our team" },
   { label: "Contact Us", to: "/contact", icon: Mail, desc: "Get in touch with us" },
 ];
@@ -102,12 +104,12 @@ const [mobilePartnersOpen, setMobilePartnersOpen] = useState(false);
               <img
                 src={hudReiLogo}
                 alt="HudRei Logo"
-                className="h-10 md:h-12 w-auto transition-transform duration-300 hover:scale-105"
+                className="h-20 md:h-24 w-auto transition-transform duration-300 hover:scale-105"
               />
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden lg:flex items-center gap-1">
+            <nav className="hidden lg:flex   items-center gap-1">
               {mainLinks.map((l) => (
                 <NavLink
                   key={l.to}

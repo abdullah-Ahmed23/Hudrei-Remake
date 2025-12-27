@@ -213,24 +213,24 @@ const OfferCard = ({ offer, index }: { offer: OfferOption; index: number }) => {
             <offer.icon className="w-8 h-8 text-accent" />
           </div>
           <div>
-            <span className="text-accent font-medium text-sm">Offer {offer.id}</span>
+            <span className="text-white font-medium text-sm">Offer {offer.id}</span>
             <h3 className="text-2xl font-bold text-white mt-1">{offer.title}</h3>
-            <p className="text-accent">{offer.subtitle}</p>
+            <p className="text-white">{offer.subtitle}</p>
           </div>
         </div>
 
-        <p className="text-whiteleading-relaxed mb-6">
+        <p className="text-white leading-relaxed mb-6">
           {offer.description}
         </p>
 
         <div className="flex flex-col sm:flex-row gap-4">
-          <Button className="bg-accent text-accent-foreground hover:bg-[#b8e1ea ]" asChild>
+          <Button className="bg-accent text-white hover:bg-[#b8e1ea ]" asChild>
             <a href={offer.ctaLink}>{offer.ctaText}</a>
           </Button>
           <Button 
             variant="outline" 
             onClick={() => setShowPerks(!showPerks)}
-            className="border-border text-foreground hover:bg-white"
+            className="border-border text-white hover:bg-white hover:text-black"
           >
             View Perks
             <ChevronDown className={cn("w-4 h-4 ml-2 transition-transform", showPerks && "rotate-180")} />
@@ -243,7 +243,7 @@ const OfferCard = ({ offer, index }: { offer: OfferOption; index: number }) => {
           showPerks ? "max-h-[500px] opacity-100 mt-6" : "max-h-0 opacity-0"
         )}>
           <div className="bg-secondary/50 rounded-xl p-6 border border-border">
-            <h4 className="text-lg font-semibold text-foreground mb-4">The Perks</h4>
+            <h4 className="text-lg font-semibold text-white mb-4">The Perks</h4>
             <div className="grid sm:grid-cols-2 gap-3">
               {offer.perks.map((perk, idx) => (
                 <div 
@@ -299,7 +299,7 @@ const SellingOptions = () => {
               Say goodbye to stress and uncertainty – our transparent approach and competitive pricing 
               sets a new standard. We offer multiple options to suit your unique situation.
             </p>
-            <Button className="mt-8 bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-8 py-6" asChild>
+            <Button className="mt-8 bg-accent text-white hover:bg-accent/90 text-lg px-8 py-6" asChild>
               <a href="#offers">Browse Offers</a>
             </Button>
           </div>
@@ -329,7 +329,7 @@ const SellingOptions = () => {
         </section>
 
         {/* How It Works Section */}
-        <section className="py-20 bg-[#fffff0]">
+        <section className="py-20 bg-[#ffffff]">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 "  data-aos="fade-up"
           data-aos-duration="500">
             <div className="text-center mb-16">
@@ -339,7 +339,7 @@ const SellingOptions = () => {
               <p className="text-black">How it works in 5 easy steps.</p>
             </div>
 
-            <div className="grid md:grid-cols-5 gap-6"  data-aos="fade-right"
+            <div className="grid md:grid-cols-5 gap-6  cursor-pointer"  data-aos="fade-right"
           data-aos-duration="500">
               {steps.map((step, index) => (
                 <div key={step.number} className="relative">
@@ -348,7 +348,7 @@ const SellingOptions = () => {
                       {step.number}
                     </div>
                     <h3 className="text-lg font-bold text-foreground mb-2">{step.title}</h3>
-                    <p className="text-sm text-muted-foreground">{step.description}</p>
+                    <p className="text-sm text-white">{step.description}</p>
                   </div>
                   {index < steps.length - 1 && (
                     <div className="hidden md:block absolute top-1/2 -right-3 transform -translate-y-1/2 text-accent">
@@ -384,7 +384,7 @@ const SellingOptions = () => {
                   Depending on the circumstances, you can get a cash offer in much less time than you might think.
                 </p>
 <Link to="/contact">
-                <Button className="bg-accent text-accent-foreground hover:bg-accent/90 text-lg px-8 py-6" asChild>
+                <Button className="bg-accent text-white hover:bg-accent/90 text-lg px-8 py-6" asChild>
                   <a>Get Cash Offers</a>
                 </Button>
                 </Link>

@@ -1,75 +1,33 @@
 import {
   CheckCircle,
-  ChevronLeft,
-  ChevronRight,
   VolumeX,
   Volume2,
   Send,
-  Info,
+  X,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect, useRef, useState } from "react";
 import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
-import hero1 from "@/media/hero-1.mp4";
-import hero2 from "@/media/hero-2.mp4";
-import hero3 from "@/media/hero-3.mp4";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import heroVideo from "@/media/hero-1.mp4";
+import { Link, NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const HeroSection = () => {
-  const videoRef = useRef<HTMLVideoElement | null>(null);
   const sectionRef = useRef<HTMLElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  const videoRef = useRef<HTMLVideoElement | null>(null);
   const navigate = useNavigate();
 
-
-
-
-  const [formData, setFormData] = useState({
-    fullName: "",
-    phone: "",
-    email: "",
-    streetAddress: "",
-  });
-const [addressQuery, setAddressQuery] = useState(formData.streetAddress);
-const [addressResults, setAddressResults] = useState([]);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-   navigate("/contact", {
-  state: {
-    fullName: formData.fullName,
-    phone: formData.phone,
-    email: formData.email,
-    streetAddress: formData.streetAddress,
-  },
-});
-
-  };
-
-  const videos = [
-    { title: "How We Help Homeowners", src: hero1 },
-    { title: "Simple Cash Process", src: hero2 },
-    { title: "Fast Closings", src: hero3 },
-  ];
-
-  const benefits = [
-    "Sell As-Is",
-    "Close Super Fast",
-    "Zero fees or commissions",
-  ];
-
-  const [current, setCurrent] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [muted, setMuted] = useState(true);
-  const [animating, setAnimating] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const [formData, setFormData] = useState({ streetAddress: "" });
+  const [addressQuery, setAddressQuery] = useState("");
+  const [addressResults, setAddressResults] = useState<any[]>([]);
   const [inView, setInView] = useState(false);
 
-  /* ---------------- INTERSECTION OBSERVER ---------------- */
+  const [videoOpen, setVideoOpen] = useState(false);
+  const [muted, setMuted] = useState(false);
+
+  /* ---------------- Intersection Observer ---------------- */
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -85,270 +43,129 @@ const [addressResults, setAddressResults] = useState([]);
     return () => observer.disconnect();
   }, []);
 
-  /* ---------------- PLAY / PAUSE ---------------- */
-  const togglePlay = () => {
-    if (!videoRef.current) return;
-
-    if (videoRef.current.paused) {
-      videoRef.current.play();
-      setIsPlaying(true);
-    } else {
-      videoRef.current.pause();
-      setIsPlaying(false);
-    }
-  };
-  // autocomplet------------adresss------
+  /* ---------------- Address Autocomplete ---------------- */
   useEffect(() => {
-  if (addressQuery.length < 3) {
-    setAddressResults([]);
-    return;
-  }
-
-  const timeout = setTimeout(async () => {
-    try {
-      const res = await fetch(
-        `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&q=${addressQuery}`,
-        {
-          headers: {
-            "User-Agent": "hudrei-form",
-          },
-        }
-      );
-      const data = await res.json();
-      setAddressResults(data);
-    } catch (err) {
-      console.error(err);
-    }
-  }, 400); // debounce
-
-  return () => clearTimeout(timeout);
-}, [addressQuery]);
-
-
-
-
-
-
-  /* ---------------- SLIDE CHANGE ---------------- */
-  const changeSlide = (dir: "next" | "prev") => {
-    if (animating) return;
-    setAnimating(true);
-    setIsPlaying(false);
-    setProgress(0);
-
-    if (videoRef.current) {
-      videoRef.current.pause();
-      videoRef.current.currentTime = 0;
+    if (addressQuery.length < 3) {
+      setAddressResults([]);
+      return;
     }
 
-    setTimeout(() => {
-      setCurrent((prev) =>
-        dir === "next"
-          ? (prev + 1) % videos.length
-          : (prev - 1 + videos.length) % videos.length
-      );
-      setAnimating(false);
+    const timeout = setTimeout(async () => {
+      try {
+        const res = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&limit=5&q=${addressQuery}`,
+          { headers: { "User-Agent": "hudrei-form" } }
+        );
+        const data = await res.json();
+        setAddressResults(data);
+      } catch (err) {
+        console.error(err);
+      }
     }, 400);
+
+    return () => clearTimeout(timeout);
+  }, [addressQuery]);
+
+  /* ---------------- Submit ---------------- */
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate("/contact", {
+      state: { streetAddress: formData.streetAddress },
+    });
   };
-
-  /* ---------------- PROGRESS BAR ---------------- */
-  useEffect(() => {
-    const video = videoRef.current;
-    if (!video) return;
-
-    const updateProgress = () => {
-      if (!video.duration) return;
-      setProgress((video.currentTime / video.duration) * 100);
-    };
-
-    video.addEventListener("timeupdate", updateProgress);
-    return () => video.removeEventListener("timeupdate", updateProgress);
-  }, [current]);
-
-  useEffect(() => {
-    videoRef.current?.load();
-  }, [current]);
-
-  const inputRef = useRef<HTMLInputElement | null>(null);
-const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
-
-
-useEffect(() => {
-  if (!inputRef.current || addressResults.length === 0) return;
-
-  const rect = inputRef.current.getBoundingClientRect();
-
-  setDropdownStyle({
-    position: "absolute",
-    top: rect.bottom + window.scrollY + 6,
-    left: rect.left + window.scrollX,
-    width: rect.width,
-    zIndex: 99999,
-  });
-}, [addressResults]);
-
-
 
   return (
-    
-    <section
-      ref={sectionRef}
-      className="main  min-h-screen md:pt-[80px] pt-16 relative overflow-hidden"
-    >
-  <div className="relative z-10 w-full bg-[#0b434a] py-2 text-center text-white font-semibold text-sm">
-        The Most Transparent & Easier Way To Sell Your Home.
-
-      </div>
-      <div className="container mx-auto md:pt-10 mt-10 px-4 relative z-10">
-        
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-
-          {/* LEFT */}
-          
+    <>
+      <section
+        ref={sectionRef}
+        className="min-h-screen bg-white pt-20 pb-11 flex items-center"
+      >
+        <div className="container mx-auto px-4">
           <div
-            className={`space-y-8 text-black text-center lg:text-left
-              transition-all duration-700 ease-out
-              ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
-            `}
+            className={`flex flex-col items-center gap-16 text-center transition-all duration-700
+            ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
           >
-              <div className="flex flex-wrap justify-center lg:justify-start gap-4">
-              {benefits.map((b) => (
-                <div key={b} className="flex items-center gap-2 text-sm">
-                  <CheckCircle className="w-5 h-5 text-accent" />
-                  {b}
-                </div>
-              ))}
+            {/* HEADLINE */}
+            <div className="space-y-4">
+              <div className="flex justify-center gap-16 text-sm sm:text-3xl lg:text-4xl text-black font-bold">
+                {["Sell As-Is", "Close Fast", "No Fees"].map((b) => (
+                  <span key={b} className="flex items-center gap-2">
+                    <CheckCircle className="w-5 h-5 text-accent" />
+                    {b}
+                  </span>
+                ))}
+              </div>
+
+              <h1 className="text-4xl sm:text-5xl lg:text-8xl font-bold">
+                <span className="text-accent">Get Your Cash Offer Today</span>
+              </h1>
             </div>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold">
-<span className="text-accent">Get Your Cash Offer Today.</span>
-            </h1>
 
-          
+            {/* 🎥 REEL THUMBNAIL */}
+            <button
+              onClick={() => setVideoOpen(true)}
+              className="relative w-[260px] sm:w-[300px] aspect-[9/16] rounded-2xl overflow-hidden shadow-xl group"
+            >
+              {/* Thumbnail */}
+              <video
+                src={heroVideo}
+                muted
+                playsInline
+                className="absolute inset-0 w-full h-full object-cover"
+              />
 
-            {/* FORM */}
-         <form onSubmit={handleSubmit} className="space-y-3">
+              {/* Overlay */}
+              <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
+                <Send className="w-14 h-14 text-white rotate-45 group-hover:scale-110 transition" />
+              </div>
+            </button>
 
-  {/* Address + Button Wrapper */}
-<div className="relative w-full">
-
-  {/* Address Input */}
-  <Input
-    ref={inputRef}
-    name="streetAddress"
-    value={addressQuery}
-    placeholder="Enter Home Address"
-    required
-    className="h-14 pr-28 rounded-full text-black bg-white"
-    onChange={(e) => {
-      setAddressQuery(e.target.value);
-      setFormData({
-        ...formData,
-        streetAddress: e.target.value,
-      });
-    }}
-  />
-
-  {/* START Button INSIDE input */}
-  <Button
-    type="submit"
-    className="absolute right-1 top-1/2 -translate-y-1/2
-               h-12 px-8 rounded-full bg-accent
-               text-accent-foreground font-bold"
-  >
-    START
-  </Button>
-
-  {/* Autocomplete dropdown */}
-  <AddressAutocompletePortal
-    anchorRef={inputRef}
-    results={addressResults}
-    onSelect={(value) => {
-      setAddressQuery(value);
-      setFormData({
-        ...formData,
-        streetAddress: value,
-      });
-      setAddressResults([]);
-    }}
-    onClose={() => setAddressResults([])}
-  />
-</div>
-
-  
-</form>
-
+            {/* ADDRESS FORM */}
+             <div className="flex justify-center  mt-10">
+                       <Link to="/contact">
+                       <Button className=" w-[25rem] h-[7rem] text-2xl" >Get My no obligation Cash Offer</Button>
+                       </Link>
+                       </div>
           </div>
+        </div>
+      </section>
 
-          {/* RIGHT – VIDEO SLIDER (UNCHANGED) */}
-          <div
-            className={`relative h-[520px] md:h-[600px] lg:h-[650px] rounded-2xl overflow-hidden glass-card
-              transition-all duration-700 ease-out delay-200
-              ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}
-            `}
-          >
-            {/* BLURRED BACKGROUND */}
-            <video
-              src={videos[current].src}
-              muted
-              playsInline
-              autoPlay
-              className="absolute inset-0 w-full h-full scale-110 blur-2xl opacity-50"
-            />
-
-            {/* MAIN VIDEO */}
+      {/* 🎬 VIDEO MODAL */}
+      {videoOpen && (
+        <div className="fixed inset-0 z-[999] bg-black/80 backdrop-blur flex items-center justify-center">
+          <div className="relative w-[90vw] max-w-[420px] aspect-[9/16] rounded-2xl overflow-hidden bg-black">
             <video
               ref={videoRef}
-              src={videos[current].src}
-              muted={muted}
-              playsInline
+              src={heroVideo}
               autoPlay
-              onClick={togglePlay}
-              className={`absolute inset-0 w-full h-full cursor-pointer
-                transition-all duration-400 ease-in-out
-                ${animating ? "opacity-0 translate-x-6" : "opacity-100 translate-x-0"}
-              `}
+              
+              muted={muted}
+              className="w-full h-full object-cover"
             />
 
-            {/* TITLE */}
-            <div className="absolute top-0 inset-x-0 bg-black/50 py-2 z-30 text-center text-white text-sm font-semibold uppercase">
-              {videos[current].title}
-            </div>
+            {/* Close */}
+            <button
+              onClick={() => setVideoOpen(false)}
+              className="absolute top-3 right-3 bg-black/60 p-2 rounded-full"
+            >
+              <X className="text-white w-5 h-5" />
+            </button>
 
-            {/* PROGRESS */}
-            <div className="absolute bottom-0 inset-x-0 h-1 bg-white/20 z-30">
-              <div
-                className="h-full bg-accent transition-all"
-                style={{ width: `${progress}%` }}
-              />
-            </div>
-
-            {/* MUTE */}
+            {/* Mute */}
             <button
               onClick={() => setMuted(!muted)}
-              className="absolute bottom-4 right-4 bg-black/60 p-2 rounded-full z-30"
+              className="absolute bottom-4 right-4 bg-black/60 p-2 rounded-full"
             >
-              {muted ? <VolumeX className="text-white w-5 h-5" /> : <Volume2 className="text-white w-5 h-5" />}
-            </button>
-
-            {/* CONTROLS */}
-            <button
-              onClick={() => changeSlide("prev")}
-              className="absolute left-4 top-1/2 -translate-y-1/2 bg-black/60 p-2 rounded-full z-30"
-            >
-              <ChevronLeft className="text-white" />
-            </button>
-
-            <button
-              onClick={() => changeSlide("next")}
-              className="absolute right-4 top-1/2 -translate-y-1/2 bg-black/60 p-2 rounded-full z-30"
-            >
-              <ChevronRight className="text-white" />
+              {muted ? (
+                <VolumeX className="text-white w-5 h-5" />
+              ) : (
+                <Volume2 className="text-white w-5 h-5" />
+              )}
             </button>
           </div>
-
         </div>
-      </div>
-    </section>
+      )}
+    </>
   );
 };
 

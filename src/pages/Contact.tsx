@@ -212,7 +212,7 @@ const [addressResults, setAddressResults] = useState([]);
                 <div className="text-center mb-6">
                   <p className="text-white text-lg font-medium mb-2">Direct contact</p>
                   <div className="">
-                   <img src={hudReiLogo} alt="HudREI" className=" w-18 h-18 mx-auto bg-white rounded-lg flex items-center justify-center mb-4" />
+                   <img src={hudReiLogo} alt="HudREI" className=" w-32 h-32 mx-auto bg-white rounded-lg flex items-center justify-center mb-4" />
                   </div>
                 </div>
                 <div className="space-y-4">

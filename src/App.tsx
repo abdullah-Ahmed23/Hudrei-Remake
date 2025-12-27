@@ -11,6 +11,7 @@ import ScrollToHash from "./components/ScrollToHash";
 import ScrollToTop from "./components/ScrollToTop";
 import WhoWeAre from "./pages/WhoWeAre";
 import Contact from "./pages/Contact";
+import HowItWorks from "@/pages/HowItWorks";
 import Blog from "./pages/blog";
 import Faq from "./pages/Faq";
 import AOS from "aos";
@@ -34,6 +35,14 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
+      <div  className="
+        h-screen
+        
+        scroll-smooth
+        snap-y
+        md:snap-mandatory
+        snap-proximity
+      ">
       <TooltipProvider>
         <Toaster />
         <Sonner />
@@ -47,13 +56,15 @@ const App = () => {
             <Route path="/selling-options" element={<SellingOptions />} />
             <Route path="/who-are-we" element={<WhoWeAre />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/Blog" element={<Blog />} />
+            <Route path="/Howit" element={ <HowItWorks />} />
+            <Route path="/blog" element={ <Blog />} />
             <Route path="/Faq" element={<Faq />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>
       </TooltipProvider>
       <Footer />
+      </div>
     </QueryClientProvider>
   );
 };

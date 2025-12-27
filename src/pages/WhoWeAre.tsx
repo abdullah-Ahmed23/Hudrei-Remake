@@ -121,7 +121,7 @@ useEffect(() => {
               <Button
                 asChild
                 size="lg"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8 py-6 text-lg hover-lift"
+                className="bg-accent hover:bg-accent/90 text-white font-semibold px-8 py-6 text-lg hover-lift"
               >
                 <Link to="/selling-options">GET MY CASH OFFER!</Link>
               </Button>
@@ -270,7 +270,7 @@ useEffect(() => {
                   <Button
                     asChild
                     size="lg"
-                    className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8"
+                    className="bg-accent hover:bg-accent/90 text-white font-semibold px-8"
                   >
                     <Link to="/selling-options">GET MY CASH OFFER!</Link>
                   </Button>
@@ -298,7 +298,7 @@ useEffect(() => {
                 <Button
                   asChild
                   size="lg"
-                  className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8"
+                  className="bg-accent hover:bg-accent/90 text-white font-semibold px-8"
                 >
                   <Link to="/selling-options">GET MY CASH OFFER!</Link>
                 </Button>
@@ -412,7 +412,7 @@ useEffect(() => {
               <Button
                 asChild
                 size="lg"
-                className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold px-8"
+                className="bg-accent hover:bg-accent/90 text-white font-semibold px-8"
               >
                 <a href="mailto:office@hudrei.com">APPLY FOR A CAREER HERE</a>
               </Button>

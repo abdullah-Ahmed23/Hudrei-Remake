@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const CTASection = () => {
   const { toast } = useToast();
   const navigate = useNavigate();
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false); 
 
   const [formData, setFormData] = useState({
     fullName: "",
@@ -251,7 +251,7 @@ const [addressResults, setAddressResults] = useState([]);
                   type="submit"
                   size="lg"
                  
-                  className="w-full bg-accent hover:bg-accent/90 text-accent-foreground h-14 rounded-xl mt-4"
+                  className="w-full bg-accent hover:bg-accent/90  h-14 rounded-xl mt-4"
                 >
                   {isSubmitting ? (
                     <>
@@ -260,7 +260,7 @@ const [addressResults, setAddressResults] = useState([]);
                     </>
                   ) : (
                     <>
-                      <Send className="w-5 h-5 mr-2" />
+                      <Send className="w-5 h-5 mr-2 text-white" />
                       Get My Cash Offer
                     </>
                   )}

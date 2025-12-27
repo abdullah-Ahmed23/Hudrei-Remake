@@ -45,10 +45,10 @@ const TrustSection = () => {
           data-aos="fade-up"
           data-aos-duration="900"
         >
-          <h2 className="text-black text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
+          <h2 className="text-black text-3xl sm:text-4xl lg:text-8xl font-bold mb-10">
             Why Sell to <span className="text-accent">HudREI?</span>
           </h2>
-          <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+          <p className="text-3xl sm:text-4xl lg:text-2xl text-black max-w-2xl mx-auto">
             We make selling your home simple, fast, and stress-free.
             Here's what makes us different.
           </p>
