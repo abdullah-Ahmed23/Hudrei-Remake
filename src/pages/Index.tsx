@@ -7,7 +7,7 @@ import TestimonialsSection from "@/components/TestimonialsSection";
 import AboutSection from "@/components/AboutSection";
 import CTASection from "@/components/CTASection";
 import Question from "@/components/QuestionsSection";
-
+import HowItWorks from "@/components/HowItWorksSection";
 
 import Footer from "@/components/Footer";
 import { useEffect } from "react";
@@ -65,7 +65,7 @@ const Index = () => {
           <HeroV2/>
           <HeroSection />
           <TrustSection />
-      
+          <HowItWorksSection />
           <TestimonialsSection />
           <AboutSection />
           <CTASection  />
