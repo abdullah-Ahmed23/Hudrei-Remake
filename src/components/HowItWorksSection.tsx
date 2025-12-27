@@ -64,10 +64,10 @@ const HowItWorksSection = () => {
           <p className="uppercase tracking-widest text-sm text-gray-400 mb-4">
             Simple Process
           </p>
-          <h2 className="text-5xl lg:text-6xl text-black font-extrabold">
+          <h2 className="text-3xl sm:text-4xl lg:text-8xl text-black font-extrabold">
             How It <span className="text-accent">Works</span>
           </h2>
-          <p className="text-gray-600 mt-4">
+          <p className="text-black text-3xl sm:text-4xl lg:text-2xl mt-4">
             A transparent, stress-free way to sell your home.
           </p>
         </motion.div>
