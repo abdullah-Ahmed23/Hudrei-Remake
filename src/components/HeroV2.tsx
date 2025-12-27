@@ -4,7 +4,6 @@ import { Input } from "@/components/ui/input";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
-import TextType from "@/components/TextType";
 
 const HeroV2 = () => {
   const navigate = useNavigate();
@@ -47,7 +46,7 @@ const HeroV2 = () => {
   return (
     <section className="relative min-h-[90vh] bg-white overflow-hidden">
       {/* Top strip */}
-      <div className="relative z-10 mt-16 md:mt-20 bg-accent text-accent-foreground text-center py-2 text-xs sm:text-sm font-semibold">
+      <div className="relative z-10 mt-16 md:mt-20 bg-accent text-white text-center py-2 text-xl sm:text-2xl font-semibold">
         The Most Transparent & Easier Way To Sell Your Home.
       </div>
 
@@ -56,38 +55,28 @@ const HeroV2 = () => {
         <div className="w-full flex flex-col items-center gap-16 text-center">
 
           {/* HEADLINE */}
-          <h1 className="text-4xl sm:text-5xl lg:text-8xl font-extrabold uppercase text-black">
-            <TextType
-              text={["Get Your Cash Offer", "Today!"]}
-              typingSpeed={30}
-              deletingSpeed={30}
-              pauseDuration={2200}
-              loop={true}
-              showCursor={true}
-              hideCursorWhileTyping={false}
-              cursorCharacter="|"
-              cursorClassName="text-black"
-              textColors={["inherit", "#318174"]}
-            />
+          <h1 className="text-7xl sm:text-5xl lg:text-8xl font-extrabold uppercase text-black" data-aos="fade-up">
+            Get Your Cash Offer{" "}
+            
           </h1>
 
           {/* INFO CARD */}
-          <div className="w-full max-w-2xl">
-            <div className="bg-white rounded-3xl shadow-2xl p-8">
-              <h3 className="text-2xl font-semibold text-black mb-6">
+          <div className="w-full max-w-2xl " data-aos="zoom-in-up">
+            <div className="bg-white rounded-3xl shadow-2xl p-8" >
+              <h3 className="text-2xl font-semibold text-black mb-6" data-aos="zoom-in-up"   data-aos-duration="500">
                 Why Homeowners Choose HudREI
               </h3>
 
               <ul className="space-y-5 text-gray-700 text-xl">
-                <li className="flex gap-3 justify-center">
-                  <CheckCircle className="text-accent w-5 h-5 mt-1" />
+                <li className="flex gap-3 justify-center " data-aos="zoom-in-down "  data-aos-duration="500">
+                  <CheckCircle className="text-accent w-5 h-5 mt-1"   />
                   Cash offers without financing delays
                 </li>
-                <li className="flex gap-3 justify-center">
+                <li className="flex gap-3 justify-center"  data-aos="zoom-in-down "  data-aos-duration="600">
                   <CheckCircle className="text-accent w-5 h-5 mt-1" />
                   Close in as little as 7–14 days
                 </li>
-                <li className="flex gap-3 justify-center">
+                <li className="flex gap-3 justify-center"  data-aos="zoom-in-down "  data-aos-duration="700">
                   <CheckCircle className="text-accent w-5 h-5 mt-1" />
                   No repairs, no fees, no stress
                 </li>
@@ -96,7 +85,7 @@ const HeroV2 = () => {
           </div>
 
           {/* ADDRESS FORM */}
-          <form onSubmit={handleSubmit} className="w-full max-w-xl">
+          <form onSubmit={handleSubmit} className="w-full max-w-xl"  data-aos="fade-right" >
             <div className="relative">
               <Input
                 ref={inputRef}
