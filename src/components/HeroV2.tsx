@@ -55,7 +55,7 @@ const HeroV2 = () => {
         <div className="w-full flex flex-col items-center gap-16 text-center">
 
           {/* HEADLINE */}
-          <h1 className="text-7xl sm:text-5xl lg:text-8xl font-extrabold uppercase text-black" data-aos="fade-up">
+          <h1 className="text-5xl sm:text-5xl lg:text-8xl font-extrabold uppercase text-black" data-aos="fade-up">
             Get Your Cash Offer{" "}
             
           </h1>

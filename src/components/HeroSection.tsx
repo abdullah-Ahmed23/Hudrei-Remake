@@ -123,7 +123,7 @@ const HeroSection = () => {
             {/* ADDRESS FORM */}
              <div className="flex justify-center  mt-10">
                        <Link to="/contact">
-                       <Button className=" w-[25rem] h-[7rem] text-2xl" >Get My no obligation Cash Offer</Button>
+                       <Button className=" w-[20rem] h-[15rem] sm:h-[10rem] sm:w-[25rem] text-lg sm:text-2xl" >Get My no obligation Cash Offer</Button>
                        </Link>
                        </div>
           </div>
