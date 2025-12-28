@@ -1,33 +1,47 @@
 import { motion } from "framer-motion";
-import { Briefcase } from "lucide-react";
+import {
+  PhoneCall,
+  Target,
+  ClipboardCheck,
+  Building2,
+  FileCheck,
+  Megaphone,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const careers = [
   {
     title: "Cold Caller",
+    icon: PhoneCall,
     desc: "Initiate outbound calls to homeowners, qualify leads, and gather property information for our acquisition team.",
   },
   {
     title: "Acquisition Property Specialist",
+    icon: Target,
     desc: "Analyze properties, negotiate offers with sellers, and secure contracts aligned with company investment goals.",
   },
   {
     title: "Executive Office Assistant",
+    icon: ClipboardCheck,
     desc: "Support daily operations, manage schedules, handle communications, and assist leadership with administrative tasks.",
   },
   {
     title: "Property Disposition Specialist",
+    icon: Building2,
     desc: "Market acquired properties, manage buyer relationships, and maximize resale value through strategic dispositions.",
   },
   {
     title: "Transaction Coordinator",
+    icon: FileCheck,
     desc: "Oversee contracts, coordinate with title companies, and ensure smooth closings from agreement to funding.",
   },
   {
     title: "Marketing Developer",
+    icon: Megaphone,
     desc: "Build and optimize digital campaigns, landing pages, and automation systems to drive consistent inbound leads.",
   },
 ];
+
 
 const container = {
   hidden: {},
@@ -83,7 +97,8 @@ const CareersSection = () => {
               "
             >
               <div className="w-12 h-12 mb-6 rounded-xl bg-accent/20 flex items-center justify-center">
-                <Briefcase className="w-6 h-6 text-accent" />
+              <role.icon className="w-6 h-6 text-accent" />
+
               </div>
 
               <h3 className="text-xl text-white font-semibold mb-3">
