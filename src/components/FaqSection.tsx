@@ -103,7 +103,7 @@ const HomeFAQSection = () => {
   
 
   return (
-    <section className="py-24 bg-white">
+    <section className="py-10 md:py-24 bg-white">
       <div className="container mx-auto px-4">
 
         {/* Header */}
