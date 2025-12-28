@@ -212,7 +212,7 @@ const HowItWorksSection = () => {
                 <div className="absolute -left-[54px] top-2 w-10 h-10 rounded-full bg-white border-4 border-accent flex items-center justify-center">
                   <step.icon className="w-5 h-5 text-accent" />
                 </div>
-                <h3 className="text-xl font-semibold mb-3">{step.title}</h3>
+                <h3 className="text-xl text-black font-semibold mb-3">{step.title}</h3>
                 <p className="text-gray-600">{step.desc}</p>
               </motion.div>
             ))}
