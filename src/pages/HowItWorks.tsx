@@ -2,15 +2,14 @@ import { useState, useRef } from "react";
 import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import {
   Search,
-  FileText,
-  DollarSign,
-  CheckCircle,
   ChartArea,
+  DollarSign,
   Footprints,
 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
-import { Button } from "@/components/ui/button"
- import { Link, NavLink } from "react-router-dom";
+const ACCENT = "#318075";
 
 const steps = [
   {
@@ -51,17 +50,16 @@ const HowItWorks = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
 
-  /* 🔥 Scroll-based line animation */
+  /* Scroll-based line fill */
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ["start 0.8", "end 0.2"],
+    offset: ["start 0.85", "end 0.15"],
   });
 
   const lineScale = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   return (
     <section className="bg-white py-28">
-        
       <div className="container mx-auto px-4 max-w-6xl">
         {/* HEADER */}
         <motion.div
@@ -72,23 +70,22 @@ const HowItWorks = () => {
           className="text-center mb-24"
         >
           <h2 className="text-5xl sm:text-6xl font-extrabold text-black mb-6">
-            How It Works
+            How It <span className="text-[#318075]">Works</span> 
           </h2>
           <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            A simple, transparent process designed to help you sell your home
-            fast — without repairs, fees, or pressure.
+            A simple, transparent process designed to help you sell your home fast.
           </p>
         </motion.div>
 
         {/* TIMELINE */}
         <div ref={containerRef} className="relative">
-          {/* Animated vertical line */}
+          {/* Vertical line (ALL SCREENS) */}
           <motion.div
             style={{ scaleY: lineScale }}
-            className="hidden md:block absolute left-6 top-0 bottom-0 w-px bg-black origin-top"
+            className="absolute left-6 top-0 bottom-0 w-[3px] bg-[#318075] origin-top rounded-full"
           />
 
-          <div className="space-y-16">
+          <div className="space-y-20 pl-20">
             {steps.map((item, i) => {
               const isOpen = openIndex === i;
 
@@ -99,31 +96,38 @@ const HowItWorks = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-80px" }}
                   transition={{ duration: 0.6 }}
-                  className="relative md:pl-20"
+                  className="relative"
                 >
-
-                    
-                  {/* DOT */}
-                  <div className="hidden md:flex absolute left-3 top-10">
-                    <motion.div
-                      initial={{ scale: 0 }}
-                      whileInView={{ scale: 1 }}
-                      viewport={{ once: true }}
-                      transition={{ duration: 0.4 }}
-                      className="w-6 h-6 rounded-full bg-black"
-                    />
-                  </div>
+                  {/* ICON NODE */}
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    whileInView={{ scale: 1 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.4 }}
+                    className="
+                      absolute
+                      -left-[52px]
+                      top-6
+                      w-12 h-12
+                      rounded-full
+                      bg-white
+                      border-[3px]
+                      border-[#318075]
+                      flex
+                      items-center
+                      justify-center
+                    "
+                  >
+                    <item.icon className="w-6 h-6 text-[#318075]" />
+                  </motion.div>
 
                   {/* CARD */}
                   <div className="bg-white border border-gray-200 rounded-3xl p-8 sm:p-10 shadow-sm">
-                    <div className="flex items-center gap-4 mb-4">
-                      <item.icon className="w-7 h-7 text-black" />
-                      <span className="text-sm font-semibold tracking-widest text-gray-500">
-                        STEP {item.step}
-                      </span>
-                    </div>
+                    <span className="text-sm font-semibold tracking-widest text-gray-500">
+                      STEP {item.step}
+                    </span>
 
-                    <h3 className="text-2xl sm:text-5xl font-bold text-[#318174]  mb-4">
+                    <h3 className="text-2xl sm:text-5xl font-bold text-[#318075] mt-3 mb-4">
                       {item.title}
                     </h3>
 
@@ -138,49 +142,42 @@ const HowItWorks = () => {
                           initial={{ height: 0, opacity: 0 }}
                           animate={{ height: "auto", opacity: 1 }}
                           exit={{ height: 0, opacity: 0 }}
-                          transition={{ duration: 0.35, ease: "easeInOut" }}
+                          transition={{ duration: 0.35 }}
                           className="overflow-hidden"
                         >
                           <p className="text-lg text-gray-700 mt-4 max-w-3xl">
                             {item.more}
                           </p>
-
-
-                          
                         </motion.div>
                       )}
                     </AnimatePresence>
 
                     {/* TOGGLE */}
                     <button
-                      onClick={() =>
-                        setOpenIndex(isOpen ? null : i)
-                      }
+                      onClick={() => setOpenIndex(isOpen ? null : i)}
                       className="mt-6 text-sm font-semibold text-black underline underline-offset-4 hover:opacity-70 transition"
                     >
                       {isOpen ? "Read less" : "Read more"}
                     </button>
                   </div>
-                  
-                  
                 </motion.div>
               );
             })}
-             
           </div>
         </div>
 
-       
+        {/* CTA */}
+        <div className="flex justify-center mt-24">
+          <Link to="/contact">
+            <Button
+              size="lg"
+              className="bg-[#318075] hover:bg-[#318075]/90 text-white px-10 py-6 text-lg rounded-full"
+            >
+              Get Your Cash Offer
+            </Button>
+          </Link>
+        </div>
       </div>
-      <div className="flex items-center justify-center mt-20">
-        <h1></h1>
- <Link className="flex items-center" to="/contact">
-                <Button className=" flex items-center bg-accent text-white hover:bg-accent/90 text-lg px-8 py-6" asChild>
-                  <a>Get Your Cash Offer</a>
-                </Button>
-                </Link>
-                </div>
-      
     </section>
   );
 };
