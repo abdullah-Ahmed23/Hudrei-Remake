@@ -64,6 +64,7 @@ const TestimonialsSection = () => {
 
   return (
     <section
+    id="testimonials"
       ref={sectionRef}
       className="py-20 md:py-28 bg-white overflow-hidden"
     >

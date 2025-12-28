@@ -44,14 +44,14 @@ const HeroV2 = () => {
   };
 
   return (
-    <section className="relative min-h-[90vh] bg-white overflow-hidden">
+    <section className="relative min-h-[85vh] md:min-g-[90vh] bg-white overflow-hidden">
       {/* Top strip */}
       <div className="relative z-10 mt-16 md:mt-20 bg-accent text-white text-center py-2 text-xl sm:text-2xl font-semibold">
         SELL WITH EASE AND PEACE!
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 py-5 min-h-[calc(90vh-40px)] flex items-center">
+      <div className="container mx-auto px-4 py-2 md:py-5 min-h-[calc(90vh-188px)] md:min-h-[calc(90vh-40px)] flex items-center">
         <div className="w-full flex flex-col items-center gap-5 md:gap-16 text-center">
 
           {/* HEADLINE */}

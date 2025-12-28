@@ -78,7 +78,7 @@ const HeroSection = () => {
     <>
       <section
         ref={sectionRef}
-        className="min-h-screen bg-white pt-20 pb-11 flex items-center"
+        className="min-h-screen bg-white pt-10 md:pt-20 pb-11 flex items-center"
       >
         <div className="container mx-auto px-4">
           <div

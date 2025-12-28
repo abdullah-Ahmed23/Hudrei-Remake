@@ -35,22 +35,15 @@ const App = () => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div  className="
-        h-screen
-        
-        scroll-smooth
-        snap-y
-        md:snap-mandatory
-        snap-proximity
-      ">
+    
       <TooltipProvider>
         <Toaster />
         <Sonner />
         <BrowserRouter>
-        <Header />
+       
         <ScrollToTop />
          <ScrollToHash />
-
+ <Header />
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/selling-options" element={<SellingOptions />} />
@@ -64,7 +57,7 @@ const App = () => {
         </BrowserRouter>
       </TooltipProvider>
       <Footer />
-      </div>
+      
     </QueryClientProvider>
   );
 };

@@ -6,6 +6,10 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useEffect } from "react";
+
+
+
 
 const faqs = [
   {
@@ -45,6 +49,8 @@ const faqs = [
     answer: "Absolutely. We buy homes as-is, in any condition. From outdated kitchens to foundation problems, fire damage, or even hoarder houses — you don't have to fix or clean a thing."
   },
 ];
+
+
 
 const FAQItem = ({ 
   question, 
@@ -108,6 +114,7 @@ const FAQItem = ({
 
 const FAQ = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
+
 
   return (
     <>

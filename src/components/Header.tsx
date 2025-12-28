@@ -18,13 +18,15 @@ import { Button } from "@/components/ui/button";
 import hudReiLogo from "@/assets/hudrei-logo.png";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { cn } from "@/lib/utils";
+import { useLocation } from "react-router-dom";
+
 
 /* ================= NAV DATA ================= */
 
 const mainLinks = [
   { label: "Selling Options", to: "/selling-options" },
   { label: "About Us", to: "/who-are-we" },
-  { label: "Testimonials", to: "/testimonials" },
+  { label: "Testimonials", to: "/#testimonials" },
   
 ];
 
@@ -84,6 +86,11 @@ const Header = () => {
   const [mobileLearnOpen, setMobileLearnOpen] = useState(false);
 const [mobilePartnersOpen, setMobilePartnersOpen] = useState(false);
 
+const location = useLocation();
+const isTestimonialsActive =
+  location.pathname === "/" && location.hash === "#testimonials";
+
+
 
   return (
     <>
@@ -109,22 +116,44 @@ const [mobilePartnersOpen, setMobilePartnersOpen] = useState(false);
 
             {/* Desktop Nav */}
             <nav className="hidden lg:flex   items-center gap-1">
-              {mainLinks.map((l) => (
-                <NavLink
-                  key={l.to}
-                  to={l.to}
-                  className={({ isActive }) =>
-                    cn(
-                      "px-4 py-2 text-sm font-medium rounded-full transition-all duration-300",
-                      isActive
-                        ? "text-primary bg-primary/10"
-                        : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                    )
-                  }
-                >
-                  {l.label}
-                </NavLink>
-              ))}
+             {mainLinks.map((l) => {
+  // 🔥 SPECIAL CASE: Testimonials (hash link)
+  if (l.to.includes("#")) {
+    return (
+      <button
+        key={l.to}
+        onClick={() => navigate(l.to)}
+        className={cn(
+          "px-4 py-2 text-sm font-medium rounded-full transition-all duration-300",
+          isTestimonialsActive
+            ? "text-primary bg-primary/10"
+            : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+        )}
+      >
+        {l.label}
+      </button>
+    );
+  }
+
+  // ✅ Normal NavLink for real routes
+  return (
+    <NavLink
+      key={l.to}
+      to={l.to}
+      className={({ isActive }) =>
+        cn(
+          "px-4 py-2 text-sm font-medium rounded-full transition-all duration-300",
+          isActive
+            ? "text-primary bg-primary/10"
+            : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+        )
+      }
+    >
+      {l.label}
+    </NavLink>
+  );
+})}
+
 
               {/* Learn Dropdown */}
               <div ref={learnRef} className="relative">

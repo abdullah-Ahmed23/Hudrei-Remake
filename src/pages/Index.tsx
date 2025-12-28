@@ -8,6 +8,9 @@ import AboutSection from "@/components/AboutSection";
 import CTASection from "@/components/CTASection";
 import Question from "@/components/QuestionsSection";
 import HowItWorks from "@/components/HowItWorksSection";
+import Faq from "@/components/FaqSection"
+import ScrollToTop from "@/components/ScrollToTop";
+
 
 import Footer from "@/components/Footer";
 import { useEffect } from "react";
@@ -22,6 +25,9 @@ import HeroV2 from "@/components/HeroV2";
 
 
 const Index = () => {
+
+
+
   return (
     <>
       <Helmet>
@@ -62,12 +68,15 @@ const Index = () => {
       <div className="min-h-screen bg-background text-foreground">
        
         <main>
+
           <HeroV2/>
           <HeroSection />
           <TrustSection />
           <HowItWorksSection />
           <TestimonialsSection />
+          
           <AboutSection />
+          <Faq />
           <CTASection  />
           <Question  />
         </main>
