@@ -47,15 +47,15 @@ const HeroV2 = () => {
     <section className="relative min-h-[90vh] bg-white overflow-hidden">
       {/* Top strip */}
       <div className="relative z-10 mt-16 md:mt-20 bg-accent text-white text-center py-2 text-xl sm:text-2xl font-semibold">
-        The Most Transparent & Easier Way To Sell Your Home.
+        SELL WITH EASE AND PEACE!
       </div>
 
       {/* Content */}
-      <div className="container mx-auto px-4 min-h-[calc(90vh-40px)] flex items-center">
-        <div className="w-full flex flex-col items-center gap-16 text-center">
+      <div className="container mx-auto px-4 py-5 min-h-[calc(90vh-40px)] flex items-center">
+        <div className="w-full flex flex-col items-center gap-5 md:gap-16 text-center">
 
           {/* HEADLINE */}
-          <h1 className="text-[65px] sm:text-8xl lg:text-8xl font-extrabold uppercase text-black" data-aos="fade-up">
+          <h1 className="text-[50px] sm:text-8xl lg:text-8xl font-extrabold uppercase text-black" data-aos="fade-up">
             Get Your Cash Offer{" "}
             
           </h1>
@@ -85,7 +85,7 @@ const HeroV2 = () => {
           </div>
 
           {/* ADDRESS FORM */}
-          <form onSubmit={handleSubmit} className="w-full max-w-xl"  data-aos="fade-right" >
+          <form onSubmit={handleSubmit} className="w-full max-w-xl"  data-aos="fade-right" data-aos-offset="50" >
             <div className="relative">
               <Input
                 ref={inputRef}
