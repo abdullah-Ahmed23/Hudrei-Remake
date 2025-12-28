@@ -23,7 +23,6 @@ import { cn } from "@/lib/utils";
 
 const mainLinks = [
   { label: "Selling Options", to: "/selling-options" },
-  { label: "How It Works", to: "/Howit" },
   { label: "About Us", to: "/who-are-we" },
   { label: "Testimonials", to: "/testimonials" },
   
