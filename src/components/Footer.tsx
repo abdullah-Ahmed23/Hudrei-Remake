@@ -73,11 +73,16 @@ const Footer = () => {
                 Areas We Serve
               </h4>
               <ul className="flex flex-col gap-3 text-sm text-white/70">
-                <li>Houston, TX</li>
-                <li>Dallas, TX</li>
-                <li>Austin, TX</li>
-                <li>San Antonio, TX</li>
-                <li>Fort Worth, TX</li>
+                <li>Kokomo
+, IN</li>
+                <li>Fort Wayne
+, IN</li>
+                <li>Indianapolis
+, IN</li>
+                <li>South Bend
+, IN</li>
+                <li>Mishawaka
+, IN</li>
               </ul>
             </div>
 
