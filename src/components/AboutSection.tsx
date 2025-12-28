@@ -1,172 +1,156 @@
-import { Shield, Heart, Users, Award } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
-import { Button } from "@/components/ui/button";
+import { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 
-const AboutSection = () => {
-  const sectionRef = useRef<HTMLElement>(null);
-  const [startCount, setStartCount] = useState(false);
+import {
+  ShieldCheck,
+  HeartHandshake,
+  MapPinned,
+  BadgeCheck,
+} from "lucide-react";
 
-  const values = [
-    {
-      icon: Shield,
-      title: "Transparency",
-      description: "No hidden fees, no surprises. We explain every step clearly.",
-    },
-    {
-      icon: Heart,
-      title: "Compassion",
-      description: "We understand selling a home can be emotional. We're here to help.",
-    },
-    {
-      icon: Users,
-      title: "Local Expertise",
-      description: "We know the Texas market inside and out.",
-    },
-    {
-      icon: Award,
-      title: "Integrity",
-      description: "Fair offers based on honest market analysis.",
-    },
-  ];
+const values = [
+  {
+    title: "We Are Transparent",
+    desc: "Clear pricing. No hidden fees. Every step explained upfront.",
+    icon: ShieldCheck,
+  },
+  {
+    title: "Compassionate",
+    desc: "We understand selling a home is emotional. We listen first.",
+    icon: HeartHandshake,
+  },
+  {
+    title: "Local Experts",
+    desc: "Deep knowledge of Texas neighborhoods and market conditions.",
+    icon: MapPinned,
+  },
+  {
+    title: "With Integrity",
+    desc: "Fair offers backed by honest market analysis.",
+    icon: BadgeCheck,
+  },
+];
 
-  /* -------- START COUNTERS ON VIEW -------- */
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          setStartCount(true);
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.4 }
-    );
-
-    if (sectionRef.current) observer.observe(sectionRef.current);
-    return () => observer.disconnect();
-  }, []);
-
-  /* -------- COUNTER HOOK -------- */
-  const useCounter = (end: number, duration = 1200) => {
-    const [count, setCount] = useState(0);
-
-    useEffect(() => {
-      if (!startCount) return;
-
-      let start = 0;
-      const increment = end / (duration / 16);
-
-      const timer = setInterval(() => {
-        start += increment;
-        if (start >= end) {
-          setCount(end);
-          clearInterval(timer);
-        } else {
-          setCount(Math.floor(start));
-        }
-      }, 16);
-
-      return () => clearInterval(timer);
-    }, [startCount, end, duration]);
-
-    return count;
-  };
-
-  const homes = useCounter(500);
-  const days = useCounter(10);
-  const satisfaction = useCounter(98);
-
+const AboutValues = () => {
   return (
-    <section
-      id="about"
-      ref={sectionRef}
-      className="py-20 md:py-28 relative text-white"
-      style={{ backgroundColor: "#0b434A" }}
-    >
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
+    <section className="py-28 bg-[#062f33] text-white">
+      <div className="max-w-6xl mx-auto px-6">
 
-          {/* LEFT CONTENT */}
-          <div className="space-y-8" data-aos="fade-right">
-            <div>
-              <span className="inline-block px-4 py-2 rounded-full bg-white/10 text-sm font-medium mb-4">
-                About Us
-              </span>
+        {/* ================= HEADER ================= */}
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center max-w-3xl mx-auto mb-20"
+        >
+          <span className="text-accent text-sm sm:text-5xl uppercase tracking-widest">
+            Our Values
+          </span>
+          <h2 className="text-4xl sm:text-7xl font-bold mt-4 mb-6">
+            Built on Trust. Driven by People.
+          </h2>
+          <p className="text-white/70 text-lg">
+            How we operate, communicate, and deliver results — every time.
+          </p>
+        </motion.div>
 
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6">
-                We're <span className="text-accent">HudREI</span>
-              </h2>
+        {/* ================= MOBILE (ICONS ONLY) ================= */}
+        <div className="relative md:hidden">
+          <div className="space-y-20 pl-16">
+            {values.map((item, i) => {
+              const Icon = item.icon;
+              const itemRef = useRef<HTMLDivElement>(null);
 
-              <p className="text-lg text-white/80 leading-relaxed mb-6">
-                Founded with a simple mission: to help homeowners sell their
-                properties quickly, fairly, and without the stress of
-                traditional real estate transactions.
-              </p>
+              const isActive = useInView(itemRef, {
+                margin: "-50% 0px -30% 0px",
+              });
 
-              <p className="text-white/70 leading-relaxed">
-                Whether you're facing foreclosure, dealing with an inherited
-                property, relocating for work, or simply want to skip the
-                hassle of repairs and showings—we're here to help.
-              </p>
-            </div>
+              return (
+                <motion.div
+                  ref={itemRef}
+                  key={i}
+                  initial={{ opacity: 0, y: 40 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  className="relative"
+                >
+                  {/* ICON */}
+                  <motion.div
+                    animate={
+                      isActive
+                        ? {
+                            scale: 1.15,
+                            backgroundColor: "rgba(56, 178, 172, 0.35)",
+                          }
+                        : {
+                            scale: 1,
+                            backgroundColor: "rgba(56, 178, 172, 0.1)",
+                          }
+                    }
+                    transition={{ type: "spring", stiffness: 300 }}
+                    className="absolute -left-[54px] top-1 w-12 h-12 rounded-xl flex items-center justify-center"
+                  >
+                    <Icon
+                      className={`w-6 h-6 transition-colors duration-300 ${
+                        isActive ? "text-accent" : "text-white/50"
+                      }`}
+                    />
+                  </motion.div>
 
-            {/* STATS */}
-            <div className="flex flex-wrap gap-10">
-              <div data-aos="fade-up" data-aos-delay="0">
-                <p className="text-4xl lg:text-5xl font-bold text-accent">
-                  {homes}+
-                </p>
-                <p className="text-white/70">Homes Purchased</p>
-              </div>
-
-              <div data-aos="fade-up" data-aos-delay="100">
-                <p className="text-4xl lg:text-5xl font-bold text-accent">
-                  {days}
-                </p>
-                <p className="text-white/70">Days Avg. Close</p>
-              </div>
-
-              <div data-aos="fade-up" data-aos-delay="200">
-                <p className="text-4xl lg:text-5xl font-bold text-accent">
-                  {satisfaction}%
-                </p>
-                <p className="text-white/70">Client Satisfaction</p>
-              </div>
-            </div>
+                  <h3 className="text-2xl font-semibold mb-3">
+                    {item.title}
+                  </h3>
+                  <p className="text-white/70 text-lg">
+                    {item.desc}
+                  </p>
+                </motion.div>
+              );
+            })}
           </div>
-
-          {/* RIGHT CONTENT – VALUES */}
-          <div className="grid sm:grid-cols-2 gap-6">
-            {values.map((value, index) => (
-              <div
-                key={value.title}
-                data-aos="fade-up"
-                data-aos-delay={index * 120}
-                className="bg-white/10 backdrop-blur-md rounded-2xl p-6 hover:translate-y-[-4px] transition-transform duration-300"
-              >
-                <div className="w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center mb-4">
-                  <value.icon className="w-6 h-6 text-accent" />
-                </div>
-                <h3 className="text-lg font-semibold mb-2">
-                  {value.title}
-                </h3>
-                <p className="text-sm text-white/70">
-                  {value.description}
-                </p>
-                  <div className="flex justify-center mt-10">
-            <Link to="/contact">
-            <Button size="lg">Get My Cash Offer</Button>
-            </Link>
-            </div>
-              </div>
-            ))}
-          </div>
-
         </div>
+
+        {/* ================= DESKTOP GRID ================= */}
+        <motion.div
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true }}
+          variants={{
+            show: { transition: { staggerChildren: 0.15 } },
+          }}
+          className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-14 text-center"
+        >
+          {values.map((item, i) => {
+            const Icon = item.icon;
+
+            return (
+              <motion.div
+                key={i}
+                variants={{
+                  hidden: { opacity: 0, y: 30 },
+                  show: { opacity: 1, y: 0 },
+                }}
+                className="flex flex-col items-center"
+              >
+                <div className="w-14 h-14 mb-6 rounded-2xl bg-accent/20 flex items-center justify-center">
+                  <Icon className="w-7 h-7 text-accent" />
+                </div>
+
+                <h3 className="text-xl font-semibold mb-3">
+                  {item.title}
+                </h3>
+
+                <p className="text-white/70 text-base leading-relaxed">
+                  {item.desc}
+                </p>
+              </motion.div>
+            );
+          })}
+        </motion.div>
+
       </div>
-     
     </section>
   );
 };
 
-export default AboutSection;
+export default AboutValues;
