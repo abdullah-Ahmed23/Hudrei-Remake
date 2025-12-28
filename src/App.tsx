@@ -14,6 +14,7 @@ import Contact from "./pages/Contact";
 import HowItWorks from "@/pages/HowItWorks";
 import Blog from "./pages/blog";
 import Faq from "./pages/Faq";
+import Carrers from "./pages/Careers";
 import AOS from "aos";
 import "aos/dist/aos.css";
 
@@ -52,6 +53,7 @@ const App = () => {
             <Route path="/Howit" element={ <HowItWorks />} />
             <Route path="/blog" element={ <Blog />} />
             <Route path="/Faq" element={<Faq />} />
+            <Route path="/Carrers" element={<Carrers />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

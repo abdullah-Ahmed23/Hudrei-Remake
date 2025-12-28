@@ -94,7 +94,7 @@ const [addressResults, setAddressResults] = useState([]);
 }, [addressQuery]);
 
   return (
-    <section id="contact" className="py-20 md:py-28 bg-[#fffefd]">
+    <section id="contact" className="py-20 md:py-10 bg-[#fffefd]">
       <div className="container mx-auto px-4">
         <div
           className="glass-card rounded-3xl shadow-xl border border-white/20 overflow-hidden"

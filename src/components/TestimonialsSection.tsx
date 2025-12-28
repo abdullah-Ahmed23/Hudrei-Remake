@@ -66,7 +66,7 @@ const TestimonialsSection = () => {
     <section
     id="testimonials"
       ref={sectionRef}
-      className="py-20 md:py-28 bg-white overflow-hidden"
+      className="py-20 md:py-10 bg-white overflow-hidden"
     >
       <div className="container mx-auto px-4">
 

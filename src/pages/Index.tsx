@@ -71,14 +71,14 @@ const Index = () => {
 
           <HeroV2/>
           <HeroSection />
-          <TrustSection />
+          
           <HowItWorksSection />
           <TestimonialsSection />
           
           <AboutSection />
           <Faq />
           <CTASection  />
-          <Question  />
+          
         </main>
        
       </div>

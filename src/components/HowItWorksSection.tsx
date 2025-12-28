@@ -49,7 +49,7 @@ const HowItWorksSection = () => {
         bg-white
         flex
         items-center
-        py-32
+        py-2
       "
     >
       <div className="container mx-auto px-4 w-full">
@@ -59,7 +59,7 @@ const HowItWorksSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.6 }}
-          className="text-center max-w-4xl mx-auto mb-28"
+          className="text-center max-w-4xl mx-auto mb-2"
         >
           <p className="uppercase tracking-widest text-sm text-gray-400 mb-4">
             Simple Process
@@ -74,7 +74,7 @@ const HowItWorksSection = () => {
 
         {/* ================= DESKTOP ================= */}
         {/* ================= DESKTOP ================= */}
-<div className="hidden lg:block relative h-[60vh]">
+<div className="hidden lg:block relative h-[51vh]">
 
   {/* SVG CURVED LINE */}
   <svg
@@ -127,10 +127,10 @@ const HowItWorksSection = () => {
     <div className="mx-auto mb-6 w-20 h-20 rounded-2xl bg-[#39ac99] flex items-center justify-center">
       <ClipboardList className="w-9 h-9 text-white" />
     </div>
-    <h3 className="text-xl font-semibold mb-3">
+    <h3 className="text-2xl font-semibold mb-3">
       Tell Us About Your Home
     </h3>
-    <p className="text-gray-600">
+    <p className="text-black text-xl font-bold  ">
       Answer a few quick questions. No cleaning. No repairs. No pressure.
     </p>
   </motion.div>
@@ -153,10 +153,10 @@ const HowItWorksSection = () => {
     <div className="mx-auto mb-6 w-20 h-20 rounded-2xl bg-[#39ac99] flex items-center justify-center">
       <BadgeDollarSign className="w-9 h-9 text-white" />
     </div>
-    <h3 className="text-xl font-semibold mb-3">
+    <h3 className="text-2xl font-semibold mb-3">
       Review Your Cash Offer
     </h3>
-    <p className="text-gray-600">
+    <p className="text-black text-xl font-bold ">
       We analyze your home and send a fair, no-obligation offer within 24 hours.
     </p>
   </motion.div>
@@ -178,10 +178,10 @@ const HowItWorksSection = () => {
     <div className="mx-auto mb-6 w-20 h-20 rounded-2xl bg-[#39ac99] flex items-center justify-center">
       <Key className="w-9 h-9 text-white" />
     </div>
-    <h3 className="text-xl font-semibold mb-3">
+    <h3 className="text-2xl font-semibold mb-3">
       Close & Get Paid
     </h3>
-    <p className="text-gray-600">
+    <p className="text-black text-xl font-bold ">
       Pick your closing date. We handle everything. You get paid.
     </p>
   </motion.div>
@@ -224,7 +224,7 @@ const HowItWorksSection = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ delay: 1.2 }}
-          className="flex justify-center mt-28"
+          className="flex justify-center mt-16 md:mt-2"
         >
           <Button size="lg" className="rounded-full px-14">
             <Link to="/contact">Get My Cash Offer</Link>
