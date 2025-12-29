@@ -1,5 +1,7 @@
 import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
+import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 
 import {
   ShieldCheck,
@@ -43,13 +45,13 @@ const AboutValues = () => {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-20"
         >
-          <span className="text-accent text-sm sm:text-5xl uppercase tracking-widest">
+          <span className="text-white text-2xl sm:text-5xl uppercase tracking-widest">
             Our Values
           </span>
           <h2 className="text-4xl sm:text-7xl font-bold mt-4 mb-6">
             Built on Trust. Driven by People.
           </h2>
-          <p className="text-white/70 text-lg">
+          <p className="text-white text-lg">
             How we operate, communicate, and deliver results — every time.
           </p>
         </motion.div>
@@ -89,7 +91,7 @@ const AboutValues = () => {
                           }
                     }
                     transition={{ type: "spring", stiffness: 300 }}
-                    className="absolute -left-[54px] top-1 w-12 h-12 rounded-xl flex items-center justify-center"
+                    className="absolute -left-[66px] top-1 w-12 h-12 rounded-xl flex items-center justify-center"
                   >
                     <Icon
                       className={`w-6 h-6 transition-colors duration-300 ${
@@ -101,7 +103,7 @@ const AboutValues = () => {
                   <h3 className="text-2xl font-semibold mb-3">
                     {item.title}
                   </h3>
-                  <p className="text-white/70 text-lg">
+                  <p className="text-white text-lg">
                     {item.desc}
                   </p>
                 </motion.div>
@@ -146,8 +148,13 @@ const AboutValues = () => {
               </motion.div>
             );
           })}
+          
         </motion.div>
-
+<div className="flex items-center justify-center pt-10">
+          <Button size="lg" className="rounded-full px-14 ">
+            <Link to="/contact">Get My Cash Offer</Link>
+          </Button>
+        </div>
       </div>
     </section>
   );
