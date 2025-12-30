@@ -128,7 +128,7 @@ const TestimonialsSection = () => {
             </div>
             <div className="flex justify-center mt-10">
                 <Link to="/contact">
-                    <Button size="lg">Get My Cash Offer</Button>
+                    <Button size="lg" className="rounded-xl px-8 py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">Get My Cash Offer</Button>
                 </Link>
             </div>
 

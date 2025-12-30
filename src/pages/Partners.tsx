@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Users, Landmark, Building, Home, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import QuestionsSection from "@/components/QuestionsSection";
 import SEO from "@/components/SEO";
 
 const PartnerCard = ({
@@ -104,7 +105,7 @@ const Partners = () => {
                                 <p className="text-gray-600 mb-6">
                                     We are always open to new connections with contractors, lenders, and other industry professionals.
                                 </p>
-                                <Button asChild size="lg" className="bg-accent text-white hover:bg-accent/90 rounded-full px-8">
+                                <Button asChild size="lg" className="rounded-xl px-8 py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
                                     <Link to="/contact">Get In Touch</Link>
                                 </Button>
                             </div>
@@ -112,6 +113,7 @@ const Partners = () => {
 
                     </div>
                 </section>
+                <QuestionsSection />
             </main>
         </>
     );

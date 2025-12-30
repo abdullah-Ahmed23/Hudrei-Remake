@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Helmet } from "react-helmet";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Minus, HelpCircle, MessageCircle } from "lucide-react";
+import QuestionsSection from "@/components/QuestionsSection";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
@@ -170,16 +171,17 @@ const FAQ = () => {
                                     <h3 className="text-xl font-semibold text-gray-900 mb-1">Still have questions?</h3>
                                     <p className="text-gray-600">We're here to help. Reach out anytime.</p>
                                 </div>
-                                <Button asChild className="rounded-full px-8 bg-[#062f33] hover:bg-gray-800 text-white">
+                                <Button asChild className="rounded-xl px-8 py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
                                     <Link to="/contact">Contact Us</Link>
                                 </Button>
                             </div>
                         </motion.div>
                     </div>
                 </section>
+                <QuestionsSection />
             </main>
 
-            <Footer />
+
         </>
     );
 };

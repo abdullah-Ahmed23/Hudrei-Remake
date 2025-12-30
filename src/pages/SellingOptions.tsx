@@ -1,11 +1,23 @@
 import { useState } from "react";
-import SEO from "@/components/SEO";
-import { Home, DollarSign, Building, Landmark, Shield, Phone, Mail, Clock, MapPin, Check, ChevronDown, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
 import { Link } from "react-router-dom";
+import {
+    Home,
+    Landmark,
+    DollarSign,
+    Shield,
+    Building,
+    Phone,
+    Mail,
+    Clock,
+    MapPin,
+    Check,
+    ChevronDown,
+    X
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
+import SEO from "@/components/SEO";
+import QuestionsSection from "@/components/QuestionsSection";
+import { cn } from "@/lib/utils";
 
 
 interface OfferOption {
@@ -225,7 +237,7 @@ const OfferCard = ({ offer, index }: { offer: OfferOption; index: number }) => {
                     </p>
 
                     <div className="flex flex-col sm:flex-row gap-4">
-                        <Button className="bg-accent text-white hover:bg-[#2a6d63] font-semibold text-base py-6 px-8" asChild>
+                        <Button className="rounded-xl px-8 py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all" asChild>
                             <a href={offer.ctaLink}>{offer.ctaText}</a>
                         </Button>
                         <Button
@@ -309,7 +321,7 @@ const SellingOptions = () => {
                             sets a new standard. We offer multiple options to suit your unique situation.
                         </p>
                         <div className="mt-10">
-                            <Button className="bg-accent text-white hover:bg-accent/90 text-lg px-10 py-7 rounded-full shadow-lg shadow-accent/20 hover:shadow-xl transition-all" asChild>
+                            <Button className="rounded-xl px-10 py-7 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all" asChild>
                                 <a href="#offers">Browse Offers</a>
                             </Button>
                         </div>
@@ -381,60 +393,8 @@ const SellingOptions = () => {
                     </div>
                 </section>
 
-                {/* Contact CTA Section */}
-                <section id="contact" className="py-24 bg-[#062f33] text-white">
-                    <div className="container mx-auto px-4 sm:px-6 lg:px-8" data-aos="zoom-in"
-                        data-aos-duration="500">
-                        <div className="grid lg:grid-cols-2 gap-16 items-center max-w-6xl mx-auto">
-                            <div>
-                                <h2 className="text-3xl md:text-5xl font-bold text-white mb-8 leading-tight">
-                                    Contact Us Today!
-                                </h2>
-                                <p className="text-gray-300 text-lg md:text-xl mb-10 leading-relaxed">
-                                    If you're ready to sell your Indiana property, call us today and get your offer ASAP.
-                                    Depending on the circumstances, you can get a cash offer in much less time than you might think.
-                                </p>
-                                <Link to="/contact">
-                                    <Button className="bg-accent text-white hover:bg-accent/90 text-xl px-10 py-8 rounded-xl font-bold shadow-lg shadow-black/20" asChild>
-                                        <a>Get Cash Offers</a>
-                                    </Button>
-                                </Link>
-                            </div>
 
-                            <div className="bg-white/5 backdrop-blur-md border border-white/10 rounded-3xl p-10 hover:bg-white/10 transition-colors">
-                                <h3 className="text-2xl font-bold text-white mb-8">Have Questions?</h3>
-                                <p className="text-gray-300 mb-8 text-lg">We care about clarity!</p>
-
-                                <div className="space-y-6">
-                                    <a href="tel:3177951990" className="flex items-center gap-5 text-white hover:text-accent transition-colors group">
-                                        <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                                            <Phone className="w-6 h-6" />
-                                        </div>
-                                        <span className="text-lg">(317) 795-1990</span>
-                                    </a>
-                                    <a href="mailto:office@hudrei.com" className="flex items-center gap-5 text-white hover:text-accent transition-colors group">
-                                        <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center group-hover:bg-accent/20 transition-colors">
-                                            <Mail className="w-6 h-6" />
-                                        </div>
-                                        <span className="text-lg">office@hudrei.com</span>
-                                    </a>
-                                    <div className="flex items-center gap-5 text-gray-300">
-                                        <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
-                                            <Clock className="w-6 h-6" />
-                                        </div>
-                                        <span>Mon-Fri: 8am - 5pm | Sat-Sun: Closed</span>
-                                    </div>
-                                    <div className="flex items-center gap-5 text-gray-300">
-                                        <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center">
-                                            <MapPin className="w-6 h-6" />
-                                        </div>
-                                        <span>Indianapolis, Indiana</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                <QuestionsSection />
             </main>
 
 

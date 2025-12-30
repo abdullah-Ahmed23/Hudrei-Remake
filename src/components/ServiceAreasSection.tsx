@@ -55,7 +55,7 @@ const ServiceAreasSection = () => {
                     Whether you're in downtown Indianapolis or a rural community, we're here to help. As local Indiana investors, we understand the unique real estate market in your neighborhood.
                 </p>
 
-                <Button size="lg" className="rounded-full px-10">
+                <Button size="lg" className="rounded-xl px-10 py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
                     <Link to="/contact">See If We Buy in Your Area</Link>
                 </Button>
             </div>

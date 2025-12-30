@@ -1,43 +1,19 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Send, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
+import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
+import { useAddressAutocomplete } from "@/hooks/useAddressAutocomplete";
 
 const CTASection = () => {
     const navigate = useNavigate();
+    const inputRef = useRef<HTMLInputElement>(null);
 
     const [addressQuery, setAddressQuery] = useState("");
-    const [addressResults, setAddressResults] = useState<any[]>([]);
+    const { results, clearResults } = useAddressAutocomplete(addressQuery);
     const [isSubmitting, setIsSubmitting] = useState(false);
-
-    // 🔍 Address Autocomplete
-    useEffect(() => {
-        if (addressQuery.length < 3) {
-            setAddressResults([]);
-            return;
-        }
-
-        const timeout = setTimeout(async () => {
-            try {
-                const res = await fetch(
-                    `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&q=${addressQuery}`,
-                    {
-                        headers: {
-                            "User-Agent": "hudrei-form",
-                        },
-                    }
-                );
-                const data = await res.json();
-                setAddressResults(data);
-            } catch (err) {
-                console.error(err);
-            }
-        }, 400);
-
-        return () => clearTimeout(timeout);
-    }, [addressQuery]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -75,6 +51,7 @@ const CTASection = () => {
                         <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-black" />
 
                         <Input
+                            ref={inputRef}
                             value={addressQuery}
                             onChange={(e) => setAddressQuery(e.target.value)}
                             placeholder="Enter your address"
@@ -85,7 +62,7 @@ const CTASection = () => {
                         <Button
                             type="submit"
                             disabled={isSubmitting}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 h-12 px-6 rounded-xl bg-accent hover:bg-accent/90"
+                            className="absolute right-2 top-1/2 -translate-y-1/2 h-12 px-6 rounded-xl glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
                         >
                             {isSubmitting ? "Loading..." : (
                                 <>
@@ -95,48 +72,16 @@ const CTASection = () => {
                             )}
                         </Button>
 
-                        {/* AUTOCOMPLETE DROPDOWN */}
-                        <AnimatePresence>
-                            {addressResults.length > 0 && (
-                                <motion.div
-                                    initial={{ opacity: 0, y: 10, scale: 0.98 }}
-                                    animate={{ opacity: 1, y: 0, scale: 1 }}
-                                    exit={{ opacity: 0, y: 10, scale: 0.98 }}
-                                    transition={{ duration: 0.25, ease: "easeOut" }}
-                                    className="absolute z-[9999] top-full left-0 w-full mt-3
-                 bg-white/95 backdrop-blur-xl
-                 border border-gray-200
-                 rounded-2xl shadow-2xl
-                  overflow-hidden
-                 max-h-64  text-left"
-                                >
-                                    {addressResults.map((item, index) => (
-                                        <motion.div
-                                            key={item.place_id}
-                                            initial={{ opacity: 0, y: 6 }}
-                                            animate={{ opacity: 1, y: 0 }}
-                                            transition={{ delay: index * 0.04 }}
-                                            whileHover={{
-                                                backgroundColor: "rgba(56,178,172,0.08)",
-                                                x: 4,
-                                            }}
-                                            className="px-5 py-4 cursor-pointer text-sm text-gray-800
-                     flex items-start gap-3
-                     transition-colors"
-                                            onClick={() => {
-                                                setAddressQuery(item.display_name);
-                                                setAddressResults([]);
-                                            }}
-                                        >
-                                            <MapPin className="w-4 h-4 mt-0.5 text-accent shrink-0" />
-                                            <span className="leading-snug">
-                                                {item.display_name}
-                                            </span>
-                                        </motion.div>
-                                    ))}
-                                </motion.div>
-                            )}
-                        </AnimatePresence>
+                        {/* PORTAL AUTOCOMPLETE */}
+                        <AddressAutocompletePortal
+                            anchorRef={inputRef}
+                            results={results}
+                            onSelect={(val) => {
+                                setAddressQuery(val);
+                                clearResults();
+                            }}
+                            onClose={clearResults}
+                        />
 
                     </form>
 

@@ -1,16 +1,20 @@
 import { Helmet } from "react-helmet";
-import { useState } from "react";
+
 import { Phone, Mail, CheckCircle2, ArrowRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import QuestionsSection from "@/components/QuestionsSection";
 import hudReiLogo from "@/assets/hudrei-logo.png";
 import contactbg from "@/assets/bg-contact.webp";
 import { useLocation } from "react-router-dom";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
+import { useAddressAutocomplete } from "@/hooks/useAddressAutocomplete";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 
 const Contact = () => {
@@ -133,34 +137,9 @@ const Contact = () => {
         "No Hidden Costs – We cover the closing fee",
     ];
 
-    const [addressQuery, setAddressQuery] = useState(formData.streetAddress);
-    const [addressResults, setAddressResults] = useState([]);
-
-    useEffect(() => {
-        if (addressQuery.length < 3) {
-            setAddressResults([]);
-            return;
-        }
-
-        const timeout = setTimeout(async () => {
-            try {
-                const res = await fetch(
-                    `https://nominatim.openstreetmap.org/search?format=json&addressdetails=1&limit=5&q=${addressQuery}`,
-                    {
-                        headers: {
-                            "User-Agent": "hudrei-form",
-                        },
-                    }
-                );
-                const data = await res.json();
-                setAddressResults(data);
-            } catch (err) {
-                console.error(err);
-            }
-        }, 400); // debounce
-
-        return () => clearTimeout(timeout);
-    }, [addressQuery]);
+    const [addressQuery, setAddressQuery] = useState(formData.streetAddress || "");
+    const { results, clearResults } = useAddressAutocomplete(addressQuery);
+    const addressInputRef = useRef<HTMLInputElement>(null);
 
     // 🔗 Get address from Hero
     useEffect(() => {
@@ -438,7 +417,7 @@ const Contact = () => {
                                                     <div className="mt-8 text-center">
                                                         <Button
                                                             onClick={() => setIsComparisonOpen(false)}
-                                                            className="bg-accent hover:bg-accent/90 text-white font-semibold px-8 py-3"
+                                                            className="rounded-xl px-8 py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
                                                         >
                                                             Get My Cash Offer Now!
                                                         </Button>
@@ -508,6 +487,7 @@ const Contact = () => {
                                                 streetAddress
                                             </label>
                                             <Input className="text-black bg-white "
+                                                ref={addressInputRef}
                                                 name="streetAddress"
                                                 value={addressQuery}
                                                 placeholder="Street Address *"
@@ -521,26 +501,19 @@ const Contact = () => {
                                                 }}
                                             />
 
-                                            {addressResults.length > 0 && (
-                                                <div className="absolute z-50 w-full bg-white text-black border rounded-md shadow-md mt-1 max-h-60 overflow-auto">
-                                                    {addressResults.map((item) => (
-                                                        <div
-                                                            key={item.place_id}
-                                                            className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-sm"
-                                                            onClick={() => {
-                                                                setAddressQuery(item.display_name);
-                                                                setFormData({
-                                                                    ...formData,
-                                                                    streetAddress: item.display_name,
-                                                                });
-                                                                setAddressResults([]);
-                                                            }}
-                                                        >
-                                                            {item.display_name}
-                                                        </div>
-                                                    ))}
-                                                </div>
-                                            )}
+                                            <AddressAutocompletePortal
+                                                anchorRef={addressInputRef}
+                                                results={results}
+                                                onSelect={(val) => {
+                                                    setAddressQuery(val);
+                                                    setFormData({
+                                                        ...formData,
+                                                        streetAddress: val,
+                                                    });
+                                                    clearResults();
+                                                }}
+                                                onClose={clearResults}
+                                            />
                                         </div>
 
                                         <div className="grid grid-cols-2 gap-4">
@@ -574,18 +547,20 @@ const Contact = () => {
                                             <label className="block text-sm font-medium text-gray-700 mb-1">
                                                 How Soon Do You Want To Sell?
                                             </label>
-                                            <select
-                                                name="timeline"
+                                            <Select
                                                 value={formData.timeline}
-                                                onChange={handleChange}
-                                                className="w-full h-10 rounded-md border border-accent/30 bg-background px-3 py-2 text-sm focus:border-accent focus:outline-none text-black bg-white"
+                                                onValueChange={(value) => setFormData(prev => ({ ...prev, timeline: value }))}
                                             >
-                                                <option value="">Select timeline</option>
-                                                <option value="asap">As soon as possible</option>
-                                                <option value="30days">Within 30 days</option>
-                                                <option value="60days">Within 60-90 days</option>
-                                                <option value="JustExploring">Just Exploring</option>
-                                            </select>
+                                                <SelectTrigger className="w-full h-10 bg-white border-accent/30 focus:border-accent text-black">
+                                                    <SelectValue placeholder="Select timeline" />
+                                                </SelectTrigger>
+                                                <SelectContent>
+                                                    <SelectItem value="asap">As soon as possible</SelectItem>
+                                                    <SelectItem value="30days">Within 30 days</SelectItem>
+                                                    <SelectItem value="60days">Within 60-90 days</SelectItem>
+                                                    <SelectItem value="JustExploring">Just Exploring</SelectItem>
+                                                </SelectContent>
+                                            </Select>
                                         </div>
 
                                         <div className="flex items-start gap-2 text-sm text-gray-500">
@@ -605,7 +580,7 @@ const Contact = () => {
                                         <Button
                                             type="submit"
                                             disabled={isSubmitting}
-                                            className="w-full bg-accent hover:bg-accent/90 text-white font-semibold py-6"
+                                            className="w-full rounded-xl py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
                                         >
                                             {isSubmitting ? "Submitting..." : "Get My Offer Now!"}
                                         </Button>
@@ -626,7 +601,8 @@ const Contact = () => {
                     </div>
                 </section>
 
-
+                <QuestionsSection />
+                <Footer />
             </div>
         </>
     );

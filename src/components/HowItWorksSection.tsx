@@ -226,7 +226,7 @@ const HowItWorksSection = () => {
           transition={{ delay: 1.2 }}
           className="flex justify-center mt-16 md:mt-2"
         >
-          <Button size="lg" className="rounded-full px-14">
+          <Button size="lg" className="rounded-xl px-14 py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
             <Link to="/contact">Start Your Sale Today</Link>
           </Button>
         </motion.div>

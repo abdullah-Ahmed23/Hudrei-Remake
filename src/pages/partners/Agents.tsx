@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { Helmet } from "react-helmet";
 import { Link } from "react-router-dom";
 import { Users, Handshake, DollarSign, Clock, CheckCircle2, ChevronRight, Building } from "lucide-react";
@@ -8,9 +8,17 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SEO from "@/components/SEO";
+import QuestionsSection from "@/components/QuestionsSection";
+import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
+import { useAddressAutocomplete } from "@/hooks/useAddressAutocomplete";
 
 const Agents = () => {
     const [submitted, setSubmitted] = useState(false);
+
+    // Autocomplete
+    const [addressQuery, setAddressQuery] = useState("");
+    const { results, clearResults } = useAddressAutocomplete(addressQuery);
+    const inputRef = useRef<HTMLInputElement>(null);
 
     // Placeholder submit handler - designed for GHL Webhook later
     const handleSubmit = (e: React.FormEvent) => {
@@ -46,7 +54,7 @@ const Agents = () => {
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4" data-aos="fade-up" data-aos-delay="200">
-                                <Button asChild size="lg" className="bg-[#062f33] hover:bg-[#0b434a] text-white rounded-full px-8 py-7 text-lg shadow-lg shadow-[#062f33]/20 transition-transform hover:scale-105">
+                                <Button asChild size="lg" className="rounded-xl px-8 py-7 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
                                     <a href="#refer-form">Refer a Listing</a>
                                 </Button>
                                 <Button asChild variant="outline" size="lg" className="rounded-full px-8 py-7 text-lg border-gray-200 bg-[#00767e] hover:bg-[#0b434a] transition-transform hover:scale-105">
@@ -148,7 +156,7 @@ const Agents = () => {
                             </div>
 
                             {/* The Form */}
-                            <div className="md:w-1/2 w-full bg-white rounded-3xl p-8 md:p-10 text-gray-900 shadow-2xl" data-aos="zoom-in-up">
+                            <div className="md:w-1/2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-10 text-gray-900" data-aos="zoom-in-up">
                                 {submitted ? (
                                     <div className="h-full flex flex-col items-center justify-center text-center py-20">
                                         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
@@ -165,35 +173,51 @@ const Agents = () => {
                                         <div className="grid grid-cols-2 gap-4">
                                             <div className="space-y-2">
                                                 <Label htmlFor="name">Agent Name</Label>
-                                                <Input id="name" placeholder="John Doe" required className="bg-gray-50 border-gray-200" />
+                                                <Input id="name" placeholder="John Doe" required className="bg-white border-accent/30 focus:border-accent text-black" />
                                             </div>
                                             <div className="space-y-2">
                                                 <Label htmlFor="phone">Phone</Label>
-                                                <Input id="phone" type="tel" placeholder="(555) 000-0000" required className="bg-gray-50 border-gray-200" />
+                                                <Input id="phone" type="tel" placeholder="(555) 000-0000" required className="bg-white border-accent/30 focus:border-accent text-black" />
                                             </div>
                                         </div>
 
                                         <div className="space-y-2">
                                             <Label htmlFor="email">Email</Label>
-                                            <Input id="email" type="email" placeholder="john@brokerage.com" required className="bg-gray-50 border-gray-200" />
+                                            <Input id="email" type="email" placeholder="john@brokerage.com" required className="bg-white border-accent/30 focus:border-accent text-black" />
                                         </div>
 
                                         <div className="space-y-2">
                                             <Label htmlFor="brokerage">Brokerage Name</Label>
-                                            <Input id="brokerage" placeholder="e.g. Century 21" required className="bg-gray-50 border-gray-200" />
+                                            <Input id="brokerage" placeholder="e.g. Century 21" required className="bg-white border-accent/30 focus:border-accent text-black" />
                                         </div>
 
-                                        <div className="space-y-2">
+                                        <div className="space-y-2 relative">
                                             <Label htmlFor="property">Property Address (Optional)</Label>
-                                            <Input id="property" placeholder="123 Main St, Indianapolis, IN" className="bg-gray-50 border-gray-200" />
+                                            <Input
+                                                id="property"
+                                                placeholder="123 Main St, Indianapolis, IN"
+                                                className="bg-white border-accent/30 focus:border-accent text-black"
+                                                ref={inputRef}
+                                                value={addressQuery}
+                                                onChange={(e) => setAddressQuery(e.target.value)}
+                                            />
+                                            <AddressAutocompletePortal
+                                                anchorRef={inputRef}
+                                                results={results}
+                                                onSelect={(val) => {
+                                                    setAddressQuery(val);
+                                                    clearResults();
+                                                }}
+                                                onClose={clearResults}
+                                            />
                                         </div>
 
                                         <div className="space-y-2">
                                             <Label htmlFor="notes">Notes / Situation</Label>
-                                            <Textarea id="notes" placeholder="Needs foundation repair, owner relocating, etc..." className="bg-gray-50 border-gray-200 min-h-[100px]" />
+                                            <Textarea id="notes" placeholder="Needs foundation repair, owner relocating, etc..." className="bg-white border-accent/30 focus:border-accent text-black min-h-[100px]" />
                                         </div>
 
-                                        <Button type="submit" className="w-full bg-[#062f33] hover:bg-[#0b434a] text-white py-6 text-lg rounded-xl">
+                                        <Button type="submit" className="w-full rounded-xl py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
                                             Send Referral <ChevronRight className="w-4 h-4 ml-2" />
                                         </Button>
                                     </form>
@@ -203,6 +227,7 @@ const Agents = () => {
                     </div>
                 </section>
 
+                <QuestionsSection />
             </main>
         </>
     );

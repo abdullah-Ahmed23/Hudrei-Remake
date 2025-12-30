@@ -8,6 +8,7 @@ import {
     Megaphone,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import QuestionsSection from "@/components/QuestionsSection";
 import { Helmet } from "react-helmet";
 
 const careers = [
@@ -138,7 +139,7 @@ const CareersSection = () => {
                     >
                         <Button
                             size="lg"
-                            className="rounded-full px-12 bg-accent text-black hover:bg-accent/90"
+                            className="rounded-xl px-12 py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
                             asChild
                         >
                             <a href="mailto:careers@hudrei.com">Apply for a Career Opportunity</a>
@@ -147,6 +148,7 @@ const CareersSection = () => {
 
                 </div>
             </section>
+            <QuestionsSection />
         </>
     );
 };

@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import QuestionsSection from "@/components/QuestionsSection";
 import png1 from "@/assets/Omar.png"
 import png2 from "@/assets/Samar.png"
 import png3 from "@/assets/WALE.jpg"
@@ -120,7 +121,7 @@ const WhoWeAre = () => {
                             <Button
                                 asChild
                                 size="lg"
-                                className="bg-accent hover:bg-accent/90 text-white font-semibold px-8 py-6 text-lg hover-lift"
+                                className="rounded-xl px-8 py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
                             >
                                 <Link to="/selling-options">GET MY CASH OFFER!</Link>
                             </Button>
@@ -263,7 +264,7 @@ const WhoWeAre = () => {
                                     <Button
                                         asChild
                                         size="lg"
-                                        className="bg-accent hover:bg-accent/90 text-white font-semibold px-8"
+                                        className="rounded-xl px-8 py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
                                     >
                                         <Link to="/contact">GET MY CASH OFFER!</Link>
                                     </Button>
@@ -426,7 +427,7 @@ const WhoWeAre = () => {
                             <Button
                                 asChild
                                 size="lg"
-                                className="bg-accent hover:bg-accent/90 text-white font-semibold px-8"
+                                className="rounded-xl px-8 py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
                             >
                                 <a href="mailto:office@hudrei.com">APPLY FOR A CAREER HERE</a>
                             </Button>
@@ -434,6 +435,8 @@ const WhoWeAre = () => {
                     </div>
                 </section>
             </main>
+
+            <QuestionsSection />
 
 
         </>

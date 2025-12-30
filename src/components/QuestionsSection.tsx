@@ -1,4 +1,4 @@
-import { Phone, Mail, HelpCircle,PhoneCall  } from "lucide-react";
+import { Phone, Mail, HelpCircle, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 
@@ -33,14 +33,14 @@ const QuestionsSection = () => {
 
               <br />
               <span className="bg-gradient-to-r from-primary to-accent bg-clip-text text-4xl text-transparent">
-We re-imagined the process to give you options.
+                We re-imagined the process to give you options.
 
               </span>
             </h2>
 
             <p className="text-black text-lg mt-4">
-            Speed. Max Value. Debt Relief.
-Tell us your goal, and we will build the offer that gets you there.
+              Speed. Max Value. Debt Relief.
+              Tell us your goal, and we will build the offer that gets you there.
             </p>
           </div>
 
@@ -48,32 +48,30 @@ Tell us your goal, and we will build the offer that gets you there.
           <div className="btnsQ flex flex-col gap-4 items-center lg:items-start text-center lg:text-left">
             <Button
               asChild
-             className="w-full sm:w-auto rounded-full px-8 py-6 text-base font-medium shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
+              className="w-full sm:w-auto rounded-xl px-8 py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
             >
               <a href="tel:+13177951990">
-                <Phone className="w-4 h-4 mr-2" />
-              Call Us Now!  317-795-1990
+                <Phone className="w-5 h-5 mr-2" />
+                Call Us Now!  317-795-1990
               </a>
             </Button>
 
             <Button
               asChild
-              variant="secondary"
-             className="w-full sm:w-auto rounded-full px-8 py-6 text-base font-medium shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
+              className="w-full sm:w-auto rounded-xl px-8 py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
             >
               <a href="mailto:office@hudrei.com">
-                <Mail className="w-4 h-4 mr-2" />
+                <Mail className="w-5 h-5 mr-2" />
                 office@hudrei.com
               </a>
             </Button>
 
             <Button
               asChild
-              variant="outline"
-              className="w-full sm:w-auto rounded-full px-8 py-6 text-base font-medium shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
+              className="w-full sm:w-auto rounded-xl px-8 py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
             >
               <a href="/contact">
-                <PhoneCall className="w-4 h-4 mr-2" />
+                <PhoneCall className="w-5 h-5 mr-2" />
                 Request a Call
               </a>
             </Button>
@@ -95,7 +93,7 @@ Tell us your goal, and we will build the offer that gets you there.
             {markets.map((market, index) => (
               <span key={market} className="flex items-center">
                 <p
-                  
+
                   className="text-sm font-medium text-accent hover:text-primary transition-colors hover:underline underline-offset-4"
                 >
                   {market}

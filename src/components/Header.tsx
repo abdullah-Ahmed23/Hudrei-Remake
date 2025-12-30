@@ -27,7 +27,7 @@ const mainLinks = [
   { label: "Selling Options", to: "/selling-options" },
   { label: "About Us", to: "/who-are-we" },
   { label: "Testimonials", to: "/#testimonials" },
-  
+
 ];
 
 const learnDropdown = [
@@ -84,11 +84,11 @@ const Header = () => {
   };
 
   const [mobileLearnOpen, setMobileLearnOpen] = useState(false);
-const [mobilePartnersOpen, setMobilePartnersOpen] = useState(false);
+  const [mobilePartnersOpen, setMobilePartnersOpen] = useState(false);
 
-const location = useLocation();
-const isTestimonialsActive =
-  location.pathname === "/" && location.hash === "#testimonials";
+  const location = useLocation();
+  const isTestimonialsActive =
+    location.pathname === "/" && location.hash === "#testimonials";
 
 
 
@@ -116,43 +116,43 @@ const isTestimonialsActive =
 
             {/* Desktop Nav */}
             <nav className="hidden lg:flex   items-center gap-1">
-             {mainLinks.map((l) => {
-  // 🔥 SPECIAL CASE: Testimonials (hash link)
-  if (l.to.includes("#")) {
-    return (
-      <button
-        key={l.to}
-        onClick={() => navigate(l.to)}
-        className={cn(
-          "px-4 py-2 text-sm font-medium rounded-full transition-all duration-300",
-          isTestimonialsActive
-            ? "text-primary bg-primary/10"
-            : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-        )}
-      >
-        {l.label}
-      </button>
-    );
-  }
+              {mainLinks.map((l) => {
+                // 🔥 SPECIAL CASE: Testimonials (hash link)
+                if (l.to.includes("#")) {
+                  return (
+                    <button
+                      key={l.to}
+                      onClick={() => navigate(l.to)}
+                      className={cn(
+                        "px-4 py-2 text-sm font-medium rounded-full transition-all duration-300",
+                        isTestimonialsActive
+                          ? "text-primary bg-primary/10"
+                          : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                      )}
+                    >
+                      {l.label}
+                    </button>
+                  );
+                }
 
-  // ✅ Normal NavLink for real routes
-  return (
-    <NavLink
-      key={l.to}
-      to={l.to}
-      className={({ isActive }) =>
-        cn(
-          "px-4 py-2 text-sm font-medium rounded-full transition-all duration-300",
-          isActive
-            ? "text-primary bg-primary/10"
-            : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-        )
-      }
-    >
-      {l.label}
-    </NavLink>
-  );
-})}
+                // ✅ Normal NavLink for real routes
+                return (
+                  <NavLink
+                    key={l.to}
+                    to={l.to}
+                    className={({ isActive }) =>
+                      cn(
+                        "px-4 py-2 text-sm font-medium rounded-full transition-all duration-300",
+                        isActive
+                          ? "text-primary bg-primary/10"
+                          : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                      )
+                    }
+                  >
+                    {l.label}
+                  </NavLink>
+                );
+              })}
 
 
               {/* Learn Dropdown */}
@@ -281,7 +281,7 @@ const isTestimonialsActive =
               </a>
               <Button
                 asChild
-                className="rounded-full px-6 shadow-lg shadow-primary/25 hover:shadow-xl hover:shadow-primary/30 transition-all duration-300 hover:-translate-y-0.5"
+                className="rounded-xl px-6 py-4 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
               >
                 <Link to="/contact">Get My Cash Offer</Link>
               </Button>
@@ -292,7 +292,7 @@ const isTestimonialsActive =
               <Button
                 asChild
                 size="sm"
-                className="rounded-full text-xs px-4 shadow-md"
+                className="rounded-xl px-4 text-xs font-bold glow-button shadow-md"
               >
                 <Link to="/contact">Get My Cash Offer</Link>
               </Button>
@@ -361,7 +361,7 @@ const isTestimonialsActive =
               {/* Learn Accordion */}
               <div className="pt-2">
                 <button
-                 onClick={() => setMobileLearnOpen((p) => !p)}
+                  onClick={() => setMobileLearnOpen((p) => !p)}
                   className="w-full flex items-center justify-between px-4 py-3 text-base font-medium text-gray-700 rounded-xl hover:bg-gray-50 transition-all"
                 >
                   Learn
@@ -375,7 +375,7 @@ const isTestimonialsActive =
                 <div
                   className={cn(
                     "overflow-hidden transition-all duration-300 ease-out",
-                    mobileLearnOpen  ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                    mobileLearnOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                   )}
                 >
                   <div className="pl-4 py-2 space-y-1">
@@ -396,7 +396,7 @@ const isTestimonialsActive =
               {/* Partners Accordion */}
               <div>
                 <button
-                 onClick={() => setMobilePartnersOpen((p) => !p)}
+                  onClick={() => setMobilePartnersOpen((p) => !p)}
                   className="w-full flex items-center justify-between px-4 py-3 text-base font-medium text-gray-700 rounded-xl hover:bg-gray-50 transition-all"
                 >
                   Partners
@@ -410,7 +410,7 @@ const isTestimonialsActive =
                 <div
                   className={cn(
                     "overflow-hidden transition-all duration-300 ease-out",
-                    mobilePartnersOpen  ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
+                    mobilePartnersOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
                   )}
                 >
                   <div className="pl-4 py-2 space-y-1">
@@ -438,7 +438,7 @@ const isTestimonialsActive =
                 <Phone className="w-5 h-5" />
                 317-795-1990
               </a>
-              <Button asChild className="w-full rounded-xl py-6 text-base">
+              <Button asChild className="w-full rounded-xl py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
                 <Link to="/contact" onClick={() => setIsMenuOpen(false)}>
                   Get My Cash Offer
                 </Link>

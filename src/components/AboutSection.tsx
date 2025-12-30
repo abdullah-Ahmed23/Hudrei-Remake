@@ -147,7 +147,7 @@ const AboutValues = () => {
 
         </motion.div>
         <div className="flex items-center justify-center pt-10">
-          <Button size="lg" className="rounded-full px-14 ">
+          <Button size="lg" className="rounded-xl px-14 py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
             <Link to="/contact">Get My Cash Offer</Link>
           </Button>
         </div>

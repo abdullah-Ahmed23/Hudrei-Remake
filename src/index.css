@@ -67,6 +67,38 @@
   html {
     scroll-behavior: smooth;
   }
+
+  /* Custom Scrollbar Styles */
+  ::-webkit-scrollbar {
+    width: 12px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #318174;
+    border-radius: 20px;
+    border: 3px solid white;
+    /* This creates space around the thumb on white backgrounds */
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #0b434a;
+  }
+
+  /* Dark mode scrollbar for sections with dark backgrounds */
+  .bg-[#062f33] ::-webkit-scrollbar-thumb,
+  .bg-primary ::-webkit-scrollbar-thumb {
+    border-color: #062f33;
+  }
+
+  /* Firefox */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #318174 transparent;
+  }
 }
 
 @layer utilities {
@@ -100,6 +132,7 @@
     opacity: 0;
     transform: translateY(30px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
@@ -110,6 +143,7 @@
   from {
     opacity: 0;
   }
+
   to {
     opacity: 1;
   }
@@ -120,8 +154,40 @@
     opacity: 0;
     transform: scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: scale(1);
+  }
+}
+
+/* Global Glow Button Style */
+.glow-button {
+  background-color: #318174;
+  color: white;
+  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.39);
+  transition: all 0.3s ease-in-out;
+  animation: colorPulse 3s ease-in-out infinite;
+}
+
+.glow-button:hover {
+  background-color: white;
+  color: #318174;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.23);
+  transform: translateY(-2px);
+  animation: none;
+}
+
+@keyframes colorPulse {
+
+  0%,
+  100% {
+    background-color: #008670;
+    box-shadow: 0 4px 14px 0 rgba(0, 130, 115, 0.39);
+  }
+
+  50% {
+    background-color: #006361;
+    box-shadow: 0 0 10px rgba(0, 114, 116, 0.62);
   }
 }

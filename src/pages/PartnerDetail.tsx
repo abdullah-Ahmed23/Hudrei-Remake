@@ -15,6 +15,7 @@ import {
     Megaphone
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import QuestionsSection from "@/components/QuestionsSection";
 import SEO from "@/components/SEO";
 
 // Define the content for each partner type
@@ -210,7 +211,7 @@ const PartnerDetail = () => {
                                     Fill out our contact form or give us a call directly. We'd love to discuss how we can help each other win.
                                 </p>
                                 <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                                    <Button asChild size="lg" className="bg-accent text-white hover:bg-accent/90 text-lg px-8 py-6 rounded-full">
+                                    <Button asChild size="lg" className="rounded-xl px-8 py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
                                         <Link to="/contact">{data.ctaText}</Link>
                                     </Button>
                                     <Button asChild variant="outline" size="lg" className="border-white/20 text-white hover:bg-white hover:text-[#0b434a] text-lg px-8 py-6 rounded-full bg-transparent">
@@ -221,6 +222,7 @@ const PartnerDetail = () => {
                         </div>
                     </div>
                 </section>
+                <QuestionsSection />
             </main>
         </>
     );
