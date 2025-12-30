@@ -50,7 +50,7 @@ const HeroV2 = () => {
   return (
     <>
       {/* ================= HERO ================= */}
-      <section className="relative min-h-[20vh] md:min-h-[90vh] bg-white">
+      <section className="relative min-h-[85vh] md:min-h-[90vh] bg-white">
         <div className="min-h-[85vh] md:min-h-[90vh] flex items-center">
           <div className="container mx-auto px-6 flex flex-col items-center text-center gap-10">
 
@@ -99,7 +99,7 @@ const HeroV2 = () => {
                 <Input
                   ref={inputRef}
                   value={addressQuery}
-                  placeholder="Enter your home address"
+                  placeholder="Enter your address"
                   required
                   className="
                     h-14
