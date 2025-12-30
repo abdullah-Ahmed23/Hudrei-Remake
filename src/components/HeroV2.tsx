@@ -51,7 +51,7 @@ const HeroV2 = () => {
     <>
       {/* ================= HERO ================= */}
       <section className="relative min-h-[20vh] md:min-h-[90vh] bg-white">
-        <div className="min-h-[75vh] md:min-h-[90vh] flex items-center">
+        <div className="min-h-[85vh] md:min-h-[90vh] flex items-center">
           <div className="container mx-auto px-6 flex flex-col items-center text-center gap-10">
 
            
@@ -167,7 +167,7 @@ const HeroV2 = () => {
             </motion.div>
 
             {/* ================= TRUST POINTS (DESKTOP ONLY) ================= */}
-            <div className="flex sm:flex gap-5 sm:gap-10 text-gray-700 text-base mt-2">
+            <div className="flex flex-col sm:flex-row sm:flex gap-2 sm:gap-10 text-gray-700 text-base mt-2">
               {[
                 "No repairs needed",
                 "No agent fees",
