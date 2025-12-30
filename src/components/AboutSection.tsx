@@ -8,27 +8,28 @@ import {
   HeartHandshake,
   MapPinned,
   BadgeCheck,
+  BadgeDollarSign,
 } from "lucide-react";
 
 const values = [
   {
-    title: "We Are Transparent",
-    desc: "Clear pricing. No hidden fees. Every step explained upfront.",
+    title: "No Repairs or Cleaning Needed",
+    desc: "Sell your house as-is. We buy homes in any condition—whether it's outdated, damaged, or even condemned.",
     icon: ShieldCheck,
   },
   {
-    title: "Compassionate",
-    desc: "We understand selling a home is emotional. We listen first.",
-    icon: HeartHandshake,
+    title: "Zero Fees or Commissions",
+    desc: "Avoid the standard 6% realtor fees. No closing costs and no hidden fees. What we offer is what you keep.",
+    icon: BadgeDollarSign,
   },
   {
-    title: "Local Experts",
-    desc: "Deep knowledge of Texas neighborhoods and market conditions.",
+    title: "Close on Your Schedule",
+    desc: "We can close in as few as 7 days. Or, if you need more time to move, we'll work with your timeline.",
     icon: MapPinned,
   },
   {
-    title: "With Integrity & Real Results",
-    desc: "Fair offers backed by honest market analysis.",
+    title: "Cash Offers in 24 Hours",
+    desc: "No waiting weeks for an offer. We evaluate your property and present a fair cash offer within 24 hours.",
     icon: BadgeCheck,
   },
 ];
@@ -45,11 +46,11 @@ const AboutValues = () => {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-20"
         >
-          
+
           <h2 className="text-4xl sm:text-7xl font-bold mt-4 mb-6">
-            At Hudrei We Are
+            Why Sell Your House to HudREI?
           </h2>
-        
+
         </motion.div>
 
         {/* ================= MOBILE (ICONS ONLY) ================= */}
@@ -78,21 +79,20 @@ const AboutValues = () => {
                     animate={
                       isActive
                         ? {
-                            scale: 1.15,
-                            backgroundColor: "rgba(56, 178, 172, 0.35)",
-                          }
+                          scale: 1.15,
+                          backgroundColor: "rgba(56, 178, 172, 0.35)",
+                        }
                         : {
-                            scale: 1,
-                            backgroundColor: "rgba(56, 178, 172, 0.1)",
-                          }
+                          scale: 1,
+                          backgroundColor: "rgba(56, 178, 172, 0.1)",
+                        }
                     }
                     transition={{ type: "spring", stiffness: 300 }}
                     className="absolute -left-[66px] top-1 w-12 h-12 rounded-xl flex items-center justify-center"
                   >
                     <Icon
-                      className={`w-6 h-6 transition-colors duration-300 ${
-                        isActive ? "text-accent" : "text-white/50"
-                      }`}
+                      className={`w-6 h-6 transition-colors duration-300 ${isActive ? "text-accent" : "text-white/50"
+                        }`}
                     />
                   </motion.div>
 
@@ -144,9 +144,9 @@ const AboutValues = () => {
               </motion.div>
             );
           })}
-          
+
         </motion.div>
-<div className="flex items-center justify-center pt-10">
+        <div className="flex items-center justify-center pt-10">
           <Button size="lg" className="rounded-full px-14 ">
             <Link to="/contact">Get My Cash Offer</Link>
           </Button>

@@ -8,20 +8,20 @@ const steps = [
   {
     id: 1,
     icon: ClipboardList,
-    title: "Tell Us About Your Home",
-    desc: "Answer a few quick questions. No cleaning. No repairs. No pressure.",
+    title: "Contact Us",
+    desc: "Fill out our simple form or call us directly. Tell us about your property and your situation.",
   },
   {
     id: 2,
     icon: BadgeDollarSign,
-    title: "Review Your Cash Offer",
-    desc: "We analyze your home and send a fair, no-obligation offer within 24 hours.",
+    title: "Get Your Cash Offer",
+    desc: "We'll schedule a quick visit (usually within 24-48 hours) and present you with a fair, no-obligation cash offer.",
   },
   {
     id: 3,
     icon: Key,
-    title: "Close & Get Paid",
-    desc: "Pick your closing date. We handle everything. You get paid.",
+    title: "Close on Your Timeline",
+    desc: "If you accept our offer, we'll handle all the paperwork and pay all closing costs. You choose the date.",
   },
 ];
 
@@ -64,58 +64,58 @@ const HowItWorksSection = () => {
           <p className="uppercase tracking-widest text-sm text-gray-400 mb-4">
             Simple Process
           </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-8xl text-black font-extrabold">
-            How It <span className="text-accent">Works</span>
+          <h2 className="text-3xl sm:text-4xl lg:text-7xl text-black font-extrabold">
+            Our Simple 3-Step Process for a <span className="text-accent">Quick Home Sale</span>
           </h2>
-          <p className="text-black text-3xl sm:text-4xl lg:text-2xl mt-4">
-            A transparent, stress-free way to sell your home.
+          <p className="text-black text-xl sm:text-2xl mt-4">
+            in Indiana
           </p>
         </motion.div>
 
         {/* ================= DESKTOP ================= */}
         {/* ================= DESKTOP ================= */}
-<div className="hidden lg:block relative h-[51vh]">
+        <div className="hidden lg:block relative h-[51vh]">
 
-  {/* SVG CURVED LINE */}
-  <svg
-    className="absolute inset-0 w-full h-full pointer-events-none"
-    viewBox="0 0 1200 420"
-    fill="none"
-  >
-    {/* MAIN LINE */}
-    <motion.path
-      d="M120 140 
+          {/* SVG CURVED LINE */}
+          <svg
+            className="absolute inset-0 w-full h-full pointer-events-none"
+            viewBox="0 0 1200 420"
+            fill="none"
+          >
+            {/* MAIN LINE */}
+            <motion.path
+              d="M120 140 
          C 420 460, 
            780 -40, 
            1080 140"
-      stroke="#318174"
-      strokeWidth="4"
-      strokeLinecap="round"
-      strokeDasharray="8 12"
-      initial={{ pathLength: 0 }}
-      animate={inView ? { pathLength: 1 } : {}}
-      transition={{ duration: 1.8, ease: "easeInOut" }}
-    />
+              stroke="#318174"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeDasharray="8 12"
+              initial={{ pathLength: 0 }}
+              animate={inView ? { pathLength: 1 } : {}}
+              transition={{ duration: 1.8, ease: "easeInOut" }}
+            />
 
-    {/* ARROW HEAD (LAST) */}
-    <motion.path
-      d="M1060 128 L1080 140 L1060 152"
-      stroke="#318174"
-      strokeWidth="4"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      initial={{ opacity: 0 }}
-      animate={inView ? { opacity: 1 } : {}}
-      transition={{ delay: 1.8, duration: 0.25 }}
-    />
-  </svg>
+            {/* ARROW HEAD (LAST) */}
+            <motion.path
+              d="M1060 128 L1080 140 L1060 152"
+              stroke="#318174"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ opacity: 0 }}
+              animate={inView ? { opacity: 1 } : {}}
+              transition={{ delay: 1.8, duration: 0.25 }}
+            />
+          </svg>
 
-  {/* STEP 1 — LEFT / TOP */}
-  <motion.div
-    initial={{ opacity: 0, y: -30 }}
-    animate={inView ? { opacity: 1, y: 0 } : {}}
-    transition={{ delay: 0.2 }}
-    className="
+          {/* STEP 1 — LEFT / TOP */}
+          <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.2 }}
+            className="
       absolute
       left-[-1%]
       top-[28%]
@@ -123,24 +123,24 @@ const HowItWorksSection = () => {
       text-center
       text-black
     "
-  >
-    <div className="mx-auto mb-6 w-20 h-20 rounded-2xl bg-[#39ac99] flex items-center justify-center">
-      <ClipboardList className="w-9 h-9 text-white" />
-    </div>
-    <h3 className="text-2xl font-semibold mb-3">
-      Tell Us About Your Home
-    </h3>
-    <p className="text-black text-xl font-bold  ">
-      Answer a few quick questions. No cleaning. No repairs. No pressure.
-    </p>
-  </motion.div>
+          >
+            <div className="mx-auto mb-6 w-20 h-20 rounded-2xl bg-[#39ac99] flex items-center justify-center">
+              <ClipboardList className="w-9 h-9 text-white" />
+            </div>
+            <h3 className="text-2xl font-semibold mb-3">
+              Contact Us
+            </h3>
+            <p className="text-black text-xl font-bold  ">
+              Fill out our simple form or call us directly. Tell us about your property.
+            </p>
+          </motion.div>
 
-  {/* STEP 2 — CENTER / BOTTOM */}
-  <motion.div
-    initial={{ opacity: 0, y: 40 }}
-    animate={inView ? { opacity: 1, y: 0 } : {}}
-    transition={{ delay: 0.7 }}
-    className="
+          {/* STEP 2 — CENTER / BOTTOM */}
+          <motion.div
+            initial={{ opacity: 0, y: 40 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.7 }}
+            className="
       absolute
       left-[37%]
       -translate-x-1/2
@@ -149,24 +149,24 @@ const HowItWorksSection = () => {
       text-center
       text-black
     "
-  >
-    <div className="mx-auto mb-6 w-20 h-20 rounded-2xl bg-[#39ac99] flex items-center justify-center">
-      <BadgeDollarSign className="w-9 h-9 text-white" />
-    </div>
-    <h3 className="text-2xl font-semibold mb-3">
-      Review Your Cash Offer
-    </h3>
-    <p className="text-black text-xl font-bold ">
-      We analyze your home and send a fair, no-obligation offer within 24 hours.
-    </p>
-  </motion.div>
+          >
+            <div className="mx-auto mb-6 w-20 h-20 rounded-2xl bg-[#39ac99] flex items-center justify-center">
+              <BadgeDollarSign className="w-9 h-9 text-white" />
+            </div>
+            <h3 className="text-2xl font-semibold mb-3">
+              Get Your Cash Offer
+            </h3>
+            <p className="text-black text-xl font-bold ">
+              We'll schedule a quick visit and present a fair, no-obligation cash offer.
+            </p>
+          </motion.div>
 
-  {/* STEP 3 — RIGHT / TOP */}
-  <motion.div
-    initial={{ opacity: 0, y: -30 }}
-    animate={inView ? { opacity: 1, y: 0 } : {}}
-    transition={{ delay: 1.1 }}
-    className="
+          {/* STEP 3 — RIGHT / TOP */}
+          <motion.div
+            initial={{ opacity: 0, y: -30 }}
+            animate={inView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 1.1 }}
+            className="
       absolute
       right-[-2%]
       top-[29%]
@@ -174,18 +174,18 @@ const HowItWorksSection = () => {
       text-center
       text-black
     "
-  >
-    <div className="mx-auto mb-6 w-20 h-20 rounded-2xl bg-[#39ac99] flex items-center justify-center">
-      <Key className="w-9 h-9 text-white" />
-    </div>
-    <h3 className="text-2xl font-semibold mb-3">
-      Close & Get Paid
-    </h3>
-    <p className="text-black text-xl font-bold ">
-      Pick your closing date. We handle everything. You get paid.
-    </p>
-  </motion.div>
-</div>
+          >
+            <div className="mx-auto mb-6 w-20 h-20 rounded-2xl bg-[#39ac99] flex items-center justify-center">
+              <Key className="w-9 h-9 text-white" />
+            </div>
+            <h3 className="text-2xl font-semibold mb-3">
+              Close on Your Timeline
+            </h3>
+            <p className="text-black text-xl font-bold ">
+              We handle all the paperwork and pay all closing costs. You choose the date.
+            </p>
+          </motion.div>
+        </div>
 
 
         {/* ================= MOBILE ================= */}
@@ -227,7 +227,7 @@ const HowItWorksSection = () => {
           className="flex justify-center mt-16 md:mt-2"
         >
           <Button size="lg" className="rounded-full px-14">
-            <Link to="/contact">Get My Cash Offer</Link>
+            <Link to="/contact">Start Your Sale Today</Link>
           </Button>
         </motion.div>
 
