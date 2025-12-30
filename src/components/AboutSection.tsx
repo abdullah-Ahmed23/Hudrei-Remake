@@ -27,7 +27,7 @@ const values = [
     icon: MapPinned,
   },
   {
-    title: "With Integrity",
+    title: "With Integrity & Real Results",
     desc: "Fair offers backed by honest market analysis.",
     icon: BadgeCheck,
   },
@@ -45,15 +45,11 @@ const AboutValues = () => {
           viewport={{ once: true }}
           className="text-center max-w-3xl mx-auto mb-20"
         >
-          <span className="text-white text-2xl sm:text-5xl uppercase tracking-widest">
-            Our Values
-          </span>
+          
           <h2 className="text-4xl sm:text-7xl font-bold mt-4 mb-6">
-            Built on Trust. Driven by People.
+            At Hudrei We Are
           </h2>
-          <p className="text-white text-lg">
-            How we operate, communicate, and deliver results — every time.
-          </p>
+        
         </motion.div>
 
         {/* ================= MOBILE (ICONS ONLY) ================= */}

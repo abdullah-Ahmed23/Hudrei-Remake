@@ -76,8 +76,8 @@ const Index = () => {
           <TestimonialsSection />
           
           <AboutSection />
-          <Faq />
           <CTASection  />
+          <Faq />
           <Question  />
         </main>
        

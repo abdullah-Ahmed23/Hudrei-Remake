@@ -29,6 +29,7 @@ const Contact = () => {
     consent: false,
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const GHL_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/EqS0XR2ZyBqz2ifHkESj/webhook-trigger/88f134a6-7042-414c-aa49-0e50824487c4";
 
   const formRef = useRef<HTMLDivElement | null>(null);
 useEffect(() => {
@@ -42,19 +43,47 @@ useEffect(() => {
 
   
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
+  e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+) => {
+  const { name, value, type } = e.target;
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+  setFormData((prev) => ({
+    ...prev,
+    [name]:
+      type === "checkbox"
+        ? (e.target as HTMLInputElement).checked
+        : value,
+  }));
+};
+
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+
+  try {
+    await fetch(GHL_WEBHOOK_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        fullName: formData.fullName,
+        phone: formData.phone,
+        email: formData.email,
+        streetAddress: formData.streetAddress,
+        city: formData.city,
+        state: formData.state,
+        timeline: formData.timeline,
+        source: "HudREI Website",
+      }),
+    });
+
     toast({
       title: "Request Received!",
-      description: "We'll contact you within 24 hours with your cash offer.",
+      description:
+        "We'll contact you within 24 hours with your cash offer.",
     });
+
     setFormData({
       fullName: "",
       phone: "",
@@ -66,8 +95,17 @@ useEffect(() => {
       timeline: "",
       consent: false,
     });
+  } catch (error) {
+    toast({
+      title: "Something went wrong",
+      description: "Please try again or call us directly.",
+      variant: "destructive",
+    });
+  } finally {
     setIsSubmitting(false);
-  };
+  }
+};
+
 
   const steps = [
     {
@@ -196,12 +234,7 @@ const [addressResults, setAddressResults] = useState([]);
                 <p className="text-white/80 mb-6">
                   Reach out to us today to begin the journey.
                 </p>
-                <Button
-                  size="lg"
-                  className="bg-accent hover:bg-accent/90 text-white font-semibold"
-                >
-                  Get My Cash Offer!
-                </Button>
+             
               </div>
 
               {/* Right - Direct Contact Card */}

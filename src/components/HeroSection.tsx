@@ -2,30 +2,21 @@ import {
   CheckCircle,
   VolumeX,
   Volume2,
-  Send,
   X,
 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useEffect, useRef, useState } from "react";
-import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
-import heroVideo from "@/media/hero-1.mp4";
-import { Link, NavLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import heroVideo from "@/media/Sell My House Fast For Cash - HudREI  Real Estate Reimagined (720p, h264).mp4";
+import heroThumb from "@/media/hero-thump.png";
 
 const HeroSection = () => {
   const sectionRef = useRef<HTMLElement | null>(null);
-  const inputRef = useRef<HTMLInputElement | null>(null);
+  const previewRef = useRef<HTMLVideoElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
-  const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({ streetAddress: "" });
-  const [addressQuery, setAddressQuery] = useState("");
-  const [addressResults, setAddressResults] = useState<any[]>([]);
   const [inView, setInView] = useState(false);
-
   const [videoOpen, setVideoOpen] = useState(false);
   const [muted, setMuted] = useState(false);
+  const [hovered, setHovered] = useState(false);
 
   /* ---------------- Intersection Observer ---------------- */
   useEffect(() => {
@@ -43,42 +34,23 @@ const HeroSection = () => {
     return () => observer.disconnect();
   }, []);
 
-  /* ---------------- Address Autocomplete ---------------- */
+  /* ---------------- Hover Preview Controls ---------------- */
   useEffect(() => {
-    if (addressQuery.length < 3) {
-      setAddressResults([]);
-      return;
+    if (!previewRef.current) return;
+
+    if (hovered) {
+      previewRef.current.play().catch(() => {});
+    } else {
+      previewRef.current.pause();
+      previewRef.current.currentTime = 0;
     }
-
-    const timeout = setTimeout(async () => {
-      try {
-        const res = await fetch(
-          `https://nominatim.openstreetmap.org/search?format=json&limit=5&q=${addressQuery}`,
-          { headers: { "User-Agent": "hudrei-form" } }
-        );
-        const data = await res.json();
-        setAddressResults(data);
-      } catch (err) {
-        console.error(err);
-      }
-    }, 400);
-
-    return () => clearTimeout(timeout);
-  }, [addressQuery]);
-
-  /* ---------------- Submit ---------------- */
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate("/contact", {
-      state: { streetAddress: formData.streetAddress },
-    });
-  };
+  }, [hovered]);
 
   return (
     <>
       <section
         ref={sectionRef}
-        className="min-h-screen bg-white pt-10 md:pt-20 pb-11 flex items-center"
+        className=" pt-10 pb-10 bg-white  flex items-center"
       >
         <div className="container mx-auto px-4">
           <div
@@ -86,8 +58,8 @@ const HeroSection = () => {
             ${inView ? "opacity-100 translate-y-0" : "opacity-0 translate-y-10"}`}
           >
             {/* HEADLINE */}
-            <div className="space-y-4">
-              <div className="flex justify-center gap-16 text-sm sm:text-3xl lg:text-4xl text-black font-bold">
+            <div className="space-y-6">
+              <div className="flex justify-center gap-10 text-sm sm:text-2xl lg:text-3xl text-black font-bold">
                 {["Sell As-Is", "Close Fast", "No Fees"].map((b) => (
                   <span key={b} className="flex items-center gap-2">
                     <CheckCircle className="w-5 h-5 text-accent" />
@@ -96,32 +68,65 @@ const HeroSection = () => {
                 ))}
               </div>
 
-              <h1 className="text-4xl sm:text-5xl lg:text-8xl font-bold">
+              <h1 className="text-4xl sm:text-5xl lg:text-7xl font-bold">
                 <span className="text-accent">Get Your Cash Offer Today</span>
               </h1>
             </div>
 
-            {/* 🎥 REEL THUMBNAIL */}
+            {/* 🎬 VIDEO PREVIEW */}
             <button
               onClick={() => setVideoOpen(true)}
-              className="relative w-[260px] sm:w-[300px] aspect-[9/16] rounded-2xl overflow-hidden shadow-xl group"
+              onMouseEnter={() => setHovered(true)}
+              onMouseLeave={() => setHovered(false)}
+              className="relative w-full max-w-[900px] aspect-video rounded-3xl overflow-hidden shadow-2xl group"
             >
-              {/* Thumbnail */}
+              {/* Animated Poster */}
+              <img
+                src={heroThumb}
+                alt="Video preview"
+                className="absolute inset-0 w-full h-full object-cover
+                           scale-105 animate-[slowZoom_8s_ease-in-out_infinite]"
+              />
+
+              {/* Preview Video */}
               <video
+                ref={previewRef}
                 src={heroVideo}
                 muted
+                loop
                 playsInline
-                className="absolute inset-0 w-full h-full object-cover"
+                preload="metadata"
+                className="absolute inset-0 w-full h-full object-cover
+                           opacity-0 group-hover:opacity-100
+                           transition-opacity duration-500"
               />
 
               {/* Overlay */}
-              <div className="absolute inset-0 bg-black/40 flex items-center justify-center">
-                <Send className="w-14 h-14 text-white rotate-45 group-hover:scale-110 transition" />
+              <div className="absolute inset-0 bg-black/35 group-hover:bg-black/15 transition-colors duration-500" />
+
+              {/* PLAY BUTTON */}
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="relative flex items-center justify-center">
+                  {/* Ripple */}
+                  <span className="absolute w-28 h-28 rounded-full bg-accent/30 animate-ping" />
+                  <span className="absolute w-20 h-20 rounded-full bg-accent/20 animate-pulse" />
+
+                  {/* Button */}
+                  <div
+                    className="relative w-16 h-16 rounded-full bg-accent flex items-center justify-center
+                               group-hover:scale-110 transition-transform duration-300 shadow-xl"
+                  >
+                    <svg
+                      viewBox="0 0 24 24"
+                      className="w-7 h-7 fill-white ml-1"
+                    >
+                      <polygon points="5,3 19,12 5,21" />
+                    </svg>
+                  </div>
+                </div>
               </div>
             </button>
 
-            {/* ADDRESS FORM */}
-         
           </div>
         </div>
       </section>
@@ -129,20 +134,20 @@ const HeroSection = () => {
       {/* 🎬 VIDEO MODAL */}
       {videoOpen && (
         <div className="fixed inset-0 z-[999] bg-black/80 backdrop-blur flex items-center justify-center">
-          <div className="relative w-[90vw] max-w-[420px] aspect-[9/16] rounded-2xl overflow-hidden bg-black">
+          <div className="relative w-[90vw] max-w-[1000px] aspect-video rounded-3xl overflow-hidden bg-black">
             <video
               ref={videoRef}
               src={heroVideo}
               autoPlay
-              
               muted={muted}
+              controls
               className="w-full h-full object-cover"
             />
 
             {/* Close */}
             <button
               onClick={() => setVideoOpen(false)}
-              className="absolute top-3 right-3 bg-black/60 p-2 rounded-full"
+              className="absolute top-4 right-4 bg-black/60 p-2 rounded-full"
             >
               <X className="text-white w-5 h-5" />
             </button>
@@ -161,6 +166,16 @@ const HeroSection = () => {
           </div>
         </div>
       )}
+
+      {/* Tailwind animation */}
+      <style>
+        {`
+          @keyframes slowZoom {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.1); }
+          }
+        `}
+      </style>
     </>
   );
 };

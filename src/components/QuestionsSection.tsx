@@ -94,12 +94,12 @@ Tell us your goal, and we will build the offer that gets you there.
           <div className="flex flex-wrap justify-center gap-x-3 gap-y-3">
             {markets.map((market, index) => (
               <span key={market} className="flex items-center">
-                <a
-                  href={`/markets/${market.toLowerCase().replace(" ", "-")}`}
+                <p
+                  
                   className="text-sm font-medium text-accent hover:text-primary transition-colors hover:underline underline-offset-4"
                 >
                   {market}
-                </a>
+                </p>
 
                 {index < markets.length - 1 && (
                   <span className="mx-2 text-muted-foreground">•</span>
