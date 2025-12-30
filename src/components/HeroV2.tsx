@@ -50,7 +50,7 @@ const HeroV2 = () => {
   return (
     <>
       {/* ================= HERO ================= */}
-      <section className="relative min-h-[85vh] md:min-h-[90vh] bg-white">
+      <section className="relative min-h-[85vh] md:min-h-[90vh] mt-14 sm:mt-0 bg-white">
         <div className="min-h-[85vh] md:min-h-[90vh] flex items-center">
           <div className="container mx-auto px-6 flex flex-col items-center text-center gap-10">
 
