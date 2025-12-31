@@ -75,7 +75,7 @@ const AppContent = () => {
       <ScrollToHash />
 
       <Header />
-      <Suspense fallback={<LoadingOverlay />}>
+      <Suspense fallback={null}>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<PageTransition><Index /></PageTransition>} />
@@ -105,26 +105,11 @@ const AppContent = () => {
 };
 
 const App = () => {
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsInitialLoad(false);
-    }, 2000); // 2 seconds for initial brand reveal as requested
-    return () => clearTimeout(timer);
-  }, []);
-
   return (
     <QueryClientProvider client={queryClient}>
-      <AnimatePresence mode="wait">
-        {isInitialLoad ? (
-          <LoadingOverlay key="initial-loader" />
-        ) : (
-          <BrowserRouter key="app-content">
-            <AppContent />
-          </BrowserRouter>
-        )}
-      </AnimatePresence>
+      <BrowserRouter>
+        <AppContent />
+      </BrowserRouter>
     </QueryClientProvider>
   );
 };
