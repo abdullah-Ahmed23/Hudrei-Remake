@@ -44,12 +44,12 @@ const HowItWorksSection = () => {
     <section
       ref={sectionRef}
       className="
-        snap-start
-        min-h-screen
+        lg:snap-start
+        lg:min-h-screen
         bg-white
         flex
         items-center
-        py-2
+        py-12 md:py-24
       "
     >
       <div className="container mx-auto px-4 w-full">
@@ -192,7 +192,7 @@ const HowItWorksSection = () => {
           <div className="absolute left-5 top-0 bottom-0 w-[3px] bg-gray-200 rounded-full">
             <motion.div
               style={{ height: mobileLineHeight }}
-              className="w-full bg-accent rounded-full"
+              className="w-full bg-accent rounded-full will-change-[height]"
             />
           </div>
 

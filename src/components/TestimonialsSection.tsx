@@ -1,13 +1,10 @@
 import { useEffect, useRef, useState } from "react";
 import { Star, User } from "lucide-react";
-import { Link, NavLink } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 
 const TestimonialsSection = () => {
-    const sliderRef = useRef<HTMLDivElement>(null);
     const sectionRef = useRef<HTMLElement>(null);
-
-    const [offset, setOffset] = useState(0);
     const [animateStars, setAnimateStars] = useState(false);
 
     const reviews = [
@@ -23,41 +20,19 @@ const TestimonialsSection = () => {
 
     const loopedReviews = [...reviews, ...reviews];
 
-    /* -------- CONTINUOUS SCROLL -------- */
-    useEffect(() => {
-        let rafId: number;
-        const speed = 0.25;
-
-        const animate = () => {
-            setOffset((prev) => {
-                const cardWidth = 360;
-                const resetPoint = reviews.length * cardWidth;
-                return prev >= resetPoint ? 0 : prev + speed;
-            });
-
-            rafId = requestAnimationFrame(animate);
-        };
-
-        rafId = requestAnimationFrame(animate);
-        return () => cancelAnimationFrame(rafId);
-    }, [reviews.length]);
-
     /* -------- STAR ANIMATION ON VIEW -------- */
     useEffect(() => {
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
                     setAnimateStars(true);
-                    observer.disconnect(); // run once
+                    observer.disconnect();
                 }
             },
-            { threshold: 0.3 }
+            { threshold: 0.1 }
         );
 
-        if (sectionRef.current) {
-            observer.observe(sectionRef.current);
-        }
-
+        if (sectionRef.current) observer.observe(sectionRef.current);
         return () => observer.disconnect();
     }, []);
 
@@ -65,12 +40,11 @@ const TestimonialsSection = () => {
         <section
             id="testimonials"
             ref={sectionRef}
-            className="py-20 md:py-10 bg-white overflow-hidden"
+            className="py-20 md:py-24 bg-white overflow-hidden"
         >
             <div className="container mx-auto px-4">
-
                 {/* Header */}
-                <div className="text-center mb-14" data-aos="fade-down">
+                <div className="text-center mb-14" data-aos="fade-up">
                     <span className="inline-block px-4 py-2 rounded-full bg-gray-100 text-black text-sm font-medium mb-4">
                         Google Reviews
                     </span>
@@ -79,75 +53,85 @@ const TestimonialsSection = () => {
                     </h2>
                 </div>
 
-                {/* Slider */}
-                <div className="relative">
-                    <div
-                        ref={sliderRef}
-                        className="flex gap-6 will-change-transform"
-                        style={{ transform: `translateX(-${offset}px)` }}
-                    >
+                {/* Slider - CSS Powered for Performance */}
+                <div className="relative w-full">
+                    <div className="flex gap-6 animate-scroll will-change-transform py-4">
                         {loopedReviews.map((review, i) => (
                             <div
                                 key={i}
-                                data-aos="fade-up"
-                                data-aos-delay={(i % reviews.length) * 80}
-                                className="min-w-[320px] md:min-w-[360px] bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-lg transition-shadow duration-300 flex flex-col justify-between"
+                                className="min-w-[300px] md:min-w-[360px] bg-white border border-gray-100 rounded-[2rem] p-8 shadow-sm hover:shadow-xl transition-all duration-500 flex flex-col justify-between group"
                             >
                                 {/* Stars */}
-                                <div className="flex justify-center gap-1 mb-4">
+                                <div className="flex justify-center gap-1 mb-6">
                                     {[...Array(5)].map((_, idx) => (
                                         <Star
                                             key={idx}
-                                            className={`w-4 h-4 text-yellow-400 fill-yellow-400 ${animateStars ? "animate-star" : ""
-                                                }`}
+                                            className={`w-5 h-5 text-yellow-400 fill-yellow-400 ${animateStars ? "animate-star" : "opacity-0"}`}
                                             style={{
-                                                animationDelay: animateStars
-                                                    ? `${idx * 120}ms`
-                                                    : "0ms",
+                                                animationDelay: animateStars ? `${idx * 100}ms` : "0ms",
                                             }}
                                         />
                                     ))}
                                 </div>
 
-                                {/* Review */}
-                                <p className="text-gray-800 leading-relaxed text-center mb-8">
-                                    {review.text}
+                                <p className="text-gray-700 leading-relaxed text-center mb-8 font-medium">
+                                    "{review.text}"
                                 </p>
 
-                                {/* Profile */}
                                 <div className="flex flex-col items-center justify-center mt-auto">
-                                    <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center mb-2">
-                                        <User className="w-5 h-5 text-accent" />
+                                    <div className="w-14 h-14 rounded-2xl bg-accent/10 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                                        <User className="w-6 h-6 text-accent" />
                                     </div>
-                                    <div className="font-semibold text-gray-900 text-center">
+                                    <div className="font-bold text-gray-900 text-center">
                                         {review.name}
                                     </div>
+                                    <div className="text-xs text-gray-400 uppercase tracking-widest mt-1">Verified Seller</div>
                                 </div>
-
                             </div>
                         ))}
-
                     </div>
                 </div>
-
             </div>
-            <div className="flex justify-center mt-10">
+
+            <div className="flex justify-center mt-12">
                 <Link to="/contact">
-                    <Button size="lg" className="rounded-xl px-8 py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">Get My Cash Offer</Button>
+                    <Button size="lg" className="rounded-2xl px-12 py-8 text-xl font-bold glow-button shadow-2xl hover:-translate-y-1.5 transition-all">
+                        Get My Cash Offer
+                    </Button>
                 </Link>
             </div>
 
-            {/* STAR ANIMATION */}
+            {/* HIGH PERFORMANCE ANIMATIONS */}
             <style>{`
-        @keyframes starPop {
-          0% { transform: scale(0); opacity: 0 }
-          60% { transform: scale(1.2); opacity: 1 }
-          100% { transform: scale(1); opacity: 1 }
-        }
-        .animate-star {
-          animation: starPop 0.6s ease-out forwards;
-        }
-      `}</style>
+                @keyframes infiniteScroll {
+                    0% { transform: translateX(0); }
+                    100% { transform: translateX(calc(-360px * ${reviews.length} - 1.5rem * ${reviews.length})); }
+                }
+                
+                @media (max-width: 768px) {
+                    @keyframes infiniteScroll {
+                        0% { transform: translateX(0); }
+                        100% { transform: translateX(calc(-300px * ${reviews.length} - 1.5rem * ${reviews.length})); }
+                    }
+                }
+
+                .animate-scroll {
+                    animation: infiniteScroll 40s linear infinite;
+                }
+                
+                .animate-scroll:hover {
+                    animation-play-state: paused;
+                }
+
+                @keyframes starPop {
+                    0% { transform: scale(0); opacity: 0 }
+                    60% { transform: scale(1.3); opacity: 1 }
+                    100% { transform: scale(1); opacity: 1 }
+                }
+                .animate-star {
+                    animation: starPop 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+                }
+            `}</style>
         </section>
     );
 };

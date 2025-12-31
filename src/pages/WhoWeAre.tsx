@@ -325,7 +325,7 @@ const WhoWeAre = () => {
                                         "group bg-white p-12 rounded-[3rem] border border-gray-100 transition-all duration-700",
                                         "hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.12)] hover:-translate-y-3",
                                         val.borderColor,
-                                        "relative overflow-hidden"
+                                        "relative overflow-hidden will-change-transform"
                                     )}
                                     initial={{ opacity: 0, y: 40 }}
                                     whileInView={{ opacity: 1, y: 0 }}
@@ -401,11 +401,14 @@ const WhoWeAre = () => {
                                                         scale: isCenter ? 1.05 : 0.85,
                                                         x: isLeft ? -50 : isRight ? 50 : 0,
                                                         zIndex: isCenter ? 30 : 20,
-                                                        filter: isCenter ? "grayscale(0)" : "grayscale(0.5) blur(1px)"
+                                                        // Disable heavy filters on mobile for performance
+                                                        filter: window.innerWidth > 768
+                                                            ? (isCenter ? "grayscale(0)" : "grayscale(0.5) blur(1px)")
+                                                            : "none"
                                                     }}
                                                     exit={{ opacity: 0, scale: 0.5 }}
                                                     transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                                                    className="absolute w-[350px] h-[500px] flex-shrink-0 cursor-pointer"
+                                                    className="absolute w-[300px] sm:w-[350px] h-[450px] sm:h-[500px] flex-shrink-0 cursor-pointer will-change-transform"
                                                     onClick={() => {
                                                         if (isLeft) prevSlide();
                                                         if (isRight) nextSlide();

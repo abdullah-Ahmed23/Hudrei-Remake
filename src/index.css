@@ -99,7 +99,6 @@
   }
 
   /* Dark mode scrollbar for sections with dark backgrounds */
-  .bg-[#062f33] ::-webkit-scrollbar-thumb,
   .bg-primary ::-webkit-scrollbar-thumb {
     border-color: #062f33;
   }
@@ -169,6 +168,33 @@
     opacity: 1;
     transform: scale(1);
   }
+}
+
+/* Global Performance Optimizations for Mobile */
+@media (max-width: 768px) {
+  * {
+    /* Avoid heavy blur and grayscale on low-end mobile */
+    --mobile-filter-none: none !important;
+  }
+
+  .animate-fade-up,
+  .animate-fade-in,
+  .animate-scale-in,
+  [data-aos] {
+    will-change: transform, opacity;
+    transform: translateZ(0);
+    /* Force GPU */
+    backface-visibility: hidden;
+  }
+}
+
+
+.will-change-transform {
+  will-change: transform;
+}
+
+.transform-gpu {
+  transform: translateZ(0);
 }
 
 /* Global Glow Button Style */

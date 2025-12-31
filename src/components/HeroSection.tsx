@@ -84,14 +84,14 @@ const HeroSection = () => {
               onClick={() => setVideoOpen(true)}
               onMouseEnter={() => setHovered(true)}
               onMouseLeave={() => setHovered(false)}
-              className="relative w-full max-w-[900px] aspect-video rounded-3xl overflow-hidden shadow-2xl group"
+              className="relative w-full max-w-[900px] aspect-video rounded-3xl overflow-hidden shadow-2xl group will-change-transform"
             >
               {/* Animated Poster */}
               <img
                 src={heroThumb}
                 alt="Video preview"
                 className="absolute inset-0 w-full h-full object-cover
-                           scale-105 animate-[slowZoom_8s_ease-in-out_infinite]"
+                           scale-105 animate-[slowZoom_8s_ease-in-out_infinite] transform-gpu"
               />
 
               {/* Preview Video */}

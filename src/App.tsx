@@ -39,7 +39,9 @@ const App = () => {
       duration: 800,
       easing: "ease-out-cubic",
       once: true,
-      offset: 120,
+      offset: 50, // Reduced offset for mobile
+      disable: 'mobile', // Disable on mobile to prevent laggy scroll
+      disableMutationObserver: true, // Better performance
     });
   }, []);
 

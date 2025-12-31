@@ -64,59 +64,46 @@ const AboutValues = () => {
         </motion.div>
 
         {/* ================= MOBILE (ICONS ONLY) ================= */}
-        <div className="relative md:hidden">
-          <div className="space-y-20 pl-16">
-            {values.map((item, i) => {
-              const Icon = item.icon;
-              const itemRef = useRef<HTMLDivElement>(null);
+        <motion.div
+          className="relative md:hidden space-y-16 pl-14"
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={{
+            hidden: { opacity: 0 },
+            show: {
+              opacity: 1,
+              transition: { staggerChildren: 0.1 }
+            }
+          }}
+        >
+          {values.map((item, i) => {
+            const Icon = item.icon;
 
-              const isActive = useInView(itemRef, {
-                margin: "-50% 0px -30% 0px",
-              });
+            return (
+              <motion.div
+                key={i}
+                variants={{
+                  hidden: { opacity: 0, x: -20 },
+                  show: { opacity: 1, x: 0 }
+                }}
+                className="relative will-change-transform"
+              >
+                {/* ICON */}
+                <div className="absolute -left-[60px] top-1 w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center border border-accent/10">
+                  <Icon className="w-6 h-6 text-accent" />
+                </div>
 
-              return (
-                <motion.div
-                  ref={itemRef}
-                  key={i}
-                  initial={{ opacity: 0, y: 40 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5 }}
-                  className="relative"
-                >
-                  {/* ICON */}
-                  <motion.div
-                    animate={
-                      isActive
-                        ? {
-                          scale: 1.15,
-                          backgroundColor: "rgba(56, 178, 172, 0.35)",
-                        }
-                        : {
-                          scale: 1,
-                          backgroundColor: "rgba(56, 178, 172, 0.1)",
-                        }
-                    }
-                    transition={{ type: "spring", stiffness: 300 }}
-                    className="absolute -left-[66px] top-1 w-12 h-12 rounded-xl flex items-center justify-center"
-                  >
-                    <Icon
-                      className={`w-6 h-6 transition-colors duration-300 ${isActive ? "text-accent" : "text-white/50"
-                        }`}
-                    />
-                  </motion.div>
-
-                  <h3 className="text-2xl font-semibold mb-3">
-                    {item.title}
-                  </h3>
-                  <p className="text-white text-lg">
-                    {item.desc}
-                  </p>
-                </motion.div>
-              );
-            })}
-          </div>
-        </div>
+                <h3 className="text-xl font-bold mb-2">
+                  {item.title}
+                </h3>
+                <p className="text-white/80 text-base leading-relaxed">
+                  {item.desc}
+                </p>
+              </motion.div>
+            );
+          })}
+        </motion.div>
 
         {/* ================= DESKTOP GRID ================= */}
         <motion.div

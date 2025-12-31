@@ -66,9 +66,9 @@ const TrustSection = () => {
                 relative group rounded-2xl p-6 lg:p-8
                 glass-card
                 transition-all duration-500
-                [transform-style:preserve-3d]
-                hover:-translate-y-3
-                hover:[transform:perspective(1000px)_rotateX(6deg)_rotateY(-6deg)]
+                will-change-transform
+                md:hover:-translate-y-3
+                md:hover:shadow-2xl md:hover:shadow-accent/10
               "
             >
               {/* Glow */}
