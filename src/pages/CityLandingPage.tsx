@@ -12,19 +12,41 @@ import { Input } from "@/components/ui/input";
 import { cityData } from "@/data/cityData";
 import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
 import { useAddressAutocomplete } from "@/hooks/useAddressAutocomplete";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import FormField from "@/components/FormField";
+
+const formSchema = z.object({
+    address: z.string().min(1, "Please enter your property address to continue"),
+});
+
+type FormData = z.infer<typeof formSchema>;
 
 const CityLandingPage = () => {
     const { area } = useParams<{ area: string }>();
     const navigate = useNavigate();
     const inputRef = useRef<HTMLInputElement | null>(null);
 
-    const [addressQuery, setAddressQuery] = useState("");
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        watch,
+        formState: { errors, isSubmitting },
+    } = useForm<FormData>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            address: "",
+        },
+    });
+
+    const addressQuery = watch("address");
     const { results, clearResults } = useAddressAutocomplete(addressQuery);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const onSubmit = (data: FormData) => {
         navigate("/contact", {
-            state: { streetAddress: addressQuery },
+            state: { streetAddress: data.address },
         });
     };
 
@@ -77,42 +99,47 @@ const CityLandingPage = () => {
 
                             {/* Address Form */}
                             <motion.form
-                                onSubmit={handleSubmit}
+                                onSubmit={handleSubmit(onSubmit)}
                                 initial={{ opacity: 0, scale: 0.97 }}
                                 animate={{ opacity: 1, scale: 1 }}
                                 transition={{ delay: 0.2 }}
                                 className="w-full max-w-2xl mx-auto mb-12"
                             >
-                                <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
-                                    <div className="relative w-full">
-                                        <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
-                                        <Input
-                                            type="text"
-                                            placeholder="Enter your address..."
-                                            className="h-16 bg-gray-50 border-gray-200 text-gray-900 placeholder:text-gray-400 text-lg focus-visible:ring-2 focus-visible:ring-accent/20 pl-12 pr-4 font-medium w-full rounded-2xl shadow-inner-sm"
-                                            value={addressQuery}
-                                            onChange={(e) => setAddressQuery(e.target.value)}
-                                            ref={inputRef}
+                                <FormField error={errors.address?.message}>
+                                    <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
+                                        <div className="relative w-full">
+                                            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+                                            <Input
+                                                {...register("address")}
+                                                type="text"
+                                                placeholder="Enter your address..."
+                                                className="h-16 bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 text-lg focus-visible:ring-2 focus-visible:ring-accent/20 pl-12 pr-4 font-bold w-full rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] focus:border-accent"
+                                                ref={(e) => {
+                                                    register("address").ref(e);
+                                                    inputRef.current = e;
+                                                }}
+                                            />
+                                        </div>
+
+                                        <Button
+                                            size="lg"
+                                            disabled={isSubmitting}
+                                            className="h-16 w-full sm:w-auto rounded-2xl px-10 text-xl font-bold glow-button shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98] flex-shrink-0"
+                                        >
+                                            {isSubmitting ? "Loading..." : "Get Cash Offer"}
+                                        </Button>
+
+                                        <AddressAutocompletePortal
+                                            anchorRef={inputRef}
+                                            results={results}
+                                            onSelect={(value) => {
+                                                setValue("address", value, { shouldValidate: true });
+                                                clearResults();
+                                            }}
+                                            onClose={clearResults}
                                         />
                                     </div>
-
-                                    <Button
-                                        size="lg"
-                                        className="h-16 w-full sm:w-auto rounded-2xl px-10 text-xl font-bold glow-button shadow-xl transition-all hover:scale-[1.02] active:scale-[0.98] flex-shrink-0"
-                                    >
-                                        Get Cash Offer
-                                    </Button>
-
-                                    <AddressAutocompletePortal
-                                        anchorRef={inputRef}
-                                        results={results}
-                                        onSelect={(value) => {
-                                            setAddressQuery(value);
-                                            clearResults();
-                                        }}
-                                        onClose={clearResults}
-                                    />
-                                </div>
+                                </FormField>
                             </motion.form>
 
                             {/* Trust Points */}

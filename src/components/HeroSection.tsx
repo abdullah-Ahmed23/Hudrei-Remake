@@ -50,7 +50,7 @@ const HeroSection = () => {
     <>
       <section
         ref={sectionRef}
-        className=" pt-10 pb-10 bg-white  flex items-center"
+        className=" pt-2 pb-10 bg-white  flex items-center"
       >
         <div className="container mx-auto px-4">
           <div
@@ -59,14 +59,7 @@ const HeroSection = () => {
           >
             {/* HEADLINE */}
             <div className="space-y-6">
-              <div className="flex justify-center gap-10 text-sm sm:text-2xl lg:text-3xl text-black font-bold">
-                {["Sell As-Is", "Close Fast", "No Fees"].map((b) => (
-                  <span key={b} className="flex items-center gap-2">
-                    <CheckCircle className="w-5 h-5 text-accent" />
-                    {b}
-                  </span>
-                ))}
-              </div>
+
 
               <h2 className="text-4xl md:text-7xl font-bold text-black mb-6 leading-tight">
                 We Buy Houses in Indiana Sell Your House <span className="text-accent underline">Fast  for Cash</span>

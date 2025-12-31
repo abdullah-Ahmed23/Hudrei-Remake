@@ -1,5 +1,4 @@
 import { Helmet } from "react-helmet";
-
 import { Phone, Mail, CheckCircle2, ArrowRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -15,27 +14,62 @@ import { motion, AnimatePresence } from "framer-motion";
 import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
 import { useAddressAutocomplete } from "@/hooks/useAddressAutocomplete";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import FormField from "@/components/FormField";
+
+const contactSchema = z.object({
+    fullName: z.string().min(1, "Full name is required"),
+    phone: z.string().min(10, "Valid phone number is required"),
+    email: z.string().email("Valid email address is required"),
+    streetAddress: z.string().min(1, "Street address is required"),
+    city: z.string().min(1, "City is required"),
+    state: z.string().min(1, "State is required"),
+    timeline: z.string().min(1, "Please select a timeline"),
+    consent: z.boolean().refine((val) => val === true, {
+        message: "You must agree to be contacted",
+    }),
+});
+
+type ContactFormData = z.infer<typeof contactSchema>;
 
 
 const Contact = () => {
     const { toast } = useToast();
     const location = useLocation();
     const incoming = location.state as any;
-    const [formData, setFormData] = useState({
-        fullName: incoming?.fullName || "",
-        phone: incoming?.phone || "",
-        email: incoming?.email || "",
-        address: "",
-        streetAddress: incoming?.streetAddress || "",
-        city: incoming?.city || "",
-        state: incoming?.state || "",
-        timeline: incoming?.timeline || "",
-        consent: false,
+    const formRef = useRef<HTMLDivElement | null>(null);
+    const addressInputRef = useRef<HTMLInputElement>(null);
+
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        watch,
+        control,
+        reset,
+        formState: { errors, isSubmitting },
+    } = useForm<ContactFormData>({
+        resolver: zodResolver(contactSchema),
+        defaultValues: {
+            fullName: incoming?.fullName || "",
+            phone: incoming?.phone || "",
+            email: incoming?.email || "",
+            streetAddress: incoming?.streetAddress || "",
+            city: incoming?.city || "",
+            state: incoming?.state || "",
+            timeline: incoming?.timeline || "",
+            consent: false,
+        },
     });
-    const [isSubmitting, setIsSubmitting] = useState(false);
+
+    const streetAddress = watch("streetAddress");
+    const [addressQuery, setAddressQuery] = useState(streetAddress || "");
+    const { results, clearResults } = useAddressAutocomplete(addressQuery);
+
     const GHL_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/EqS0XR2ZyBqz2ifHkESj/webhook-trigger/88f134a6-7042-414c-aa49-0e50824487c4";
 
-    const formRef = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
         if (incoming && formRef.current) {
             formRef.current.scrollIntoView({
@@ -45,25 +79,14 @@ const Contact = () => {
         }
     }, [incoming]);
 
+    // Update query when internal state changes (e.g. from location)
+    useEffect(() => {
+        if (streetAddress && streetAddress !== addressQuery) {
+            setAddressQuery(streetAddress);
+        }
+    }, [streetAddress]);
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-    ) => {
-        const { name, value, type } = e.target;
-
-        setFormData((prev) => ({
-            ...prev,
-            [name]:
-                type === "checkbox"
-                    ? (e.target as HTMLInputElement).checked
-                    : value,
-        }));
-    };
-
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-
+    const onSubmit = async (data: ContactFormData) => {
         try {
             await fetch(GHL_WEBHOOK_URL, {
                 method: "POST",
@@ -71,45 +94,26 @@ const Contact = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                    fullName: formData.fullName,
-                    phone: formData.phone,
-                    email: formData.email,
-                    streetAddress: formData.streetAddress,
-                    city: formData.city,
-                    state: formData.state,
-                    timeline: formData.timeline,
+                    ...data,
                     source: "HudREI Website",
                 }),
             });
 
             toast({
                 title: "Request Received!",
-                description:
-                    "We'll contact you within 24 hours with your cash offer.",
+                description: "We'll contact you within 24 hours with your cash offer.",
             });
 
-            setFormData({
-                fullName: "",
-                phone: "",
-                email: "",
-                address: "",
-                streetAddress: "",
-                city: "",
-                state: "",
-                timeline: "",
-                consent: false,
-            });
+            reset();
+            setAddressQuery("");
         } catch (error) {
             toast({
                 title: "Something went wrong",
                 description: "Please try again or call us directly.",
                 variant: "destructive",
             });
-        } finally {
-            setIsSubmitting(false);
         }
     };
-
 
     const steps = [
         {
@@ -137,23 +141,18 @@ const Contact = () => {
         "No Hidden Costs – We cover the closing fee",
     ];
 
-    const [addressQuery, setAddressQuery] = useState(formData.streetAddress || "");
-    const { results, clearResults } = useAddressAutocomplete(addressQuery);
-    const addressInputRef = useRef<HTMLInputElement>(null);
 
     // 🔗 Get address from Hero
     useEffect(() => {
         if (location.state?.streetAddress) {
-            setFormData((prev) => ({
-                ...prev,
-                streetAddress: location.state.streetAddress,
-            }));
+            setValue("streetAddress", location.state.streetAddress, { shouldValidate: true });
+            setAddressQuery(location.state.streetAddress);
 
             setTimeout(() => {
                 formRef.current?.scrollIntoView({ behavior: "smooth" });
             }, 300);
         }
-    }, [location.state]);
+    }, [location.state, setValue]);
 
     const [isComparisonOpen, setIsComparisonOpen] = useState(false);
 
@@ -435,146 +434,117 @@ const Contact = () => {
                                     data-aos="zoom-in"
                                 >
 
-                                    <form onSubmit={handleSubmit} className="space-y-4 ">
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Full Name *
-                                            </label>
+                                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                                        <FormField label="Full Name" error={errors.fullName?.message} required>
                                             <Input
-                                                name="fullName"
-                                                value={formData.fullName}
-                                                onChange={handleChange}
+                                                {...register("fullName")}
                                                 placeholder="Full Name"
-                                                required
-                                                className="border-accent/30 focus:border-accent text-black bg-white "
-                                            />
-                                        </div>
-
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Phone *
-                                            </label>
-                                            <Input
-                                                name="phone"
-                                                type="tel"
-                                                value={formData.phone}
-                                                onChange={handleChange}
-                                                placeholder="Phone"
-                                                required
                                                 className="border-accent/30 focus:border-accent text-black bg-white"
                                             />
-                                        </div>
+                                        </FormField>
 
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                Email *
-                                            </label>
+                                        <FormField label="Phone" error={errors.phone?.message} required>
                                             <Input
-                                                name="email"
+                                                {...register("phone")}
+                                                type="tel"
+                                                placeholder="Phone"
+                                                className="border-accent/30 focus:border-accent text-black bg-white"
+                                            />
+                                        </FormField>
+
+                                        <FormField label="Email" error={errors.email?.message} required>
+                                            <Input
+                                                {...register("email")}
                                                 type="email"
-                                                value={formData.email}
-                                                onChange={handleChange}
                                                 placeholder="Email"
-                                                required
-                                                className="border-accent/30 focus:border-accen text-black bg-white "
+                                                className="border-accent/30 focus:border-accent text-black bg-white"
                                             />
-                                        </div>
+                                        </FormField>
 
-
-
-                                        <div className="relative">
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                streetAddress
-                                            </label>
-                                            <Input className="text-black bg-white "
-                                                ref={addressInputRef}
-                                                name="streetAddress"
-                                                value={addressQuery}
-                                                placeholder="Street Address *"
-                                                required
-                                                onChange={(e) => {
-                                                    setAddressQuery(e.target.value);
-                                                    setFormData({
-                                                        ...formData,
-                                                        streetAddress: e.target.value,
-                                                    });
-                                                }}
-                                            />
-
-                                            <AddressAutocompletePortal
-                                                anchorRef={addressInputRef}
-                                                results={results}
-                                                onSelect={(val) => {
-                                                    setAddressQuery(val);
-                                                    setFormData({
-                                                        ...formData,
-                                                        streetAddress: val,
-                                                    });
-                                                    clearResults();
-                                                }}
-                                                onClose={clearResults}
-                                            />
-                                        </div>
+                                        <FormField label="Street Address" error={errors.streetAddress?.message} required>
+                                            <div className="relative">
+                                                <Input
+                                                    {...register("streetAddress")}
+                                                    ref={(e) => {
+                                                        register("streetAddress").ref(e);
+                                                        // @ts-ignore
+                                                        addressInputRef.current = e;
+                                                    }}
+                                                    onChange={(e) => {
+                                                        register("streetAddress").onChange(e);
+                                                        setAddressQuery(e.target.value);
+                                                    }}
+                                                    placeholder="Street Address"
+                                                    className="text-black bg-white border-accent/30 focus:border-accent"
+                                                />
+                                                <AddressAutocompletePortal
+                                                    anchorRef={addressInputRef}
+                                                    results={results}
+                                                    onSelect={(val) => {
+                                                        setValue("streetAddress", val, { shouldValidate: true });
+                                                        setAddressQuery(val);
+                                                        clearResults();
+                                                    }}
+                                                    onClose={clearResults}
+                                                />
+                                            </div>
+                                        </FormField>
 
                                         <div className="grid grid-cols-2 gap-4">
-                                            <div>
-                                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                    City
-                                                </label>
+                                            <FormField label="City" error={errors.city?.message} required>
                                                 <Input
-                                                    name="city"
-                                                    value={formData.city}
-                                                    onChange={handleChange}
+                                                    {...register("city")}
                                                     placeholder="City"
                                                     className="border-accent/30 focus:border-accent text-black bg-white"
                                                 />
-                                            </div>
-                                            <div>
-                                                <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                    State
-                                                </label>
+                                            </FormField>
+                                            <FormField label="State" error={errors.state?.message} required>
                                                 <Input
-                                                    name="state"
-                                                    value={formData.state}
-                                                    onChange={handleChange}
+                                                    {...register("state")}
                                                     placeholder="State"
                                                     className="border-accent/30 focus:border-accent text-black bg-white"
                                                 />
-                                            </div>
+                                            </FormField>
                                         </div>
 
-                                        <div>
-                                            <label className="block text-sm font-medium text-gray-700 mb-1">
-                                                How Soon Do You Want To Sell?
-                                            </label>
-                                            <Select
-                                                value={formData.timeline}
-                                                onValueChange={(value) => setFormData(prev => ({ ...prev, timeline: value }))}
-                                            >
-                                                <SelectTrigger className="w-full h-10 bg-white border-accent/30 focus:border-accent text-black">
-                                                    <SelectValue placeholder="Select timeline" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value="asap">As soon as possible</SelectItem>
-                                                    <SelectItem value="30days">Within 30 days</SelectItem>
-                                                    <SelectItem value="60days">Within 60-90 days</SelectItem>
-                                                    <SelectItem value="JustExploring">Just Exploring</SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                        </div>
-
-                                        <div className="flex items-start gap-2 text-sm text-gray-500">
-                                            <input
-                                                type="checkbox"
-                                                name="consent"
-                                                checked={formData.consent}
-                                                onChange={handleChange}
-                                                className="mt-1"
+                                        <FormField label="How Soon Do You Want To Sell?" error={errors.timeline?.message} required>
+                                            <Controller
+                                                name="timeline"
+                                                control={control}
+                                                render={({ field }) => (
+                                                    <Select
+                                                        value={field.value}
+                                                        onValueChange={field.onChange}
+                                                    >
+                                                        <SelectTrigger className="w-full h-10 bg-white border-accent/30 focus:border-accent text-black">
+                                                            <SelectValue placeholder="Select timeline" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            <SelectItem value="asap">As soon as possible</SelectItem>
+                                                            <SelectItem value="30days">Within 30 days</SelectItem>
+                                                            <SelectItem value="60days">Within 60-90 days</SelectItem>
+                                                            <SelectItem value="JustExploring">Just Exploring</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                )}
                                             />
-                                            <span>
-                                                Free offer, no pressure. Your info stays private. Submit to be contacted
-                                                opt out anytime.
-                                            </span>
+                                        </FormField>
+
+                                        <div className="space-y-1">
+                                            <div className="flex items-start gap-2 text-sm text-gray-500">
+                                                <input
+                                                    {...register("consent")}
+                                                    type="checkbox"
+                                                    className="mt-1 accent-accent"
+                                                />
+                                                <span>
+                                                    Free offer, no pressure. Your info stays private. Submit to be contacted
+                                                    opt out anytime.
+                                                </span>
+                                            </div>
+                                            {errors.consent && (
+                                                <p className="text-accent text-xs font-medium">{errors.consent.message}</p>
+                                            )}
                                         </div>
 
                                         <Button

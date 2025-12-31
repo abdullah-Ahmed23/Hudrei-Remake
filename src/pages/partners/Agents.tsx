@@ -1,30 +1,69 @@
-import { useState, useRef } from "react";
-import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
 import { Users, Handshake, DollarSign, Clock, CheckCircle2, ChevronRight, Building } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SEO from "@/components/SEO";
 import QuestionsSection from "@/components/QuestionsSection";
 import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
 import { useAddressAutocomplete } from "@/hooks/useAddressAutocomplete";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import FormField from "@/components/FormField";
+
+const agentSchema = z.object({
+    name: z.string().min(1, "Agent name is required"),
+    phone: z.string().min(10, "Valid phone number is required"),
+    email: z.string().email("Valid email address is required"),
+    brokerage: z.string().min(1, "Brokerage name is required"),
+    property: z.string().min(1, "Property address is required"),
+    notes: z.string().min(1, "Please provide some notes about the situation"),
+});
+
+type AgentFormData = z.infer<typeof agentSchema>;
 
 const Agents = () => {
     const [submitted, setSubmitted] = useState(false);
-
-    // Autocomplete
-    const [addressQuery, setAddressQuery] = useState("");
-    const { results, clearResults } = useAddressAutocomplete(addressQuery);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    // Placeholder submit handler - designed for GHL Webhook later
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        watch,
+        reset,
+        formState: { errors, isSubmitting },
+    } = useForm<AgentFormData>({
+        resolver: zodResolver(agentSchema),
+        defaultValues: {
+            name: "",
+            phone: "",
+            email: "",
+            brokerage: "",
+            property: "",
+            notes: "",
+        },
+    });
+
+    const propertyValue = watch("property");
+    const [addressQuery, setAddressQuery] = useState("");
+    const { results, clearResults } = useAddressAutocomplete(addressQuery);
+
+    // Sync address query with form value
+    useEffect(() => {
+        if (propertyValue !== undefined && propertyValue !== addressQuery) {
+            setAddressQuery(propertyValue);
+        }
+    }, [propertyValue]);
+
+    const onSubmit = async (data: AgentFormData) => {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log("Agent Referral Data:", data);
         setSubmitted(true);
-        // TODO: GHL Webhook Integration
+        reset();
+        setAddressQuery("");
     };
 
     return (
@@ -167,58 +206,65 @@ const Agents = () => {
                                         <Button onClick={() => setSubmitted(false)} variant="outline">Submit Another</Button>
                                     </div>
                                 ) : (
-                                    <form onSubmit={handleSubmit} className="space-y-6">
+                                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                                         <h3 className="text-2xl font-bold mb-6">Realtor Referral Form</h3>
 
                                         <div className="grid grid-cols-2 gap-4">
-                                            <div className="space-y-2">
-                                                <Label htmlFor="name">Agent Name</Label>
-                                                <Input id="name" placeholder="John Doe" required className="bg-white border-accent/30 focus:border-accent text-black" />
+                                            <FormField label="Agent Name" error={errors.name?.message} required>
+                                                <Input {...register("name")} placeholder="John Doe" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                            </FormField>
+                                            <FormField label="Phone" error={errors.phone?.message} required>
+                                                <Input {...register("phone")} placeholder="(317) 000-0000" type="tel" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                            </FormField>
+                                        </div>
+
+                                        <FormField label="Email" error={errors.email?.message} required>
+                                            <Input {...register("email")} placeholder="john@brokerage.com" type="email" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                        </FormField>
+
+                                        <FormField label="Brokerage Name" error={errors.brokerage?.message} required>
+                                            <Input {...register("brokerage")} placeholder="e.g. Century 21" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                        </FormField>
+
+                                        <FormField label="Property Address" error={errors.property?.message} required>
+                                            <div className="relative">
+                                                <Input
+                                                    {...register("property")}
+                                                    ref={(e) => {
+                                                        register("property").ref(e);
+                                                        // @ts-ignore
+                                                        inputRef.current = e;
+                                                    }}
+                                                    onChange={(e) => {
+                                                        register("property").onChange(e);
+                                                        setAddressQuery(e.target.value);
+                                                    }}
+                                                    placeholder="123 Main St, Indianapolis, IN"
+                                                    className="bg-white border-accent/30 focus:border-accent text-black"
+                                                />
+                                                <AddressAutocompletePortal
+                                                    anchorRef={inputRef}
+                                                    results={results}
+                                                    onSelect={(val) => {
+                                                        setValue("property", val, { shouldValidate: true });
+                                                        setAddressQuery(val);
+                                                        clearResults();
+                                                    }}
+                                                    onClose={clearResults}
+                                                />
                                             </div>
-                                            <div className="space-y-2">
-                                                <Label htmlFor="phone">Phone</Label>
-                                                <Input id="phone" type="tel" placeholder="(555) 000-0000" required className="bg-white border-accent/30 focus:border-accent text-black" />
-                                            </div>
-                                        </div>
+                                        </FormField>
 
-                                        <div className="space-y-2">
-                                            <Label htmlFor="email">Email</Label>
-                                            <Input id="email" type="email" placeholder="john@brokerage.com" required className="bg-white border-accent/30 focus:border-accent text-black" />
-                                        </div>
+                                        <FormField label="Notes / Situation" error={errors.notes?.message} required>
+                                            <Textarea {...register("notes")} placeholder="Needs foundation repair, owner relocating, etc..." className="bg-white border-accent/30 focus:border-accent text-black min-h-[100px]" />
+                                        </FormField>
 
-                                        <div className="space-y-2">
-                                            <Label htmlFor="brokerage">Brokerage Name</Label>
-                                            <Input id="brokerage" placeholder="e.g. Century 21" required className="bg-white border-accent/30 focus:border-accent text-black" />
-                                        </div>
-
-                                        <div className="space-y-2 relative">
-                                            <Label htmlFor="property">Property Address (Optional)</Label>
-                                            <Input
-                                                id="property"
-                                                placeholder="123 Main St, Indianapolis, IN"
-                                                className="bg-white border-accent/30 focus:border-accent text-black"
-                                                ref={inputRef}
-                                                value={addressQuery}
-                                                onChange={(e) => setAddressQuery(e.target.value)}
-                                            />
-                                            <AddressAutocompletePortal
-                                                anchorRef={inputRef}
-                                                results={results}
-                                                onSelect={(val) => {
-                                                    setAddressQuery(val);
-                                                    clearResults();
-                                                }}
-                                                onClose={clearResults}
-                                            />
-                                        </div>
-
-                                        <div className="space-y-2">
-                                            <Label htmlFor="notes">Notes / Situation</Label>
-                                            <Textarea id="notes" placeholder="Needs foundation repair, owner relocating, etc..." className="bg-white border-accent/30 focus:border-accent text-black min-h-[100px]" />
-                                        </div>
-
-                                        <Button type="submit" className="w-full rounded-xl py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
-                                            Send Referral <ChevronRight className="w-4 h-4 ml-2" />
+                                        <Button type="submit" disabled={isSubmitting} className="w-full rounded-xl py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                                            {isSubmitting ? "Sending..." : (
+                                                <>
+                                                    Send Referral <ChevronRight className="w-4 h-4 ml-2" />
+                                                </>
+                                            )}
                                         </Button>
                                     </form>
                                 )}

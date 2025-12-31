@@ -1,21 +1,52 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
 import { Home, FileCheck, Clock, CheckSquare, ChevronRight, Check } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import SEO from "@/components/SEO";
 import QuestionsSection from "@/components/QuestionsSection";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import FormField from "@/components/FormField";
+
+const titleSchema = z.object({
+    companyName: z.string().min(1, "Company name is required"),
+    contactPerson: z.string().min(1, "Contact person is required"),
+    phone: z.string().min(10, "Valid phone number is required"),
+    email: z.string().email("Valid email address is required"),
+    handleAssignment: z.enum(["yes", "no"]),
+});
+
+type TitleFormData = z.infer<typeof titleSchema>;
 
 const TitleCompanies = () => {
     const [submitted, setSubmitted] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const {
+        register,
+        handleSubmit,
+        control,
+        reset,
+        formState: { errors, isSubmitting },
+    } = useForm<TitleFormData>({
+        resolver: zodResolver(titleSchema),
+        defaultValues: {
+            companyName: "",
+            contactPerson: "",
+            phone: "",
+            email: "",
+            handleAssignment: "yes",
+        },
+    });
+
+    const onSubmit = async (data: TitleFormData) => {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log("Title Company Data:", data);
         setSubmitted(true);
+        reset();
     };
 
     return (
@@ -153,45 +184,51 @@ const TitleCompanies = () => {
                                         <Button onClick={() => setSubmitted(false)} variant="outline">Reset Form</Button>
                                     </div>
                                 ) : (
-                                    <form onSubmit={handleSubmit} className="space-y-6">
+                                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                                         <div className="space-y-4">
-                                            <div className="space-y-2">
-                                                <Label>Company Name</Label>
-                                                <Input placeholder="Title Company Name" required className="bg-white border-accent/30 focus:border-accent text-black" />
-                                            </div>
+                                            <FormField label="Company Name" error={errors.companyName?.message} required>
+                                                <Input {...register("companyName")} placeholder="Title Company Name" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                            </FormField>
 
                                             <div className="grid grid-cols-2 gap-4">
-                                                <div className="space-y-2">
-                                                    <Label>Contact Person</Label>
-                                                    <Input placeholder="Name" required className="bg-white border-accent/30 focus:border-accent text-black" />
-                                                </div>
-                                                <div className="space-y-2">
-                                                    <Label>Direct Phone</Label>
-                                                    <Input placeholder="Phone" required className="bg-white border-accent/30 focus:border-accent text-black" />
-                                                </div>
+                                                <FormField label="Contact Person" error={errors.contactPerson?.message} required>
+                                                    <Input {...register("contactPerson")} placeholder="Name" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                                </FormField>
+                                                <FormField label="Direct Phone" error={errors.phone?.message} required>
+                                                    <Input {...register("phone")} placeholder="(317) 000-0000" type="tel" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                                </FormField>
                                             </div>
 
-                                            <div className="space-y-2">
-                                                <Label>Email</Label>
-                                                <Input placeholder="Email" type="email" required className="bg-white border-accent/30 focus:border-accent text-black" />
-                                            </div>
+                                            <FormField label="Email" error={errors.email?.message} required>
+                                                <Input {...register("email")} placeholder="Email" type="email" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                            </FormField>
 
                                             <div className="space-y-3 pt-2">
                                                 <Label>Do you handle assignment of contracts?</Label>
-                                                <RadioGroup defaultValue="yes" className="flex gap-4">
-                                                    <div className="flex items-center space-x-2">
-                                                        <RadioGroupItem value="yes" id="r1" />
-                                                        <Label htmlFor="r1">Yes</Label>
-                                                    </div>
-                                                    <div className="flex items-center space-x-2">
-                                                        <RadioGroupItem value="no" id="r2" />
-                                                        <Label htmlFor="r2">No / Unsure</Label>
-                                                    </div>
-                                                </RadioGroup>
+                                                <Controller
+                                                    name="handleAssignment"
+                                                    control={control}
+                                                    render={({ field }) => (
+                                                        <RadioGroup onValueChange={field.onChange} value={field.value} className="flex gap-4">
+                                                            <div className="flex items-center space-x-2">
+                                                                <RadioGroupItem value="yes" id="r1" />
+                                                                <Label htmlFor="r1">Yes</Label>
+                                                            </div>
+                                                            <div className="flex items-center space-x-2">
+                                                                <RadioGroupItem value="no" id="r2" />
+                                                                <Label htmlFor="r2">No / Unsure</Label>
+                                                            </div>
+                                                        </RadioGroup>
+                                                    )}
+                                                />
                                             </div>
 
-                                            <Button type="submit" className="w-full mt-4 rounded-xl py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
-                                                Submit Inquiry <ChevronRight className="w-4 h-4 ml-2" />
+                                            <Button type="submit" disabled={isSubmitting} className="w-full mt-4 rounded-xl py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                                                {isSubmitting ? "Sending..." : (
+                                                    <>
+                                                        Submit Inquiry <ChevronRight className="w-4 h-4 ml-2" />
+                                                    </>
+                                                )}
                                             </Button>
                                         </div>
                                     </form>

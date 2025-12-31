@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
     PhoneCall,
@@ -39,6 +39,33 @@ import {
 import QuestionsSection from "@/components/QuestionsSection";
 import SEO from "@/components/SEO";
 import { toast } from "sonner";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import FormField from "@/components/FormField";
+
+const careerSchema = z.object({
+    firstName: z.string().min(1, "First name is required"),
+    lastName: z.string().min(1, "Last name is required"),
+    email: z.string().email("Valid email is required"),
+    phone: z.string().min(10, "Valid phone number is required"),
+    gender: z.string().min(1, "Gender selection is required"),
+    country: z.string().min(1, "Country is required"),
+    position: z.string().min(1, "Position is required"),
+    experienceYears: z.string().min(1, "Experience selection is required"),
+    crmTools: z.array(z.string()).min(1, "At least one tool must be selected"),
+    salaryCurrency: z.string().min(1, "Currency is required"),
+    salaryAmount: z.string().min(1, "Salary amount is required"),
+    salaryWhy: z.string().min(1, "This field is required"),
+    hireWhy: z.string().min(1, "This field is required"),
+    attraction: z.string().min(1, "This field is required"),
+    referralSource: z.string().min(1, "Please select how you heard about us"),
+    timeTracking: z.string().min(1, "Please select an option"),
+    resume: z.any().refine((file) => file instanceof File, "Resume is required"),
+    voiceNote: z.any().refine((file) => file instanceof File, "Voice recording is required"),
+});
+
+type CareerFormData = z.infer<typeof careerSchema>;
 
 const careers = [
     {
@@ -190,61 +217,63 @@ const FileUploadZone = ({
 };
 
 const CareersSection = () => {
-    const [formData, setFormData] = useState({
-        firstName: "",
-        lastName: "",
-        email: "",
-        phone: "",
-        gender: "",
-        country: "",
-        position: "",
-        attraction: "",
-        experienceYears: "",
-        salaryCurrency: "",
-        salaryAmount: "",
-        salaryWhy: "",
-        hireWhy: "",
-        referralSource: "",
-        crmTools: [] as string[],
-        timeTracking: "",
+    const {
+        register,
+        handleSubmit,
+        control,
+        setValue,
+        watch,
+        reset,
+        clearErrors,
+        formState: { errors, isSubmitting },
+    } = useForm<CareerFormData>({
+        resolver: zodResolver(careerSchema),
+        defaultValues: {
+            firstName: "",
+            lastName: "",
+            email: "",
+            phone: "",
+            gender: "",
+            country: "",
+            position: "",
+            experienceYears: "",
+            crmTools: [],
+            salaryCurrency: "",
+            salaryAmount: "",
+            salaryWhy: "",
+            hireWhy: "",
+            attraction: "",
+            referralSource: "",
+            timeTracking: "",
+        }
     });
 
-    const [resume, setResume] = useState<File | null>(null);
-    const [voiceNote, setVoiceNote] = useState<File | null>(null);
+    const crmTools = watch("crmTools") || [];
+    const resume = watch("resume");
+    const voiceNote = watch("voiceNote");
 
     const toggleCrmTool = (tool: string) => {
-        setFormData(prev => ({
-            ...prev,
-            crmTools: prev.crmTools.includes(tool)
-                ? prev.crmTools.filter(t => t !== tool)
-                : [...prev.crmTools, tool]
-        }));
+        const currentTools = [...crmTools];
+        const index = currentTools.indexOf(tool);
+        if (index > -1) {
+            currentTools.splice(index, 1);
+        } else {
+            currentTools.push(tool);
+        }
+        setValue("crmTools", currentTools, { shouldValidate: true });
     };
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const onSubmit = async (data: CareerFormData) => {
+        console.log("Full Application submitted:", data);
 
-        if (!resume || !voiceNote) {
-            toast.error("Missing Files", {
-                description: "Please upload both your resume and voice recording."
-            });
-            return;
-        }
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1500));
 
-        console.log("Full Application submitted:", { ...formData, resume, voiceNote });
         toast.success("Application Sent Successfully!", {
             description: "We'll review your application and media files and get back to you soon."
         });
 
-        // Reset state
-        setFormData({
-            firstName: "", lastName: "", email: "", phone: "", gender: "", country: "",
-            position: "", attraction: "", experienceYears: "", salaryCurrency: "",
-            salaryAmount: "", salaryWhy: "", hireWhy: "", referralSource: "",
-            crmTools: [], timeTracking: "",
-        });
-        setResume(null);
-        setVoiceNote(null);
+        reset();
     };
 
     return (
@@ -309,7 +338,7 @@ const CareersSection = () => {
                                     variant="ghost"
                                     className="p-0 h-auto font-bold text-accent hover:text-primary group/btn flex items-center justify-start gap-2 hover:bg-transparent"
                                     onClick={() => {
-                                        setFormData(prev => ({ ...prev, position: role.title }));
+                                        setValue("position", role.title, { shouldValidate: true });
                                         document.getElementById('application-form')?.scrollIntoView({ behavior: 'smooth' });
                                     }}
                                 >
@@ -370,7 +399,7 @@ const CareersSection = () => {
 
                             {/* Form Side (3 cols) */}
                             <div className="lg:col-span-3 bg-white rounded-[2.5rem] shadow-2xl border border-gray-100 p-8 md:p-12" data-aos="fade-left">
-                                <form onSubmit={handleSubmit} className="space-y-10">
+                                <form onSubmit={handleSubmit(onSubmit)} className="space-y-10">
 
                                     {/* Section 1: Personal */}
                                     <div className="space-y-6">
@@ -380,78 +409,63 @@ const CareersSection = () => {
                                         </div>
 
                                         <div className="grid sm:grid-cols-2 gap-6">
-                                            <div className="space-y-2">
-                                                <Label htmlFor="firstName" className="text-sm font-semibold text-gray-700">First Name <span className="text-red-500">*</span></Label>
+                                            <FormField label="First Name" error={errors.firstName?.message} required>
                                                 <Input
-                                                    id="firstName"
-                                                    required
+                                                    {...register("firstName")}
                                                     className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl"
-                                                    value={formData.firstName}
-                                                    onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
                                                 />
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label htmlFor="lastName" className="text-sm font-semibold text-gray-700">Last Name <span className="text-red-500">*</span></Label>
+                                            </FormField>
+                                            <FormField label="Last Name" error={errors.lastName?.message} required>
                                                 <Input
-                                                    id="lastName"
-                                                    required
+                                                    {...register("lastName")}
                                                     className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl"
-                                                    value={formData.lastName}
-                                                    onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
                                                 />
-                                            </div>
+                                            </FormField>
                                         </div>
 
                                         <div className="grid sm:grid-cols-2 gap-6">
-                                            <div className="space-y-2">
-                                                <Label htmlFor="phone" className="text-sm font-semibold text-gray-700">Phone Number (with area code) <span className="text-red-500">*</span></Label>
+                                            <FormField label="Phone Number (with area code)" error={errors.phone?.message} required>
                                                 <Input
-                                                    id="phone"
-                                                    required
+                                                    {...register("phone")}
                                                     placeholder="+1 (xxx) xxx-xxxx"
                                                     className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl"
-                                                    value={formData.phone}
-                                                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                                 />
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label htmlFor="email" className="text-sm font-semibold text-gray-700">Email Address <span className="text-red-500">*</span></Label>
+                                            </FormField>
+                                            <FormField label="Email Address" error={errors.email?.message} required>
                                                 <Input
-                                                    id="email"
+                                                    {...register("email")}
                                                     type="email"
-                                                    required
                                                     placeholder="john@example.com"
                                                     className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl"
-                                                    value={formData.email}
-                                                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                                                 />
-                                            </div>
+                                            </FormField>
                                         </div>
 
                                         <div className="grid sm:grid-cols-2 gap-6">
-                                            <div className="space-y-2">
-                                                <Label htmlFor="gender" className="text-sm font-semibold text-gray-700">Gender <span className="text-red-500">*</span></Label>
-                                                <Select value={formData.gender} onValueChange={(v) => setFormData({ ...formData, gender: v })}>
-                                                    <SelectTrigger className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl">
-                                                        <SelectValue placeholder="Select gender" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value="Male">Male</SelectItem>
-                                                        <SelectItem value="Female">Female</SelectItem>
-                                                        <SelectItem value="Prefer not to say">Prefer not to say</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label htmlFor="country" className="text-sm font-semibold text-gray-700">Country <span className="text-red-500">*</span></Label>
-                                                <Input
-                                                    id="country"
-                                                    required
-                                                    className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl"
-                                                    value={formData.country}
-                                                    onChange={(e) => setFormData({ ...formData, country: e.target.value })}
+                                            <FormField label="Gender" error={errors.gender?.message} required>
+                                                <Controller
+                                                    name="gender"
+                                                    control={control}
+                                                    render={({ field }) => (
+                                                        <Select onValueChange={field.onChange} value={field.value}>
+                                                            <SelectTrigger className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl">
+                                                                <SelectValue placeholder="Select gender" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                <SelectItem value="Male">Male</SelectItem>
+                                                                <SelectItem value="Female">Female</SelectItem>
+                                                                <SelectItem value="Prefer not to say">Prefer not to say</SelectItem>
+                                                            </SelectContent>
+                                                        </Select>
+                                                    )}
                                                 />
-                                            </div>
+                                            </FormField>
+                                            <FormField label="Country" error={errors.country?.message} required>
+                                                <Input
+                                                    {...register("country")}
+                                                    className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl"
+                                                />
+                                            </FormField>
                                         </div>
                                     </div>
 
@@ -463,44 +477,53 @@ const CareersSection = () => {
                                         </div>
 
                                         <div className="grid sm:grid-cols-2 gap-6">
-                                            <div className="space-y-2">
-                                                <Label className="text-sm font-semibold text-gray-700">Position of Interest <span className="text-red-500">*</span></Label>
-                                                <Select value={formData.position} onValueChange={(v) => setFormData({ ...formData, position: v })}>
-                                                    <SelectTrigger className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl">
-                                                        <SelectValue placeholder="Select role" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        {careers.map(c => <SelectItem key={c.title} value={c.title}>{c.title}</SelectItem>)}
-                                                        <SelectItem value="Other">Other Position</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label className="text-sm font-semibold text-gray-700">Years of Experience in Real Estate <span className="text-red-500">*</span></Label>
-                                                <Select value={formData.experienceYears} onValueChange={(v) => setFormData({ ...formData, experienceYears: v })}>
-                                                    <SelectTrigger className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl">
-                                                        <SelectValue placeholder="Select experience" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value="No previous experience">No previous experience</SelectItem>
-                                                        <SelectItem value="1 Year">1 Year</SelectItem>
-                                                        <SelectItem value="2 Years">2 Years</SelectItem>
-                                                        <SelectItem value="3 Years">3 Years</SelectItem>
-                                                        <SelectItem value="4 Years">4 Years</SelectItem>
-                                                        <SelectItem value="5+ Years">5+ Years</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </div>
+                                            <FormField label="Position of Interest" error={errors.position?.message} required>
+                                                <Controller
+                                                    name="position"
+                                                    control={control}
+                                                    render={({ field }) => (
+                                                        <Select onValueChange={field.onChange} value={field.value}>
+                                                            <SelectTrigger className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl">
+                                                                <SelectValue placeholder="Select role" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                {careers.map(c => <SelectItem key={c.title} value={c.title}>{c.title}</SelectItem>)}
+                                                                <SelectItem value="Other">Other Position</SelectItem>
+                                                            </SelectContent>
+                                                        </Select>
+                                                    )}
+                                                />
+                                            </FormField>
+                                            <FormField label="Years of Experience in Real Estate" error={errors.experienceYears?.message} required>
+                                                <Controller
+                                                    name="experienceYears"
+                                                    control={control}
+                                                    render={({ field }) => (
+                                                        <Select onValueChange={field.onChange} value={field.value}>
+                                                            <SelectTrigger className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl">
+                                                                <SelectValue placeholder="Select experience" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                <SelectItem value="No previous experience">No previous experience</SelectItem>
+                                                                <SelectItem value="1 Year">1 Year</SelectItem>
+                                                                <SelectItem value="2 Years">2 Years</SelectItem>
+                                                                <SelectItem value="3 Years">3 Years</SelectItem>
+                                                                <SelectItem value="4 Years">4 Years</SelectItem>
+                                                                <SelectItem value="5+ Years">5+ Years</SelectItem>
+                                                            </SelectContent>
+                                                        </Select>
+                                                    )}
+                                                />
+                                            </FormField>
                                         </div>
 
-                                        <div className="space-y-3">
-                                            <Label className="text-sm font-semibold text-gray-700">Select CRM systems and tools you've used <span className="text-red-500">*</span></Label>
+                                        <FormField label="Select CRM systems and tools you've used" error={errors.crmTools?.message} required>
                                             <div className="p-4 bg-gray-50 rounded-2xl border border-gray-100 min-h-[100px] flex flex-wrap gap-2 items-start content-start">
                                                 <AnimatePresence mode="popLayout">
-                                                    {formData.crmTools.length === 0 && (
+                                                    {crmTools.length === 0 && (
                                                         <p className="text-sm text-gray-400 italic py-2">No tools selected yet...</p>
                                                     )}
-                                                    {formData.crmTools.map(tool => (
+                                                    {crmTools.map(tool => (
                                                         <motion.div
                                                             key={tool}
                                                             initial={{ opacity: 0, scale: 0.8 }}
@@ -527,7 +550,7 @@ const CareersSection = () => {
                                                         onClick={() => toggleCrmTool(option)}
                                                         className={`
                                                             text-xs font-semibold px-3 py-1.5 rounded-full border transition-all
-                                                            ${formData.crmTools.includes(option)
+                                                            ${crmTools.includes(option)
                                                                 ? 'bg-accent/10 border-accent text-accent'
                                                                 : 'bg-white border-gray-200 text-gray-500 hover:border-accent hover:text-accent'
                                                             }
@@ -537,7 +560,7 @@ const CareersSection = () => {
                                                     </button>
                                                 ))}
                                             </div>
-                                        </div>
+                                        </FormField>
                                     </div>
 
                                     {/* Section 3: Expectations */}
@@ -548,82 +571,76 @@ const CareersSection = () => {
                                         </div>
 
                                         <div className="grid sm:grid-cols-2 gap-6">
-                                            <div className="space-y-2">
-                                                <Label className="text-sm font-semibold text-gray-700">Salary Currency <span className="text-red-500">*</span></Label>
-                                                <Select value={formData.salaryCurrency} onValueChange={(v) => setFormData({ ...formData, salaryCurrency: v })}>
-                                                    <SelectTrigger className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl">
-                                                        <SelectValue placeholder="Currency" />
-                                                    </SelectTrigger>
-                                                    <SelectContent>
-                                                        <SelectItem value="EGP">EGP</SelectItem>
-                                                        <SelectItem value="USD">USD</SelectItem>
-                                                        <SelectItem value="Other">Other</SelectItem>
-                                                    </SelectContent>
-                                                </Select>
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label htmlFor="salaryAmount" className="text-sm font-semibold text-gray-700">Expected Salary Amount <span className="text-red-500">*</span></Label>
+                                            <FormField label="Salary Currency" error={errors.salaryCurrency?.message} required>
+                                                <Controller
+                                                    name="salaryCurrency"
+                                                    control={control}
+                                                    render={({ field }) => (
+                                                        <Select onValueChange={field.onChange} value={field.value}>
+                                                            <SelectTrigger className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl">
+                                                                <SelectValue placeholder="Currency" />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                <SelectItem value="EGP">EGP</SelectItem>
+                                                                <SelectItem value="USD">USD</SelectItem>
+                                                                <SelectItem value="Other">Other</SelectItem>
+                                                            </SelectContent>
+                                                        </Select>
+                                                    )}
+                                                />
+                                            </FormField>
+                                            <FormField label="Expected Salary Amount" error={errors.salaryAmount?.message} required>
                                                 <div className="relative">
                                                     <DollarSign className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
                                                     <Input
-                                                        id="salaryAmount"
-                                                        required
+                                                        {...register("salaryAmount")}
                                                         placeholder="0.00"
                                                         className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl pl-10"
-                                                        value={formData.salaryAmount}
-                                                        onChange={(e) => setFormData({ ...formData, salaryAmount: e.target.value })}
                                                     />
                                                 </div>
-                                            </div>
+                                            </FormField>
                                         </div>
 
-                                        <div className="space-y-2">
-                                            <Label htmlFor="salaryWhy" className="text-sm font-semibold text-gray-700">Why do you think we should pay you that much? <span className="text-red-500">*</span></Label>
+                                        <FormField label="Why do you think we should pay you that much?" error={errors.salaryWhy?.message} required>
                                             <Textarea
-                                                id="salaryWhy"
-                                                required
+                                                {...register("salaryWhy")}
                                                 placeholder="..."
                                                 className="bg-white border-accent/20 focus:border-accent text-black min-h-[100px] rounded-xl resize-none"
-                                                value={formData.salaryWhy}
-                                                onChange={(e) => setFormData({ ...formData, salaryWhy: e.target.value })}
                                             />
-                                        </div>
+                                        </FormField>
 
-                                        <div className="space-y-2">
-                                            <Label htmlFor="hireWhy" className="text-sm font-semibold text-gray-700">Why should we hire you? <span className="text-red-500">*</span></Label>
+                                        <FormField label="Why should we hire you?" error={errors.hireWhy?.message} required>
                                             <Textarea
-                                                id="hireWhy"
-                                                required
+                                                {...register("hireWhy")}
                                                 placeholder="..."
                                                 className="bg-white border-accent/20 focus:border-accent text-black min-h-[100px] rounded-xl resize-none"
-                                                value={formData.hireWhy}
-                                                onChange={(e) => setFormData({ ...formData, hireWhy: e.target.value })}
                                             />
-                                        </div>
+                                        </FormField>
 
-                                        <div className="space-y-2">
-                                            <Label htmlFor="attraction" className="text-sm font-semibold text-gray-700">What attracted you to this role and our company? <span className="text-red-500">*</span></Label>
+                                        <FormField label="What attracted you to this role and our company?" error={errors.attraction?.message} required>
                                             <Textarea
-                                                id="attraction"
-                                                required
+                                                {...register("attraction")}
                                                 placeholder="..."
                                                 className="bg-white border-accent/20 focus:border-accent text-black min-h-[100px] rounded-xl resize-none"
-                                                value={formData.attraction}
-                                                onChange={(e) => setFormData({ ...formData, attraction: e.target.value })}
                                             />
-                                        </div>
+                                        </FormField>
 
-                                        <div className="space-y-2">
-                                            <Label className="text-sm font-semibold text-gray-700">How did you know about HudREI? <span className="text-red-500">*</span></Label>
-                                            <Select value={formData.referralSource} onValueChange={(v) => setFormData({ ...formData, referralSource: v })}>
-                                                <SelectTrigger className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl">
-                                                    <SelectValue placeholder="Select platform" />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    {referralSources.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
-                                                </SelectContent>
-                                            </Select>
-                                        </div>
+                                        <FormField label="How did you know about HudREI?" error={errors.referralSource?.message} required>
+                                            <Controller
+                                                name="referralSource"
+                                                control={control}
+                                                render={({ field }) => (
+                                                    <Select onValueChange={field.onChange} value={field.value}>
+                                                        <SelectTrigger className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl">
+                                                            <SelectValue placeholder="Select platform" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {referralSources.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}
+                                                        </SelectContent>
+                                                    </Select>
+                                                )}
+                                            />
+                                        </FormField>
                                     </div>
 
                                     {/* Section 4: Compliance & Files */}
@@ -637,44 +654,65 @@ const CareersSection = () => {
                                             <p className="text-sm text-gray-700 leading-relaxed">
                                                 Please note that since you will be working on Dialer/ReadyMode you will be required to use a time tracking system which is mandatory for joining our company. We need to confirm that you understand this before we proceed.
                                             </p>
-                                            <Select value={formData.timeTracking} onValueChange={(v) => setFormData({ ...formData, timeTracking: v })}>
-                                                <SelectTrigger className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl">
-                                                    <SelectValue placeholder="Choose an option..." />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value="I understand that">I understand that</SelectItem>
-                                                    <SelectItem value="I don't want to be on time tracking system">I don't want to be on time tracking system</SelectItem>
-                                                    <SelectItem value="I have question about the time tracking system">I have question about the time tracking system</SelectItem>
-                                                </SelectContent>
-                                            </Select>
+                                            <FormField label="Time Tracking Understanding" error={errors.timeTracking?.message} required>
+                                                <Controller
+                                                    name="timeTracking"
+                                                    control={control}
+                                                    render={({ field }) => (
+                                                        <Select onValueChange={field.onChange} value={field.value}>
+                                                            <SelectTrigger className="bg-white border-accent/20 focus:border-accent text-black h-12 rounded-xl">
+                                                                <SelectValue placeholder="Choose an option..." />
+                                                            </SelectTrigger>
+                                                            <SelectContent>
+                                                                <SelectItem value="I understand that">I understand that</SelectItem>
+                                                                <SelectItem value="I don't want to be on time tracking system">I don't want to be on time tracking system</SelectItem>
+                                                                <SelectItem value="I have question about the time tracking system">I have question about the time tracking system</SelectItem>
+                                                            </SelectContent>
+                                                        </Select>
+                                                    )}
+                                                />
+                                            </FormField>
                                         </div>
 
                                         <div className="grid sm:grid-cols-2 gap-8">
-                                            <FileUploadZone
-                                                label="Please submit an updated resume"
-                                                id="resume-upload"
-                                                accept=".pdf,.doc,.docx"
-                                                icon={FileText}
-                                                file={resume}
-                                                onFileChange={setResume}
-                                            />
-                                            <FileUploadZone
-                                                label="Submit a Voice Recording introducing yourself"
-                                                id="voice-upload"
-                                                accept="audio/*"
-                                                icon={Mic}
-                                                file={voiceNote}
-                                                onFileChange={setVoiceNote}
-                                            />
+                                            <FormField label="Please submit an updated resume" error={errors.resume?.message} required>
+                                                <FileUploadZone
+                                                    label="Please submit an updated resume"
+                                                    id="resume-upload"
+                                                    accept=".pdf,.doc,.docx"
+                                                    icon={FileText}
+                                                    file={resume}
+                                                    onFileChange={(file) => {
+                                                        setValue("resume", file, { shouldValidate: true });
+                                                        if (file) clearErrors("resume");
+                                                    }}
+                                                />
+                                            </FormField>
+                                            <FormField label="Submit a Voice Recording introducing yourself" error={errors.voiceNote?.message} required>
+                                                <FileUploadZone
+                                                    label="Submit a Voice Recording introducing yourself"
+                                                    id="voice-upload"
+                                                    accept="audio/*"
+                                                    icon={Mic}
+                                                    file={voiceNote}
+                                                    onFileChange={(file) => {
+                                                        setValue("voiceNote", file, { shouldValidate: true });
+                                                        if (file) clearErrors("voiceNote");
+                                                    }}
+                                                />
+                                            </FormField>
                                         </div>
                                     </div>
 
                                     <div className="pt-6">
                                         <Button
                                             type="submit"
-                                            className="w-full rounded-2xl py-8 text-xl font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-1 transition-all"
+                                            disabled={isSubmitting}
+                                            className="w-full rounded-2xl py-8 text-xl font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-1 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
                                         >
-                                            Submit Application <Send className="w-6 h-6 ml-3" />
+                                            {isSubmitting ? "Submitting Application..." : (
+                                                <>Submit Application <Send className="w-6 h-6 ml-3" /></>
+                                            )}
                                         </Button>
                                         <p className="text-center text-xs text-gray-400 mt-6">
                                             By submitting, you agree to being contacted regarding career opportunities. All information is handled with strict confidentiality.

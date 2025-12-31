@@ -1,29 +1,45 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { Send, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
 import { useAddressAutocomplete } from "@/hooks/useAddressAutocomplete";
+import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import FormField from "./FormField";
+
+const formSchema = z.object({
+    address: z.string().min(1, "Please enter your property address to continue"),
+});
+
+type FormData = z.infer<typeof formSchema>;
 
 const CTASection = () => {
     const navigate = useNavigate();
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const [addressQuery, setAddressQuery] = useState("");
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        watch,
+        formState: { errors, isSubmitting },
+    } = useForm<FormData>({
+        resolver: zodResolver(formSchema),
+        defaultValues: {
+            address: "",
+        },
+    });
+
+    const addressQuery = watch("address");
     const { results, clearResults } = useAddressAutocomplete(addressQuery);
-    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
-        if (!addressQuery) return;
-
-        setIsSubmitting(true);
-
+    const onSubmit = (data: FormData) => {
         navigate("/contact", {
             state: {
-                streetAddress: addressQuery,
+                streetAddress: data.address,
             },
         });
     };
@@ -45,39 +61,48 @@ const CTASection = () => {
 
                     {/* ADDRESS FORM */}
                     <form
-                        onSubmit={handleSubmit}
+                        onSubmit={handleSubmit(onSubmit)}
                         className="relative max-w-2xl mx-auto"
                     >
-                        <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-black" />
+                        <FormField error={errors.address?.message} className="space-y-2">
+                            <div className="relative">
+                                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-black" />
 
-                        <Input
-                            ref={inputRef}
-                            value={addressQuery}
-                            onChange={(e) => setAddressQuery(e.target.value)}
-                            placeholder="Enter your address"
-                            required
-                            className="h-16 pl-12 pr-40 text-lg bg-white text-black rounded-2xl border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent"
-                        />
+                                <Input
+                                    {...register("address")}
+                                    ref={(e) => {
+                                        register("address").ref(e);
+                                        // @ts-ignore
+                                        inputRef.current = e;
+                                    }}
+                                    onChange={(e) => {
+                                        register("address").onChange(e);
+                                    }}
+                                    placeholder="Enter your address..."
+                                    className="h-16 pl-12 pr-40 text-lg bg-white text-black rounded-2xl border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent w-full font-bold placeholder:text-gray-500 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)]"
+                                />
 
-                        <Button
-                            type="submit"
-                            disabled={isSubmitting}
-                            className="absolute right-2 top-1/2 -translate-y-1/2 h-12 px-6 rounded-xl glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
-                        >
-                            {isSubmitting ? "Loading..." : (
-                                <>
-                                    <Send className="w-4 h-4 mr-2" />
-                                    Start
-                                </>
-                            )}
-                        </Button>
+                                <Button
+                                    type="submit"
+                                    disabled={isSubmitting}
+                                    className="absolute right-2 top-1/2 -translate-y-1/2 h-12 px-6 rounded-xl glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
+                                >
+                                    {isSubmitting ? "Loading..." : (
+                                        <>
+                                            <Send className="w-4 h-4 mr-2" />
+                                            Start
+                                        </>
+                                    )}
+                                </Button>
+                            </div>
+                        </FormField>
 
                         {/* PORTAL AUTOCOMPLETE */}
                         <AddressAutocompletePortal
                             anchorRef={inputRef}
                             results={results}
                             onSelect={(val) => {
-                                setAddressQuery(val);
+                                setValue("address", val, { shouldValidate: true });
                                 clearResults();
                             }}
                             onClose={clearResults}

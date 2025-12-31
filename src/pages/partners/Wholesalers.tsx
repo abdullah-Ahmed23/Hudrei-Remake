@@ -1,27 +1,101 @@
-import { useState, useRef } from "react";
-import { Link } from "react-router-dom";
+import { useState, useRef, useEffect } from "react";
 import { Landmark, Zap, ShieldCheck, Check, Wallet, ChevronRight, Building } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import SEO from "@/components/SEO";
 import QuestionsSection from "@/components/QuestionsSection";
 import { motion, AnimatePresence } from "framer-motion";
 import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
 import { useAddressAutocomplete } from "@/hooks/useAddressAutocomplete";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import FormField from "@/components/FormField";
+
+const wholesalerSchema = z.object({
+    formType: z.enum(["submit-deal", "join-list"]),
+    name: z.string().min(1, "Name is required"),
+    phone: z.string().min(10, "Valid phone number is required"),
+    email: z.string().email("Valid email address is required"),
+    // Deal specific
+    address: z.string().optional(),
+    price: z.string().optional(),
+    arv: z.string().optional(),
+    link: z.string().optional(),
+    // List specific
+    company: z.string().optional(),
+    markets: z.string().optional(),
+}).superRefine((data, ctx) => {
+    if (data.formType === "submit-deal") {
+        if (!data.address) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Property address is required", path: ["address"] });
+        if (!data.price) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Asking price is required", path: ["price"] });
+        if (!data.arv) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Estimated ARV is required", path: ["arv"] });
+        if (!data.link) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Link to photos is required", path: ["link"] });
+    } else {
+        if (!data.company) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Company name is required", path: ["company"] });
+        if (!data.markets) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Markets served is required", path: ["markets"] });
+    }
+});
+
+type WholesalerFormData = z.infer<typeof wholesalerSchema>;
 
 const Wholesalers = () => {
-    const [formType, setFormType] = useState<"submit-deal" | "join-list">("submit-deal");
     const [submitted, setSubmitted] = useState(false);
-
-    // Autocomplete
-    const [addressQuery, setAddressQuery] = useState("");
-    const { results, clearResults } = useAddressAutocomplete(addressQuery);
     const inputRef = useRef<HTMLInputElement>(null);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const {
+        register,
+        handleSubmit,
+        setValue,
+        watch,
+        reset,
+        formState: { errors, isSubmitting },
+    } = useForm<WholesalerFormData>({
+        resolver: zodResolver(wholesalerSchema),
+        defaultValues: {
+            formType: "submit-deal",
+            name: "",
+            phone: "",
+            email: "",
+            address: "",
+            price: "",
+            arv: "",
+            link: "",
+            company: "",
+            markets: "",
+        },
+    });
+
+    const formType = watch("formType");
+    const addressValue = watch("address");
+    const [addressQuery, setAddressQuery] = useState("");
+    const { results, clearResults } = useAddressAutocomplete(addressQuery);
+
+    // Sync address query with form value
+    useEffect(() => {
+        if (addressValue !== undefined && addressValue !== addressQuery) {
+            setAddressQuery(addressValue);
+        }
+    }, [addressValue]);
+
+    const onSubmit = async (data: WholesalerFormData) => {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log("Wholesaler Partner Data:", data);
         setSubmitted(true);
+        reset({
+            formType: data.formType,
+            name: "",
+            phone: "",
+            email: "",
+            address: "",
+            price: "",
+            arv: "",
+            link: "",
+            company: "",
+            markets: "",
+        });
+        setAddressQuery("");
     };
 
     return (
@@ -163,7 +237,7 @@ const Wholesalers = () => {
                                         <Button onClick={() => setSubmitted(false)} variant="outline">Reset Form</Button>
                                     </div>
                                 ) : (
-                                    <form onSubmit={handleSubmit} className="space-y-6">
+                                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                                         {/* Toggle Type */}
                                         <div className="grid grid-cols-2 gap-2 p-1 bg-gray-100 rounded-xl mb-6 relative">
                                             <motion.div
@@ -178,14 +252,20 @@ const Wholesalers = () => {
                                             />
                                             <button
                                                 type="button"
-                                                onClick={() => setFormType("submit-deal")}
+                                                onClick={() => {
+                                                    setValue("formType", "submit-deal");
+                                                    clearResults();
+                                                }}
                                                 className={`relative z-10 py-3 rounded-lg font-medium text-sm transition-colors duration-200 ${formType === 'submit-deal' ? 'text-[#062f33]' : 'text-gray-500 hover:text-gray-700'}`}
                                             >
                                                 Submit A Deal
                                             </button>
                                             <button
                                                 type="button"
-                                                onClick={() => setFormType("join-list")}
+                                                onClick={() => {
+                                                    setValue("formType", "join-list");
+                                                    clearResults();
+                                                }}
                                                 className={`relative z-10 py-3 rounded-lg font-medium text-sm transition-colors duration-200 ${formType === 'join-list' ? 'text-[#062f33]' : 'text-gray-500 hover:text-gray-700'}`}
                                             >
                                                 Join Buyers List
@@ -193,20 +273,17 @@ const Wholesalers = () => {
                                         </div>
 
                                         <div className="grid grid-cols-2 gap-4">
-                                            <div className="space-y-2">
-                                                <Label htmlFor="name">Contact Name</Label>
-                                                <Input className="bg-white border-accent/30 focus:border-accent text-black" id="name" placeholder="Name" required />
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label htmlFor="phone">Phone</Label>
-                                                <Input className="bg-white border-accent/30 focus:border-accent text-black" id="phone" type="tel" placeholder="Phone" required />
-                                            </div>
+                                            <FormField label="Contact Name" error={errors.name?.message} required>
+                                                <Input {...register("name")} placeholder="Name" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                            </FormField>
+                                            <FormField label="Phone" error={errors.phone?.message} required>
+                                                <Input {...register("phone")} placeholder="Phone" type="tel" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                            </FormField>
                                         </div>
 
-                                        <div className="space-y-2">
-                                            <Label htmlFor="email">Email Address</Label>
-                                            <Input className="bg-white border-accent/30 focus:border-accent text-black" id="email" type="email" placeholder="Email" required />
-                                        </div>
+                                        <FormField label="Email Address" error={errors.email?.message} required>
+                                            <Input {...register("email")} placeholder="Email" type="email" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                        </FormField>
 
                                         <div className="overflow-hidden min-h-[220px]">
                                             <AnimatePresence mode="wait">
@@ -219,41 +296,45 @@ const Wholesalers = () => {
                                                         transition={{ duration: 0.3 }}
                                                         className="space-y-6"
                                                     >
-                                                        <div className="space-y-2 relative">
-                                                            <Label htmlFor="address">Property Address</Label>
-                                                            <Input
-                                                                className="bg-white border-accent/30 focus:border-accent text-black"
-                                                                id="address"
-                                                                placeholder="123 Main St, Indianapolis"
-                                                                required
-                                                                ref={inputRef}
-                                                                value={addressQuery}
-                                                                onChange={(e) => setAddressQuery(e.target.value)}
-                                                            />
-                                                            <AddressAutocompletePortal
-                                                                anchorRef={inputRef}
-                                                                results={results}
-                                                                onSelect={(val) => {
-                                                                    setAddressQuery(val);
-                                                                    clearResults();
-                                                                }}
-                                                                onClose={clearResults}
-                                                            />
-                                                        </div>
+                                                        <FormField label="Property Address" error={errors.address?.message} required>
+                                                            <div className="relative">
+                                                                <Input
+                                                                    {...register("address")}
+                                                                    ref={(e) => {
+                                                                        register("address").ref(e);
+                                                                        // @ts-ignore
+                                                                        inputRef.current = e;
+                                                                    }}
+                                                                    onChange={(e) => {
+                                                                        register("address").onChange(e);
+                                                                        setAddressQuery(e.target.value);
+                                                                    }}
+                                                                    placeholder="123 Main St, Indianapolis"
+                                                                    className="bg-white border-accent/30 focus:border-accent text-black"
+                                                                />
+                                                                <AddressAutocompletePortal
+                                                                    anchorRef={inputRef}
+                                                                    results={results}
+                                                                    onSelect={(val) => {
+                                                                        setValue("address", val, { shouldValidate: true });
+                                                                        setAddressQuery(val);
+                                                                        clearResults();
+                                                                    }}
+                                                                    onClose={clearResults}
+                                                                />
+                                                            </div>
+                                                        </FormField>
                                                         <div className="grid grid-cols-2 gap-4">
-                                                            <div className="space-y-2">
-                                                                <Label htmlFor="price">Asking Price</Label>
-                                                                <Input className="bg-white border-accent/30 focus:border-accent text-black" id="price" placeholder="$" />
-                                                            </div>
-                                                            <div className="space-y-2">
-                                                                <Label htmlFor="arv">Estimated ARV</Label>
-                                                                <Input className="bg-white border-accent/30 focus:border-accent text-black" id="arv" placeholder="$" />
-                                                            </div>
+                                                            <FormField label="Asking Price" error={errors.price?.message} required>
+                                                                <Input {...register("price")} placeholder="$" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                                            </FormField>
+                                                            <FormField label="Estimated ARV" error={errors.arv?.message} required>
+                                                                <Input {...register("arv")} placeholder="$" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                                            </FormField>
                                                         </div>
-                                                        <div className="space-y-2">
-                                                            <Label htmlFor="link">Link to Photos (Dropbox/Drive)</Label>
-                                                            <Input className="bg-white border-accent/30 focus:border-accent text-black" id="link" placeholder="https://..." />
-                                                        </div>
+                                                        <FormField label="Link to Photos (Dropbox/Drive)" error={errors.link?.message} required>
+                                                            <Input {...register("link")} placeholder="https://..." className="bg-white border-accent/30 focus:border-accent text-black" />
+                                                        </FormField>
                                                     </motion.div>
                                                 ) : (
                                                     <motion.div
@@ -264,21 +345,23 @@ const Wholesalers = () => {
                                                         transition={{ duration: 0.3 }}
                                                         className="space-y-6"
                                                     >
-                                                        <div className="space-y-2">
-                                                            <Label htmlFor="company">Company Name</Label>
-                                                            <Input className="bg-white border-accent/30 focus:border-accent text-black" id="company" placeholder="Your Wholesaling Co." />
-                                                        </div>
-                                                        <div className="space-y-2">
-                                                            <Label htmlFor="markets">Markets You Serve</Label>
-                                                            <Input className="bg-white border-accent/30 focus:border-accent text-black" id="markets" placeholder="e.g. Marion County, Fishers, etc." />
-                                                        </div>
+                                                        <FormField label="Company Name" error={errors.company?.message} required>
+                                                            <Input {...register("company")} placeholder="Your Wholesaling Co." className="bg-white border-accent/30 focus:border-accent text-black" />
+                                                        </FormField>
+                                                        <FormField label="Markets You Serve" error={errors.markets?.message} required>
+                                                            <Input {...register("markets")} placeholder="e.g. Marion County, Fishers, etc." className="bg-white border-accent/30 focus:border-accent text-black" />
+                                                        </FormField>
                                                     </motion.div>
                                                 )}
                                             </AnimatePresence>
                                         </div>
 
-                                        <Button type="submit" className="w-full rounded-xl py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
-                                            {formType === "submit-deal" ? "Send Deal Now" : "Join Network"} <ChevronRight className="w-4 h-4 ml-2" />
+                                        <Button type="submit" disabled={isSubmitting} className="w-full rounded-xl py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                                            {isSubmitting ? "Processing..." : (
+                                                <>
+                                                    {formType === "submit-deal" ? "Send Deal Now" : "Join Network"} <ChevronRight className="w-4 h-4 ml-2" />
+                                                </>
+                                            )}
                                         </Button>
                                     </form>
                                 )}

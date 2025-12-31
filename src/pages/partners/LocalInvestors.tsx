@@ -1,21 +1,52 @@
 import { useState } from "react";
-import { Helmet } from "react-helmet";
-import { Link } from "react-router-dom";
-import { Building, TrendingUp, Share2, MessageSquare, ArrowUpRight, Check, ChevronRight } from "lucide-react";
+import { Building, TrendingUp, Share2, MessageSquare, Check, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import SEO from "@/components/SEO";
 import QuestionsSection from "@/components/QuestionsSection";
+import { useForm, Controller } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as z from "zod";
+import FormField from "@/components/FormField";
+
+const investorSchema = z.object({
+    name: z.string().min(1, "Name is required"),
+    phone: z.string().min(10, "Valid phone number is required"),
+    email: z.string().email("Valid email address is required"),
+    strategy: z.string().min(1, "Please select a strategy"),
+    interests: z.string().min(1, "Please tell us what you're looking for"),
+});
+
+type InvestorFormData = z.infer<typeof investorSchema>;
 
 const LocalInvestors = () => {
     const [submitted, setSubmitted] = useState(false);
 
-    const handleSubmit = (e: React.FormEvent) => {
-        e.preventDefault();
+    const {
+        register,
+        handleSubmit,
+        control,
+        reset,
+        formState: { errors, isSubmitting },
+    } = useForm<InvestorFormData>({
+        resolver: zodResolver(investorSchema),
+        defaultValues: {
+            name: "",
+            phone: "",
+            email: "",
+            strategy: "",
+            interests: "",
+        },
+    });
+
+    const onSubmit = async (data: InvestorFormData) => {
+        // Simulate API call
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        console.log("Investor Partner Data:", data);
         setSubmitted(true);
+        reset();
     };
 
     return (
@@ -153,45 +184,50 @@ const LocalInvestors = () => {
                                         <Button onClick={() => setSubmitted(false)} variant="outline">Start Over</Button>
                                     </div>
                                 ) : (
-                                    <form onSubmit={handleSubmit} className="space-y-6">
+                                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                                         <div className="grid grid-cols-2 gap-4">
-                                            <div className="space-y-2">
-                                                <Label>Name</Label>
-                                                <Input placeholder="Your Name" required className="bg-white border-accent/30 focus:border-accent text-black" />
-                                            </div>
-                                            <div className="space-y-2">
-                                                <Label>Phone</Label>
-                                                <Input placeholder="Your Phone" type="tel" required className="bg-white border-accent/30 focus:border-accent text-black" />
-                                            </div>
+                                            <FormField label="Name" error={errors.name?.message} required>
+                                                <Input {...register("name")} placeholder="Your Name" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                            </FormField>
+                                            <FormField label="Phone" error={errors.phone?.message} required>
+                                                <Input {...register("phone")} placeholder="Your Phone" type="tel" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                            </FormField>
                                         </div>
 
-                                        <div className="space-y-2">
-                                            <Label>Email</Label>
-                                            <Input placeholder="Your Email" type="email" required className="bg-white border-accent/30 focus:border-accent text-black" />
-                                        </div>
+                                        <FormField label="Email" error={errors.email?.message} required>
+                                            <Input {...register("email")} placeholder="Your Email" type="email" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                        </FormField>
 
-                                        <div className="space-y-2">
-                                            <Label>Primary Strategy</Label>
-                                            <Select>
-                                                <SelectTrigger className="bg-white border-accent/30 focus:border-accent text-black">
-                                                    <SelectValue placeholder="Select Strategy..." />
-                                                </SelectTrigger>
-                                                <SelectContent>
-                                                    <SelectItem value="flip">Fix & Flip</SelectItem>
-                                                    <SelectItem value="rental">Buy & Hold (Rental)</SelectItem>
-                                                    <SelectItem value="multi">Multifamily</SelectItem>
-                                                    <SelectItem value="lending">Private Lending</SelectItem>
-                                                </SelectContent>
-                                            </Select>
-                                        </div>
+                                        <FormField label="Primary Strategy" error={errors.strategy?.message} required>
+                                            <Controller
+                                                name="strategy"
+                                                control={control}
+                                                render={({ field }) => (
+                                                    <Select onValueChange={field.onChange} value={field.value}>
+                                                        <SelectTrigger className="bg-white border-accent/30 focus:border-accent text-black">
+                                                            <SelectValue placeholder="Select Strategy..." />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            <SelectItem value="flip">Fix & Flip</SelectItem>
+                                                            <SelectItem value="rental">Buy & Hold (Rental)</SelectItem>
+                                                            <SelectItem value="multi">Multifamily</SelectItem>
+                                                            <SelectItem value="lending">Private Lending</SelectItem>
+                                                        </SelectContent>
+                                                    </Select>
+                                                )}
+                                            />
+                                        </FormField>
 
-                                        <div className="space-y-2">
-                                            <Label>What are you looking for?</Label>
-                                            <Textarea placeholder="Specific areas, price points, or JV interests..." className="bg-white border-accent/30 focus:border-accent text-black" />
-                                        </div>
+                                        <FormField label="What are you looking for?" error={errors.interests?.message} required>
+                                            <Textarea {...register("interests")} placeholder="Specific areas, price points, or JV interests..." className="bg-white border-accent/30 focus:border-accent text-black min-h-[120px]" />
+                                        </FormField>
 
-                                        <Button type="submit" className="w-full rounded-xl py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
-                                            Send Message <ChevronRight className="w-4 h-4 ml-2" />
+                                        <Button type="submit" disabled={isSubmitting} className="w-full rounded-xl py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                                            {isSubmitting ? "Sending..." : (
+                                                <>
+                                                    Send Message <ChevronRight className="w-4 h-4 ml-2" />
+                                                </>
+                                            )}
                                         </Button>
                                     </form>
                                 )}
