@@ -52,11 +52,10 @@ const Partners = () => {
                 <section className="bg-[#062f33] text-white pt-32 pb-20">
                     <div className="container mx-auto px-4 text-center">
                         <h1 className="text-4xl md:text-6xl font-bold mb-6">
-                            Partner With <span className="text-accent">HudREI</span>
+                            Partnering for <span className="text-accent underline decoration-accent/20">Impact</span> in Indiana
                         </h1>
-                        <p className="text-xl text-white/90 max-w-2xl mx-auto">
-                            We believe in the power of community and collaboration.
-                            Let's work together to create win-win solutions in the Indiana real estate market.
+                        <p className="text-xl text-white/90 max-w-3xl mx-auto leading-relaxed">
+                            HudREI is committed to building a robust ecosystem of real estate professionals across Indiana. Whether you're an agent, wholesaler, or investor, let's work together to provide better solutions for homeowners.
                         </p>
                     </div>
                 </section>

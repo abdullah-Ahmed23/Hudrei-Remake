@@ -11,9 +11,14 @@ const TestimonialsSection = () => {
     const [animateStars, setAnimateStars] = useState(false);
 
     const reviews = [
-        { name: "Sarah M.", text: "I inherited my parents' house in Indianapolis and had no idea what to do with it. HudREI made the entire process simple and stress-free. They gave me a fair offer and closed in two weeks. Highly recommend!" },
-        { name: "James & Linda R.", text: "We were behind on our mortgage and facing foreclosure. HudREI stepped in and bought our house before the sheriff sale. They saved our credit and treated us with respect during a difficult time." },
-        { name: "Michelle T.", text: "After my divorce, I needed to sell our marital home quickly. HudREI gave me a cash offer the next day and closed in 10 days. The process was straightforward and professional." },
+        { name: "Greg M.", text: "I'm compelled to pass on our great experience with HudREI. The whole team at Hudrei was understanding and patient while we worked through a challenging family period. The professionalism was top notch." },
+        { name: "Badr Almalahi", text: "HudREI is an incredibly well-organized, results-driven real estate team. They are easy to work with, professional at every step, and communicate clearly throughout the process. Most importantly, they make sure every transaction is handled with integrity." },
+        { name: "Gloria He", text: "HudREI made selling my home incredibly smooth. They handled every obstacle with professionalism and clear communication, always staying one step ahead. Their team was proactive, knowledgeable, and truly went above and beyond." },
+        { name: "Holly Dooley", text: "We had an excellent experience with HUDREI. Communication was excellent. They met our expectations and actually made moving and selling our home after 30 years of living in a better experience than I could have imagined." },
+        { name: "David", text: "My experience with HudREI was a positive one for me. I enjoyed talking with the staff members that handled my transaction. We agreed on a fair price and did the signing of the Purchase agreement electronically. Closed on time." },
+        { name: "Darien Sharpe", text: "HudREI truly redefines what it means to work with a real estate team. Their professionalism, market knowledge, and attention to detail made the entire process smooth and stress-free. They go above and beyond." },
+        { name: "Lee Contreras", text: "Sam, Owale, Summer, everyone was very professional and worked together to get to the end. This team is terrific and I want to do another deal with these guys right away." },
+        { name: "Alphonso Wilhite", text: "We are very pleased with the experience we shared. Both demonstrated a high level of professionalism and teamwork throughout the sale of our property. They communicated clearly and kept us informed at each step." }
     ];
 
     const loopedReviews = [...reviews, ...reviews];

@@ -17,6 +17,8 @@ import {
 import { Button } from "@/components/ui/button";
 import SEO from "@/components/SEO";
 import QuestionsSection from "@/components/QuestionsSection";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { cn } from "@/lib/utils";
 
 
@@ -50,7 +52,7 @@ const offers: OfferOption[] = [
             "Completely Stress-Free"
         ],
         ctaText: "Get Cash Offers",
-        ctaLink: "#contact"
+        ctaLink: "/contact"
     },
     {
         id: 2,
@@ -66,7 +68,7 @@ const offers: OfferOption[] = [
             "Zero Maintenance Worries"
         ],
         ctaText: "Become The Bank",
-        ctaLink: "#contact"
+        ctaLink: "/contact"
     },
     {
         id: 3,
@@ -83,7 +85,7 @@ const offers: OfferOption[] = [
             "No Appraisal Contingencies"
         ],
         ctaText: "Learn More",
-        ctaLink: "#contact"
+        ctaLink: "/contact"
     },
     {
         id: 4,
@@ -100,7 +102,7 @@ const offers: OfferOption[] = [
             "No Home Repairs Needed"
         ],
         ctaText: "Get Mortgage Relief",
-        ctaLink: "#contact"
+        ctaLink: "/contact"
     },
     {
         id: 5,
@@ -300,9 +302,7 @@ const SellingOptions = () => {
                 description="Explore your home selling options in Indiana. Compare a fast cash offer from HudREI vs listing with an agent. No fees, no repairs, close in 7 days."
                 canonical="https://hudrei.com/selling-options"
             />
-
-
-
+            <Header />
             <main className="bg-white">
                 {/* Hero Section */}
                 <section className="pt-32 pb-20 bg-white" >
@@ -312,18 +312,133 @@ const SellingOptions = () => {
                             <Home className="w-10 h-10 text-accent" />
                         </div>
                         <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-gray-900 mb-6 tracking-tight">
-                            Your Selling Options
+                            Explore Your <span className="text-accent">Home Selling Options</span> In Indiana
                         </h1>
                         <p className="text-xl md:text-2xl text-accent font-medium mb-6">Choose the path that's best for you!</p>
-                        <p className="text-gray-600 max-w-3xl mx-auto text-lg md:text-xl leading-relaxed">
-                            At HudREI, we redefine the selling experience with tailored solutions to meet your needs in Indiana.
-                            Say goodbye to stress and uncertainty – our transparent approach and competitive pricing
-                            sets a new standard. We offer multiple options to suit your unique situation.
+                        <p className="text-gray-600 max-w-4xl mx-auto text-lg md:text-xl leading-relaxed">
+                            Compare our fast cash offers to listing on the market. At HudREI, we provide homeowners in Indiana with multiple ways to sell, ensuring you get the best result for your specific situation. Whether you need speed, convenience, or the absolute highest price, we have a solution.
                         </p>
                         <div className="mt-10">
                             <Button className="rounded-xl px-10 py-7 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all" asChild>
                                 <a href="#offers">Browse Offers</a>
                             </Button>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Comparison Table Section */}
+                <section className="py-24 bg-white">
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="text-center mb-16">
+                            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+                                Professional Home Buyer <span className="text-accent">vs.</span> Traditional Agent
+                            </h2>
+                            <p className="max-w-2xl text-gray-600 text-xl mx-auto">
+                                See how the numbers stack up and which option puts more control in your hands.
+                            </p>
+                        </div>
+
+                        <div className="max-w-5xl mx-auto overflow-hidden rounded-3xl shadow-xl border border-gray-100 bg-white">
+                            <table className="w-full text-left border-collapse">
+                                <thead>
+                                    <tr className="bg-[#062f33] text-white">
+                                        <th className="p-6 text-lg font-bold">Feature</th>
+                                        <th className="p-6 text-lg font-bold">Listing w/ An Agent</th>
+                                        <th className="p-6 text-lg font-bold bg-accent">Selling To HudREI</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr className="border-b border-gray-100">
+                                        <td className="p-6 font-semibold text-gray-900">Commissions / Fees</td>
+                                        <td className="p-6 text-gray-600">6% on average paid by seller</td>
+                                        <td className="p-6 font-bold text-accent bg-accent/5">NONE</td>
+                                    </tr>
+                                    <tr className="border-b border-gray-100">
+                                        <td className="p-6 font-semibold text-gray-900">Closing Costs</td>
+                                        <td className="p-6 text-gray-600">2% on average paid by seller</td>
+                                        <td className="p-6 font-bold text-accent bg-accent/5">NONE – We pay all costs</td>
+                                    </tr>
+                                    <tr className="border-b border-gray-100">
+                                        <td className="p-6 font-semibold text-gray-900">Inspection & Financing Contingencies</td>
+                                        <td className="p-6 text-gray-600">Yes, sales often fall through</td>
+                                        <td className="p-6 font-bold text-accent bg-accent/5">NONE</td>
+                                    </tr>
+                                    <tr className="border-b border-gray-100">
+                                        <td className="p-6 font-semibold text-gray-900">Appraisal Needed</td>
+                                        <td className="p-6 text-gray-600">Yes, required by mortgage lenders</td>
+                                        <td className="p-6 font-bold text-accent bg-accent/5">NONE – Cash offers only</td>
+                                    </tr>
+                                    <tr className="border-b border-gray-100">
+                                        <td className="p-6 font-semibold text-gray-900">Average Days to Close</td>
+                                        <td className="p-6 text-gray-600">90+ days</td>
+                                        <td className="p-6 font-bold text-accent bg-accent/5">7 – 14 Days</td>
+                                    </tr>
+                                    <tr className="border-b border-gray-100">
+                                        <td className="p-6 font-semibold text-gray-900">Number of Showings</td>
+                                        <td className="p-6 text-gray-600">Endless, inconvenient showings</td>
+                                        <td className="p-6 font-bold text-accent bg-accent/5">1 (Just Us)</td>
+                                    </tr>
+                                    <tr className="border-b border-gray-100">
+                                        <td className="p-6 font-semibold text-gray-900">Who Pays For Repairs?</td>
+                                        <td className="p-6 text-gray-600">Negotiated during inspection</td>
+                                        <td className="p-6 font-bold text-accent bg-accent/5">NONE – We buy as-is</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                {/* iBuyer section */}
+                <section className="py-24 bg-gray-50">
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                        <div className="max-w-4xl mx-auto bg-white rounded-[2.5rem] p-10 md:p-16 shadow-lg border border-gray-100">
+                            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
+                                HudREI vs. <span className="text-accent">Large iBuyers</span> (Zillow, OpenDoor)
+                            </h2>
+                            <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
+                                <p>
+                                    Large corporate iBuyers often use "bait and switch" tactics. They make a high initial offer to get you in the door, then slowly chip away at it with "convenience fees," inspection repair requests, and service charges that can total 10-15% of the sale price.
+                                </p>
+                                <p>
+                                    As a local Indiana company, HudREI offers <span className="font-bold text-gray-900">transparency</span>. Our offer doesn't come with hidden service fees or surprise inspection deductions. What we offer is what you get at the closing table. plus, you get the personal service of a local team, not a call center in another state.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* When to Choose Section */}
+                <section className="py-24 bg-white">
+                    <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+                        <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-16 text-center">
+                            When to <span className="text-accent">Choose Each Option</span>
+                        </h2>
+                        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                            <div className="p-8 rounded-3xl bg-gray-50 border border-gray-100">
+                                <h3 className="text-xl font-bold text-gray-900 mb-4">Choose Cash Offer if...</h3>
+                                <ul className="space-y-3 text-black">
+                                    <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> Speed is your priority</li>
+                                    <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> The house needs major repairs</li>
+                                    <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> You want a guaranteed sale</li>
+                                </ul>
+                            </div>
+                            <div className="p-8 rounded-3xl bg-gray-50 border border-gray-100">
+                                <h3 className="text-xl font-bold text-gray-900 mb-4">Choose Become the Bank if...</h3>
+                                <ul className="space-y-3 text-black">
+                                    <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> You want passive monthly income</li>
+                                    <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> You want to defer capital gains</li>
+                                    <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> You don't need all the cash at once</li>
+                                </ul>
+                            </div>
+                            <div className="p-8 rounded-3xl bg-gray-50 border border-gray-100">
+                                <h3 className="text-xl font-bold text-gray-900 mb-4">Choose List w/ HudREI if...</h3>
+                                <ul className="space-y-3 text-black">
+                                    <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> The house is in great condition</li>
+                                    <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> You have time to wait for top dollar</li>
+                                    <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> You want maximum market exposure</li>
+                                </ul>
+                            </div>
                         </div>
                     </div>
                 </section>
@@ -334,11 +449,11 @@ const SellingOptions = () => {
                         <div className="text-center mb-20">
                             <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6" data-aos="fade-up"
                                 data-aos-duration="900">
-                                Get Cash Offers
+                                Detailed Selling Solutions
                             </h2>
                             <p className="max-w-2xl text-gray-600 text-xl mx-auto leading-relaxed" data-aos="fade-down"
                                 data-aos-duration="900">
-                                Explore our range of selling solutions designed to meet your specific needs and timeline.
+                                Explore how we can help you solve your specific real estate problem in Indiana.
                             </p>
                         </div>
 
@@ -396,7 +511,6 @@ const SellingOptions = () => {
 
                 <QuestionsSection />
             </main>
-
 
         </>
     );

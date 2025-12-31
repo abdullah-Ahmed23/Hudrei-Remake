@@ -11,7 +11,7 @@ import { Link } from "react-router-dom";
 const faqs = [
     {
         question: "Do you purchase homes directly, or will you list my house on the MLS?",
-        answer: "Great question! We're not real estate agents and we don't list properties on the MLS. At HudREI, we're professional home buyers. We purchase houses in Indiana that meet our buying criteria. We pay cash and can close quickly."
+        answer: "Great question! We're not real estate agents and we don't list properties on the MLS. At HudREI, we're professional home buyers. We purchase houses in Indiana that meet our buying criteria. We pay cash and handle the entire process from start to finish."
     },
     {
         question: "Will you make me a fair offer?",

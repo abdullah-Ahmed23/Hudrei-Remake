@@ -1,4 +1,5 @@
 import { Phone, Mail, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 import hudReiLogo1 from "@/assets/w2.png";
 
 const Footer = () => {
@@ -20,8 +21,7 @@ const Footer = () => {
             />
 
             <p className="text-sm text-white/70 leading-relaxed max-w-sm">
-              Helping homeowners sell quickly through transparent cash offers
-              and fast closings.
+              HudREI is a family-owned real estate investment company based right here in Indiana. We buy houses in any condition, handle all the paperwork, and close on your timeline.
             </p>
 
             <div className="flex flex-col gap-3 text-sm text-white/80">
@@ -35,7 +35,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center gap-3">
                 <MapPin className="w-4 h-4 text-accent" />
-                <span>Avon, Indiana</span>
+                <span>Indianapolis, Indiana</span>
               </div>
             </div>
           </div>
@@ -49,10 +49,11 @@ const Footer = () => {
                 Company
               </h4>
               <ul className="flex flex-col gap-3 text-sm text-white/70">
-                <li><a href="/who-are-we" className="hover:text-white">About Us</a></li>
-                <li><a href="/selling-options" className="hover:text-white">Selling Options</a></li>
-                <li><a href="/#testimonials" className="hover:text-white">Testimonials</a></li>
-                <li><a href="/contact" className="hover:text-white">Contact</a></li>
+                <li><Link to="/who-are-we" className="hover:text-white">About Us</Link></li>
+                <li><Link to="/selling-options" className="hover:text-white">Selling Options</Link></li>
+                <li><Link to="/testimonials" className="hover:text-white">Testimonials</Link></li>
+                <li><Link to="/contact" className="hover:text-white">Contact</Link></li>
+                <li><Link to="/careers" className="hover:text-white">Careers</Link></li>
               </ul>
             </div>
 
@@ -62,8 +63,9 @@ const Footer = () => {
                 Resources
               </h4>
               <ul className="flex flex-col gap-3 text-sm text-white/70">
-                <li><a href="/faq" className="hover:text-white">FAQ</a></li>
-                <li><a href="/blog" className="hover:text-white">Blog</a></li>
+                <li><Link to="/faq" className="hover:text-white">FAQ</Link></li>
+                <li><Link to="/blog" className="hover:text-white">Blog</Link></li>
+                <li><Link to="/how-it-works" className="hover:text-white">How It Works</Link></li>
               </ul>
             </div>
 
@@ -74,15 +76,15 @@ const Footer = () => {
               </h4>
               <ul className="flex flex-col gap-3 text-sm text-white/70">
                 <li>Kokomo
-, IN</li>
+                  , IN</li>
                 <li>Fort Wayne
-, IN</li>
+                  , IN</li>
                 <li>Indianapolis
-, IN</li>
+                  , IN</li>
                 <li>South Bend
-, IN</li>
+                  , IN</li>
                 <li>Mishawaka
-, IN</li>
+                  , IN</li>
               </ul>
             </div>
 
@@ -96,9 +98,8 @@ const Footer = () => {
         <div className="py-6 flex flex-col md:flex-row items-center justify-between gap-4 text-sm text-white/60">
           <p>© {currentYear} HudREI. All rights reserved.</p>
           <div className="flex gap-6">
-            <span>Privacy</span>
-            <span>Terms</span>
-            <span>Cookies</span>
+            <Link to="/privacy-policy" className="hover:text-white">Privacy Policy</Link>
+            <Link to="/terms-of-service" className="hover:text-white">Terms of Service</Link>
           </div>
         </div>
 

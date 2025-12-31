@@ -26,14 +26,14 @@ import { useLocation } from "react-router-dom";
 const mainLinks = [
   { label: "Selling Options", to: "/selling-options" },
   { label: "About Us", to: "/who-are-we" },
-  { label: "Testimonials", to: "/#testimonials" },
+  { label: "Testimonials", to: "/testimonials" },
 
 ];
 
 const learnDropdown = [
-  { label: "FAQ", to: "/Faq", icon: HelpCircle, desc: "Common questions answered" },
+  { label: "FAQ", to: "/faq", icon: HelpCircle, desc: "Common questions answered" },
   { label: "Blog", to: "/blog", icon: BookOpen, desc: "Latest news & insights" },
-  { label: "Careers", to: "/Carrers", icon: Briefcase, desc: "Join our team" },
+  { label: "Careers", to: "/careers", icon: Briefcase, desc: "Join our team" },
   { label: "Contact Us", to: "/contact", icon: Mail, desc: "Get in touch with us" },
 ];
 
@@ -87,8 +87,7 @@ const Header = () => {
   const [mobilePartnersOpen, setMobilePartnersOpen] = useState(false);
 
   const location = useLocation();
-  const isTestimonialsActive =
-    location.pathname === "/" && location.hash === "#testimonials";
+  const isTestimonialsActive = location.pathname === "/testimonials";
 
 
 
@@ -115,44 +114,23 @@ const Header = () => {
             </Link>
 
             {/* Desktop Nav */}
-            <nav className="hidden lg:flex   items-center gap-1">
-              {mainLinks.map((l) => {
-                // 🔥 SPECIAL CASE: Testimonials (hash link)
-                if (l.to.includes("#")) {
-                  return (
-                    <button
-                      key={l.to}
-                      onClick={() => navigate(l.to)}
-                      className={cn(
-                        "px-4 py-2 text-sm font-medium rounded-full transition-all duration-300",
-                        isTestimonialsActive
-                          ? "text-primary bg-primary/10"
-                          : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                      )}
-                    >
-                      {l.label}
-                    </button>
-                  );
-                }
-
-                // ✅ Normal NavLink for real routes
-                return (
-                  <NavLink
-                    key={l.to}
-                    to={l.to}
-                    className={({ isActive }) =>
-                      cn(
-                        "px-4 py-2 text-sm font-medium rounded-full transition-all duration-300",
-                        isActive
-                          ? "text-primary bg-primary/10"
-                          : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
-                      )
-                    }
-                  >
-                    {l.label}
-                  </NavLink>
-                );
-              })}
+            <nav className="hidden lg:flex items-center gap-1">
+              {mainLinks.map((l) => (
+                <NavLink
+                  key={l.to}
+                  to={l.to}
+                  className={({ isActive }) =>
+                    cn(
+                      "px-4 py-2 text-sm font-medium rounded-full transition-all duration-300",
+                      isActive
+                        ? "text-primary bg-primary/10"
+                        : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                    )
+                  }
+                >
+                  {l.label}
+                </NavLink>
+              ))}
 
 
               {/* Learn Dropdown */}
@@ -305,30 +283,36 @@ const Header = () => {
             </div>
           </div>
         </div>
-      </header>
+      </header >
 
       {/* ================= MOBILE SLIDE MENU ================= */}
-      <div
-        className={cn(
-          "fixed inset-0 z-[60] lg:hidden transition-all duration-500",
-          isMenuOpen ? "pointer-events-auto" : "pointer-events-none"
-        )}
+      < div
+        className={
+          cn(
+            "fixed inset-0 z-[60] lg:hidden transition-all duration-500",
+            isMenuOpen ? "pointer-events-auto" : "pointer-events-none"
+          )
+        }
       >
         {/* Overlay */}
-        <div
+        < div
           onClick={() => setIsMenuOpen(false)}
-          className={cn(
-            "absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-500",
-            isMenuOpen ? "opacity-100" : "opacity-0"
-          )}
+          className={
+            cn(
+              "absolute inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-500",
+              isMenuOpen ? "opacity-100" : "opacity-0"
+            )
+          }
         />
 
         {/* Panel */}
-        <div
-          className={cn(
-            "absolute right-0 top-0 bottom-0 w-full max-w-sm bg-white shadow-2xl transition-transform duration-500 ease-out",
-            isMenuOpen ? "translate-x-0" : "translate-x-full"
-          )}
+        < div
+          className={
+            cn(
+              "absolute right-0 top-0 bottom-0 w-full max-w-sm bg-white shadow-2xl transition-transform duration-500 ease-out",
+              isMenuOpen ? "translate-x-0" : "translate-x-full"
+            )
+          }
         >
           <div className="flex flex-col h-full">
             {/* Header */}
@@ -445,8 +429,8 @@ const Header = () => {
               </Button>
             </div>
           </div>
-        </div>
-      </div>
+        </div >
+      </div >
     </>
   );
 };

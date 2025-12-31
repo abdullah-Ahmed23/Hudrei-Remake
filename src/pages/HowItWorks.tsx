@@ -34,11 +34,11 @@ const steps = [
     },
     {
         step: "03",
-        title: "Close & Get Paid",
+        title: "Close on Your Timeline",
         icon: Key,
         desc: "If you accept, we handle the paperwork and pay all closing costs. You pick the date.",
         more:
-            "We work with a reputable local title company to handle the transaction. You get paid cash on closing day. No hidden fees, no commissions, no surprises.",
+            "We work with a reputable local title company to handle the transaction. You get paid cash on closing day. No hidden fees, no commissions, and no pressure. We work around your schedule to make the transition as smooth as possible.",
     },
 ];
 
@@ -72,8 +72,8 @@ const HowItWorks = () => {
                         transition={{ duration: 0.6 }}
                         className="text-center mb-24"
                     >
-                        <h1 className="text-5xl sm:text-6xl font-extrabold text-black mb-6">
-                            Sell Your House in <span className="text-[#318075]">3 Easy Steps</span>
+                        <h1 className="text-5xl sm:text-7xl font-extrabold text-black mb-6">
+                            Selling Your Indiana House in <span className="text-[#318075]">3 Easy Steps</span>
                         </h1>
                         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                             A simple, transparent process designed to help you sell your home quickly and stress-free.

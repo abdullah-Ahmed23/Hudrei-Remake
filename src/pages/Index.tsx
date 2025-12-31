@@ -33,7 +33,7 @@ const Index = () => {
     <>
       <SEO
         title="Sell My House Fast Indiana | Cash Home Buyers | HudREI"
-        description="Looking to sell your house fast in Indiana? HudREI is a local, family-owned company buying homes in any condition. No fees, no repairs, and cash offers in 24 hours."
+        description="Looking to sell your house fast in Indiana? HudREI is a local, family-owned company buying homes in any condition. No fees, no repairs, and cash offers in 24 hours. Close on your timeline."
         canonical="https://hudrei.com"
       />
 

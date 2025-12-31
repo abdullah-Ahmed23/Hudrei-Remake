@@ -180,7 +180,7 @@ const Contact = () => {
                 />
                 <link rel="canonical" href="https://hudrei.com/contact" />
             </Helmet>
-
+            <Header />
             <div className="min-h-screen bg-white">
 
 
@@ -602,8 +602,9 @@ const Contact = () => {
                 </section>
 
                 <QuestionsSection />
-                <Footer />
+
             </div>
+
         </>
     );
 };

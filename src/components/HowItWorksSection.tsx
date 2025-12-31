@@ -8,20 +8,20 @@ const steps = [
   {
     id: 1,
     icon: ClipboardList,
-    title: "Contact Us",
-    desc: "Fill out our simple form or call us directly. Tell us about your property and your situation.",
+    title: "Step 1: Contact Us",
+    desc: "Fill out our simple form or call us directly. Tell us about your property and your situation. The conversation is pressure-free and confidential.",
   },
   {
     id: 2,
     icon: BadgeDollarSign,
-    title: "Get Your Cash Offer",
-    desc: "We'll schedule a quick visit (usually within 24-48 hours) and present you with a fair, no-obligation cash offer.",
+    title: "Step 2: Get Your Cash Offer",
+    desc: "We'll schedule a quick visit to see your property (usually within 24-48 hours). After our evaluation, we'll present you with a fair, no-obligation cash offer.",
   },
   {
     id: 3,
     icon: Key,
-    title: "Close on Your Timeline",
-    desc: "If you accept our offer, we'll handle all the paperwork and pay all closing costs. You choose the date.",
+    title: "Step 3: Close on Your Timeline",
+    desc: "If you accept our offer, we'll work with a local title company to handle all the paperwork. You choose the closing date—whether that's next week or next month. We pay all closing costs.",
   },
 ];
 
@@ -65,11 +65,8 @@ const HowItWorksSection = () => {
             Simple Process
           </p>
           <h2 className="text-3xl sm:text-4xl lg:text-7xl text-black font-extrabold">
-            Our Simple 3-Step Process for a <span className="text-accent">Quick Home Sale</span>
+            Our Simple 3-Step Process for a <span className="text-accent">Quick Home Sale</span> in Indiana
           </h2>
-          <p className="text-black text-xl sm:text-2xl mt-4">
-            in Indiana
-          </p>
         </motion.div>
 
         {/* ================= DESKTOP ================= */}
@@ -128,10 +125,10 @@ const HowItWorksSection = () => {
               <ClipboardList className="w-9 h-9 text-white" />
             </div>
             <h3 className="text-2xl font-semibold mb-3">
-              Contact Us
+              Step 1: Contact Us
             </h3>
             <p className="text-black text-xl font-bold  ">
-              Fill out our simple form or call us directly. Tell us about your property.
+              Fill out our simple form or call us directly. Tell us about your property and your situation.
             </p>
           </motion.div>
 
@@ -154,7 +151,7 @@ const HowItWorksSection = () => {
               <BadgeDollarSign className="w-9 h-9 text-white" />
             </div>
             <h3 className="text-2xl font-semibold mb-3">
-              Get Your Cash Offer
+              Step 2: Get Your Cash Offer
             </h3>
             <p className="text-black text-xl font-bold ">
               We'll schedule a quick visit and present a fair, no-obligation cash offer.
@@ -179,7 +176,7 @@ const HowItWorksSection = () => {
               <Key className="w-9 h-9 text-white" />
             </div>
             <h3 className="text-2xl font-semibold mb-3">
-              Close on Your Timeline
+              Step 3: Close on Your Timeline
             </h3>
             <p className="text-black text-xl font-bold ">
               We handle all the paperwork and pay all closing costs. You choose the date.

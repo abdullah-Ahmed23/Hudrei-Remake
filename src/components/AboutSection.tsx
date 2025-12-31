@@ -14,22 +14,32 @@ import {
 const values = [
   {
     title: "No Repairs or Cleaning Needed",
-    desc: "Sell your house as-is. We buy homes in any condition—whether it's outdated, damaged, or even condemned.",
+    desc: "Sell your house as-is in Indiana. We buy homes in any condition—whether it's outdated, damaged, or even condemned. No need to spend thousands on repairs, painting, or staging. We handle everything, including cleanout if needed.",
     icon: ShieldCheck,
   },
   {
     title: "Zero Fees or Commissions",
-    desc: "Avoid the standard 6% realtor fees. No closing costs and no hidden fees. What we offer is what you keep.",
+    desc: "Avoid the standard 6% realtor fees that cost Indiana sellers thousands. When you sell to HudREI, there are no realtor commissions, no closing costs, and no hidden fees. What we offer is what you keep.",
     icon: BadgeDollarSign,
   },
   {
     title: "Close on Your Schedule",
-    desc: "We can close in as few as 7 days. Or, if you need more time to move, we'll work with your timeline.",
+    desc: "Need a quick home sale in Indiana? We can close in as few as 7 days. Or, if you need more time to move, we'll work with your timeline. You choose the closing date that works best for you.",
     icon: MapPinned,
   },
   {
     title: "Cash Offers in 24 Hours",
-    desc: "No waiting weeks for an offer. We evaluate your property and present a fair cash offer within 24 hours.",
+    desc: "No waiting weeks for an offer. We evaluate your property and present a fair cash offer within 24 hours. No obligation—you're free to accept or decline.",
+    icon: BadgeCheck,
+  },
+  {
+    title: "No Showings or Open Houses",
+    desc: "Forget about keeping your house pristine for endless showings. We only need to visit once to make our offer. No disruption to your life.",
+    icon: HeartHandshake,
+  },
+  {
+    title: "We Buy in Any Situation",
+    desc: "Facing foreclosure? Inherited a property? Going through a divorce? Behind on taxes? We've helped Indiana homeowners in every situation imaginable. Our cash for houses Indianapolis program is designed to solve your specific problem.",
     icon: BadgeCheck,
   },
 ];
@@ -116,7 +126,7 @@ const AboutValues = () => {
           variants={{
             show: { transition: { staggerChildren: 0.15 } },
           }}
-          className="hidden md:grid grid-cols-2 lg:grid-cols-4 gap-14 text-center"
+          className="hidden md:grid grid-cols-2 lg:grid-cols-3 gap-14 text-center"
         >
           {values.map((item, i) => {
             const Icon = item.icon;

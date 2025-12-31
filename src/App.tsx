@@ -14,7 +14,8 @@ import Contact from "./pages/Contact";
 import HowItWorks from "@/pages/HowItWorks";
 import Blog from "./pages/blog";
 import Faq from "./pages/Faq";
-import Carrers from "./pages/Careers";
+import Careers from "./pages/Careers";
+import Testimonials from "./pages/Testimonials";
 import Partners from "./pages/Partners";
 import Agents from "./pages/partners/Agents";
 import Wholesalers from "./pages/partners/Wholesalers";
@@ -25,6 +26,9 @@ import "aos/dist/aos.css";
 
 import Index from "./pages/Index";
 import NotFound from "./pages/NotFound";
+import CityLandingPage from "./pages/CityLandingPage";
+import PrivacyPolicy from "./pages/PrivacyPolicy";
+import TermsOfService from "./pages/TermsOfService";
 import "./App.css";
 
 const queryClient = new QueryClient();
@@ -55,20 +59,24 @@ const App = () => {
             <Route path="/selling-options" element={<SellingOptions />} />
             <Route path="/who-are-we" element={<WhoWeAre />} />
             <Route path="/contact" element={<Contact />} />
-            <Route path="/Howit" element={<HowItWorks />} />
+            <Route path="/how-it-works" element={<HowItWorks />} />
             <Route path="/blog" element={<Blog />} />
+            <Route path="/testimonials" element={<Testimonials />} />
             <Route path="/partners" element={<Partners />} />
             <Route path="/partners/agents" element={<Agents />} />
             <Route path="/partners/wholesalers" element={<Wholesalers />} />
             <Route path="/partners/local-investors" element={<LocalInvestors />} />
             <Route path="/partners/title-companies" element={<TitleCompanies />} />
-            <Route path="/Faq" element={<Faq />} />
-            <Route path="/Carrers" element={<Carrers />} />
+            <Route path="/faq" element={<Faq />} />
+            <Route path="/careers" element={<Careers />} />
+            <Route path="/we-buy-houses/:area" element={<CityLandingPage />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/terms-of-service" element={<TermsOfService />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+          <Footer />
         </BrowserRouter>
       </TooltipProvider>
-      <Footer />
 
     </QueryClientProvider>
   );
