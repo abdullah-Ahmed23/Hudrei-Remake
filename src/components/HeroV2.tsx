@@ -127,7 +127,7 @@ const HeroV2 = () => {
                     {[
                         "No repairs needed",
                         "No agent fees",
-                        "Close in 7 days",
+                        "Close in 7-14 days",
                     ].map((item, i) => (
                         <motion.div
                             key={i}
