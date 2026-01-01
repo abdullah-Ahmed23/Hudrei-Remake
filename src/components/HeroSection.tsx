@@ -63,7 +63,7 @@ const HeroSection = () => {
 
               <h2 className="text-4xl md:text-7xl font-extrabold text-black mb-6 leading-tight tracking-tight">
                 We Buy Houses in Indiana Sell Your House <span className="text-accent relative inline-block">
-                  Fast for Cash
+                  Fast with Cash
                   <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
                     <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
                   </svg>
@@ -71,9 +71,9 @@ const HeroSection = () => {
               </h2>
               <div className="space-y-6 text-xl text-black leading-relaxed font-medium">
                 <p>
-                  Need to sell your house fast in Indiana? HudREI is a local, family-owned company that buys houses in any condition throughout the Hoosier State. Whether you're facing foreclosure, dealing with an inherited property, going through a divorce, or simply need to sell quickly, we provide a straightforward solution with no hassles, no fees, and no repairs required.
+                  Need to sell your house fast in Indiana?
                 </p>
-
+                <p>HudREI is a local, family-owned company that buys houses in any condition throughout the Hoosier State. Whether you're facing foreclosure, dealing with an inherited property, going through a divorce, or simply need to sell quickly, we provide a straightforward solution with no hassles, no fees, and no repairs required.</p>
               </div>
             </div>
 

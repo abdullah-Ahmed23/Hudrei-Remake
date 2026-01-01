@@ -43,6 +43,7 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import FormField from "@/components/FormField";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const careerSchema = z.object({
     firstName: z.string().min(1, "First name is required"),
@@ -217,6 +218,7 @@ const FileUploadZone = ({
 };
 
 const CareersSection = () => {
+    const isMobile = useIsMobile();
     const {
         register,
         handleSubmit,
@@ -288,8 +290,8 @@ const CareersSection = () => {
                 {/* Header */}
                 <section className="container mx-auto px-4 mb-20">
                     <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                        whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                         className="text-center max-w-3xl mx-auto"
@@ -315,8 +317,8 @@ const CareersSection = () => {
                 {/* Open Roles Grid */}
                 <section className="container mx-auto px-4 pb-32">
                     <motion.div
-                        variants={container}
-                        initial="hidden"
+                        variants={isMobile ? {} : container}
+                        initial={isMobile ? "show" : "hidden"}
                         whileInView="show"
                         viewport={{ once: true }}
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"

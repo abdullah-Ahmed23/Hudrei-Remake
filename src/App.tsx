@@ -12,6 +12,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import AOS from "aos";
 import "aos/dist/aos.css";
 import "./App.css";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 // Static Imports (Removing Lazy Loading)
 import Index from "./pages/Index";
@@ -37,16 +38,19 @@ import BlogPost from "./pages/blog/[slug]/page";
 const queryClient = new QueryClient();
 
 // Page Transition Wrapper
-const PageTransition = ({ children }: { children: React.ReactNode }) => (
-  <motion.div
-    initial={{ opacity: 0, y: 10 }}
-    animate={{ opacity: 1, y: 0 }}
-    exit={{ opacity: 0, y: -10 }}
-    transition={{ duration: 0.4, ease: "easeOut" }}
-  >
-    {children}
-  </motion.div>
-);
+const PageTransition = ({ children }: { children: React.ReactNode }) => {
+  const isMobile = useIsMobile();
+  return (
+    <motion.div
+      initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
+      transition={{ duration: isMobile ? 0 : 0.4, ease: "easeOut" }}
+    >
+      {children}
+    </motion.div>
+  );
+};
 
 const AppContent = () => {
   const location = useLocation();
@@ -57,7 +61,7 @@ const AppContent = () => {
       easing: "ease-out-cubic",
       once: true,
       offset: 50,
-      disable: 'mobile', // Disable animations on mobile devices to prevent scrolling glitch
+      disable: false, // Enable animations on mobile as requested
       disableMutationObserver: false,
     });
   }, []);

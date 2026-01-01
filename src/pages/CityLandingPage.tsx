@@ -23,9 +23,12 @@ const formSchema = z.object({
 
 type FormData = z.infer<typeof formSchema>;
 
+import { useIsMobile } from "@/hooks/use-mobile";
+
 const CityLandingPage = () => {
     const { area } = useParams<{ area: string }>();
     const navigate = useNavigate();
+    const isMobile = useIsMobile();
     const inputRef = useRef<HTMLInputElement | null>(null);
 
     const {
@@ -210,11 +213,10 @@ const CityLandingPage = () => {
                                         "We handle all the paperwork and closing costs",
                                         "Buying as-is: no cleaning or expensive repairs required"
                                     ]).map((situation, index) => (
-                                        <motion.div
+                                        <div
                                             key={index}
-                                            initial={{ opacity: 0, x: -20 }}
-                                            whileInView={{ opacity: 1, x: 0 }}
-                                            transition={{ delay: index * 0.1 }}
+                                            data-aos="fade-up"
+                                            data-aos-delay={index * 100}
                                             className="flex items-start gap-4 p-5 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all group"
                                         >
                                             <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 group-hover:bg-accent group-hover:text-white transition-colors">
@@ -223,7 +225,7 @@ const CityLandingPage = () => {
                                             <div>
                                                 <p className="text-gray-700 font-medium leading-relaxed">{situation}</p>
                                             </div>
-                                        </motion.div>
+                                        </div>
                                     ))}
                                 </div>
                             </motion.div>

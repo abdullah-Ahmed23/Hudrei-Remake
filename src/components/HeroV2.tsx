@@ -67,12 +67,12 @@ const HeroV2 = () => {
 
                 {/* SUBTEXT */}
                 <motion.p
-                    className="text-gray-800 text-lg sm:text-xl max-w-2xl leading-relaxed font-medium"
+                    className="text-gray-800 text-lg sm:text-xl max-w-2xl leading-relaxed font-medium font-times"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
                 >
-                    Keep 100% · Pay $0 · Sell as-is for a fair cash offer.
+                    Keep 100% -  Pay $0 - Sell as-is for a fair cash offer.
                 </motion.p>
 
                 {/* ================= ADDRESS BAR ================= */}

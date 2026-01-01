@@ -1,8 +1,10 @@
 import { Phone, Mail, HelpCircle, PhoneCall } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const QuestionsSection = () => {
+  const isMobile = useIsMobile();
   const markets = [
     "Kokomo",
     "Fort Wayne",
@@ -116,6 +118,7 @@ export default QuestionsSection;
 /* ================= Background House ================= */
 
 const HouseOnView = () => {
+  const isMobile = useIsMobile();
   return (
     <>
       {/* Ghost house */}
@@ -123,12 +126,12 @@ const HouseOnView = () => {
         className="absolute right-[-240px] top-1/2 -translate-y-1/2 w-[880px] h-[600px] opacity-[0.05] blur-[2px]"
         viewBox="0 0 820 560"
         fill="none"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
+        whileInView={isMobile ? undefined : { opacity: 1 }}
         viewport={{ once: true, margin: "-120px" }}
         transition={{ duration: 0.8 }}
       >
-        <HousePaths delay={0.2} />
+        <HousePaths delay={0.2} isMobile={isMobile} />
       </motion.svg>
 
       {/* Main house */}
@@ -136,18 +139,18 @@ const HouseOnView = () => {
         className="absolute right-[-160px] top-1/2 -translate-y-1/2 w-[820px] h-[560px] opacity-[0.12]"
         viewBox="0 0 820 560"
         fill="none"
-        initial={{ opacity: 0 }}
-        whileInView={{ opacity: 1 }}
+        initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
+        whileInView={isMobile ? undefined : { opacity: 1 }}
         viewport={{ once: true, margin: "-120px" }}
         transition={{ duration: 0.8 }}
       >
-        <HousePaths delay={0} />
+        <HousePaths delay={0} isMobile={isMobile} />
       </motion.svg>
     </>
   );
 };
 
-const HousePaths = ({ delay }: { delay: number }) => (
+const HousePaths = ({ delay, isMobile }: { delay: number; isMobile: boolean }) => (
   <>
     <defs>
       <linearGradient id="luxStroke" x1="0" y1="0" x2="1" y2="1">
@@ -162,8 +165,8 @@ const HousePaths = ({ delay }: { delay: number }) => (
       stroke="url(#luxStroke)"
       strokeWidth="1.5"
       strokeLinecap="round"
-      initial={{ pathLength: 0 }}
-      whileInView={{ pathLength: 1 }}
+      initial={isMobile ? { pathLength: 1 } : { pathLength: 0 }}
+      whileInView={isMobile ? undefined : { pathLength: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 1.6, delay }}
     />
@@ -177,8 +180,8 @@ const HousePaths = ({ delay }: { delay: number }) => (
       rx="18"
       stroke="url(#luxStroke)"
       strokeWidth="1.5"
-      initial={{ pathLength: 0 }}
-      whileInView={{ pathLength: 1 }}
+      initial={isMobile ? { pathLength: 1 } : { pathLength: 0 }}
+      whileInView={isMobile ? undefined : { pathLength: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 1.6, delay: delay + 0.15 }}
     />
@@ -192,8 +195,8 @@ const HousePaths = ({ delay }: { delay: number }) => (
       rx="10"
       stroke="url(#luxStroke)"
       strokeWidth="1"
-      initial={{ pathLength: 0 }}
-      whileInView={{ pathLength: 1 }}
+      initial={isMobile ? { pathLength: 1 } : { pathLength: 0 }}
+      whileInView={isMobile ? undefined : { pathLength: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 1.6, delay: delay + 0.3 }}
     />

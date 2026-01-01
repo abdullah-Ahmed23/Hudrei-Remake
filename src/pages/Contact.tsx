@@ -516,15 +516,15 @@ const Contact = () => {
                                                 initial={{ opacity: 0 }}
                                                 animate={{ opacity: 1 }}
                                                 exit={{ opacity: 0 }}
-                                                className="fixed inset-0 space-y-0  backdrop-blur-sm  z-50 flex items-center justify-center p-4"
+                                                className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
                                                 onClick={() => setIsComparisonOpen(false)}
                                             >
                                                 <motion.div
-                                                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
+                                                    initial={{ opacity: 0, scale: 0.95, y: 20 }}
                                                     animate={{ opacity: 1, scale: 1, y: 0 }}
-                                                    exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                                                    transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                                                    className="bg-white rounded-2xl shadow-2xl  w-full max-h-[90vh] overflow-auto"
+                                                    exit={{ opacity: 0, scale: 0.95, y: 20 }}
+                                                    transition={{ duration: 0.2 }}
+                                                    className="bg-white rounded-2xl shadow-2xl w-full max-w-4xl max-h-[90vh] overflow-auto"
                                                     onClick={(e) => e.stopPropagation()}
                                                 >
                                                     {/* Modal Header */}

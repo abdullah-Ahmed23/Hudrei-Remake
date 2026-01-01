@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 import {
   ShieldCheck,
@@ -45,18 +46,13 @@ const values = [
 ];
 
 const AboutValues = () => {
+  const isMobile = useIsMobile();
   return (
     <section className="py-28 bg-[#062f33] text-white">
       <div className="max-w-6xl mx-auto px-6">
 
         {/* ================= HEADER ================= */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center max-w-3xl mx-auto mb-20"
-        >
-
+        <div className="text-center max-w-3xl mx-auto mb-20" data-aos="fade-up">
           <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-white mt-4 mb-6 tracking-tight">
             Why Sell Your House to <span className="text-accent relative inline-block">
               HudREI?
@@ -65,20 +61,19 @@ const AboutValues = () => {
               </svg>
             </span>
           </h2>
-
-        </motion.div>
+        </div>
 
         {/* ================= MOBILE (ICONS ONLY) ================= */}
         <motion.div
           className="relative md:hidden space-y-16 pl-14"
-          initial="hidden"
+          initial={isMobile ? "show" : "hidden"}
           whileInView="show"
           viewport={{ once: true, amount: 0.1 }}
           variants={{
             hidden: { opacity: 0 },
             show: {
               opacity: 1,
-              transition: { staggerChildren: 0.1 }
+              transition: { staggerChildren: isMobile ? 0 : 0.1 }
             }
           }}
         >

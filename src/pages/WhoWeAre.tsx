@@ -26,6 +26,7 @@ import {
 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const teamLeaders = [
     {
@@ -70,6 +71,7 @@ const careers = [
 ];
 
 const WhoWeAre = () => {
+    const isMobile = useIsMobile();
     const [currentIndex, setCurrentIndex] = useState(0);
     const [direction, setDirection] = useState(0);
 
@@ -109,9 +111,9 @@ const WhoWeAre = () => {
                     <div className="container relative z-10 mx-auto px-4">
                         <div className="max-w-4xl mx-auto text-center">
                             <motion.div
-                                initial={{ opacity: 0, y: 20 }}
+                                initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
-                                transition={{ duration: 0.8 }}
+                                transition={{ duration: isMobile ? 0 : 0.8 }}
                             >
                                 <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 text-accent font-bold text-sm mb-8 uppercase tracking-widest">
                                     <Award className="w-4 h-4" />
@@ -194,8 +196,8 @@ const WhoWeAre = () => {
                         <div className="flex flex-col lg:flex-row items-center gap-16 max-w-6xl mx-auto">
                             <motion.div
                                 className="lg:w-1/2"
-                                initial={{ opacity: 0, x: -30 }}
-                                whileInView={{ opacity: 1, x: 0 }}
+                                initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+                                whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                             >
                                 <div className="inline-flex items-center gap-2 text-primary font-bold tracking-widest uppercase mb-4 text-sm">
@@ -245,8 +247,8 @@ const WhoWeAre = () => {
 
                             <motion.div
                                 className="lg:w-1/2 relative"
-                                initial={{ opacity: 0, x: 30 }}
-                                whileInView={{ opacity: 1, x: 0 }}
+                                initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+                                whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                             >
                                 <div className="relative z-10 rounded-[2.5rem] overflow-hidden shadow-2xl border-8 border-white">
@@ -272,10 +274,10 @@ const WhoWeAre = () => {
                     <div className="container mx-auto px-4 relative z-10">
                         <motion.div
                             className="max-w-4xl mx-auto text-center mb-24 px-4"
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                            whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                             viewport={{ once: true }}
-                            transition={{ duration: 0.8 }}
+                            transition={{ duration: isMobile ? 0 : 0.8 }}
                         >
                             <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
                                 Values That <span className="text-accent relative inline-block">
@@ -337,10 +339,10 @@ const WhoWeAre = () => {
                                         val.borderColor,
                                         "relative overflow-hidden will-change-transform"
                                     )}
-                                    initial={{ opacity: 0, y: 40 }}
-                                    whileInView={{ opacity: 1, y: 0 }}
+                                    initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+                                    whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
-                                    transition={{ duration: 0.8, delay: val.delay }}
+                                    transition={{ duration: 0.8, delay: isMobile ? 0 : val.delay }}
                                 >
                                     <div className="relative z-10">
                                         <div className={cn(
@@ -411,20 +413,20 @@ const WhoWeAre = () => {
                                             return (
                                                 <motion.div
                                                     key={member.name}
-                                                    layout
-                                                    initial={{ opacity: 0, scale: 0.8, x: isLeft ? -100 : isRight ? 100 : 0 }}
+                                                    layout={!isMobile}
+                                                    initial={isMobile ? { opacity: 1, scale: 0.85, x: 0 } : { opacity: 0, scale: 0.8, x: isLeft ? -100 : isRight ? 100 : 0 }}
                                                     animate={{
                                                         opacity: isCenter ? 1 : 0.6,
                                                         scale: isCenter ? 1.05 : 0.85,
-                                                        x: isLeft ? -50 : isRight ? 50 : 0,
+                                                        x: isMobile ? 0 : (isLeft ? -50 : isRight ? 50 : 0),
                                                         zIndex: isCenter ? 30 : 20,
                                                         // Disable heavy filters on mobile for performance
                                                         filter: window.innerWidth > 768
                                                             ? (isCenter ? "grayscale(0)" : "grayscale(0.5) blur(1px)")
                                                             : "none"
                                                     }}
-                                                    exit={{ opacity: 0, scale: 0.5 }}
-                                                    transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                                                    exit={isMobile ? { opacity: 0 } : { opacity: 0, scale: 0.5 }}
+                                                    transition={{ type: "spring", stiffness: 300, damping: 30, duration: isMobile ? 0 : undefined }}
                                                     className="absolute w-[300px] sm:w-[350px] h-[450px] sm:h-[500px] flex-shrink-0 cursor-pointer will-change-transform"
                                                     onClick={() => {
                                                         if (isLeft) prevSlide();
@@ -495,10 +497,10 @@ const WhoWeAre = () => {
                                 <motion.div
                                     key={career.title}
                                     className="group bg-white p-8 rounded-3xl shadow-xl shadow-black/5 border border-gray-100 hover:border-accent/40 hover:scale-[1.02] transition-all duration-300"
-                                    initial={{ opacity: 0, scale: 0.9 }}
-                                    whileInView={{ opacity: 1, scale: 1 }}
+                                    initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
+                                    whileInView={isMobile ? undefined : { opacity: 1, scale: 1 }}
                                     viewport={{ once: true }}
-                                    transition={{ delay: index * 0.05 }}
+                                    transition={{ delay: isMobile ? 0 : index * 0.05 }}
                                 >
                                     <div className="flex items-center gap-5 mb-4">
                                         <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">

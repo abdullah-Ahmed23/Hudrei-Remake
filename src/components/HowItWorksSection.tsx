@@ -3,25 +3,26 @@ import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { useRef } from "react";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const steps = [
   {
     id: 1,
     icon: ClipboardList,
     title: "Step 1: Contact Us",
-    desc: "Fill out our simple form or call us directly. Tell us about your property and your situation. The conversation is pressure-free and confidential.",
+    desc: "Fill out our simple form or call us directly. Tell us about your property and your situation.",
   },
   {
     id: 2,
     icon: BadgeDollarSign,
     title: "Step 2: Get Your Cash Offer",
-    desc: "We'll schedule a quick visit to see your property (usually within 24-48 hours). After our evaluation, we'll present you with a fair, no-obligation cash offer.",
+    desc: "A specialist would give you a call, understand your situation and goals so we can present an offer that fits your needs.",
   },
   {
     id: 3,
     icon: Key,
     title: "Step 3: Close on Your Timeline",
-    desc: "If you accept our offer, we'll work with a local title company to handle all the paperwork. You choose the closing date—whether that's next week or next month. We pay all closing costs.",
+    desc: "If you accept the cash offer. We work with a local title company to handle all the paperwork. You choose the closing date whether that's next week or next month, And we pay all closing costs.",
   },
 ];
 

@@ -62,7 +62,7 @@ const ServiceAreasSection = () => {
                 variants={containerVariants}
                 initial="hidden"
                 whileInView="visible"
-                viewport={{ once: true }}
+                viewport={{ once: true, margin: "-50px" }}
                 className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 md:gap-3"
             >
                 {items.map((item) => (
@@ -95,8 +95,8 @@ const ServiceAreasSection = () => {
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center max-w-4xl mx-auto mb-12 md:mb-20 px-2 md:px-4">
                     <motion.div
-                        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
-                        whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
+                        initial={{ opacity: 0, y: -20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >

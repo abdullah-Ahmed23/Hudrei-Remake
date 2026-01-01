@@ -7,6 +7,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const faqs = [
     {
@@ -47,54 +48,58 @@ const FAQItem = ({
     isOpen: boolean;
     onClick: () => void;
     index: number;
-}) => (
-    <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ delay: index * 0.05, duration: 0.4 }}
-        className="group"
-    >
-        <button
-            onClick={onClick}
-            className={`w-full text-left p-6 rounded-2xl transition-all duration-300 ${isOpen
-                ? "bg-[#062f33] text-white shadow-lg shadow-gray-900/20"
-                : "bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-gray-300"
-                }`}
+}) => {
+    const isMobile = useIsMobile();
+    return (
+        <motion.div
+            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: isMobile ? 0 : index * 0.05, duration: 0.4 }}
+            className="group"
         >
-            <div className="flex items-start justify-between gap-4">
-                <span className={`text-lg font-semibold pr-4 ${isOpen ? "text-white" : "text-gray-900"}`}>
-                    {question}
-                </span>
-                <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${isOpen
-                    ? "bg-white/20 text-white"
-                    : " text-gray-900 group-hover:bg-gray-900/20"
-                    }`}>
-                    {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                </div>
-            </div>
-        </button>
-
-        <AnimatePresence>
-            {isOpen && (
-                <motion.div
-                    initial={{ height: 0, opacity: 0 }}
-                    animate={{ height: "auto", opacity: 1 }}
-                    exit={{ height: 0, opacity: 0 }}
-                    transition={{ duration: 0.3, ease: "easeInOut" }}
-                    className="overflow-hidden"
-                >
-                    <div className="px-6 py-5 text-black leading-relaxed bg-gray-50 rounded-b-2xl -mt-4 pt-8">
-                        {answer}
+            <button
+                onClick={onClick}
+                className={`w-full text-left p-6 rounded-2xl transition-all duration-300 ${isOpen
+                    ? "bg-[#062f33] text-white shadow-lg shadow-gray-900/20"
+                    : "bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-gray-300"
+                    }`}
+            >
+                <div className="flex items-start justify-between gap-4">
+                    <span className={`text-lg font-semibold pr-4 ${isOpen ? "text-white" : "text-gray-900"}`}>
+                        {question}
+                    </span>
+                    <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${isOpen
+                        ? "bg-white/20 text-white"
+                        : " text-gray-900 group-hover:bg-gray-900/20"
+                        }`}>
+                        {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
                     </div>
-                </motion.div>
-            )}
-        </AnimatePresence>
-    </motion.div>
-);
+                </div>
+            </button>
+
+            <AnimatePresence>
+                {isOpen && (
+                    <motion.div
+                        initial={isMobile ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
+                        animate={{ height: "auto", opacity: 1 }}
+                        exit={isMobile ? { height: 0, opacity: 0 } : { height: 0, opacity: 0 }}
+                        transition={{ duration: isMobile ? 0 : 0.3, ease: "easeInOut" }}
+                        className="overflow-hidden"
+                    >
+                        <div className="px-6 py-5 text-black leading-relaxed bg-gray-50 rounded-b-2xl -mt-4 pt-8">
+                            {answer}
+                        </div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
+        </motion.div>
+    );
+}
 
 const FAQ = () => {
     const [openIndex, setOpenIndex] = useState<number | null>(0);
+    const isMobile = useIsMobile();
 
     return (
         <>
@@ -116,9 +121,9 @@ const FAQ = () => {
 
                     <div className="container mx-auto px-4 relative z-10">
                         <motion.div
-                            initial={{ opacity: 0, y: 30 }}
+                            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
+                            transition={{ duration: isMobile ? 0 : 0.6 }}
                             className="text-center max-w-3xl mx-auto"
                         >
                             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-900/5 border border-gray-900/10 text-gray-900 mb-6">
@@ -162,8 +167,8 @@ const FAQ = () => {
 
                         {/* CTA */}
                         <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                            whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                             viewport={{ once: true }}
                             transition={{ duration: 0.5 }}
                             className="mt-16 text-center"

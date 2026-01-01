@@ -12,6 +12,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const ACCENT = "#318075";
 
@@ -43,6 +44,7 @@ const steps = [
 ];
 
 const HowItWorks = () => {
+    const isMobile = useIsMobile();
     const [openIndex, setOpenIndex] = useState<number | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -66,8 +68,8 @@ const HowItWorks = () => {
                 <div className="container mx-auto px-4 max-w-6xl">
                     {/* HEADER */}
                     <motion.div
-                        initial={{ opacity: 0, y: 30 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                        whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                         className="text-center mb-24"
@@ -89,7 +91,7 @@ const HowItWorks = () => {
                     <div ref={containerRef} className="relative">
                         {/* Vertical line (ALL SCREENS) */}
                         <motion.div
-                            style={{ scaleY: lineScale }}
+                            style={{ scaleY: isMobile ? 1 : lineScale }}
                             className="absolute left-6 top-0 bottom-0 w-[3px] bg-[#318075] origin-top rounded-full"
                         />
 
@@ -100,16 +102,16 @@ const HowItWorks = () => {
                                 return (
                                     <motion.div
                                         key={item.step}
-                                        initial={{ opacity: 0, y: 40 }}
-                                        whileInView={{ opacity: 1, y: 0 }}
+                                        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+                                        whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                                         viewport={{ once: true, margin: "-80px" }}
                                         transition={{ duration: 0.6 }}
                                         className="relative"
                                     >
                                         {/* ICON NODE */}
                                         <motion.div
-                                            initial={{ scale: 0 }}
-                                            whileInView={{ scale: 1 }}
+                                            initial={isMobile ? { scale: 1 } : { scale: 0 }}
+                                            whileInView={isMobile ? undefined : { scale: 1 }}
                                             viewport={{ once: true }}
                                             transition={{ duration: 0.4 }}
                                             className="
@@ -147,10 +149,10 @@ const HowItWorks = () => {
                                             <AnimatePresence>
                                                 {isOpen && (
                                                     <motion.div
-                                                        initial={{ height: 0, opacity: 0 }}
+                                                        initial={isMobile ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
                                                         animate={{ height: "auto", opacity: 1 }}
-                                                        exit={{ height: 0, opacity: 0 }}
-                                                        transition={{ duration: 0.35 }}
+                                                        exit={isMobile ? { height: 0, opacity: 0 } : { height: 0, opacity: 0 }}
+                                                        transition={{ duration: isMobile ? 0 : 0.35 }}
                                                         className="overflow-hidden"
                                                     >
                                                         <p className="text-lg text-gray-700 mt-4 max-w-3xl">
