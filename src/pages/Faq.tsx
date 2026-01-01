@@ -52,11 +52,12 @@ const FAQItem = ({
     const isMobile = useIsMobile();
     return (
         <motion.div
+            key={isMobile ? "m-item" : "d-item"}
             initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: isMobile ? 0 : index * 0.05, duration: 0.4 }}
-            className="group"
+            className="group" data-aos="fade-up"
         >
             <button
                 onClick={onClick}
@@ -113,7 +114,7 @@ const FAQ = () => {
 
             <main className="min-h-screen bg-white">
                 {/* Hero Section */}
-                <section className="relative pt-32 pb-20 overflow-hidden">
+                <section className="relative pt-32 pb-20 overflow-hidden" data-aos="fade-up">
                     {/* Background Effects */}
                     <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100" />
                     <div className="absolute top-20 right-0 w-96 h-96 bg-gray-200/50 rounded-full blur-3xl" />
@@ -121,6 +122,7 @@ const FAQ = () => {
 
                     <div className="container mx-auto px-4 relative z-10">
                         <motion.div
+                            key={isMobile ? "m-header" : "d-header"}
                             initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: isMobile ? 0 : 0.6 }}
@@ -167,6 +169,7 @@ const FAQ = () => {
 
                         {/* CTA */}
                         <motion.div
+                            key={isMobile ? "m-cta" : "d-cta"}
                             initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                             whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                             viewport={{ once: true }}

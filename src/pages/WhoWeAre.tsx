@@ -196,9 +196,11 @@ const WhoWeAre = () => {
                         <div className="flex flex-col lg:flex-row items-center gap-16 max-w-6xl mx-auto">
                             <motion.div
                                 className="lg:w-1/2"
-                                initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -30 }}
+                                key={isMobile ? "mobile-story-text" : "desktop-story-text"}
+                                initial={isMobile ? undefined : { opacity: 0, x: -30 }}
                                 whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
+                                data-aos={isMobile ? "fade-right" : undefined}
                             >
                                 <div className="inline-flex items-center gap-2 text-primary font-bold tracking-widest uppercase mb-4 text-sm">
                                     <div className="w-8 h-px bg-primary" />
@@ -247,7 +249,9 @@ const WhoWeAre = () => {
 
                             <motion.div
                                 className="lg:w-1/2 relative"
-                                initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: 30 }}
+                                key={isMobile ? "mobile-story-img" : "desktop-story-img"}
+                                initial={isMobile ? undefined : { opacity: 0, x: 30 }}
+                                data-aos={isMobile ? "fade-left" : undefined}
                                 whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                             >
@@ -266,20 +270,17 @@ const WhoWeAre = () => {
                 </section>
 
                 {/* --- PREMIUM VALUES GRID --- */}
-                <section id="values" className="py-32 bg-white relative overflow-hidden">
+                <section id="values" className="py-25 bg-white relative overflow-hidden">
                     {/* Background Accents */}
                     <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] -mr-64 -mt-64" />
                     <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -ml-64 -mb-64" />
 
                     <div className="container mx-auto px-4 relative z-10">
-                        <motion.div
+                        <div
                             className="max-w-4xl mx-auto text-center mb-24 px-4"
-                            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-                            whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
-                            viewport={{ once: true }}
-                            transition={{ duration: isMobile ? 0 : 0.8 }}
+
                         >
-                            <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                            <h2 className="text-6xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
                                 Values That <span className="text-accent relative inline-block">
                                     Define Us
                                     <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -290,9 +291,9 @@ const WhoWeAre = () => {
                             <p className="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
                                 The core principles that guide every single homeowner conversation and every decision we make.
                             </p>
-                        </motion.div>
+                        </div>
 
-                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10">
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-10" data-aos="fade-up">
                             {[
                                 {
                                     icon: Target,
@@ -332,7 +333,7 @@ const WhoWeAre = () => {
                                 }
                             ].map((val, i) => (
                                 <motion.div
-                                    key={i}
+                                    key={isMobile ? `m-${i}` : `d-${i}`}
                                     className={cn(
                                         "group bg-white p-12 rounded-[3rem] border border-gray-100 transition-all duration-700",
                                         "hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.12)] hover:-translate-y-3",
@@ -478,7 +479,7 @@ const WhoWeAre = () => {
                 </section>
 
                 {/* --- MODERN CAREERS --- */}
-                <section id="careers" className="py-24 bg-white overflow-hidden">
+                <section id="careers" className="py-10 bg-white overflow-hidden">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-16">
                             <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
@@ -492,10 +493,10 @@ const WhoWeAre = () => {
                             <p className="text-xl text-gray-600 max-w-2xl mx-auto">We're always looking for world-class talent to join our mission of helping Indiana homeowners.</p>
                         </div>
 
-                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16" data-aos="zoom-in">
                             {careers.map((career, index) => (
                                 <motion.div
-                                    key={career.title}
+                                    key={isMobile ? `m-${career.title}` : `d-${career.title}`}
                                     className="group bg-white p-8 rounded-3xl shadow-xl shadow-black/5 border border-gray-100 hover:border-accent/40 hover:scale-[1.02] transition-all duration-300"
                                     initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                                     whileInView={isMobile ? undefined : { opacity: 1, scale: 1 }}

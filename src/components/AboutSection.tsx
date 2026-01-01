@@ -52,7 +52,15 @@ const AboutValues = () => {
       <div className="max-w-6xl mx-auto px-6">
 
         {/* ================= HEADER ================= */}
-        <div className="text-center max-w-3xl mx-auto mb-20" data-aos="fade-up">
+        <motion.div
+          key={isMobile ? "mobile-header" : "desktop-header"}
+          initial={isMobile ? undefined : { opacity: 0, y: 30 }}
+          whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          data-aos={isMobile ? "fade-up" : undefined}
+          className="text-center max-w-3xl mx-auto mb-20"
+        >
+
           <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-white mt-4 mb-6 tracking-tight">
             Why Sell Your House to <span className="text-accent relative inline-block">
               HudREI?
@@ -61,33 +69,20 @@ const AboutValues = () => {
               </svg>
             </span>
           </h2>
-        </div>
+
+        </motion.div>
 
         {/* ================= MOBILE (ICONS ONLY) ================= */}
-        <motion.div
-          className="relative md:hidden space-y-16 pl-14"
-          initial={isMobile ? "show" : "hidden"}
-          whileInView="show"
-          viewport={{ once: true, amount: 0.1 }}
-          variants={{
-            hidden: { opacity: 0 },
-            show: {
-              opacity: 1,
-              transition: { staggerChildren: isMobile ? 0 : 0.1 }
-            }
-          }}
-        >
+        <div className="relative md:hidden space-y-16 pl-14">
           {values.map((item, i) => {
             const Icon = item.icon;
 
             return (
-              <motion.div
+              <div
                 key={i}
-                variants={{
-                  hidden: { opacity: 0, x: -20 },
-                  show: { opacity: 1, x: 0 }
-                }}
-                className="relative will-change-transform"
+                className="relative"
+                data-aos="fade-left"
+                data-aos-delay={i * 100}
               >
                 {/* ICON */}
                 <div className="absolute -left-[60px] top-1 w-12 h-12 rounded-xl bg-accent/20 flex items-center justify-center border border-accent/10">
@@ -100,10 +95,10 @@ const AboutValues = () => {
                 <p className="text-white/80 text-base leading-relaxed">
                   {item.desc}
                 </p>
-              </motion.div>
+              </div>
             );
           })}
-        </motion.div>
+        </div>
 
         {/* ================= DESKTOP GRID ================= */}
         <motion.div

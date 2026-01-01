@@ -290,10 +290,12 @@ const CareersSection = () => {
                 {/* Header */}
                 <section className="container mx-auto px-4 mb-20">
                     <motion.div
-                        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+                        key={isMobile ? "mobile-header" : "desktop-header"}
+                        initial={isMobile ? undefined : { opacity: 0, y: 30 }}
                         whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
+                        data-aos={isMobile ? "fade-up" : undefined}
                         className="text-center max-w-3xl mx-auto"
                     >
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 text-accent font-semibold text-sm mb-6">
@@ -317,16 +319,18 @@ const CareersSection = () => {
                 {/* Open Roles Grid */}
                 <section className="container mx-auto px-4 pb-32">
                     <motion.div
-                        variants={isMobile ? {} : container}
-                        initial={isMobile ? "show" : "hidden"}
-                        whileInView="show"
+                        variants={isMobile ? undefined : container}
+                        initial={isMobile ? undefined : "hidden"}
+                        whileInView={isMobile ? undefined : "show"}
                         viewport={{ once: true }}
                         className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
                     >
                         {careers.map((role, i) => (
                             <motion.div
-                                key={i}
-                                variants={item}
+                                key={isMobile ? `m-${i}` : `d-${i}`}
+                                variants={isMobile ? undefined : item}
+                                data-aos={isMobile ? "fade-up" : undefined}
+                                data-aos-delay={isMobile ? i * 100 : undefined}
                                 className="group bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
                             >
                                 <div className="w-14 h-14 mb-8 rounded-2xl bg-accent/10 flex items-center justify-center group-hover:bg-accent group-hover:scale-110 transition-all duration-300">

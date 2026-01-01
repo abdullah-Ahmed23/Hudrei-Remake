@@ -52,8 +52,9 @@ const HeroV2 = () => {
 
                 {/* HEADLINE */}
                 <motion.h1
+                    key={isMobile ? "m-h1" : "d-h1"}
                     className="text-4xl md:text-7xl font-extrabold text-gray-900 max-w-4xl leading-tight tracking-tight"
-                    initial={{ opacity: 0, y: 18 }}
+                    initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.15 }}
                 >
@@ -67,8 +68,9 @@ const HeroV2 = () => {
 
                 {/* SUBTEXT */}
                 <motion.p
+                    key={isMobile ? "m-p" : "d-p"}
                     className="text-gray-800 text-lg sm:text-xl max-w-2xl leading-relaxed font-medium font-times"
-                    initial={{ opacity: 0 }}
+                    initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
                 >
@@ -78,7 +80,8 @@ const HeroV2 = () => {
                 {/* ================= ADDRESS BAR ================= */}
                 <motion.form
                     onSubmit={handleSubmit(onSubmit)}
-                    initial={{ opacity: 0, scale: 0.97 }}
+                    key={isMobile ? "m-form" : "d-form"}
+                    initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.97 }}
                     animate={{ opacity: 1, scale: 1 }}
                     transition={{ delay: 0.45 }}
                     className="w-full max-w-3xl"

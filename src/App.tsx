@@ -42,6 +42,7 @@ const PageTransition = ({ children }: { children: React.ReactNode }) => {
   const isMobile = useIsMobile();
   return (
     <motion.div
+      key={isMobile ? "m-page" : "d-page"}
       initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       exit={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: -10 }}
@@ -61,7 +62,7 @@ const AppContent = () => {
       easing: "ease-out-cubic",
       once: true,
       offset: 50,
-      disable: false, // Enable animations on mobile as requested
+      disable: false, // Enable animations on mobile
       disableMutationObserver: false,
     });
   }, []);

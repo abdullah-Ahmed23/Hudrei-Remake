@@ -39,6 +39,7 @@ const HowItWorksSection = () => {
     offset: ["start center", "end center"],
   });
 
+  const isMobile = useIsMobile();
   const mobileLineHeight = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
 
   return (
@@ -197,23 +198,25 @@ const HowItWorksSection = () => {
           {/* VERTICAL LINE */}
           <div className="absolute left-5 top-0 bottom-0 w-[3px] bg-gray-200 rounded-full">
             <motion.div
-              style={{ height: mobileLineHeight }}
+              style={{ height: isMobile ? "100%" : mobileLineHeight }}
               className="w-full bg-accent rounded-full will-change-[height]"
             />
           </div>
 
           <div className="space-y-20 pl-16">
             {steps.map((step, i) => (
-              <motion.div
+              <div
                 key={step.id}
                 className="relative"
+                data-aos="fade-up"
+                data-aos-delay={i * 100}
               >
                 <div className="absolute -left-[54px] top-2 w-10 h-10 rounded-full bg-white border-4 border-accent flex items-center justify-center">
                   <step.icon className="w-5 h-5 text-accent" />
                 </div>
                 <h3 className="text-xl text-black font-semibold mb-3">{step.title}</h3>
                 <p className="text-gray-600">{step.desc}</p>
-              </motion.div>
+              </div>
             ))}
           </div>
         </div>

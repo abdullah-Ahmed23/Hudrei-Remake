@@ -68,6 +68,7 @@ const HowItWorks = () => {
                 <div className="container mx-auto px-4 max-w-6xl">
                     {/* HEADER */}
                     <motion.div
+                        key={isMobile ? "m-header" : "d-header"}
                         initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
                         whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                         viewport={{ once: true }}
@@ -101,7 +102,7 @@ const HowItWorks = () => {
 
                                 return (
                                     <motion.div
-                                        key={item.step}
+                                        key={isMobile ? `m-step-${item.step}` : `d-step-${item.step}`}
                                         initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
                                         whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                                         viewport={{ once: true, margin: "-80px" }}
@@ -110,6 +111,7 @@ const HowItWorks = () => {
                                     >
                                         {/* ICON NODE */}
                                         <motion.div
+                                            key={isMobile ? "m-icon" : "d-icon"}
                                             initial={isMobile ? { scale: 1 } : { scale: 0 }}
                                             whileInView={isMobile ? undefined : { scale: 1 }}
                                             viewport={{ once: true }}
@@ -149,6 +151,7 @@ const HowItWorks = () => {
                                             <AnimatePresence>
                                                 {isOpen && (
                                                     <motion.div
+                                                        key={isMobile ? "m-expand" : "d-expand"}
                                                         initial={isMobile ? { height: "auto", opacity: 1 } : { height: 0, opacity: 0 }}
                                                         animate={{ height: "auto", opacity: 1 }}
                                                         exit={isMobile ? { height: 0, opacity: 0 } : { height: 0, opacity: 0 }}

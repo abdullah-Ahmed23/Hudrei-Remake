@@ -123,6 +123,7 @@ const HouseOnView = () => {
     <>
       {/* Ghost house */}
       <motion.svg
+        key={isMobile ? "m-house-1" : "d-house-1"}
         className="absolute right-[-240px] top-1/2 -translate-y-1/2 w-[880px] h-[600px] opacity-[0.05] blur-[2px]"
         viewBox="0 0 820 560"
         fill="none"
@@ -136,6 +137,7 @@ const HouseOnView = () => {
 
       {/* Main house */}
       <motion.svg
+        key={isMobile ? "m-house-2" : "d-house-2"}
         className="absolute right-[-160px] top-1/2 -translate-y-1/2 w-[820px] h-[560px] opacity-[0.12]"
         viewBox="0 0 820 560"
         fill="none"

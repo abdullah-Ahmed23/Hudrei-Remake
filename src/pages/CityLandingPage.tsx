@@ -80,9 +80,10 @@ const CityLandingPage = () => {
 
                     <div className="container relative z-10 mx-auto px-4 text-center">
                         <motion.div
-                            initial={{ opacity: 0, y: 20 }}
+                            key={isMobile ? "m-hero" : "d-hero"}
+                            initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.6 }}
+                            transition={{ duration: isMobile ? 0 : 0.6 }}
                             className="max-w-4xl mx-auto"
                         >
                             <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 border border-gray-200 text-gray-600 font-semibold text-sm mb-8">
@@ -108,9 +109,10 @@ const CityLandingPage = () => {
                             {/* Address Form */}
                             <motion.form
                                 onSubmit={handleSubmit(onSubmit)}
-                                initial={{ opacity: 0, scale: 0.97 }}
+                                key={isMobile ? "m-form" : "d-form"}
+                                initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.97 }}
                                 animate={{ opacity: 1, scale: 1 }}
-                                transition={{ delay: 0.2 }}
+                                transition={{ delay: isMobile ? 0 : 0.2 }}
                                 className="w-full max-w-2xl mx-auto mb-12"
                             >
                                 <FormField error={errors.address?.message}>
@@ -158,11 +160,11 @@ const CityLandingPage = () => {
                                     "Close on your timeline",
                                 ].map((text, i) => (
                                     <motion.div
-                                        key={i}
+                                        key={isMobile ? `m-trust-${i}` : `d-trust-${i}`}
                                         className="flex items-center gap-2"
-                                        initial={{ opacity: 0 }}
+                                        initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
                                         animate={{ opacity: 1 }}
-                                        transition={{ delay: 0.4 + i * 0.1 }}
+                                        transition={{ delay: isMobile ? 0 : 0.4 + i * 0.1 }}
                                     >
                                         <CheckCircle className="text-accent w-5 h-5" />
                                         <span className="font-medium">{text}</span>
@@ -173,9 +175,10 @@ const CityLandingPage = () => {
                             {/* Google Reviews */}
                             <motion.div
                                 className="flex items-center justify-center gap-2 text-gray-500 mt-10 p-4 border-t border-gray-100"
-                                initial={{ opacity: 0 }}
+                                key={isMobile ? "m-reviews" : "d-reviews"}
+                                initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
                                 animate={{ opacity: 1 }}
-                                transition={{ delay: 0.7 }}
+                                transition={{ delay: isMobile ? 0 : 0.7 }}
                             >
                                 <div className="flex gap-1 text-yellow-500">
                                     {[...Array(5)].map((_, i) => (
@@ -195,8 +198,9 @@ const CityLandingPage = () => {
                     <div className="container mx-auto px-4">
                         <div className="grid lg:grid-cols-2 gap-20 items-center">
                             <motion.div
-                                initial={{ opacity: 0, x: -50 }}
-                                whileInView={{ opacity: 1, x: 0 }}
+                                key={isMobile ? "m-experts" : "d-experts"}
+                                initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+                                whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                             >
                                 <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
@@ -213,10 +217,11 @@ const CityLandingPage = () => {
                                         "We handle all the paperwork and closing costs",
                                         "Buying as-is: no cleaning or expensive repairs required"
                                     ]).map((situation, index) => (
-                                        <div
-                                            key={index}
-                                            data-aos="fade-up"
-                                            data-aos-delay={index * 100}
+                                        <motion.div
+                                            key={isMobile ? `m-sit-${index}` : `d-sit-${index}`}
+                                            initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+                                            whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
+                                            transition={{ delay: isMobile ? 0 : index * 0.1 }}
                                             className="flex items-start gap-4 p-5 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all group"
                                         >
                                             <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 group-hover:bg-accent group-hover:text-white transition-colors">
@@ -225,14 +230,15 @@ const CityLandingPage = () => {
                                             <div>
                                                 <p className="text-gray-700 font-medium leading-relaxed">{situation}</p>
                                             </div>
-                                        </div>
+                                        </motion.div>
                                     ))}
                                 </div>
                             </motion.div>
 
                             <motion.div
-                                initial={{ opacity: 0, x: 50 }}
-                                whileInView={{ opacity: 1, x: 0 }}
+                                key={isMobile ? "m-img" : "d-img"}
+                                initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: 50 }}
+                                whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                                 className="relative"
                             >
