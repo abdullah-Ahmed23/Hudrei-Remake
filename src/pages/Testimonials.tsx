@@ -153,8 +153,13 @@ const Testimonials = () => {
                             <Star className="w-4 h-4 fill-accent" />
                             <span>Rated 5/5 on Google Reviews</span>
                         </div>
-                        <h1 className="text-4xl md:text-6xl font-bold text-gray-900 mb-6 leading-tight">
-                            What Our <span className="text-accent">Clients Say</span>
+                        <h1 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                            What Our <span className="text-accent relative inline-block">
+                                Clients Say
+                                <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                    <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
+                                </svg>
+                            </span>
                         </h1>
                         <p className="text-xl text-gray-600 leading-relaxed mb-10 max-w-2xl mx-auto">
                             We're proud to have a 5-star rating on Google. Here's what Indiana homeowners have to say about their experience working with HudREI to sell their homes fast for cash.
@@ -214,7 +219,7 @@ const Testimonials = () => {
                         <div className="absolute bottom-0 left-0 w-64 h-64 bg-primary/10 rounded-full blur-3xl -ml-32 -mb-32" />
 
                         <div className="relative z-10 max-w-3xl mx-auto">
-                            <h2 className="text-3xl md:text-5xl font-bold mb-6">Ready to be our next success story?</h2>
+                            <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-6">Ready to be our next success story?</h2>
                             <p className="text-xl text-gray-300 mb-10 leading-relaxed">
                                 Join hundreds of satisfied sellers who chose the simple way to sell their house in Indiana. No fees, no repairs, just results.
                             </p>

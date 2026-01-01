@@ -311,8 +311,13 @@ const SellingOptions = () => {
                         <div className="w-20 h-20 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-8 animate-fade-in">
                             <Home className="w-10 h-10 text-accent" />
                         </div>
-                        <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-gray-900 mb-6 tracking-tight">
-                            Explore Your <span className="text-accent">Home Selling Options</span> In Indiana
+                        <h1 className="text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 tracking-tight">
+                            Explore Your <span className="text-accent relative inline-block">
+                                Home Selling Options
+                                <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                    <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
+                                </svg>
+                            </span> In Indiana
                         </h1>
                         <p className="text-xl md:text-2xl text-accent font-medium mb-6">Choose the path that's best for you!</p>
                         <p className="text-gray-600 max-w-4xl mx-auto text-lg md:text-xl leading-relaxed">

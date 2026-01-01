@@ -50,12 +50,17 @@ const HeroV2 = () => {
 
                 {/* HEADLINE */}
                 <motion.h1
-                    className="text-4xl sm:text-6xl font-extrabold text-gray-900 max-w-4xl leading-tight"
+                    className="text-4xl md:text-7xl font-extrabold text-gray-900 max-w-4xl leading-tight tracking-tight"
                     initial={{ opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.15 }}
                 >
-                    Need To Sell Your House Fast In Indiana?
+                    Sell Your House Fast  <span className="text-accent relative inline-block">
+                        In Indiana
+                        <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
+                            <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
+                        </svg>
+                    </span>
                 </motion.h1>
 
                 {/* SUBTEXT */}
@@ -97,7 +102,7 @@ const HeroV2 = () => {
                                 disabled={isSubmitting}
                                 className="h-14 sm:h-16 w-full sm:w-auto rounded-xl px-8 text-lg sm:text-xl font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all flex-shrink-0"
                             >
-                                {isSubmitting ? "Loading..." : "Get Cash Offer"}
+                                {isSubmitting ? "Loading..." : "Get My Cash Offer"}
                             </Button>
 
                             <AddressAutocompletePortal
@@ -113,29 +118,7 @@ const HeroV2 = () => {
                     </FormField>
                 </motion.form>
 
-                {/* ================= GOOGLE REVIEWS ================= */}
-                <motion.div
-                    className="flex items-center gap-2 text-gray-500 mt-2"
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.65 }}
-                >
-                    <div className="flex gap-1 text-yellow-400">
-                        {[...Array(5)].map((_, i) => (
-                            <Star key={i} className="w-4 h-4 fill-yellow-400" />
-                        ))}
-                    </div>
-                    <span className="text-sm font-bold text-gray-900">
-                        4.9/5 from {" "}
-                        <a
-                            href="https://www.google.com/search?q=hudrei"
-                            target="_blank"
-                            className="text-accent hover:text-accent/80 transition-colors underline underline-offset-4"
-                        >
-                            Google reviews
-                        </a>
-                    </span>
-                </motion.div>
+
 
                 {/* ================= TRUST POINTS ================= */}
                 <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-gray-900 text-sm sm:text-base mt-8">

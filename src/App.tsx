@@ -32,6 +32,7 @@ import CityLandingPage from "./pages/CityLandingPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
+import BlogPost from "./pages/blog/[slug]/page";
 
 const queryClient = new QueryClient();
 
@@ -52,11 +53,11 @@ const AppContent = () => {
 
   useEffect(() => {
     AOS.init({
-      duration: 800,
+      duration: 700,
       easing: "ease-out-cubic",
       once: true,
       offset: 50,
-      disable: false,
+      disable: 'mobile', // Disable animations on mobile devices to prevent scrolling glitch
       disableMutationObserver: false,
     });
   }, []);
@@ -82,6 +83,7 @@ const AppContent = () => {
           <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
           <Route path="/how-it-works" element={<PageTransition><HowItWorks /></PageTransition>} />
           <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
+          <Route path="/blog/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
           <Route path="/testimonials" element={<PageTransition><Testimonials /></PageTransition>} />
           <Route path="/partners" element={<PageTransition><Partners /></PageTransition>} />
           <Route path="/partners/agents" element={<PageTransition><Agents /></PageTransition>} />

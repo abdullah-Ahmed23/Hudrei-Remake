@@ -72,8 +72,13 @@ const HowItWorks = () => {
                         transition={{ duration: 0.6 }}
                         className="text-center mb-24"
                     >
-                        <h1 className="text-5xl sm:text-7xl font-extrabold text-black mb-6">
-                            Selling Your Indiana House in <span className="text-[#318075]">3 Easy Steps</span>
+                        <h1 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                            Selling Your Indiana House in <span className="text-accent relative inline-block">
+                                3 Easy Steps
+                                <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                    <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
+                                </svg>
+                            </span>
                         </h1>
                         <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                             A simple, transparent process designed to help you sell your home quickly and stress-free.

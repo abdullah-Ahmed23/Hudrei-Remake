@@ -87,9 +87,14 @@ const CityLandingPage = () => {
                                 <span>Buying Houses Throughout {areaName}</span>
                             </div>
 
-                            <h1 className="text-4xl md:text-[5.5rem] font-extrabold mb-8 leading-[1.1] text-gray-900 tracking-tight">
+                            <h1 className="text-4xl md:text-7xl font-extrabold mb-8 leading-tight text-gray-900 tracking-tight">
                                 {specializedData?.heroLine || (
-                                    <>Sell Your <span className="text-accent">House Fast</span> In {areaName} Indiana For Cash</>
+                                    <>Sell Your <span className="text-accent relative inline-block">
+                                        House Fast
+                                        <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                            <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
+                                        </svg>
+                                    </span> In {areaName} Indiana For Cash</>
                                 )}
                             </h1>
 

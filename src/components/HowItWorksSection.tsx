@@ -64,8 +64,13 @@ const HowItWorksSection = () => {
           <p className="uppercase tracking-widest text-sm text-gray-400 mb-4">
             Simple Process
           </p>
-          <h2 className="text-3xl sm:text-4xl lg:text-7xl text-black font-extrabold">
-            Our Simple 3-Step Process for a <span className="text-accent">Quick Home Sale</span> in Indiana
+          <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+            Our Simple 3-Step Process for a <span className="text-accent relative inline-block">
+              Quick Home Sale
+              <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
+                <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
+              </svg>
+            </span> in Indiana
           </h2>
         </motion.div>
 

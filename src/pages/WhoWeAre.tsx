@@ -117,11 +117,11 @@ const WhoWeAre = () => {
                                     <Award className="w-4 h-4" />
                                     <span>Indiana's Most Trusted Home Buyers</span>
                                 </div>
-                                <h1 className="text-5xl md:text-[5rem] font-extrabold text-gray-900 mb-8 leading-[1.05] tracking-tight">
-                                    Local Experts with a <span className="text-accent relative">
+                                <h1 className="text-4xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                                    Local Experts with a <span className="text-accent relative inline-block">
                                         Mission
-                                        <svg className="absolute -bottom-2 left-0 w-full h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
-                                            <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="8" />
+                                        <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                            <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
                                         </svg>
                                     </span>
                                 </h1>
@@ -202,8 +202,13 @@ const WhoWeAre = () => {
                                     <div className="w-8 h-px bg-primary" />
                                     The HudREI Story
                                 </div>
-                                <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-8 leading-tight">
-                                    Born and Raised in <span className="text-accent underline decoration-accent/20">Indiana</span>
+                                <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                                    Born and Raised in <span className="text-accent relative inline-block">
+                                        Indiana
+                                        <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                            <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
+                                        </svg>
+                                    </span>
                                 </h2>
                                 <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
                                     <p>
@@ -272,8 +277,13 @@ const WhoWeAre = () => {
                             viewport={{ once: true }}
                             transition={{ duration: 0.8 }}
                         >
-                            <h2 className="text-4xl md:text-7xl font-extrabold text-gray-900 mb-8 tracking-tight">
-                                Values That <span className="text-accent">Define Us</span>
+                            <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                                Values That <span className="text-accent relative inline-block">
+                                    Define Us
+                                    <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                        <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
+                                    </svg>
+                                </span>
                             </h2>
                             <p className="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
                                 The core principles that guide every single homeowner conversation and every decision we make.
@@ -360,7 +370,14 @@ const WhoWeAre = () => {
                 <section id="team" className="py-32 bg-gray-50 overflow-hidden">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-20">
-                            <h2 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6">Meet the <span className="text-accent">HudREI</span> Family</h2>
+                            <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                                Meet the <span className="text-accent relative inline-block">
+                                    HudREI
+                                    <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                        <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
+                                    </svg>
+                                </span> Family
+                            </h2>
                             <p className="text-xl text-gray-600 max-w-2xl mx-auto">Real people. Real conversations. Helping real Hoosiers move forward.</p>
                         </div>
 
@@ -462,7 +479,14 @@ const WhoWeAre = () => {
                 <section id="careers" className="py-24 bg-white overflow-hidden">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-16">
-                            <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">Build Your <span className="text-accent underline decoration-accent/20">Future</span> Here</h2>
+                            <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                                Build Your <span className="text-accent relative inline-block">
+                                    Future
+                                    <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                        <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
+                                    </svg>
+                                </span> Here
+                            </h2>
                             <p className="text-xl text-gray-600 max-w-2xl mx-auto">We're always looking for world-class talent to join our mission of helping Indiana homeowners.</p>
                         </div>
 

@@ -126,8 +126,13 @@ const FAQ = () => {
                                 <span className="text-sm font-medium">Got Questions?</span>
                             </div>
 
-                            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-gray-900">
-                                Frequently Asked <span className="text-primary">Questions</span>
+                            <h1 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                                Frequently Asked <span className="text-accent relative inline-block">
+                                    Questions
+                                    <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                        <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
+                                    </svg>
+                                </span>
                             </h1>
 
                             <p className="text-lg text-gray-600 max-w-2xl mx-auto">

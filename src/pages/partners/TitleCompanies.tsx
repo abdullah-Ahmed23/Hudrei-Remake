@@ -67,8 +67,13 @@ const TitleCompanies = () => {
                                 <Home className="w-4 h-4" />
                                 <span>For Title Companies</span>
                             </div>
-                            <h1 className="text-5xl lg:text-7xl font-bold text-gray-900 mb-6 leading-tight" data-aos="fade-up">
-                                Streamlined <span className="text-[#062f33]">Transactions</span>
+                            <h1 className="text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight" data-aos="fade-up">
+                                Streamlined <span className="text-accent relative inline-block">
+                                    Transactions
+                                    <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
+                                        <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
+                                    </svg>
+                                </span>
                             </h1>
                             <p className="text-xl text-gray-600 mb-8 leading-relaxed" data-aos="fade-up" data-aos-delay="100">
                                 We value efficiency. HudREI conducts high-volume transactions and needs partners who can keep up.
