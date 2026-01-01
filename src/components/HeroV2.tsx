@@ -1,10 +1,11 @@
-import { CheckCircle, MapPin, Star } from "lucide-react";
+import { Star, MapPin, Check, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
+import AddressAutocompletePortal from "./AddressAutocompletePortal";
+import { useIsMobile } from "@/hooks/use-mobile";
 import { useAddressAutocomplete } from "@/hooks/useAddressAutocomplete";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -20,6 +21,7 @@ type FormData = z.infer<typeof formSchema>;
 const HeroV2 = () => {
     const navigate = useNavigate();
     const inputRef = useRef<HTMLInputElement | null>(null);
+    const isMobile = useIsMobile();
 
     const {
         register,
@@ -55,7 +57,7 @@ const HeroV2 = () => {
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.15 }}
                 >
-                    Sell Your House Fast  <span className="text-accent relative inline-block">
+                    Sell Your House Fast <span className="text-accent relative inline-block">
                         In Indiana
                         <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
                             <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
@@ -70,7 +72,7 @@ const HeroV2 = () => {
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
                 >
-                    We are local, and we buy in any condition. Fast Cash.
+                    Keep 100% · Pay $0 · Sell as-is for a fair cash offer.
                 </motion.p>
 
                 {/* ================= ADDRESS BAR ================= */}
@@ -125,17 +127,19 @@ const HeroV2 = () => {
                     {[
                         "No repairs needed",
                         "No agent fees",
-                        "Close in 7–14 days",
-                    ].map((text, i) => (
+                        "Close in 7 days",
+                    ].map((item, i) => (
                         <motion.div
                             key={i}
-                            className="flex items-center gap-2.5 bg-white rounded-full py-3 px-6 border-2 border-accent/10 shadow-lg shadow-gray-200/50 hover:border-accent/30 transition-all font-bold"
-                            initial={{ opacity: 0, y: 10 }}
+                            initial={{ opacity: 0, y: isMobile ? 0 : 10 }}
                             animate={{ opacity: 1, y: 0 }}
-                            transition={{ delay: 0.75 + i * 0.1 }}
+                            transition={{ delay: isMobile ? 0 : 0.7 + i * 0.1 }}
+                            className="flex items-center gap-2 bg-white/50 backdrop-blur-sm px-4 py-2 rounded-full border border-white/50 shadow-sm"
                         >
-                            <CheckCircle className="text-accent w-5 h-5 sm:w-6 sm:h-6" />
-                            {text}
+                            <div className="w-5 h-5 rounded-full bg-accent/10 flex items-center justify-center flex-shrink-0">
+                                <Check className="w-3.5 h-3.5 text-accent" strokeWidth={3} />
+                            </div>
+                            <span className="font-semibold">{item}</span>
                         </motion.div>
                     ))}
                 </div>

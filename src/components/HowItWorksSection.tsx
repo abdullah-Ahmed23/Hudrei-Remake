@@ -205,10 +205,6 @@ const HowItWorksSection = () => {
             {steps.map((step, i) => (
               <motion.div
                 key={step.id}
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ delay: i * 0.15 }}
                 className="relative"
               >
                 <div className="absolute -left-[54px] top-2 w-10 h-10 rounded-full bg-white border-4 border-accent flex items-center justify-center">

@@ -4,8 +4,10 @@ import { MapPin, Globe, Map } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { cn } from "@/lib/utils";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const ServiceAreasSection = () => {
+    const isMobile = useIsMobile();
     const cities = [
         "Indianapolis", "Fort Wayne", "Evansville", "South Bend",
         "Carmel", "Fishers", "Bloomington", "Hammond", "Muncie", "Lafayette"
@@ -93,8 +95,8 @@ const ServiceAreasSection = () => {
             <div className="container mx-auto px-4 relative z-10">
                 <div className="text-center max-w-4xl mx-auto mb-12 md:mb-20 px-2 md:px-4">
                     <motion.div
-                        initial={{ opacity: 0, y: -20 }}
-                        whileInView={{ opacity: 1, y: 0 }}
+                        initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: -20 }}
+                        whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
