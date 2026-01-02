@@ -25,6 +25,7 @@ import { useLocation } from "react-router-dom";
 
 const mainLinks = [
   { label: "Selling Options", to: "/selling-options" },
+  { label: "Listing", to: "/listing" },
   { label: "About Us", to: "/who-are-we" },
   { label: "Testimonials", to: "/testimonials" },
 

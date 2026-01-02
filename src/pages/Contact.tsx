@@ -23,10 +23,10 @@ const contactSchema = z.object({
     fullName: z.string().min(1, "Full name is required"),
     phone: z.string().min(10, "Valid phone number is required"),
     email: z.string().email("Valid email address is required"),
-    streetAddress: z.string().min(1, "Street address is required"),
-    city: z.string().min(1, "City is required"),
-    state: z.string().min(1, "State is required"),
-    timeline: z.string().min(1, "Please select a timeline"),
+    streetAddress: z.string().optional(),
+    city: z.string().optional(),
+    state: z.string().optional(),
+    timeline: z.string().optional(),
     consent: z.boolean().refine((val) => val === true, {
         message: "You must agree to be contacted",
     }),
@@ -68,7 +68,7 @@ const Contact = () => {
     const [addressQuery, setAddressQuery] = useState(streetAddress || "");
     const { results, clearResults } = useAddressAutocomplete(addressQuery);
 
-    const GHL_WEBHOOK_URL = "https://services.leadconnectorhq.com/hooks/EqS0XR2ZyBqz2ifHkESj/webhook-trigger/88f134a6-7042-414c-aa49-0e50824487c4";
+    const API_URL = "http://localhost:5000/api/contact";
 
     useEffect(() => {
         if (incoming && formRef.current) {
@@ -82,13 +82,13 @@ const Contact = () => {
     // Update query when internal state changes (e.g. from location)
     useEffect(() => {
         if (streetAddress && streetAddress !== addressQuery) {
-            setAddressQuery(streetAddress);
+            setAddressQuery(streetAddress || "");
         }
     }, [streetAddress]);
 
     const onSubmit = async (data: ContactFormData) => {
         try {
-            await fetch(GHL_WEBHOOK_URL, {
+            const response = await fetch(API_URL, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -99,14 +99,20 @@ const Contact = () => {
                 }),
             });
 
-            toast({
-                title: "Request Received!",
-                description: "We'll contact you within 24 hours with your cash offer.",
-            });
+            const result = await response.json();
 
-            reset();
-            setAddressQuery("");
+            if (result.success) {
+                toast({
+                    title: "Request Received!",
+                    description: "We'll contact you within 24 hours with your cash offer.",
+                });
+                reset();
+                setAddressQuery("");
+            } else {
+                throw new Error(result.error || "Submission failed");
+            }
         } catch (error) {
+            console.error(error);
             toast({
                 title: "Something went wrong",
                 description: "Please try again or call us directly.",

@@ -344,7 +344,65 @@ const SellingOptions = () => {
                         </div>
 
                         <div className="max-w-5xl mx-auto overflow-hidden rounded-3xl shadow-xl border border-gray-100 bg-white">
-                            <table className="w-full text-left border-collapse">
+                            {/* Mobile View (Cards) */}
+                            <div className="md:hidden space-y-4">
+                                {[
+                                    {
+                                        feature: "Commissions / Fees",
+                                        agent: "6% on average paid by seller",
+                                        hudrei: "NONE"
+                                    },
+                                    {
+                                        feature: "Closing Costs",
+                                        agent: "2% on average paid by seller",
+                                        hudrei: "NONE – We pay all costs"
+                                    },
+                                    {
+                                        feature: "Inspection & Financing Contingencies",
+                                        agent: "Yes, sales often fall through",
+                                        hudrei: "NONE"
+                                    },
+                                    {
+                                        feature: "Appraisal Needed",
+                                        agent: "Yes, required by mortgage lenders",
+                                        hudrei: "NONE – Cash offers only"
+                                    },
+                                    {
+                                        feature: "Average Days to Close",
+                                        agent: "90+ days",
+                                        hudrei: "7 – 14 Days"
+                                    },
+                                    {
+                                        feature: "Number of Showings",
+                                        agent: "Endless, inconvenient showings",
+                                        hudrei: "1 (Just Us)"
+                                    },
+                                    {
+                                        feature: "Who Pays For Repairs?",
+                                        agent: "Negotiated during inspection",
+                                        hudrei: "NONE – We buy as-is"
+                                    }
+                                ].map((item, i) => (
+                                    <div key={i} className="bg-white rounded-2xl p-6 shadow-md border border-gray-100" data-aos="fade-up" data-aos-delay={i * 50}>
+                                        <h3 className="text-lg font-bold text-gray-900 mb-4 border-b border-gray-100 pb-2">
+                                            {item.feature}
+                                        </h3>
+                                        <div className="grid grid-cols-2 gap-4">
+                                            <div>
+                                                <p className="text-xs text-gray-400 uppercase font-bold mb-1 tracking-wider">Traditional Agent</p>
+                                                <p className="text-gray-600 text-sm font-medium">{item.agent}</p>
+                                            </div>
+                                            <div className="bg-accent/5 -m-2 p-2 rounded-lg">
+                                                <p className="text-xs text-accent uppercase font-bold mb-1 tracking-wider">HudREI</p>
+                                                <p className="text-accent font-bold text-sm">{item.hudrei}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+
+                            {/* Desktop View (Table) */}
+                            <table className="hidden md:table w-full text-left border-collapse">
                                 <thead>
                                     <tr className="bg-[#062f33] text-white">
                                         <th className="p-6 text-lg font-bold">Feature</th>
@@ -353,41 +411,49 @@ const SellingOptions = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr className="border-b border-gray-100">
-                                        <td className="p-6 font-semibold text-gray-900">Commissions / Fees</td>
-                                        <td className="p-6 text-gray-600">6% on average paid by seller</td>
-                                        <td className="p-6 font-bold text-accent bg-accent/5">NONE</td>
-                                    </tr>
-                                    <tr className="border-b border-gray-100">
-                                        <td className="p-6 font-semibold text-gray-900">Closing Costs</td>
-                                        <td className="p-6 text-gray-600">2% on average paid by seller</td>
-                                        <td className="p-6 font-bold text-accent bg-accent/5">NONE – We pay all costs</td>
-                                    </tr>
-                                    <tr className="border-b border-gray-100">
-                                        <td className="p-6 font-semibold text-gray-900">Inspection & Financing Contingencies</td>
-                                        <td className="p-6 text-gray-600">Yes, sales often fall through</td>
-                                        <td className="p-6 font-bold text-accent bg-accent/5">NONE</td>
-                                    </tr>
-                                    <tr className="border-b border-gray-100">
-                                        <td className="p-6 font-semibold text-gray-900">Appraisal Needed</td>
-                                        <td className="p-6 text-gray-600">Yes, required by mortgage lenders</td>
-                                        <td className="p-6 font-bold text-accent bg-accent/5">NONE – Cash offers only</td>
-                                    </tr>
-                                    <tr className="border-b border-gray-100">
-                                        <td className="p-6 font-semibold text-gray-900">Average Days to Close</td>
-                                        <td className="p-6 text-gray-600">90+ days</td>
-                                        <td className="p-6 font-bold text-accent bg-accent/5">7 – 14 Days</td>
-                                    </tr>
-                                    <tr className="border-b border-gray-100">
-                                        <td className="p-6 font-semibold text-gray-900">Number of Showings</td>
-                                        <td className="p-6 text-gray-600">Endless, inconvenient showings</td>
-                                        <td className="p-6 font-bold text-accent bg-accent/5">1 (Just Us)</td>
-                                    </tr>
-                                    <tr className="border-b border-gray-100">
-                                        <td className="p-6 font-semibold text-gray-900">Who Pays For Repairs?</td>
-                                        <td className="p-6 text-gray-600">Negotiated during inspection</td>
-                                        <td className="p-6 font-bold text-accent bg-accent/5">NONE – We buy as-is</td>
-                                    </tr>
+                                    {[
+                                        {
+                                            feature: "Commissions / Fees",
+                                            agent: "6% on average paid by seller",
+                                            hudrei: "NONE"
+                                        },
+                                        {
+                                            feature: "Closing Costs",
+                                            agent: "2% on average paid by seller",
+                                            hudrei: "NONE – We pay all costs"
+                                        },
+                                        {
+                                            feature: "Inspection & Financing Contingencies",
+                                            agent: "Yes, sales often fall through",
+                                            hudrei: "NONE"
+                                        },
+                                        {
+                                            feature: "Appraisal Needed",
+                                            agent: "Yes, required by mortgage lenders",
+                                            hudrei: "NONE – Cash offers only"
+                                        },
+                                        {
+                                            feature: "Average Days to Close",
+                                            agent: "90+ days",
+                                            hudrei: "7 – 14 Days"
+                                        },
+                                        {
+                                            feature: "Number of Showings",
+                                            agent: "Endless, inconvenient showings",
+                                            hudrei: "1 (Just Us)"
+                                        },
+                                        {
+                                            feature: "Who Pays For Repairs?",
+                                            agent: "Negotiated during inspection",
+                                            hudrei: "NONE – We buy as-is"
+                                        }
+                                    ].map((item, i) => (
+                                        <tr key={i} className="border-b border-gray-100">
+                                            <td className="p-6 font-semibold text-gray-900">{item.feature}</td>
+                                            <td className="p-6 text-gray-600">{item.agent}</td>
+                                            <td className="p-6 font-bold text-accent bg-accent/5">{item.hudrei}</td>
+                                        </tr>
+                                    ))}
                                 </tbody>
                             </table>
                         </div>

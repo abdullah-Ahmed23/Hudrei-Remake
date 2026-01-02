@@ -70,10 +70,13 @@ const HeroSection = () => {
                 </span>
               </h2>
               <div className="space-y-6 text-xl text-black leading-relaxed font-medium">
-                <p>
-                  Need to sell your house fast in Indiana?
-                </p>
-                <p>HudREI is a local, family-owned company that buys houses in any condition throughout the Hoosier State. Whether you're facing foreclosure, dealing with an inherited property, going through a divorce, or simply need to sell quickly, we provide a straightforward solution with no hassles, no fees, and no repairs required.</p>
+                <p>Need to sell your house fast in Indiana? <br />
+
+                  At HudREI is a local, family-owned company that buys houses in any condition throughout the Hoosier State. <br />
+
+                  Whether you're facing foreclosure, dealing with an inherited property, going through a divorce, or simply need to sell quickly, we provide a straight forward solution with no hassle, certainty and zero Fees.</p>
+
+
               </div>
             </div>
 

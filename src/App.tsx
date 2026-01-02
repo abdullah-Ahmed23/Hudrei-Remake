@@ -17,6 +17,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 // Static Imports (Removing Lazy Loading)
 import Index from "./pages/Index";
 import SellingOptions from "./pages/SellingOptions";
+import Listing from "./pages/Listing";
 import WhoWeAre from "./pages/WhoWeAre";
 import Contact from "./pages/Contact";
 import HowItWorks from "./pages/HowItWorks";
@@ -87,6 +88,7 @@ const AppContent = () => {
           <Route path="/who-are-we" element={<PageTransition><WhoWeAre /></PageTransition>} />
           <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
           <Route path="/how-it-works" element={<PageTransition><HowItWorks /></PageTransition>} />
+          <Route path="/listing" element={<PageTransition><Listing /></PageTransition>} />
           <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
           <Route path="/blog/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
           <Route path="/testimonials" element={<PageTransition><Testimonials /></PageTransition>} />

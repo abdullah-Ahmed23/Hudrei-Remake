@@ -49,7 +49,7 @@ const TestimonialsSection = () => {
                         Google Reviews
                     </span>
                     <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-black">
-                        What <span className="text-accent">Indiana Homeowners</span> Say About HudREI
+                        Reviews From <span className="text-accent">Real Indiana Customers</span> Like You!
                     </h2>
                 </div>
 
