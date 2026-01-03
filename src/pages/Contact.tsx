@@ -65,6 +65,7 @@ const Contact = () => {
     });
 
     const streetAddress = watch("streetAddress");
+    const [submitted, setSubmitted] = useState(false);
     const [addressQuery, setAddressQuery] = useState(streetAddress || "");
     const { results, clearResults } = useAddressAutocomplete(addressQuery);
 
@@ -102,10 +103,8 @@ const Contact = () => {
             const result = await response.json();
 
             if (result.success) {
-                toast({
-                    title: "Request Received!",
-                    description: "We'll contact you within 24 hours with your cash offer.",
-                });
+                setSubmitted(true);
+                // toast({ ... }); // Removed toast in favor of inline success
                 reset();
                 setAddressQuery("");
             } else {
@@ -124,19 +123,19 @@ const Contact = () => {
     const steps = [
         {
             number: "1",
-            text: "Tell us about your property. Call us at (317) 795-1990 or fill out our short form.",
+            text: "Contact Us: Fill out our simple form or call us directly. Tell us about your property and your situation.",
         },
         {
             number: "2",
-            text: "We'll connect with you fast. If your home fits our buying criteria, we'll set a quick appointment to learn your goals and explain how selling to us works.",
+            text: "Free Consultation: A specialist would give you a call, understand your situation and goals so we can present an offer that fits your needs.",
         },
         {
             number: "3",
-            text: "Get a fair written offer. We'll present a straightforward, no-obligation cash offer.",
+            text: "Get Your Cash Offer: If we are a good fit, we present a fair cash offer that actually closes.",
         },
         {
             number: "4",
-            text: "Close on your timeline. We work with a local, reputable title company and put cash in your hands in as little as 2 weeks sometimes even sooner.",
+            text: "Close on Your Timeline: If you accept the cash offer. We work with a local title company to handle all the paperwork. You choose the closing date whether that's next week or next month, And we pay all closing costs.",
         },
     ];
 
@@ -354,141 +353,155 @@ const Contact = () => {
                                 {/* 2. Contact Form (Mobile Order 2) */}
                                 <div className="order-2 lg:order-none w-full">
                                     <div
+                                        id="contact-form"
                                         ref={formRef}
-                                        className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 scroll-mt-12"
+                                        className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 scroll-mt-32"
                                         data-aos="zoom-in"
                                     >
-                                        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                                            <FormField label="Full Name" error={errors.fullName?.message} required>
-                                                <Input
-                                                    {...register("fullName")}
-                                                    placeholder="Full Name"
-                                                    className="border-accent/30 focus:border-accent text-black bg-white"
-                                                />
-                                            </FormField>
-
-                                            <FormField label="Phone" error={errors.phone?.message} required>
-                                                <Input
-                                                    {...register("phone")}
-                                                    type="tel"
-                                                    placeholder="Phone"
-                                                    className="border-accent/30 focus:border-accent text-black bg-white"
-                                                />
-                                            </FormField>
-
-                                            <FormField label="Email" error={errors.email?.message} required>
-                                                <Input
-                                                    {...register("email")}
-                                                    type="email"
-                                                    placeholder="Email"
-                                                    className="border-accent/30 focus:border-accent text-black bg-white"
-                                                />
-                                            </FormField>
-
-                                            <FormField label="Street Address" error={errors.streetAddress?.message} required>
-                                                <div className="relative">
-                                                    <Input
-                                                        {...register("streetAddress")}
-                                                        ref={(e) => {
-                                                            register("streetAddress").ref(e);
-                                                            // @ts-ignore
-                                                            addressInputRef.current = e;
-                                                        }}
-                                                        onChange={(e) => {
-                                                            register("streetAddress").onChange(e);
-                                                            setAddressQuery(e.target.value);
-                                                        }}
-                                                        placeholder="Street Address"
-                                                        className="text-black bg-white border-accent/30 focus:border-accent"
-                                                    />
-                                                    <AddressAutocompletePortal
-                                                        anchorRef={addressInputRef}
-                                                        results={results}
-                                                        onSelect={(val) => {
-                                                            setValue("streetAddress", val, { shouldValidate: true });
-                                                            setAddressQuery(val);
-                                                            clearResults();
-                                                        }}
-                                                        onClose={clearResults}
-                                                    />
+                                        {submitted ? (
+                                            <div className="flex flex-col items-center justify-center text-center py-10">
+                                                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
+                                                    <CheckCircle2 className="w-10 h-10 text-green-600" />
                                                 </div>
-                                            </FormField>
-
-                                            <div className="grid grid-cols-2 gap-4">
-                                                <FormField label="City" error={errors.city?.message} required>
-                                                    <Input
-                                                        {...register("city")}
-                                                        placeholder="City"
-                                                        className="border-accent/30 focus:border-accent text-black bg-white"
-                                                    />
-                                                </FormField>
-                                                <FormField label="State" error={errors.state?.message} required>
-                                                    <Input
-                                                        {...register("state")}
-                                                        placeholder="State"
-                                                        className="border-accent/30 focus:border-accent text-black bg-white"
-                                                    />
-                                                </FormField>
+                                                <h3 className="text-2xl font-bold mb-2">Request Received!</h3>
+                                                <p className="text-gray-600 mb-8">We'll review your property and contact you within 24 hours with your cash offer.</p>
+                                                {/* User asked for consistent button style ("glow-button" usually) */}
+                                                <Button onClick={() => setSubmitted(false)} className="rounded-xl px-8 py-3 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                                                    Return Home
+                                                </Button>
                                             </div>
+                                        ) : (
+                                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                                                <FormField label="Full Name" error={errors.fullName?.message} required>
+                                                    <Input
+                                                        {...register("fullName")}
+                                                        placeholder="Full Name"
+                                                        className="border-accent/30 focus:border-accent text-black bg-white"
+                                                    />
+                                                </FormField>
 
-                                            <FormField label="How Soon Do You Want To Sell?" error={errors.timeline?.message} required>
-                                                <Controller
-                                                    name="timeline"
-                                                    control={control}
-                                                    render={({ field }) => (
-                                                        <Select
-                                                            value={field.value}
-                                                            onValueChange={field.onChange}
-                                                        >
-                                                            <SelectTrigger className="w-full h-10 bg-white border-accent/30 focus:border-accent text-black">
-                                                                <SelectValue placeholder="Select timeline" />
-                                                            </SelectTrigger>
-                                                            <SelectContent>
-                                                                <SelectItem value="asap">As soon as possible</SelectItem>
-                                                                <SelectItem value="30days">Within 30 days</SelectItem>
-                                                                <SelectItem value="60days">Within 60-90 days</SelectItem>
-                                                                <SelectItem value="JustExploring">Just Exploring</SelectItem>
-                                                            </SelectContent>
-                                                        </Select>
+                                                <FormField label="Phone" error={errors.phone?.message} required>
+                                                    <Input
+                                                        {...register("phone")}
+                                                        type="tel"
+                                                        placeholder="Phone"
+                                                        className="border-accent/30 focus:border-accent text-black bg-white"
+                                                    />
+                                                </FormField>
+
+                                                <FormField label="Email" error={errors.email?.message} required>
+                                                    <Input
+                                                        {...register("email")}
+                                                        type="email"
+                                                        placeholder="Email"
+                                                        className="border-accent/30 focus:border-accent text-black bg-white"
+                                                    />
+                                                </FormField>
+
+                                                <FormField label="Street Address" error={errors.streetAddress?.message} required>
+                                                    <div className="relative">
+                                                        <Input
+                                                            {...register("streetAddress")}
+                                                            ref={(e) => {
+                                                                register("streetAddress").ref(e);
+                                                                // @ts-ignore
+                                                                addressInputRef.current = e;
+                                                            }}
+                                                            onChange={(e) => {
+                                                                register("streetAddress").onChange(e);
+                                                                setAddressQuery(e.target.value);
+                                                            }}
+                                                            placeholder="Street Address"
+                                                            className="text-black bg-white border-accent/30 focus:border-accent"
+                                                        />
+                                                        <AddressAutocompletePortal
+                                                            anchorRef={addressInputRef}
+                                                            results={results}
+                                                            onSelect={(val) => {
+                                                                setValue("streetAddress", val, { shouldValidate: true });
+                                                                setAddressQuery(val);
+                                                                clearResults();
+                                                            }}
+                                                            onClose={clearResults}
+                                                        />
+                                                    </div>
+                                                </FormField>
+
+                                                <div className="grid grid-cols-2 gap-4">
+                                                    <FormField label="City" error={errors.city?.message} required>
+                                                        <Input
+                                                            {...register("city")}
+                                                            placeholder="City"
+                                                            className="border-accent/30 focus:border-accent text-black bg-white"
+                                                        />
+                                                    </FormField>
+                                                    <FormField label="State" error={errors.state?.message} required>
+                                                        <Input
+                                                            {...register("state")}
+                                                            placeholder="State"
+                                                            className="border-accent/30 focus:border-accent text-black bg-white"
+                                                        />
+                                                    </FormField>
+                                                </div>
+
+                                                <FormField label="How Soon Do You Want To Sell?" error={errors.timeline?.message} required>
+                                                    <Controller
+                                                        name="timeline"
+                                                        control={control}
+                                                        render={({ field }) => (
+                                                            <Select
+                                                                value={field.value}
+                                                                onValueChange={field.onChange}
+                                                            >
+                                                                <SelectTrigger className="w-full h-10 bg-white border-accent/30 focus:border-accent text-black">
+                                                                    <SelectValue placeholder="Select timeline" />
+                                                                </SelectTrigger>
+                                                                <SelectContent>
+                                                                    <SelectItem value="asap">As soon as possible</SelectItem>
+                                                                    <SelectItem value="30days">Within 30 days</SelectItem>
+                                                                    <SelectItem value="60days">Within 60-90 days</SelectItem>
+                                                                    <SelectItem value="JustExploring">Just Exploring</SelectItem>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        )}
+                                                    />
+                                                </FormField>
+
+                                                <div className="space-y-1">
+                                                    <div className="flex items-start gap-2 text-sm text-gray-500">
+                                                        <input
+                                                            {...register("consent")}
+                                                            type="checkbox"
+                                                            className="mt-1 accent-accent"
+                                                        />
+                                                        <span>
+                                                            Free offer, no pressure. Your info stays private. Submit to be contactedopt out anytime.
+                                                        </span>
+                                                    </div>
+                                                    {errors.consent && (
+                                                        <p className="text-accent text-xs font-medium">{errors.consent.message}</p>
                                                     )}
-                                                />
-                                            </FormField>
-
-                                            <div className="space-y-1">
-                                                <div className="flex items-start gap-2 text-sm text-gray-500">
-                                                    <input
-                                                        {...register("consent")}
-                                                        type="checkbox"
-                                                        className="mt-1 accent-accent"
-                                                    />
-                                                    <span>
-                                                        Free offer, no pressure. Your info stays private. Submit to be contacted
-                                                        opt out anytime.
-                                                    </span>
                                                 </div>
-                                                {errors.consent && (
-                                                    <p className="text-accent text-xs font-medium">{errors.consent.message}</p>
-                                                )}
-                                            </div>
 
-                                            <Button
-                                                type="submit"
-                                                disabled={isSubmitting}
-                                                className="w-full rounded-xl py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
-                                            >
-                                                {isSubmitting ? "Submitting..." : "Get My Offer Now!"}
-                                            </Button>
+                                                <Button
+                                                    type="submit"
+                                                    disabled={isSubmitting}
+                                                    className="w-full rounded-xl py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
+                                                >
+                                                    {isSubmitting ? "Submitting..." : "Get My Offer Now!"}
+                                                </Button>
 
-                                            <div className="text-center text-sm text-gray-500">
-                                                <a href="#" className="hover:underline">
-                                                    Privacy Policy
-                                                </a>{" "}
-                                                |{" "}
-                                                <a href="#" className="hover:underline">
-                                                    Terms of Service
-                                                </a>
-                                            </div>
-                                        </form>
+                                                <div className="text-center text-sm text-gray-500">
+                                                    <a href="#" className="hover:underline">
+                                                        Privacy Policy
+                                                    </a>{" "}
+                                                    |{" "}
+                                                    <a href="#" className="hover:underline">
+                                                        Terms of Service
+                                                    </a>
+                                                </div>
+                                            </form>
+                                        )}
                                     </div>
                                 </div>
 

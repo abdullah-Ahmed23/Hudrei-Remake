@@ -42,11 +42,40 @@ const TitleCompanies = () => {
     });
 
     const onSubmit = async (data: TitleFormData) => {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log("Title Company Data:", data);
-        setSubmitted(true);
-        reset();
+        try {
+            const payload = {
+                companyName: data.companyName,
+                contactPerson: data.contactPerson,
+                phone: data.phone,
+                email: data.email,
+                handlesAssignments: data.handleAssignment === "yes" ? "Yes" : "No / Unsure",
+                source: "Title Page"
+            };
+
+            console.log("Submitting Title Co:", payload);
+
+            const response = await fetch("http://localhost:5000/api/title", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                setSubmitted(true);
+                reset();
+            } else {
+                console.error("Submission failed:", result.error);
+                alert("Submission failed: " + (result.error || "Unknown error"));
+            }
+        } catch (error) {
+            console.error("Network Error:", error);
+            alert("Network error. Please try again.");
+        }
     };
 
     return (
@@ -186,7 +215,7 @@ const TitleCompanies = () => {
                                         </div>
                                         <h3 className="text-2xl font-bold mb-2">Inquiry Sent!</h3>
                                         <p className="text-gray-600 mb-8">Our Transaction Coordinator will contact you shortly.</p>
-                                        <Button onClick={() => setSubmitted(false)} variant="outline">Reset Form</Button>
+                                        <Button onClick={() => setSubmitted(false)} className="rounded-xl px-8 py-3 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">Reset Form</Button>
                                     </div>
                                 ) : (
                                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">

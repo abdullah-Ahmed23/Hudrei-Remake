@@ -21,25 +21,33 @@ const steps = [
         step: "01",
         title: "Contact Us",
         icon: Phone,
-        desc: "Fill out our simple form or call us directly. Tell us about your property and situation.",
+        desc: "Fill out our simple form or call us directly. Tell us about your property and your situation.",
         more:
             "You don’t need to clean, repair, or prepare anything. Just tell us about your situation, timeline, and goals — it only takes a minute to get started.",
     },
     {
         step: "02",
+        title: "Free Consultation",
+        icon: Search, // Using Search or Phone or similar. The user said "A specialist would give you a call". Let's stick to Phone or maybe MessageSquare? HowItWorks has Phone in line 8? Line 8 imports Phone.
+        desc: "A specialist would give you a call, understand your situation and goals so we can present an offer that fits your needs.",
+        more:
+            "We listen to your needs. This isn't just about the house; it's about what you need to move forward. We can discuss creative options, lease-backs, or standard cash offers.",
+    },
+    {
+        step: "03",
         title: "Get Your Cash Offer",
         icon: BadgeDollarSign,
-        desc: "We'll schedule a quick visit and present a fair, no-obligation cash offer.",
+        desc: "If we are a good fit, we present a fair cash offer that actually closes.",
         more:
             "Our team analyzes comparable sales, property condition, and market trends to create a transparent, fair cash offer. We can usually present this to you within 24 hours of seeing the property.",
     },
     {
-        step: "03",
+        step: "04",
         title: "Close on Your Timeline",
         icon: Key,
-        desc: "If you accept, we handle the paperwork and pay all closing costs. You pick the date.",
+        desc: "We work with a local title company to handle all the paperwork. You choose the closing date. We pay all costs.",
         more:
-            "We work with a reputable local title company to handle the transaction. You get paid cash on closing day. No hidden fees, no commissions, and no pressure. We work around your schedule to make the transition as smooth as possible.",
+            "You choose the closing date whether that's next week or next month, And we pay all closing costs. You get paid cash on closing day. No hidden fees, no commissions, and no pressure.",
     },
 ];
 

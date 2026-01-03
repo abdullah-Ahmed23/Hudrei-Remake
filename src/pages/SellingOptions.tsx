@@ -125,28 +125,23 @@ const offers: OfferOption[] = [
 const steps = [
     {
         number: 1,
-        title: "Get In Touch",
-        description: "Click the 'Get Started' button or call us directly to speak with our team."
+        title: "Contact Us",
+        description: "Fill out our simple form or call us directly. Tell us about your property and your situation."
     },
     {
         number: 2,
-        title: "Share Property Details",
-        description: "We just need a few details about your needs and your property. Our goal is to make this as easy as possible."
+        title: "Free Consultation",
+        description: "A specialist would give you a call, understand your situation and goals so we can present an offer that fits your needs."
     },
     {
         number: 3,
-        title: "Receive Your Offer",
-        description: "Once we've reviewed your information, we'll provide you with a no-obligation cash offer for your property."
+        title: "Get Your Cash Offer",
+        description: "If we are a good fit, we present a fair cash offer that actually closes."
     },
     {
         number: 4,
-        title: "Sign At Title Company",
-        description: "If you accept our offer, we'll schedule a meeting at the Title Company. Ask any questions along the way!"
-    },
-    {
-        number: 5,
-        title: "Get Your Money",
-        description: "You'll receive a certified check at the Title Office to cash at your bank immediately."
+        title: "Close on Your Timeline",
+        description: "If you accept the cash offer. We work with a local title company to handle all the paperwork. You choose the closing date whether that's next week or next month, And we pay all closing costs."
     }
 ];
 
@@ -548,7 +543,7 @@ const SellingOptions = () => {
                             <p className="text-gray-600 text-xl">How it works in 5 easy steps.</p>
                         </div>
 
-                        <div className="grid md:grid-cols-5 gap-8" data-aos="fade-in"
+                        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 justify-center" data-aos="fade-in"
                             data-aos-duration="500">
                             {steps.map((step, index) => (
                                 <div key={step.number} className="relative group">

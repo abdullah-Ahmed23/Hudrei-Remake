@@ -57,26 +57,19 @@ const FAQItem = ({
             whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: isMobile ? 0 : index * 0.05, duration: 0.4 }}
-            className="group" data-aos="fade-up"
+            className="group border-b border-gray-100 last:border-0" data-aos="fade-up"
         >
             <button
                 onClick={onClick}
-                className={`w-full text-left p-6 rounded-2xl transition-all duration-300 ${isOpen
-                    ? "bg-[#062f33] text-white shadow-lg shadow-gray-900/20"
-                    : "bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-gray-300"
-                    }`}
+                className="w-full text-left py-4 flex items-center justify-start gap-4 hover:bg-transparent transition-all"
             >
-                <div className="flex items-start justify-between gap-4">
-                    <span className={`text-lg font-semibold pr-4 ${isOpen ? "text-white" : "text-gray-900"}`}>
-                        {question}
-                    </span>
-                    <div className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${isOpen
-                        ? "bg-white/20 text-white"
-                        : " text-gray-900 group-hover:bg-gray-900/20"
-                        }`}>
-                        {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
-                    </div>
+                <div className={`flex-shrink-0 w-6 h-6 flex items-center justify-center transition-transform duration-300 ${isOpen ? "text-accent rotate-45" : "text-primary"}`}>
+                    <Plus className="w-5 h-5 font-bold" strokeWidth={3} />
                 </div>
+
+                <span className={`text-base md:text-lg font-bold transition-colors ${isOpen ? "text-gray-900" : "text-gray-700 group-hover:text-primary"}`}>
+                    {question}
+                </span>
             </button>
 
             <AnimatePresence>
@@ -88,7 +81,7 @@ const FAQItem = ({
                         transition={{ duration: isMobile ? 0 : 0.3, ease: "easeInOut" }}
                         className="overflow-hidden"
                     >
-                        <div className="px-6 py-5 text-black leading-relaxed bg-gray-50 rounded-b-2xl -mt-4 pt-8">
+                        <div className="pl-12 pr-4 pb-6 text-gray-600 leading-relaxed text-sm md:text-base">
                             {answer}
                         </div>
                     </motion.div>

@@ -35,6 +35,8 @@ import PrivacyPolicy from "./pages/PrivacyPolicy";
 import TermsOfService from "./pages/TermsOfService";
 import NotFound from "./pages/NotFound";
 import BlogPost from "./pages/blog/[slug]/page";
+import Dashboard from "./pages/Dashboard";
+import ListingDetails from "./pages/ListingDetails";
 
 const queryClient = new QueryClient();
 
@@ -89,6 +91,7 @@ const AppContent = () => {
           <Route path="/contact" element={<PageTransition><Contact /></PageTransition>} />
           <Route path="/how-it-works" element={<PageTransition><HowItWorks /></PageTransition>} />
           <Route path="/listing" element={<PageTransition><Listing /></PageTransition>} />
+          <Route path="/listing/:id" element={<PageTransition><ListingDetails /></PageTransition>} />
           <Route path="/blog" element={<PageTransition><Blog /></PageTransition>} />
           <Route path="/blog/:slug" element={<PageTransition><BlogPost /></PageTransition>} />
           <Route path="/testimonials" element={<PageTransition><Testimonials /></PageTransition>} />
@@ -102,6 +105,7 @@ const AppContent = () => {
           <Route path="/we-buy-houses/:area" element={<PageTransition><CityLandingPage /></PageTransition>} />
           <Route path="/privacy-policy" element={<PageTransition><PrivacyPolicy /></PageTransition>} />
           <Route path="/terms-of-service" element={<PageTransition><TermsOfService /></PageTransition>} />
+          <Route path="/dashboard" element={<PageTransition><Dashboard /></PageTransition>} />
           <Route path="*" element={<PageTransition><NotFound /></PageTransition>} />
         </Routes>
       </AnimatePresence>

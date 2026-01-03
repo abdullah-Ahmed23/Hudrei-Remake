@@ -12,90 +12,36 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import FormField from "@/components/FormField";
 
-const wholesalerSchema = z.object({
-    formType: z.enum(["submit-deal", "join-list"]),
+// --- Form 1: Submit A Deal Schema ---
+const submitDealSchema = z.object({
     name: z.string().min(1, "Name is required"),
     phone: z.string().min(10, "Valid phone number is required"),
     email: z.string().email("Valid email address is required"),
-    // Deal specific
-    address: z.string().optional(),
-    price: z.string().optional(),
-    arv: z.string().optional(),
-    link: z.string().optional(),
-    // List specific
-    company: z.string().optional(),
-    markets: z.string().optional(),
-}).superRefine((data, ctx) => {
-    if (data.formType === "submit-deal") {
-        if (!data.address) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Property address is required", path: ["address"] });
-        if (!data.price) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Asking price is required", path: ["price"] });
-        if (!data.arv) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Estimated ARV is required", path: ["arv"] });
-        if (!data.link) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Link to photos is required", path: ["link"] });
-    } else {
-        if (!data.company) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Company name is required", path: ["company"] });
-        if (!data.markets) ctx.addIssue({ code: z.ZodIssueCode.custom, message: "Markets served is required", path: ["markets"] });
-    }
+    address: z.string().min(1, "Property address is required"),
+    price: z.string().min(1, "Asking price is required"),
+    arv: z.string().min(1, "Estimated ARV is required"),
+    link: z.string().min(1, "Photo link is required"),
 });
+type SubmitDealData = z.infer<typeof submitDealSchema>;
 
-type WholesalerFormData = z.infer<typeof wholesalerSchema>;
+// --- Form 2: Join Buyers List Schema ---
+const joinListSchema = z.object({
+    name: z.string().min(1, "Name is required"),
+    phone: z.string().min(10, "Valid phone number is required"),
+    email: z.string().email("Valid email address is required"),
+    company: z.string().min(1, "Company name is required"),
+    markets: z.string().min(1, "Markets served is required"),
+});
+type JoinListData = z.infer<typeof joinListSchema>;
+
 
 const Wholesalers = () => {
+    const [activeTab, setActiveTab] = useState<"submit-deal" | "join-list">("submit-deal");
     const [submitted, setSubmitted] = useState(false);
-    const inputRef = useRef<HTMLInputElement>(null);
 
-    const {
-        register,
-        handleSubmit,
-        setValue,
-        watch,
-        reset,
-        formState: { errors, isSubmitting },
-    } = useForm<WholesalerFormData>({
-        resolver: zodResolver(wholesalerSchema),
-        defaultValues: {
-            formType: "submit-deal",
-            name: "",
-            phone: "",
-            email: "",
-            address: "",
-            price: "",
-            arv: "",
-            link: "",
-            company: "",
-            markets: "",
-        },
-    });
-
-    const formType = watch("formType");
-    const addressValue = watch("address");
-    const [addressQuery, setAddressQuery] = useState("");
-    const { results, clearResults } = useAddressAutocomplete(addressQuery);
-
-    // Sync address query with form value
-    useEffect(() => {
-        if (addressValue !== undefined && addressValue !== addressQuery) {
-            setAddressQuery(addressValue);
-        }
-    }, [addressValue]);
-
-    const onSubmit = async (data: WholesalerFormData) => {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log("Wholesaler Partner Data:", data);
-        setSubmitted(true);
-        reset({
-            formType: data.formType,
-            name: "",
-            phone: "",
-            email: "",
-            address: "",
-            price: "",
-            arv: "",
-            link: "",
-            company: "",
-            markets: "",
-        });
-        setAddressQuery("");
+    const toggleTab = (tab: "submit-deal" | "join-list") => {
+        setActiveTab(tab);
+        setSubmitted(false); // Reset success state when switching
     };
 
     return (
@@ -239,10 +185,10 @@ const Wholesalers = () => {
                                         </div>
                                         <h3 className="text-2xl font-bold mb-2">Information Received!</h3>
                                         <p className="text-gray-600 mb-8">We've got your info. Expect to hear from us shortly.</p>
-                                        <Button onClick={() => setSubmitted(false)} variant="outline">Reset Form</Button>
+                                        <Button onClick={() => setSubmitted(false)} className="rounded-xl px-8 py-3 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">Reset Form</Button>
                                     </div>
                                 ) : (
-                                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                                    <>
                                         {/* Toggle Type */}
                                         <div className="grid grid-cols-2 gap-2 p-1 bg-gray-100 rounded-xl mb-6 relative">
                                             <motion.div
@@ -252,123 +198,51 @@ const Wholesalers = () => {
                                                 transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                                                 style={{
                                                     width: "calc(50% - 4px)",
-                                                    left: formType === "submit-deal" ? "4px" : "calc(50%)"
+                                                    left: activeTab === "submit-deal" ? "4px" : "calc(50%)"
                                                 }}
                                             />
                                             <button
                                                 type="button"
-                                                onClick={() => {
-                                                    setValue("formType", "submit-deal");
-                                                    clearResults();
-                                                }}
-                                                className={`relative z-10 py-3 rounded-lg font-medium text-sm transition-colors duration-200 ${formType === 'submit-deal' ? 'text-[#062f33]' : 'text-gray-500 hover:text-gray-700'}`}
+                                                onClick={() => toggleTab("submit-deal")}
+                                                className={`relative z-10 py-3 rounded-lg font-medium text-sm transition-colors duration-200 ${activeTab === 'submit-deal' ? 'text-[#062f33]' : 'text-gray-500 hover:text-gray-700'}`}
                                             >
                                                 Submit A Deal
                                             </button>
                                             <button
                                                 type="button"
-                                                onClick={() => {
-                                                    setValue("formType", "join-list");
-                                                    clearResults();
-                                                }}
-                                                className={`relative z-10 py-3 rounded-lg font-medium text-sm transition-colors duration-200 ${formType === 'join-list' ? 'text-[#062f33]' : 'text-gray-500 hover:text-gray-700'}`}
+                                                onClick={() => toggleTab("join-list")}
+                                                className={`relative z-10 py-3 rounded-lg font-medium text-sm transition-colors duration-200 ${activeTab === 'join-list' ? 'text-[#062f33]' : 'text-gray-500 hover:text-gray-700'}`}
                                             >
                                                 Join Buyers List
                                             </button>
                                         </div>
 
-                                        <div className="grid grid-cols-2 gap-4">
-                                            <FormField label="Contact Name" error={errors.name?.message} required>
-                                                <Input {...register("name")} placeholder="Name" className="bg-white border-accent/30 focus:border-accent text-black" />
-                                            </FormField>
-                                            <FormField label="Phone" error={errors.phone?.message} required>
-                                                <Input {...register("phone")} placeholder="Phone" type="tel" className="bg-white border-accent/30 focus:border-accent text-black" />
-                                            </FormField>
-                                        </div>
-
-                                        <FormField label="Email Address" error={errors.email?.message} required>
-                                            <Input {...register("email")} placeholder="Email" type="email" className="bg-white border-accent/30 focus:border-accent text-black" />
-                                        </FormField>
-
-                                        <div className="overflow-hidden min-h-[220px]">
+                                        <div className="overflow-hidden min-h-[400px]">
                                             <AnimatePresence mode="wait">
-                                                {formType === "submit-deal" ? (
+                                                {activeTab === "submit-deal" ? (
                                                     <motion.div
-                                                        key="submit-deal"
+                                                        key="submit-deal-form"
                                                         initial={{ opacity: 0, x: -20 }}
                                                         animate={{ opacity: 1, x: 0 }}
                                                         exit={{ opacity: 0, x: 20 }}
                                                         transition={{ duration: 0.3 }}
-                                                        className="space-y-6"
                                                     >
-                                                        <FormField label="Property Address" error={errors.address?.message} required>
-                                                            <div className="relative">
-                                                                <Input
-                                                                    {...register("address")}
-                                                                    ref={(e) => {
-                                                                        register("address").ref(e);
-                                                                        // @ts-ignore
-                                                                        inputRef.current = e;
-                                                                    }}
-                                                                    onChange={(e) => {
-                                                                        register("address").onChange(e);
-                                                                        setAddressQuery(e.target.value);
-                                                                    }}
-                                                                    placeholder="123 Main St, Indianapolis"
-                                                                    className="bg-white border-accent/30 focus:border-accent text-black"
-                                                                />
-                                                                <AddressAutocompletePortal
-                                                                    anchorRef={inputRef}
-                                                                    results={results}
-                                                                    onSelect={(val) => {
-                                                                        setValue("address", val, { shouldValidate: true });
-                                                                        setAddressQuery(val);
-                                                                        clearResults();
-                                                                    }}
-                                                                    onClose={clearResults}
-                                                                />
-                                                            </div>
-                                                        </FormField>
-                                                        <div className="grid grid-cols-2 gap-4">
-                                                            <FormField label="Asking Price" error={errors.price?.message} required>
-                                                                <Input {...register("price")} placeholder="$" className="bg-white border-accent/30 focus:border-accent text-black" />
-                                                            </FormField>
-                                                            <FormField label="Estimated ARV" error={errors.arv?.message} required>
-                                                                <Input {...register("arv")} placeholder="$" className="bg-white border-accent/30 focus:border-accent text-black" />
-                                                            </FormField>
-                                                        </div>
-                                                        <FormField label="Link to Photos (Dropbox/Drive)" error={errors.link?.message} required>
-                                                            <Input {...register("link")} placeholder="https://..." className="bg-white border-accent/30 focus:border-accent text-black" />
-                                                        </FormField>
+                                                        <SubmitDealForm onSuccess={() => setSubmitted(true)} />
                                                     </motion.div>
                                                 ) : (
                                                     <motion.div
-                                                        key="join-list"
+                                                        key="join-list-form"
                                                         initial={{ opacity: 0, x: 20 }}
                                                         animate={{ opacity: 1, x: 0 }}
                                                         exit={{ opacity: 0, x: -20 }}
                                                         transition={{ duration: 0.3 }}
-                                                        className="space-y-6"
                                                     >
-                                                        <FormField label="Company Name" error={errors.company?.message} required>
-                                                            <Input {...register("company")} placeholder="Your Wholesaling Co." className="bg-white border-accent/30 focus:border-accent text-black" />
-                                                        </FormField>
-                                                        <FormField label="Markets You Serve" error={errors.markets?.message} required>
-                                                            <Input {...register("markets")} placeholder="e.g. Marion County, Fishers, etc." className="bg-white border-accent/30 focus:border-accent text-black" />
-                                                        </FormField>
+                                                        <JoinListForm onSuccess={() => setSubmitted(true)} />
                                                     </motion.div>
                                                 )}
                                             </AnimatePresence>
                                         </div>
-
-                                        <Button type="submit" disabled={isSubmitting} className="w-full rounded-xl py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
-                                            {isSubmitting ? "Processing..." : (
-                                                <>
-                                                    {formType === "submit-deal" ? "Send Deal Now" : "Join Network"} <ChevronRight className="w-4 h-4 ml-2" />
-                                                </>
-                                            )}
-                                        </Button>
-                                    </form>
+                                    </>
                                 )}
                             </div>
                         </div>
@@ -378,6 +252,175 @@ const Wholesalers = () => {
                 <QuestionsSection />
             </main>
         </>
+    );
+};
+
+// --- Sub Components ---
+
+const SubmitDealForm = ({ onSuccess }: { onSuccess: () => void }) => {
+    const inputRef = useRef<HTMLInputElement>(null);
+    const { register, handleSubmit, setValue, watch, formState: { errors, isSubmitting } } = useForm<SubmitDealData>({
+        resolver: zodResolver(submitDealSchema),
+    });
+
+    const addressValue = watch("address");
+    const [addressQuery, setAddressQuery] = useState("");
+    const { results, clearResults } = useAddressAutocomplete(addressQuery);
+
+    useEffect(() => {
+        if (addressValue !== undefined && addressValue !== addressQuery) {
+            setAddressQuery(addressValue);
+        }
+    }, [addressValue]);
+
+    const onSubmit = async (data: SubmitDealData) => {
+        try {
+            const url = "http://localhost:5000/api/wholesalers/submit-deal";
+            const payload = {
+                contactName: data.name,
+                phone: data.phone,
+                email: data.email,
+                propertyAddress: data.address,
+                askingPrice: data.price,
+                estimatedArv: data.arv,
+                photosLink: data.link,
+                source: "Wholesaler Deal Page"
+            };
+
+            console.log("Submitting Deal to:", url, payload);
+
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+            if (result.success) onSuccess();
+            else alert("Submission failed: " + result.error);
+        } catch (error) {
+            console.error(error);
+            alert("Network error.");
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+                <FormField label="Contact Name" error={errors.name?.message} required>
+                    <Input {...register("name")} placeholder="Name" className="bg-white border-accent/30 focus:border-accent text-black" />
+                </FormField>
+                <FormField label="Phone" error={errors.phone?.message} required>
+                    <Input {...register("phone")} placeholder="Phone" type="tel" className="bg-white border-accent/30 focus:border-accent text-black" />
+                </FormField>
+            </div>
+            <FormField label="Email" error={errors.email?.message} required>
+                <Input {...register("email")} placeholder="Email" type="email" className="bg-white border-accent/30 focus:border-accent text-black" />
+            </FormField>
+
+            <FormField label="Property Address" error={errors.address?.message} required>
+                <div className="relative">
+                    <Input
+                        {...register("address")}
+                        ref={(e) => {
+                            register("address").ref(e);
+                            // @ts-ignore
+                            inputRef.current = e;
+                        }}
+                        onChange={(e) => {
+                            register("address").onChange(e);
+                            setAddressQuery(e.target.value);
+                        }}
+                        placeholder="123 Main St..."
+                        className="bg-white border-accent/30 focus:border-accent text-black"
+                    />
+                    <AddressAutocompletePortal
+                        anchorRef={inputRef}
+                        results={results}
+                        onSelect={(val) => {
+                            setValue("address", val, { shouldValidate: true });
+                            setAddressQuery(val);
+                            clearResults();
+                        }}
+                        onClose={clearResults}
+                    />
+                </div>
+            </FormField>
+
+            <div className="grid grid-cols-2 gap-4">
+                <FormField label="Asking Price" error={errors.price?.message} required>
+                    <Input {...register("price")} placeholder="$" className="bg-white border-accent/30 focus:border-accent text-black" />
+                </FormField>
+                <FormField label="Estimated ARV" error={errors.arv?.message} required>
+                    <Input {...register("arv")} placeholder="$" className="bg-white border-accent/30 focus:border-accent text-black" />
+                </FormField>
+            </div>
+            <FormField label="Link to Photos" error={errors.link?.message} required>
+                <Input {...register("link")} placeholder="https://..." className="bg-white border-accent/30 focus:border-accent text-black" />
+            </FormField>
+
+            <Button type="submit" disabled={isSubmitting} className="w-full rounded-xl py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                {isSubmitting ? "Sending..." : <>Send Deal Now <ChevronRight className="w-4 h-4 ml-2" /></>}
+            </Button>
+        </form>
+    );
+};
+
+const JoinListForm = ({ onSuccess }: { onSuccess: () => void }) => {
+    const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<JoinListData>({
+        resolver: zodResolver(joinListSchema),
+    });
+
+    const onSubmit = async (data: JoinListData) => {
+        try {
+            const url = "http://localhost:5000/api/wholesalers/join";
+            const payload = {
+                contactName: data.name,
+                phone: data.phone,
+                email: data.email,
+                companyName: data.company,
+                markets: data.markets
+            };
+
+            console.log("Joining List:", url, payload);
+
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { "Content-Type": "application/json", "Accept": "application/json" },
+                body: JSON.stringify(payload)
+            });
+            const result = await response.json();
+            if (result.success) onSuccess();
+            else alert("Submission failed: " + result.error);
+        } catch (error) {
+            console.error(error);
+            alert("Network error.");
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+            <div className="grid grid-cols-2 gap-4">
+                <FormField label="Contact Name" error={errors.name?.message} required>
+                    <Input {...register("name")} placeholder="Name" className="bg-white border-accent/30 focus:border-accent text-black" />
+                </FormField>
+                <FormField label="Phone" error={errors.phone?.message} required>
+                    <Input {...register("phone")} placeholder="Phone" type="tel" className="bg-white border-accent/30 focus:border-accent text-black" />
+                </FormField>
+            </div>
+            <FormField label="Email" error={errors.email?.message} required>
+                <Input {...register("email")} placeholder="Email" type="email" className="bg-white border-accent/30 focus:border-accent text-black" />
+            </FormField>
+            <FormField label="Company Name" error={errors.company?.message} required>
+                <Input {...register("company")} placeholder="Your Co." className="bg-white border-accent/30 focus:border-accent text-black" />
+            </FormField>
+            <FormField label="Markets Served" error={errors.markets?.message} required>
+                <Input {...register("markets")} placeholder="Areas..." className="bg-white border-accent/30 focus:border-accent text-black" />
+            </FormField>
+
+            <Button type="submit" disabled={isSubmitting} className="w-full rounded-xl py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
+                {isSubmitting ? "Joining..." : <>Join Network <ChevronRight className="w-4 h-4 ml-2" /></>}
+            </Button>
+        </form>
     );
 };
 

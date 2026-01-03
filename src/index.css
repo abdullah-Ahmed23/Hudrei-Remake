@@ -5,225 +5,316 @@
 /* HudREI Design System - Monochromatic Teal Palette */
 
 @layer base {
-  :root {
-    /* Monochromatic Teal Palette based on logo */
-    --background: 170 40% 6%;
-    --foreground: 170 20% 95%;
+    :root {
+        /* Monochromatic Teal Palette based on logo */
+        --background: 170 40% 6%;
+        --foreground: 170 20% 95%;
 
-    --card: 170 35% 10%;
-    --card-foreground: 170 20% 95%;
+        --card: 170 35% 10%;
+        --card-foreground: 170 20% 95%;
 
-    --popover: 170 35% 10%;
-    --popover-foreground: 170 20% 95%;
+        --popover: 170 35% 10%;
+        --popover-foreground: 170 20% 95%;
 
-    --primary: 170 45% 35%;
-    --primary-foreground: 170 20% 98%;
+        --primary: 170 45% 35%;
+        --primary-foreground: 170 20% 98%;
 
-    --secondary: 170 30% 15%;
-    --secondary-foreground: 170 20% 90%;
+        --secondary: 170 30% 15%;
+        --secondary-foreground: 170 20% 90%;
 
-    --muted: 170 25% 12%;
-    --muted-foreground: 170 15% 60%;
+        --muted: 170 25% 12%;
+        --muted-foreground: 170 15% 60%;
 
-    --accent: 170 50% 45%;
-    --accent-foreground: 170 40% 6%;
+        --accent: 170 50% 45%;
+        --accent-foreground: 170 40% 6%;
 
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
+        --destructive: 0 84.2% 60.2%;
+        --destructive-foreground: 210 40% 98%;
 
-    --border: 170 25% 20%;
-    --input: 170 25% 18%;
-    --ring: 170 45% 35%;
+        --border: 170 25% 20%;
+        --input: 170 25% 18%;
+        --ring: 170 45% 35%;
 
-    --radius: 0.75rem;
+        --radius: 0.75rem;
 
-    /* Custom tokens */
-    --teal-glow: 170 50% 40%;
-    --teal-light: 170 35% 50%;
-    --teal-dark: 170 40% 8%;
-    --cream: 45 30% 96%;
+        /* Custom tokens */
+        --teal-glow: 170 50% 40%;
+        --teal-light: 170 35% 50%;
+        --teal-dark: 170 40% 8%;
+        --cream: 45 30% 96%;
 
-    --sidebar-background: 170 40% 8%;
-    --sidebar-foreground: 170 20% 90%;
-    --sidebar-primary: 170 45% 35%;
-    --sidebar-primary-foreground: 170 20% 98%;
-    --sidebar-accent: 170 30% 15%;
-    --sidebar-accent-foreground: 170 20% 90%;
-    --sidebar-border: 170 25% 20%;
-    --sidebar-ring: 170 45% 35%;
-  }
+        --sidebar-background: 170 40% 8%;
+        --sidebar-foreground: 170 20% 90%;
+        --sidebar-primary: 170 45% 35%;
+        --sidebar-primary-foreground: 170 20% 98%;
+        --sidebar-accent: 170 30% 15%;
+        --sidebar-accent-foreground: 170 20% 90%;
+        --sidebar-border: 170 25% 20%;
+        --sidebar-ring: 170 45% 35%;
+    }
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
+    * {
+        @apply border-border;
+    }
 
-  body {
-    @apply bg-background text-foreground antialiased;
-    font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
-    text-rendering: optimizeLegibility;
-  }
+    body {
+        @apply bg-background text-foreground antialiased;
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+        text-rendering: optimizeLegibility;
+    }
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6 {
-    font-family: 'Outfit', sans-serif;
-  }
+    h1,
+    h2,
+    h3,
+    h4,
+    h5,
+    h6 {
+        font-family: 'Outfit', sans-serif;
+    }
 
-  html {
-    scroll-behavior: smooth;
-  }
+    html {
+        scroll-behavior: smooth;
+    }
 
-  /* Custom Scrollbar Styles */
-  ::-webkit-scrollbar {
-    width: 12px;
-  }
+    /* Custom Scrollbar Styles */
+    ::-webkit-scrollbar {
+        width: 12px;
+    }
 
-  ::-webkit-scrollbar-track {
-    background: transparent;
-  }
+    ::-webkit-scrollbar-track {
+        background: transparent;
+    }
 
-  ::-webkit-scrollbar-thumb {
-    background-color: #318174;
-    border-radius: 20px;
-    border: 3px solid white;
-    /* This creates space around the thumb on white backgrounds */
-  }
+    ::-webkit-scrollbar-thumb {
+        background-color: #318174;
+        border-radius: 20px;
+        border: 3px solid white;
+        /* This creates space around the thumb on white backgrounds */
+    }
 
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: #0b434a;
-  }
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: #0b434a;
+    }
 
-  /* Dark mode scrollbar for sections with dark backgrounds */
-  .bg-primary ::-webkit-scrollbar-thumb {
-    border-color: #062f33;
-  }
+    /* Dark mode scrollbar for sections with dark backgrounds */
+    .bg-primary ::-webkit-scrollbar-thumb {
+        border-color: #062f33;
+    }
 
-  /* Firefox */
-  * {
-    scrollbar-width: thin;
-    scrollbar-color: #318174 transparent;
-  }
+    /* Firefox */
+    * {
+        scrollbar-width: thin;
+        scrollbar-color: #318174 transparent;
+    }
 }
 
 @layer utilities {
-  .text-gradient {
-    @apply bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent;
-  }
+    .text-gradient {
+        @apply bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent;
+    }
 
-  .glass-card {
-    @apply bg-card/80 backdrop-blur-md border border-border/50;
-  }
+    .glass-card {
+        @apply bg-card/80 backdrop-blur-md border border-border/50;
+    }
 
-  .hover-lift {
-    @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/20;
-  }
+    .hover-lift {
+        @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg hover:shadow-primary/20;
+    }
 
-  .animate-fade-up {
-    animation: fade-up 0.6s ease-out forwards;
-  }
+    .animate-fade-up {
+        animation: fade-up 0.6s ease-out forwards;
+    }
 
-  .animate-fade-in {
-    animation: fade-in 0.5s ease-out forwards;
-  }
+    .animate-fade-in {
+        animation: fade-in 0.5s ease-out forwards;
+    }
 
-  .animate-scale-in {
-    animation: scale-in 0.4s ease-out forwards;
-  }
+    .animate-scale-in {
+        animation: scale-in 0.4s ease-out forwards;
+    }
 }
 
 @keyframes fade-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
 
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 @keyframes fade-in {
-  from {
-    opacity: 0;
-  }
+    from {
+        opacity: 0;
+    }
 
-  to {
-    opacity: 1;
-  }
+    to {
+        opacity: 1;
+    }
 }
 
 @keyframes scale-in {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
+    from {
+        opacity: 0;
+        transform: scale(0.95);
+    }
 
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 /* Global Performance Optimizations for Mobile */
 @media (max-width: 768px) {
-  * {
-    /* Avoid heavy blur and grayscale on low-end mobile */
-    --mobile-filter-none: none !important;
-  }
+    * {
+        /* Avoid heavy blur and grayscale on low-end mobile */
+        --mobile-filter-none: none !important;
+    }
 
-  .animate-fade-up,
-  .animate-fade-in,
-  .animate-scale-in,
-  [data-aos] {
-    will-change: transform, opacity;
-    transform: translateZ(0);
-    /* Force GPU */
-    backface-visibility: hidden;
-  }
+    .animate-fade-up,
+    .animate-fade-in,
+    .animate-scale-in,
+    [data-aos] {
+        will-change: transform, opacity;
+        transform: translateZ(0);
+        /* Force GPU */
+        backface-visibility: hidden;
+    }
 }
 
 
 .will-change-transform {
-  will-change: transform;
+    will-change: transform;
 }
 
 .transform-gpu {
-  transform: translateZ(0);
+    transform: translateZ(0);
 }
 
 /* Global Glow Button Style */
 .glow-button {
-  background-color: #318174;
-  color: white;
-  box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.39);
-  transition: all 0.3s ease-in-out;
-  animation: colorPulse 3s ease-in-out infinite;
+    background-color: #318174;
+    color: white;
+    box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.39);
+    transition: all 0.3s ease-in-out;
+    animation: colorPulse 3s ease-in-out infinite;
 }
 
 .glow-button:hover {
-  background-color: white;
-  color: #318174;
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.23);
-  transform: translateY(-2px);
-  animation: none;
+    background-color: white;
+    color: #318174;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.23);
+    transform: translateY(-2px);
+    animation: none;
 }
 
 @keyframes colorPulse {
 
-  0%,
-  100% {
-    background-color: #008670;
-    box-shadow: 0 4px 14px 0 rgba(0, 130, 115, 0.39);
-  }
+    0%,
+    100% {
+        background-color: #008670;
+        box-shadow: 0 4px 14px 0 rgba(0, 130, 115, 0.39);
+    }
 
-  50% {
-    background-color: #006361;
-    box-shadow: 0 0 10px rgba(0, 114, 116, 0.62);
-  }
+    50% {
+        background-color: #006361;
+        box-shadow: 0 0 10px rgba(0, 114, 116, 0.62);
+    }
+}
+
+/* --- BLOG CONTENT MANUAL TYPOGRAPHY --- */
+/* Mimics @tailwindcss/typography since proper plugin is missing */
+.blog-content {
+    /* Base styles */
+    color: #000;
+    line-height: 1.75;
+}
+
+.blog-content h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin-top: 2.5rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+    color: #111;
+}
+
+.blog-content h2 {
+    font-size: 1.875rem;
+    font-weight: 700;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+    color: #111;
+}
+
+.blog-content h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+    color: #111;
+}
+
+.blog-content p {
+    margin-bottom: 1.25rem;
+    font-size: 1.125rem;
+    color: #333;
+}
+
+.blog-content a {
+    color: hsl(170 50% 45%);
+    /* Accent Color */
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.blog-content ul {
+    list-style-type: disc;
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.blog-content ol {
+    list-style-type: decimal;
+    padding-left: 1.5rem;
+    margin-bottom: 1.25rem;
+}
+
+.blog-content li {
+    margin-bottom: 0.5rem;
+    color: #333;
+}
+
+.blog-content blockquote {
+    border-left: 4px solid hsl(170 50% 45%);
+    font-style: italic;
+    color: #4b5563;
+    padding-left: 1rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    background-color: #f9fafb;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    border-top-right-radius: 0.5rem;
+    border-bottom-right-radius: 0.5rem;
+}
+
+.blog-content img {
+    border-radius: 0.75rem;
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+    width: 100%;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.blog-content hr {
+    margin-top: 3rem;
+    margin-bottom: 3rem;
+    border-color: #e5e7eb;
 }

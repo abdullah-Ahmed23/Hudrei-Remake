@@ -1,115 +1,54 @@
-import { useEffect, useState, useMemo } from "react";
-import { useParams, Link, useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import { ArrowLeft, User, Calendar, Clock, Share2, Facebook, Twitter, Linkedin } from "lucide-react";
+import Header from "@/components/Header";
+import Footer from "@/components/Footer";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { ArrowLeft, Calendar, User, Tag, Share2, Printer, Clock } from "lucide-react";
 import { motion } from "framer-motion";
 
+// Types (Updated to match GHL Raw Data)
 interface BlogPost {
     id: string;
     title: string;
     slug: string;
-    image: string;
-    body?: string;
-    publishedDate: string;
-    categories?: string[];
-    author?: string;
-    authorImage?: string;
     description?: string;
+    rawHTML?: string; // specific field mentioned
+    html?: string;    // fallback 1
+    imageUrl?: string; // Was image
+    publishedAt?: string; // Was publishedDate
+    author?: string;
+    categories?: string[];
 }
 
-// ---- PARSER UTILITIES ----
-
-interface ContentSection {
-    type: "text" | "image";
-    content: string; // HTML string
-    imgSrc?: string; // For image types
-}
-
-/**
- * intelligently parses the raw HTML string into sections.
- */
-const parseContentIntoSections = (html: string): ContentSection[] => {
-    if (!html) return [];
-
-    const sections: ContentSection[] = [];
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, "text/html");
-    const children = Array.from(doc.body.children);
-
-    let currentTextBuffer: Element[] = [];
-
-    const flushText = () => {
-        if (currentTextBuffer.length > 0) {
-            const wrapper = document.createElement("div");
-            currentTextBuffer.forEach(el => wrapper.appendChild(el.cloneNode(true)));
-
-            wrapper.querySelectorAll('*').forEach(el => {
-                el.removeAttribute('style'); // Strip inline styles
-                el.removeAttribute('width');
-                el.removeAttribute('height');
-                el.removeAttribute('class');
-            });
-
-            if (wrapper.textContent?.trim() || wrapper.innerHTML.includes('<')) {
-                sections.push({ type: "text", content: wrapper.innerHTML });
-            }
-            currentTextBuffer = [];
-        }
-    };
-
-    children.forEach((child) => {
-        if (child.tagName === "IMG") {
-            flushText();
-            const src = child.getAttribute("src") || "";
-            if (src) sections.push({ type: "image", content: "", imgSrc: src });
-
-        } else if (child.querySelector("img") && child.textContent?.trim().length === 0) {
-            flushText();
-            const img = child.querySelector("img");
-            const src = img?.getAttribute("src") || "";
-            if (src) sections.push({ type: "image", content: "", imgSrc: src });
-
-        } else {
-            child.removeAttribute("style");
-            child.removeAttribute("class");
-            child.querySelectorAll("*").forEach(el => el.removeAttribute("style"));
-            currentTextBuffer.push(child);
-        }
-    });
-
-    flushText();
-    return sections;
-};
-
-
-const BlogPostPage = () => {
-    const { slug } = useParams<{ slug: string }>();
-    const navigate = useNavigate();
+const BlogPost = () => {
+    const { slug } = useParams();
     const [post, setPost] = useState<BlogPost | null>(null);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
+        // Scroll to top
+        window.scrollTo(0, 0);
+
         const fetchPost = async () => {
             try {
+                // Fetch Single Blog by Slug
                 const response = await fetch(`http://localhost:5000/api/blogs/slug/${slug}`);
-                if (!response.ok) throw new Error("Post not found");
-                const data = await response.json();
+                if (!response.ok) throw new Error("Failed to fetch");
 
-                let targetPost = null;
-                if (data.success) {
-                    if (Array.isArray(data.data) && data.data.length > 0) targetPost = data.data[0];
-                    else if (!Array.isArray(data.data)) targetPost = data.data;
+                const json = await response.json();
+                const data = json.data || json;
+
+                if (data) {
+                    setPost(data);
                 } else {
-                    targetPost = data;
+                    setError("Article not found.");
                 }
-
-                if (!targetPost) throw new Error("Post not found");
-                setPost(targetPost);
-
             } catch (err) {
-                console.error("Error fetching post:", err);
-                setError("Could not load the article.");
+                console.error(err);
+                setError("Failed to load article.");
             } finally {
                 setLoading(false);
             }
@@ -118,16 +57,9 @@ const BlogPostPage = () => {
         if (slug) fetchPost();
     }, [slug]);
 
-
-    const sections = useMemo(() => {
-        if (!post?.body) return [];
-        return parseContentIntoSections(post.body);
-    }, [post]);
-
-
     if (loading) {
         return (
-            <div className="min-h-screen pt-32 flex justify-center">
+            <div className="min-h-screen bg-gray-50 flex items-center justify-center">
                 <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-accent"></div>
             </div>
         );
@@ -135,10 +67,10 @@ const BlogPostPage = () => {
 
     if (error || !post) {
         return (
-            <div className="min-h-screen pt-32 container mx-auto px-4 text-center">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">{error || "Post not found"}</h2>
-                <Link to="/blog" className="text-accent hover:underline flex items-center justify-center gap-2">
-                    <ArrowLeft className="w-4 h-4" /> Back to Blog
+            <div className="min-h-screen bg-white flex flex-col items-center justify-center">
+                <h1 className="text-3xl font-bold text-gray-900 mb-4">Article Not Found</h1>
+                <Link to="/blog">
+                    <Button variant="outline"><ArrowLeft className="mr-2 h-4 w-4" /> Back to Blog</Button>
                 </Link>
             </div>
         );
@@ -148,138 +80,100 @@ const BlogPostPage = () => {
         <>
             <Helmet>
                 <title>{post.title} | HudREI Blog</title>
-                <meta name="description" content={post.description ? post.description.substring(0, 160) : post.title} />
+                <meta name="description" content={post.description || post.title} />
             </Helmet>
+            <Header />
 
-            <main className="min-h-screen pt-32 pb-40 bg-white text-black">
+            <article className="min-h-screen bg-gray-50 pt-28 pb-24 border-t border-gray-100">
 
-                <div className="container mx-auto px-4 max-w-7xl">
+                {/* Floating Modern Container */}
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="container mx-auto px-6 max-w-5xl"
+                >
 
-                    {/* BACK LINK */}
-                    <div className="mb-12">
-                        <Link to="/blog" className="inline-flex items-center text-sm font-black text-black hover:text-accent transition-colors uppercase tracking-widest border-b-2 border-transparent hover:border-accent pb-1">
-                            <ArrowLeft className="w-4 h-4 mr-3" />
-                            Back to Articles
+                    <div className="bg-white rounded-[2.5rem] shadow-2xl shadow-gray-200/50 p-8 md:p-14 lg:p-20 relative overflow-hidden">
+
+                        {/* Back Link */}
+                        <Link to="/blog" className="inline-flex items-center text-gray-400 hover:text-accent font-bold mb-8 transition-colors text-sm uppercase tracking-wider">
+                            <ArrowLeft className="w-4 h-4 mr-2" /> Back to Articles
                         </Link>
-                    </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24">
 
-                        {/* LEFT COLUMN: STICKY SIDEBAR (Author & Meta) */}
-                        <aside className="lg:col-span-4 relative">
-                            <div className="lg:sticky lg:top-40 space-y-10">
-                                {/* Title (Mobile Only) */}
-                                <div className="lg:hidden mb-8">
-                                    <h1 className="text-4xl font-black text-black leading-tight mb-6">{post.title}</h1>
-                                </div>
-
-                                {/* Author Card */}
-                                <div className="bg-gray-50 p-8 rounded-3xl border border-gray-100">
-                                    <div className="flex items-center gap-4 mb-6">
-                                        {post.authorImage ? (
-                                            <img src={post.authorImage} className="w-16 h-16 rounded-full object-cover border-2 border-white shadow-md" />
-                                        ) : (
-                                            <div className="w-16 h-16 rounded-full bg-gray-200 flex items-center justify-center">
-                                                <User className="w-8 h-8 text-gray-400" />
-                                            </div>
-                                        )}
-                                        <div>
-                                            <p className="text-xs font-bold text-accent uppercase tracking-widest mb-1">Author</p>
-                                            <p className="text-lg font-black text-black">{post.author || "HudREI Team"}</p>
-                                        </div>
-                                    </div>
-                                    <div className="space-y-3 text-sm font-medium text-black">
-                                        <div className="flex items-center gap-3">
-                                            <Calendar className="w-4 h-4 text-accent" />
-                                            <span>{post.publishedDate}</span>
-                                        </div>
-                                        <div className="flex items-center gap-3">
-                                            <Clock className="w-4 h-4 text-accent" />
-                                            <span>5 min read</span>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* Share Links (Visual only) */}
-                                <div className="bg-white p-6 rounded-3xl border border-gray-100 shadow-lg shadow-gray-100/50">
-                                    <p className="text-xs font-bold text-gray-400 uppercase tracking-widest mb-4 text-center">Share this article</p>
-                                    <div className="flex justify-center gap-4">
-                                        <button className="p-3 rounded-full bg-gray-50 hover:bg-blue-50 text-black hover:text-blue-600 transition-colors"><Facebook className="w-5 h-5" /></button>
-                                        <button className="p-3 rounded-full bg-gray-50 hover:bg-sky-50 text-black hover:text-sky-500 transition-colors"><Twitter className="w-5 h-5" /></button>
-                                        <button className="p-3 rounded-full bg-gray-50 hover:bg-blue-50 text-black hover:text-blue-700 transition-colors"><Linkedin className="w-5 h-5" /></button>
-                                        <button className="p-3 rounded-full bg-gray-50 hover:bg-gray-100 text-black transition-colors"><Share2 className="w-5 h-5" /></button>
-                                    </div>
-                                </div>
+                        {/* Hero Image - Rounded & Embedded */}
+                        {post.imageUrl && (
+                            <div className="w-full mb-10 rounded-[1.5rem] overflow-hidden shadow-sm border border-gray-100">
+                                <img src={post.imageUrl} alt={post.title} className="w-full h-auto" />
                             </div>
-                        </aside>
+                        )}
 
-
-                        {/* RIGHT COLUMN: MAIN CONTENT */}
-                        <article className="lg:col-span-8">
-
-                            {/* Desktop Title */}
-                            <h1 className="hidden lg:block text-5xl xl:text-7xl font-black text-black leading-[1.1] mb-10 tracking-tight">
-                                {post.title}
-                            </h1>
-
-                            {/* Categories */}
-                            <div className="flex flex-wrap gap-3 mb-10">
-                                {Array.isArray(post.categories) && post.categories.map(cat => (
-                                    <span key={cat} className="text-xs font-black uppercase tracking-widest bg-accent text-white px-4 py-2 rounded-lg">
-                                        {cat}
+                        {/* Header Content */}
+                        <div className="mb-12">
+                            <div className="flex flex-wrap items-center gap-4 text-sm font-medium text-gray-400 mb-4">
+                                {post.publishedAt && (
+                                    <span className="flex items-center">
+                                        <Calendar className="w-4 h-4 mr-2 text-accent" />
+                                        {new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
                                     </span>
-                                ))}
-                            </div>
-
-                            {/* Hero Image */}
-                            {post.image && (
-                                <div className="mb-16 rounded-[2rem] overflow-hidden shadow-2xl">
-                                    <img src={post.image} alt={post.title} className="w-full h-auto object-cover" />
-                                </div>
-                            )}
-
-                            {/* Rendered Content Sections */}
-                            <div className="space-y-16">
-                                {sections.map((section, idx) => (
-                                    <motion.div
-                                        key={idx}
-                                        initial={{ opacity: 0, y: 20 }}
-                                        animate={{ opacity: 1, y: 0 }}
-                                        transition={{ duration: 0.5 }}
-                                    >
-                                        {section.type === "image" ? (
-                                            <div className="rounded-3xl overflow-hidden shadow-lg my-12">
-                                                <img src={section.imgSrc} className="w-full h-auto" />
-                                            </div>
-                                        ) : (
-                                            <div className="prose prose-xl prose-stone max-w-none
-                                                text-black
-                                                prose-headings:text-black prose-headings:font-black
-                                                prose-p:text-black prose-p:font-medium prose-p:leading-loose
-                                                prose-strong:text-black prose-strong:font-black
-                                                prose-ul:text-black prose-li:text-black
-                                                prose-blockquote:text-black prose-blockquote:border-l-8 prose-blockquote:border-accent prose-blockquote:bg-gray-50 prose-blockquote:rounded-r-xl prose-blockquote:py-6 prose-blockquote:px-8 prose-blockquote:not-italic prose-blockquote:text-2xl prose-blockquote:font-bold
-                                                ">
-                                                <div dangerouslySetInnerHTML={{ __html: section.content }} />
-                                            </div>
-                                        )}
-                                    </motion.div>
-                                ))}
-
-                                {sections.length === 0 && (
-                                    <div className="prose prose-xl prose-stone max-w-none text-black">
-                                        {post.body ? <div dangerouslySetInnerHTML={{ __html: post.body }} /> : post.description}
-                                    </div>
+                                )}
+                                {post.author && (
+                                    <span className="flex items-center">
+                                        <User className="w-4 h-4 mr-2 text-accent" />
+                                        {(() => {
+                                            if (typeof post.author === 'string') return post.author;
+                                            // @ts-ignore
+                                            return post.author.label || post.author.name || "HudREI Team";
+                                        })()}
+                                    </span>
                                 )}
                             </div>
 
-                        </article>
+                            <h1 className="text-3xl md:text-5xl lg:text-5xl font-extrabold text-gray-900 leading-tight mb-6">
+                                {post.title}
+                            </h1>
+                        </div>
+
+                        {/* Custom Styled Content - Clean & Modern */}
+                        <div className="blog-content">
+                            {post.description && (
+                                <p className="lead text-xl md:text-2xl text-black font-medium mb-10 leading-relaxed opacity-90">
+                                    {post.description}
+                                </p>
+                            )}
+
+                            <div dangerouslySetInnerHTML={{ __html: post.rawHTML || post.html || "" }} />
+                        </div>
+
+                        {/* Social Share / Footer of Card */}
+                        <div className="mt-16 pt-8 border-t border-gray-100 flex items-center justify-between">
+                            <div className="text-sm font-bold text-gray-400">
+                                Share this article
+                            </div>
+                            <div className="flex gap-2">
+                                <Button size="icon" variant="ghost" className="rounded-full hover:bg-gray-50 hover:text-accent"><Share2 className="w-4 h-4" /></Button>
+                                <Button size="icon" variant="ghost" className="rounded-full hover:bg-gray-50 hover:text-accent"><Printer className="w-4 h-4" /></Button>
+                            </div>
+                        </div>
 
                     </div>
-                </div>
-            </main>
+
+                    {/* CTA Section Outside Card */}
+                    <div className="mt-20 text-center max-w-2xl mx-auto">
+                        <h3 className="text-2xl font-bold text-gray-900 mb-4">Start Selling Your House Today</h3>
+                        <p className="text-gray-500 mb-8">Get the best cash offer for your property in Indiana with HudREI.</p>
+                        <Link to="/contact">
+                            <Button size="lg" className="bg-accent hover:bg-accent/90 text-white font-bold px-10 py-6 rounded-xl shadow-xl shadow-accent/20">
+                                Get Your Cash Offer
+                            </Button>
+                        </Link>
+                    </div>
+
+                </motion.div>
+            </article>
+            <Footer />
         </>
     );
 };
 
-export default BlogPostPage;
+export default BlogPost;

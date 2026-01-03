@@ -40,7 +40,7 @@ const HeroV2 = () => {
     const { results, clearResults } = useAddressAutocomplete(addressQuery);
 
     const onSubmit = (data: FormData) => {
-        navigate("/contact", {
+        navigate("/contact#contact-form", {
             state: { streetAddress: data.address },
         });
     };

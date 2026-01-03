@@ -11,6 +11,7 @@ import png3 from "@/assets/WALE.jpg"
 import png4 from "@/assets/Hamid.png"
 import png5 from "@/assets/gomaa.png"
 import png6 from "@/assets/F1.jpg"
+import png7 from "@/assets/Asmaa.jpg"
 import {
     Users,
     Heart,
@@ -38,6 +39,11 @@ const teamLeaders = [
         name: "Samar",
         role: "COO And Partner",
         image: png2,
+    },
+    {
+        name: "Sam Adham",
+        role: "Transaction coordinator ",
+        image: png7,
     },
     {
         name: "Abdullah Tarek",
@@ -270,12 +276,12 @@ const WhoWeAre = () => {
                 </section>
 
                 {/* --- PREMIUM VALUES GRID --- */}
-                <section id="values" className="py-25 bg-white relative overflow-hidden">
+                <section id="values" className="py-25 pt-15 bg-white relative ">
                     {/* Background Accents */}
                     <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] -mr-64 -mt-64" />
                     <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -ml-64 -mb-64" />
 
-                    <div className="container mx-auto px-4 relative z-10">
+                    <div className="container mx-auto py-20 px-4 relative z-10">
                         <div
                             className="max-w-4xl mx-auto text-center mb-24 px-4"
 

@@ -25,7 +25,6 @@ import { useLocation } from "react-router-dom";
 
 const mainLinks = [
   { label: "Selling Options", to: "/selling-options" },
-  { label: "Listing", to: "/listing" },
   { label: "About Us", to: "/who-are-we" },
   { label: "Testimonials", to: "/testimonials" },
 
@@ -262,7 +261,7 @@ const Header = () => {
                 asChild
                 className="rounded-xl px-6 py-4 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
               >
-                <Link to="/contact">Get My Cash Offer</Link>
+                <Link to="/contact#contact-form">Get My Cash Offer</Link>
               </Button>
             </div>
 
@@ -273,7 +272,7 @@ const Header = () => {
                 size="sm"
                 className="rounded-xl px-4 text-xs font-bold glow-button shadow-md"
               >
-                <Link to="/contact">Get My Cash Offer</Link>
+                <Link to="/contact#contact-form">Get My Cash Offer</Link>
               </Button>
               <button
                 onClick={() => setIsMenuOpen(true)}

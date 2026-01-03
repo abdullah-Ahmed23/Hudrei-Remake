@@ -42,11 +42,40 @@ const LocalInvestors = () => {
     });
 
     const onSubmit = async (data: InvestorFormData) => {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log("Investor Partner Data:", data);
-        setSubmitted(true);
-        reset();
+        try {
+            const payload = {
+                fullName: data.name,
+                phone: data.phone,
+                email: data.email,
+                primaryStrategy: data.strategy, // Values updated below
+                lookingFor: data.interests,
+                source: "Local Investor Page"
+            };
+
+            console.log("Submitting Investor:", payload);
+
+            const response = await fetch("http://localhost:5000/api/investors", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify(payload)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                setSubmitted(true);
+                reset();
+            } else {
+                console.error("Submission failed:", result.error);
+                alert("Submission failed: " + (result.error || "Unknown error"));
+            }
+        } catch (error) {
+            console.error("Network Error:", error);
+            alert("Network error. Please try again.");
+        }
     };
 
     return (
@@ -186,7 +215,7 @@ const LocalInvestors = () => {
                                         </div>
                                         <h3 className="text-2xl font-bold mb-2">Connected!</h3>
                                         <p className="text-gray-600 mb-8">We'll review your criteria and be in touch soon.</p>
-                                        <Button onClick={() => setSubmitted(false)} variant="outline">Start Over</Button>
+                                        <Button onClick={() => setSubmitted(false)} className="rounded-xl px-8 py-3 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">Start Over</Button>
                                     </div>
                                 ) : (
                                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
@@ -213,10 +242,10 @@ const LocalInvestors = () => {
                                                             <SelectValue placeholder="Select Strategy..." />
                                                         </SelectTrigger>
                                                         <SelectContent>
-                                                            <SelectItem value="flip">Fix & Flip</SelectItem>
-                                                            <SelectItem value="rental">Buy & Hold (Rental)</SelectItem>
-                                                            <SelectItem value="multi">Multifamily</SelectItem>
-                                                            <SelectItem value="lending">Private Lending</SelectItem>
+                                                            <SelectItem value="Fix and Flip">Fix & Flip</SelectItem>
+                                                            <SelectItem value="Buy and Hold">Buy & Hold (Rental)</SelectItem>
+                                                            <SelectItem value="Multifamily">Multifamily</SelectItem>
+                                                            <SelectItem value="Private Lending">Private Lending</SelectItem>
                                                         </SelectContent>
                                                     </Select>
                                                 )}

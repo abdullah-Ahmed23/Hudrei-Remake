@@ -58,12 +58,35 @@ const Agents = () => {
     }, [propertyValue]);
 
     const onSubmit = async (data: AgentFormData) => {
-        // Simulate API call
-        await new Promise(resolve => setTimeout(resolve, 1000));
-        console.log("Agent Referral Data:", data);
-        setSubmitted(true);
-        reset();
-        setAddressQuery("");
+        try {
+            const response = await fetch("http://localhost:5000/api/realtors", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    agentName: data.name,
+                    phone: data.phone,
+                    email: data.email,
+                    brokerageName: data.brokerage,
+                    propertyAddress: data.property,
+                    notes: data.notes,
+                    source: "Realtor Referral"
+                })
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                setSubmitted(true);
+                reset();
+                setAddressQuery("");
+            } else {
+                console.error("Error:", result.error);
+                alert("Submission failed: " + (result.error || "Unknown error"));
+            }
+        } catch (err) {
+            console.error("Network Error:", err);
+            alert("Network error. Please try again.");
+        }
     };
 
     return (
@@ -208,7 +231,7 @@ const Agents = () => {
                                         </div>
                                         <h3 className="text-2xl font-bold mb-2">Details Received!</h3>
                                         <p className="text-gray-600 mb-8">We'll review your property and reach out typically within 2 hours.</p>
-                                        <Button onClick={() => setSubmitted(false)} variant="outline">Submit Another</Button>
+                                        <Button onClick={() => setSubmitted(false)} className="rounded-xl px-8 py-3 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">Submit Another</Button>
                                     </div>
                                 ) : (
                                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
