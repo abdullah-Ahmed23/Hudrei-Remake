@@ -57,7 +57,7 @@ const FAQItem = ({
             whileInView={isMobile ? undefined : { opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ delay: isMobile ? 0 : index * 0.05, duration: 0.4 }}
-            className="group border-b border-gray-100 last:border-0" data-aos="fade-up"
+            className="group border-b border-brand-black/10 last:border-0" data-aos="fade-up"
         >
             <button
                 onClick={onClick}
@@ -67,7 +67,7 @@ const FAQItem = ({
                     <Plus className="w-5 h-5 font-bold" strokeWidth={3} />
                 </div>
 
-                <span className={`text-base md:text-lg font-bold transition-colors ${isOpen ? "text-gray-900" : "text-gray-700 group-hover:text-primary"}`}>
+                <span className={`text-base md:text-lg font-bold transition-colors ${isOpen ? "text-brand-black" : "text-brand-black group-hover:text-primary"}`}>
                     {question}
                 </span>
             </button>
@@ -81,7 +81,7 @@ const FAQItem = ({
                         transition={{ duration: isMobile ? 0 : 0.3, ease: "easeInOut" }}
                         className="overflow-hidden"
                     >
-                        <div className="pl-12 pr-4 pb-6 text-gray-600 leading-relaxed text-sm md:text-base">
+                        <div className="pl-12 pr-4 pb-6 text-brand-black/80 leading-relaxed text-sm md:text-base">
                             {answer}
                         </div>
                     </motion.div>
@@ -121,12 +121,12 @@ const FAQ = () => {
                             transition={{ duration: isMobile ? 0 : 0.6 }}
                             className="text-center max-w-3xl mx-auto"
                         >
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-900/5 border border-gray-900/10 text-gray-900 mb-6">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-900/5 border border-gray-900/10 text-brand-black mb-6">
                                 <HelpCircle className="w-4 h-4" />
                                 <span className="text-sm font-medium">Got Questions?</span>
                             </div>
 
-                            <h1 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                            <h1 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-brand-black mb-6 md:mb-8 tracking-tight">
                                 Frequently Asked <span className="text-accent relative inline-block">
                                     Questions
                                     <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -135,7 +135,7 @@ const FAQ = () => {
                                 </span>
                             </h1>
 
-                            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                            <p className="text-lg text-brand-black/80 max-w-2xl mx-auto">
                                 We know selling a house is a big decision, and you probably have questions.
                                 Below are answers to the most common ones we hear. If you don't see yours,
                                 reach out directly — we're always happy to talk.
@@ -169,13 +169,13 @@ const FAQ = () => {
                             transition={{ duration: 0.5 }}
                             className="mt-16 text-center"
                         >
-                            <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-8 rounded-3xl bg-gray-50 border border-gray-200">
+                            <div className="inline-flex flex-col sm:flex-row items-center gap-4 p-8 rounded-3xl bg-gray-50 border border-brand-black/20">
                                 <div className="w-14 h-14 rounded-2xl bg-gray-900/10 flex items-center justify-center">
-                                    <MessageCircle className="w-7 h-7 text-gray-900" />
+                                    <MessageCircle className="w-7 h-7 text-brand-black" />
                                 </div>
                                 <div className="text-center sm:text-left">
-                                    <h3 className="text-xl font-semibold text-gray-900 mb-1">Still have questions?</h3>
-                                    <p className="text-gray-600">We're here to help. Reach out anytime.</p>
+                                    <h3 className="text-xl font-semibold text-brand-black mb-1">Still have questions?</h3>
+                                    <p className="text-brand-black/80">We're here to help. Reach out anytime.</p>
                                 </div>
                                 <Button asChild className="rounded-xl px-8 py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
                                     <Link to="/contact">Contact Us</Link>
@@ -193,3 +193,6 @@ const FAQ = () => {
 };
 
 export default FAQ;
+
+
+

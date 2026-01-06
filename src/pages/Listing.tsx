@@ -29,7 +29,7 @@ const Listing = () => {
     useEffect(() => {
         const fetchListings = async () => {
             try {
-                const res = await fetch("http://localhost:5000/api/listings");
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/listings`);
                 if (res.ok) {
                     const data = await res.json();
                     setListings(data);
@@ -68,7 +68,7 @@ const Listing = () => {
                         <Badge className="bg-accent/10 text-accent hover:bg-accent/20 border-none px-4 py-1.5 mb-6 text-sm font-semibold rounded-full">
                             Current Inventory
                         </Badge>
-                        <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 mb-6 leading-tight">
+                        <h1 className="text-4xl md:text-6xl font-extrabold text-brand-black mb-6 leading-tight">
                             Find Your Next
                             <span className="text-accent relative inline-block mx-2">
                                 Home
@@ -77,7 +77,7 @@ const Listing = () => {
                                 </svg>
                             </span>
                         </h1>
-                        <p className="text-xl text-gray-600 leading-relaxed mb-8">
+                        <p className="text-xl text-brand-black/80 leading-relaxed mb-8">
                             Browse our exclusive selection of properties. Whether you're a first-time buyer or looking for an investment, we have options for you.
                         </p>
                     </motion.div>
@@ -100,7 +100,7 @@ const Listing = () => {
                                             whileInView={{ opacity: 1, y: 0 }}
                                             viewport={{ once: true }}
                                             transition={{ delay: index * 0.1 }}
-                                            className="bg-white rounded-[2rem] overflow-hidden shadow-lg border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col"
+                                            className="bg-white rounded-[2rem] overflow-hidden shadow-lg border border-brand-black/10 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group flex flex-col"
                                         >
                                             {/* Image Container */}
                                             <div className="relative h-64 overflow-hidden bg-gray-100">
@@ -121,7 +121,7 @@ const Listing = () => {
                                                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
                                                     />
                                                 ) : (
-                                                    <div className="w-full h-full flex items-center justify-center text-gray-400">
+                                                    <div className="w-full h-full flex items-center justify-center text-brand-black/60">
                                                         No Image Available
                                                     </div>
                                                 )}
@@ -132,10 +132,10 @@ const Listing = () => {
                                             <div className="p-6 flex flex-col flex-1">
                                                 <div className="flex justify-between items-start mb-4">
                                                     <div>
-                                                        <h3 className="text-xl font-bold text-gray-900 group-hover:text-accent transition-colors">
+                                                        <h3 className="text-xl font-bold text-brand-black group-hover:text-accent transition-colors">
                                                             {item.price}
                                                         </h3>
-                                                        <p className="text-gray-500 text-sm flex items-center gap-1 mt-1">
+                                                        <p className="text-brand-black/70 text-sm flex items-center gap-1 mt-1">
                                                             <MapPin className="w-3.5 h-3.5" />
                                                             {item.address}
                                                         </p>
@@ -143,31 +143,31 @@ const Listing = () => {
                                                 </div>
 
                                                 {/* Specs */}
-                                                <div className="grid grid-cols-3 gap-2 py-4 border-t border-gray-100 mb-4">
+                                                <div className="grid grid-cols-3 gap-2 py-4 border-t border-brand-black/10 mb-4">
                                                     <div className="flex flex-col items-center">
-                                                        <div className="flex items-center gap-1 text-gray-400 mb-1">
+                                                        <div className="flex items-center gap-1 text-brand-black/60 mb-1">
                                                             <Bed className="w-4 h-4" />
                                                             <span className="text-xs font-semibold uppercase">Beds</span>
                                                         </div>
-                                                        <span className="font-bold text-gray-800">{item.beds}</span>
+                                                        <span className="font-bold text-brand-black">{item.beds}</span>
                                                     </div>
-                                                    <div className="flex flex-col items-center border-l border-gray-100">
-                                                        <div className="flex items-center gap-1 text-gray-400 mb-1">
+                                                    <div className="flex flex-col items-center border-l border-brand-black/10">
+                                                        <div className="flex items-center gap-1 text-brand-black/60 mb-1">
                                                             <Bath className="w-4 h-4" />
                                                             <span className="text-xs font-semibold uppercase">Baths</span>
                                                         </div>
-                                                        <span className="font-bold text-gray-800">{item.baths}</span>
+                                                        <span className="font-bold text-brand-black">{item.baths}</span>
                                                     </div>
-                                                    <div className="flex flex-col items-center border-l border-gray-100">
-                                                        <div className="flex items-center gap-1 text-gray-400 mb-1">
+                                                    <div className="flex flex-col items-center border-l border-brand-black/10">
+                                                        <div className="flex items-center gap-1 text-brand-black/60 mb-1">
                                                             <Ruler className="w-4 h-4" />
                                                             <span className="text-xs font-semibold uppercase">Sqft</span>
                                                         </div>
-                                                        <span className="font-bold text-gray-800">{item.sqft}</span>
+                                                        <span className="font-bold text-brand-black">{item.sqft}</span>
                                                     </div>
                                                 </div>
 
-                                                <p className="text-gray-600 text-sm line-clamp-2 mb-6 flex-grow">
+                                                <p className="text-brand-black/80 text-sm line-clamp-2 mb-6 flex-grow">
                                                     {item.description}
                                                 </p>
 
@@ -183,9 +183,9 @@ const Listing = () => {
                                     ))}
                                 </div>
                             ) : (
-                                <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm">
-                                    <h3 className="text-xl font-bold text-gray-900 mb-2">No Listings Found</h3>
-                                    <p className="text-gray-500">Check back soon for new properties!</p>
+                                <div className="text-center py-20 bg-white rounded-3xl border border-brand-black/10 shadow-sm">
+                                    <h3 className="text-xl font-bold text-brand-black mb-2">No Listings Found</h3>
+                                    <p className="text-brand-black/70">Check back soon for new properties!</p>
                                 </div>
                             )}
                         </>
@@ -200,3 +200,6 @@ const Listing = () => {
 };
 
 export default Listing;
+
+
+

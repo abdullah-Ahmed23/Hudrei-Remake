@@ -86,12 +86,12 @@ const CityLandingPage = () => {
                             transition={{ duration: isMobile ? 0 : 0.6 }}
                             className="max-w-4xl mx-auto"
                         >
-                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 border border-gray-200 text-gray-600 font-semibold text-sm mb-8">
+                            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-gray-100 border border-brand-black/20 text-brand-black/80 font-semibold text-sm mb-8">
                                 <MapPin className="w-4 h-4 text-accent" />
                                 <span>Buying Houses Throughout {areaName}</span>
                             </div>
 
-                            <h1 className="text-4xl md:text-7xl font-extrabold mb-8 leading-tight text-gray-900 tracking-tight">
+                            <h1 className="text-4xl md:text-7xl font-extrabold mb-8 leading-tight text-brand-black tracking-tight">
                                 {specializedData?.heroLine || (
                                     <>Sell Your <span className="text-accent relative inline-block">
                                         House Fast
@@ -102,7 +102,7 @@ const CityLandingPage = () => {
                                 )}
                             </h1>
 
-                            <p className="text-xl text-gray-600 mb-12 max-w-2xl mx-auto leading-relaxed">
+                            <p className="text-xl text-brand-black/80 mb-12 max-w-2xl mx-auto leading-relaxed">
                                 {specializedData?.intro || `Get a fair cash offer for your ${areaName} property today. We buy houses in any condition, with no fees and no repairs needed.`}
                             </p>
 
@@ -118,12 +118,12 @@ const CityLandingPage = () => {
                                 <FormField error={errors.address?.message}>
                                     <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
                                         <div className="relative w-full">
-                                            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+                                            <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-black/60 z-10" />
                                             <Input
                                                 {...register("address")}
                                                 type="text"
                                                 placeholder="Enter your address..."
-                                                className="h-16 bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 text-lg focus-visible:ring-2 focus-visible:ring-accent/20 pl-12 pr-4 font-bold w-full rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] focus:border-accent"
+                                                className="h-16 bg-white border-brand-black/30 text-brand-black placeholder:text-brand-black/70 text-lg focus-visible:ring-2 focus-visible:ring-accent/20 pl-12 pr-4 font-bold w-full rounded-2xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] focus:border-accent"
                                                 ref={(e) => {
                                                     register("address").ref(e);
                                                     inputRef.current = e;
@@ -153,7 +153,7 @@ const CityLandingPage = () => {
                             </motion.form>
 
                             {/* Trust Points */}
-                            <div className="flex flex-wrap justify-center gap-6 text-gray-700 text-sm md:text-base">
+                            <div className="flex flex-wrap justify-center gap-6 text-brand-black text-sm md:text-base">
                                 {[
                                     "No repairs needed",
                                     "No agent fees",
@@ -174,7 +174,7 @@ const CityLandingPage = () => {
 
                             {/* Google Reviews */}
                             <motion.div
-                                className="flex items-center justify-center gap-2 text-gray-500 mt-10 p-4 border-t border-gray-100"
+                                className="flex items-center justify-center gap-2 text-brand-black/70 mt-10 p-4 border-t border-brand-black/10"
                                 key={isMobile ? "m-reviews" : "d-reviews"}
                                 initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
                                 animate={{ opacity: 1 }}
@@ -185,7 +185,7 @@ const CityLandingPage = () => {
                                         <Star key={i} className="w-4 h-4 fill-yellow-500" />
                                     ))}
                                 </div>
-                                <span className="text-sm font-semibold text-gray-700">
+                                <span className="text-sm font-semibold text-brand-black">
                                     4.9/5 Star Local Rated House Buyer
                                 </span>
                             </motion.div>
@@ -194,7 +194,7 @@ const CityLandingPage = () => {
                 </section>
 
                 {/* Local Trust Section */}
-                <section className="py-24 bg-gray-50 overflow-hidden border-y border-gray-100">
+                <section className="py-24 bg-gray-50 overflow-hidden border-y border-brand-black/10">
                     <div className="container mx-auto px-4">
                         <div className="grid lg:grid-cols-2 gap-20 items-center">
                             <motion.div
@@ -203,10 +203,10 @@ const CityLandingPage = () => {
                                 whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
                                 viewport={{ once: true }}
                             >
-                                <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-8 leading-tight">
+                                <h2 className="text-4xl md:text-5xl font-bold text-brand-black mb-8 leading-tight">
                                     Trusted Local {areaName} Experts
                                 </h2>
-                                <p className="text-lg text-gray-600 mb-10 leading-relaxed">
+                                <p className="text-lg text-brand-black/80 mb-10 leading-relaxed">
                                     {specializedData?.marketInsights || `Whether you're in the heart of ${areaName} or in ${isCounty ? "the surrounding towns" : "other parts of the county"}, HudREI understands the unique real estate market here. We aren't out-of-state buyers; we're your neighbors.`}
                                 </p>
 
@@ -222,13 +222,13 @@ const CityLandingPage = () => {
                                             initial={isMobile ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                                             whileInView={isMobile ? undefined : { opacity: 1, x: 0 }}
                                             transition={{ delay: isMobile ? 0 : index * 0.1 }}
-                                            className="flex items-start gap-4 p-5 rounded-2xl bg-white border border-gray-100 shadow-sm hover:shadow-md transition-all group"
+                                            className="flex items-start gap-4 p-5 rounded-2xl bg-white border border-brand-black/10 shadow-sm hover:shadow-md transition-all group"
                                         >
                                             <div className="w-10 h-10 rounded-xl bg-accent/10 flex items-center justify-center flex-shrink-0 group-hover:bg-accent group-hover:text-white transition-colors">
                                                 <Zap className="w-5 h-5 text-accent group-hover:text-white" />
                                             </div>
                                             <div>
-                                                <p className="text-gray-700 font-medium leading-relaxed">{situation}</p>
+                                                <p className="text-brand-black font-medium leading-relaxed">{situation}</p>
                                             </div>
                                         </motion.div>
                                     ))}
@@ -243,7 +243,7 @@ const CityLandingPage = () => {
                                 className="relative"
                             >
                                 <div className="absolute -top-10 -left-10 w-40 h-40 bg-accent/10 rounded-full blur-3xl opacity-50" />
-                                <div className="bg-white rounded-[2.5rem] p-3 relative border border-gray-200 shadow-2xl overflow-hidden aspect-[4/3] group">
+                                <div className="bg-white rounded-[2.5rem] p-3 relative border border-brand-black/20 shadow-2xl overflow-hidden aspect-[4/3] group">
                                     <img
                                         src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?q=80&w=1000&auto=format&fit=crop"
                                         alt={`Houses in ${areaName}`}
@@ -263,14 +263,14 @@ const CityLandingPage = () => {
                     <section className="py-24 bg-white">
                         <div className="container mx-auto px-4">
                             <div className="text-center mb-16">
-                                <h2 className="text-3xl font-bold text-gray-900 mb-4">Neighborhoods We Serve in {areaName}</h2>
-                                <p className="text-gray-600 max-w-2xl mx-auto">We are local investors buying houses in any condition throughout all parts of {areaName}.</p>
+                                <h2 className="text-3xl font-bold text-brand-black mb-4">Neighborhoods We Serve in {areaName}</h2>
+                                <p className="text-brand-black/80 max-w-2xl mx-auto">We are local investors buying houses in any condition throughout all parts of {areaName}.</p>
                             </div>
                             <div className="flex flex-wrap justify-center gap-4 max-w-5xl mx-auto">
                                 {specializedData.neighborhoods.map((neighbor) => (
                                     <div
                                         key={neighbor}
-                                        className="px-6 py-3 bg-gray-50 border border-gray-100 rounded-2xl text-gray-700 font-semibold shadow-sm hover:border-accent hover:text-accent hover:bg-white transition-all cursor-default"
+                                        className="px-6 py-3 bg-gray-50 border border-brand-black/10 rounded-2xl text-brand-black font-semibold shadow-sm hover:border-accent hover:text-accent hover:bg-white transition-all cursor-default"
                                     >
                                         {neighbor}
                                     </div>
@@ -313,3 +313,6 @@ const CityLandingPage = () => {
 };
 
 export default CityLandingPage;
+
+
+

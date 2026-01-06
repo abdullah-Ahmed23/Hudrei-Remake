@@ -54,7 +54,7 @@ const TitleCompanies = () => {
 
             console.log("Submitting Title Co:", payload);
 
-            const response = await fetch("http://localhost:5000/api/title", {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/title`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -96,16 +96,16 @@ const TitleCompanies = () => {
                                 <Home className="w-4 h-4" />
                                 <span>For Title Companies</span>
                             </div>
-                            <h1 className="text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight" data-aos="fade-up">
-                                Streamlined <span className="text-accent relative inline-block">
-                                    Transactions
+                            <h1 className="text-4xl md:text-7xl font-extrabold text-brand-black mb-6 leading-tight tracking-tight" data-aos="fade-up">
+                                Never Lose a Closing <span className="text-accent relative inline-block">
+                                    to Fallout
                                     <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
                                         <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
                                     </svg>
                                 </span>
                             </h1>
-                            <p className="text-xl text-gray-600 mb-8 leading-relaxed" data-aos="fade-up" data-aos-delay="100">
-                                We value efficiency. HudREI conducts high-volume transactions and needs partners who can keep up.
+                            <p className="text-xl text-brand-black/80 mb-8 leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+                                Have a deal that fell through unexpectedly? Need a buyer yesterday? HudREI is your reliable backstop for volume business and seamless closings.
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4" data-aos="fade-up" data-aos-delay="200">
@@ -123,9 +123,9 @@ const TitleCompanies = () => {
 
                         <div className="relative h-full flex flex-col items-center justify-center text-white p-12 text-center">
                             <FileCheck className="w-24 h-24 text-white/20 mb-8" data-aos="zoom-in" data-aos-delay="300" />
-                            <h2 className="text-3xl font-bold mb-4" data-aos="fade-up" data-aos-delay="400">Volume Business</h2>
+                            <h2 className="text-3xl font-bold mb-4" data-aos="fade-up" data-aos-delay="400">Save Your Closings</h2>
                             <p className="text-gray-300 max-w-md text-lg" data-aos="fade-up" data-aos-delay="500">
-                                Become a trusted partner and expect consistent file openings from our team.
+                                Don't let your pipeline stall. Bring us your fallout deals and watch how fast we can step in and close.
                             </p>
                         </div>
                     </div>
@@ -135,8 +135,8 @@ const TitleCompanies = () => {
                 <section className="py-24 bg-gray-50">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-16" data-aos="fade-up">
-                            <h2 className="text-3xl font-bold text-gray-900 mb-4">What We Provide</h2>
-                            <p className="text-gray-600 text-lg">We make your job easier.</p>
+                            <h2 className="text-3xl font-bold text-brand-black mb-4">What We Provide</h2>
+                            <p className="text-brand-black/80 text-lg">We make your job easier.</p>
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-8">
@@ -145,8 +145,8 @@ const TitleCompanies = () => {
                                 <div className="w-14 h-14 bg-[#062f33]/10 rounded-xl flex items-center justify-center mb-6">
                                     <CheckSquare className="w-7 h-7 text-[#062f33]" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">Organized Files</h3>
-                                <p className="text-gray-600">
+                                <h3 className="text-xl font-bold text-brand-black mb-3">Organized Files</h3>
+                                <p className="text-brand-black/80">
                                     Complete packets and precise instructions to minimize back-and-forth emails. We know what you need before you ask.
                                 </p>
                             </div>
@@ -156,8 +156,8 @@ const TitleCompanies = () => {
                                 <div className="w-14 h-14 bg-[#062f33]/10 rounded-xl flex items-center justify-center mb-6">
                                     <Clock className="w-7 h-7 text-[#062f33]" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">Prompt Communication</h3>
-                                <p className="text-gray-600">
+                                <h3 className="text-xl font-bold text-brand-black mb-3">Prompt Communication</h3>
+                                <p className="text-brand-black/80">
                                     We respect your time. We answer queries promptly to ensure smooth closings and keep the pipeline moving.
                                 </p>
                             </div>
@@ -167,8 +167,8 @@ const TitleCompanies = () => {
                                 <div className="w-14 h-14 bg-[#062f33]/10 rounded-xl flex items-center justify-center mb-6">
                                     <FileCheck className="w-7 h-7 text-[#062f33]" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">Volume Business</h3>
-                                <p className="text-gray-600">
+                                <h3 className="text-xl font-bold text-brand-black mb-3">Volume Business</h3>
+                                <p className="text-brand-black/80">
                                     We're looking for long-term relationships with title companies who can handle our deal flow.
                                 </p>
                             </div>
@@ -207,34 +207,34 @@ const TitleCompanies = () => {
                             </div>
 
                             {/* The Form */}
-                            <div className="md:w-1/2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-10 text-gray-900" data-aos="zoom-in-up">
+                            <div className="md:w-1/2 w-full bg-white rounded-2xl shadow-xl border border-brand-black/10 p-8 md:p-10 text-brand-black" data-aos="zoom-in-up">
                                 {submitted ? (
                                     <div className="h-full flex flex-col items-center justify-center text-center py-20">
                                         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
                                             <Check className="w-10 h-10 text-green-600" />
                                         </div>
                                         <h3 className="text-2xl font-bold mb-2">Inquiry Sent!</h3>
-                                        <p className="text-gray-600 mb-8">Our Transaction Coordinator will contact you shortly.</p>
+                                        <p className="text-brand-black/80 mb-8">Our Transaction Coordinator will contact you shortly.</p>
                                         <Button onClick={() => setSubmitted(false)} className="rounded-xl px-8 py-3 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">Reset Form</Button>
                                     </div>
                                 ) : (
                                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                                         <div className="space-y-4">
                                             <FormField label="Company Name" error={errors.companyName?.message} required>
-                                                <Input {...register("companyName")} placeholder="Title Company Name" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                                <Input {...register("companyName")} placeholder="Title Company Name" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                                             </FormField>
 
                                             <div className="grid grid-cols-2 gap-4">
                                                 <FormField label="Contact Person" error={errors.contactPerson?.message} required>
-                                                    <Input {...register("contactPerson")} placeholder="Name" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                                    <Input {...register("contactPerson")} placeholder="Name" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                                                 </FormField>
                                                 <FormField label="Direct Phone" error={errors.phone?.message} required>
-                                                    <Input {...register("phone")} placeholder="(317) 000-0000" type="tel" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                                    <Input {...register("phone")} placeholder="(317) 000-0000" type="tel" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                                                 </FormField>
                                             </div>
 
                                             <FormField label="Email" error={errors.email?.message} required>
-                                                <Input {...register("email")} placeholder="Email" type="email" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                                <Input {...register("email")} placeholder="Email" type="email" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                                             </FormField>
 
                                             <div className="space-y-3 pt-2">
@@ -279,3 +279,6 @@ const TitleCompanies = () => {
 };
 
 export default TitleCompanies;
+
+
+

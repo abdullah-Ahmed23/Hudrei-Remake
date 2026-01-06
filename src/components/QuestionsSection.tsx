@@ -29,7 +29,7 @@ const QuestionsSection = () => {
         <div className="flex flex-col lg:flex-row items-center lg:items-center justify-between gap-14 mb-20">
           {/* Left */}
           <div className="max-w-md">
-            <h2 className="text-4xl text-black md:text-5xl font-bold leading-tight">
+            <h2 className="text-4xl text-brand-black md:text-5xl font-bold leading-tight">
               Don’t settle for a generic cash offer.
 
 
@@ -40,7 +40,7 @@ const QuestionsSection = () => {
               </span>
             </h2>
 
-            <p className="text-black text-lg mt-4">
+            <p className="text-brand-black text-lg mt-4">
               Speed. Max Value. Debt Relief.
               Tell us your goal, and we will build the offer that gets you there.
             </p>
@@ -204,3 +204,6 @@ const HousePaths = ({ delay, isMobile }: { delay: number; isMobile: boolean }) =
     />
   </>
 );
+
+
+

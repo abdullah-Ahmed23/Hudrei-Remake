@@ -15,7 +15,7 @@ const FormField = ({ label, error, children, className, required }: FormFieldPro
     return (
         <div className={cn("space-y-2 w-full", className)}>
             {label && (
-                <Label className="text-gray-700 font-medium">
+                <Label className="text-brand-black font-medium">
                     {label} {required && <span className="text-accent">*</span>}
                 </Label>
             )}
@@ -41,3 +41,6 @@ const FormField = ({ label, error, children, className, required }: FormFieldPro
 };
 
 export default FormField;
+
+
+

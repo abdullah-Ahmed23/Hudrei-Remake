@@ -54,7 +54,7 @@ const LocalInvestors = () => {
 
             console.log("Submitting Investor:", payload);
 
-            const response = await fetch("http://localhost:5000/api/investors", {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/investors`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -96,7 +96,7 @@ const LocalInvestors = () => {
                                 <Building className="w-4 h-4" />
                                 <span>For Real Estate Investors</span>
                             </div>
-                            <h1 className="text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight" data-aos="fade-up">
+                            <h1 className="text-4xl md:text-7xl font-extrabold text-brand-black mb-6 leading-tight tracking-tight" data-aos="fade-up">
                                 Collaborate & <span className="text-accent relative inline-block">
                                     Grow Together
                                     <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -104,7 +104,7 @@ const LocalInvestors = () => {
                                     </svg>
                                 </span>
                             </h1>
-                            <p className="text-xl text-gray-600 mb-8 leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+                            <p className="text-xl text-brand-black/80 mb-8 leading-relaxed" data-aos="fade-up" data-aos-delay="100">
                                 Real estate is a team sport. Whether you're looking to partner on a flip, share resources, or need an exit strategy, we're open to creative partnerships.
                             </p>
 
@@ -135,8 +135,8 @@ const LocalInvestors = () => {
                 <section className="py-24 bg-gray-50">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-16" data-aos="fade-up">
-                            <h2 className="text-3xl font-bold text-gray-900 mb-4">Partnership Opportunities</h2>
-                            <p className="text-gray-600 text-lg">Ways we can work together.</p>
+                            <h2 className="text-3xl font-bold text-brand-black mb-4">Partnership Opportunities</h2>
+                            <p className="text-brand-black/80 text-lg">Ways we can work together.</p>
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-8">
@@ -145,8 +145,8 @@ const LocalInvestors = () => {
                                 <div className="w-14 h-14 bg-[#062f33]/10 rounded-xl flex items-center justify-center mb-6">
                                     <TrendingUp className="w-7 h-7 text-[#062f33]" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">Joint Ventures</h3>
-                                <p className="text-gray-600">
+                                <h3 className="text-xl font-bold text-brand-black mb-3">Joint Ventures</h3>
+                                <p className="text-brand-black/80">
                                     Have a deal but short on capital or crew? We have the resources to help cross the finish line. Let's discuss a JV structure.
                                 </p>
                             </div>
@@ -156,8 +156,8 @@ const LocalInvestors = () => {
                                 <div className="w-14 h-14 bg-[#062f33]/10 rounded-xl flex items-center justify-center mb-6">
                                     <Share2 className="w-7 h-7 text-[#062f33]" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">Inventory Sharing</h3>
-                                <p className="text-gray-600">
+                                <h3 className="text-xl font-bold text-brand-black mb-3">Inventory Sharing</h3>
+                                <p className="text-brand-black/80">
                                     We sometimes come across deals that don't fit our buy box but might be perfect for you. Join our buyers list.
                                 </p>
                             </div>
@@ -167,8 +167,8 @@ const LocalInvestors = () => {
                                 <div className="w-14 h-14 bg-[#062f33]/10 rounded-xl flex items-center justify-center mb-6">
                                     <MessageSquare className="w-7 h-7 text-[#062f33]" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">Market Insights</h3>
-                                <p className="text-gray-600">
+                                <h3 className="text-xl font-bold text-brand-black mb-3">Market Insights</h3>
+                                <p className="text-brand-black/80">
                                     We believe in community over competition. Let's share data on what's working in the Indianapolis market right now.
                                 </p>
                             </div>
@@ -207,29 +207,29 @@ const LocalInvestors = () => {
                             </div>
 
                             {/* The Form */}
-                            <div className="md:w-1/2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-10 text-gray-900" data-aos="zoom-in-up">
+                            <div className="md:w-1/2 w-full bg-white rounded-2xl shadow-xl border border-brand-black/10 p-8 md:p-10 text-brand-black" data-aos="zoom-in-up">
                                 {submitted ? (
                                     <div className="h-full flex flex-col items-center justify-center text-center py-20">
                                         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
                                             <Check className="w-10 h-10 text-green-600" />
                                         </div>
                                         <h3 className="text-2xl font-bold mb-2">Connected!</h3>
-                                        <p className="text-gray-600 mb-8">We'll review your criteria and be in touch soon.</p>
+                                        <p className="text-brand-black/80 mb-8">We'll review your criteria and be in touch soon.</p>
                                         <Button onClick={() => setSubmitted(false)} className="rounded-xl px-8 py-3 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">Start Over</Button>
                                     </div>
                                 ) : (
                                     <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                                         <div className="grid grid-cols-2 gap-4">
                                             <FormField label="Name" error={errors.name?.message} required>
-                                                <Input {...register("name")} placeholder="Your Name" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                                <Input {...register("name")} placeholder="Your Name" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                                             </FormField>
                                             <FormField label="Phone" error={errors.phone?.message} required>
-                                                <Input {...register("phone")} placeholder="Your Phone" type="tel" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                                <Input {...register("phone")} placeholder="Your Phone" type="tel" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                                             </FormField>
                                         </div>
 
                                         <FormField label="Email" error={errors.email?.message} required>
-                                            <Input {...register("email")} placeholder="Your Email" type="email" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                            <Input {...register("email")} placeholder="Your Email" type="email" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                                         </FormField>
 
                                         <FormField label="Primary Strategy" error={errors.strategy?.message} required>
@@ -238,7 +238,7 @@ const LocalInvestors = () => {
                                                 control={control}
                                                 render={({ field }) => (
                                                     <Select onValueChange={field.onChange} value={field.value}>
-                                                        <SelectTrigger className="bg-white border-accent/30 focus:border-accent text-black">
+                                                        <SelectTrigger className="bg-white border-accent/30 focus:border-accent text-brand-black">
                                                             <SelectValue placeholder="Select Strategy..." />
                                                         </SelectTrigger>
                                                         <SelectContent>
@@ -253,7 +253,7 @@ const LocalInvestors = () => {
                                         </FormField>
 
                                         <FormField label="What are you looking for?" error={errors.interests?.message} required>
-                                            <Textarea {...register("interests")} placeholder="Specific areas, price points, or JV interests..." className="bg-white border-accent/30 focus:border-accent text-black min-h-[120px]" />
+                                            <Textarea {...register("interests")} placeholder="Specific areas, price points, or JV interests..." className="bg-white border-accent/30 focus:border-accent text-brand-black min-h-[120px]" />
                                         </FormField>
 
                                         <Button type="submit" disabled={isSubmitting} className="w-full rounded-xl py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
@@ -277,3 +277,6 @@ const LocalInvestors = () => {
 };
 
 export default LocalInvestors;
+
+
+

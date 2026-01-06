@@ -53,7 +53,7 @@ const HeroV2 = () => {
                 {/* HEADLINE */}
                 <motion.h1
                     key={isMobile ? "m-h1" : "d-h1"}
-                    className="text-4xl md:text-7xl font-extrabold text-gray-900 max-w-4xl leading-tight tracking-tight"
+                    className="text-4xl md:text-7xl font-extrabold text-brand-black max-w-4xl leading-tight tracking-tight"
                     initial={isMobile ? { opacity: 1, y: 0 } : { opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.15 }}
@@ -69,7 +69,7 @@ const HeroV2 = () => {
                 {/* SUBTEXT */}
                 <motion.p
                     key={isMobile ? "m-p" : "d-p"}
-                    className="text-gray-800 text-lg sm:text-xl max-w-2xl leading-relaxed font-medium font-times"
+                    className="text-brand-black text-lg sm:text-xl max-w-2xl leading-relaxed font-medium font-times"
                     initial={isMobile ? { opacity: 1 } : { opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ delay: 0.3 }}
@@ -89,12 +89,12 @@ const HeroV2 = () => {
                     <FormField error={errors.address?.message}>
                         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 w-full">
                             <div className="relative w-full">
-                                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400 z-10" />
+                                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-black/60 z-10" />
                                 <Input
                                     {...register("address")}
                                     type="text"
                                     placeholder="Enter your address..."
-                                    className="h-14 sm:h-16 bg-white border-gray-300 text-gray-900 placeholder:text-gray-500 text-lg focus-visible:ring-2 focus-visible:ring-accent/20 pl-12 pr-4 font-bold w-full rounded-xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] focus:border-accent"
+                                    className="h-14 sm:h-16 bg-white border-brand-black/30 text-brand-black placeholder:text-brand-black/70 text-lg focus-visible:ring-2 focus-visible:ring-accent/20 pl-12 pr-4 font-bold w-full rounded-xl shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)] focus:border-accent"
                                     ref={(e) => {
                                         register("address").ref(e);
                                         inputRef.current = e;
@@ -126,7 +126,7 @@ const HeroV2 = () => {
 
 
                 {/* ================= TRUST POINTS ================= */}
-                <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-gray-900 text-sm sm:text-base mt-8">
+                <div className="flex flex-wrap justify-center gap-4 sm:gap-6 text-brand-black text-sm sm:text-base mt-8">
                     {[
                         "No repairs needed",
                         "No agent fees",
@@ -153,3 +153,6 @@ const HeroV2 = () => {
 };
 
 export default HeroV2;
+
+
+

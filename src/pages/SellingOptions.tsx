@@ -36,9 +36,9 @@ interface OfferOption {
 const offers: OfferOption[] = [
     {
         id: 1,
-        title: "Sell AS-IS",
+        title: "Fast Cash Offer",
         subtitle: "Multiple Cash Offers",
-        description: "Experience a hassle-free sale with our straightforward cash offer. Using our extensive network of investors and our own capital, we guarantee a quick close on your schedule. No repairs, no agent fees, no financing delays. Leave behind what you don't want and even stay after closing if needed. Sell on your terms, stress-free.",
+        description: "Need to close in 1-2 weeks? No closing costs. We buy as-is. Leave behind what you don't want and even stay after closing if needed. Sell on your terms, stress-free.",
         icon: Home,
         perks: [
             "Receive Multiple Cash Offers",
@@ -56,9 +56,9 @@ const offers: OfferOption[] = [
     },
     {
         id: 2,
-        title: "Become The Bank",
+        title: "Smart Seller Program",
         subtitle: "Sell For Top Dollar",
-        description: "This innovative approach is perfect for homeowners who want maximum value without rushing for immediate cash. Instead of a traditional sale, you become the lender. Use your property as collateral, receive a down payment, and enjoy monthly income payments—all while we handle taxes, insurance, and maintenance.",
+        description: "Not in a rush? Want top dollar? See if your property is approved. This innovative approach is perfect for homeowners who want maximum value without rushing for immediate cash. Instead of a traditional sale, you become the lender. Use your property as collateral, receive a down payment, and enjoy monthly income payments—all while we handle taxes, insurance, and maintenance.",
         icon: Landmark,
         perks: [
             "Higher Sale Price",
@@ -67,7 +67,7 @@ const offers: OfferOption[] = [
             "Insurance Covered",
             "Zero Maintenance Worries"
         ],
-        ctaText: "Become The Bank",
+        ctaText: "Check Eligibility",
         ctaLink: "/contact"
     },
     {
@@ -155,14 +155,14 @@ const PerksModal = ({ offer, isOpen, onClose }: { offer: OfferOption; isOpen: bo
         >
             <div
                 className={cn(
-                    "bg-white border border-gray-200 rounded-2xl max-w-lg w-full p-8 relative shadow-2xl",
+                    "bg-white border border-brand-black/20 rounded-2xl max-w-lg w-full p-8 relative shadow-2xl",
                     "animate-scale-in"
                 )}
                 onClick={(e) => e.stopPropagation()}
             >
                 <button
                     onClick={onClose}
-                    className="absolute top-4 right-4 text-gray-500 hover:text-gray-900 transition-colors"
+                    className="absolute top-4 right-4 text-brand-black/70 hover:text-brand-black transition-colors"
                 >
                     <X className="w-6 h-6" />
                 </button>
@@ -172,12 +172,12 @@ const PerksModal = ({ offer, isOpen, onClose }: { offer: OfferOption; isOpen: bo
                         <offer.icon className="w-7 h-7 text-primary" />
                     </div>
                     <div>
-                        <h3 className="text-xl font-bold text-gray-900">{offer.title}</h3>
+                        <h3 className="text-xl font-bold text-brand-black">{offer.title}</h3>
                         <p className="text-accent font-medium">{offer.subtitle}</p>
                     </div>
                 </div>
 
-                <h4 className="text-lg font-semibold text-gray-900 mb-4">The Perks</h4>
+                <h4 className="text-lg font-semibold text-brand-black mb-4">The Perks</h4>
 
                 <ul className="space-y-3">
                     {offer.perks.map((perk, index) => (
@@ -189,7 +189,7 @@ const PerksModal = ({ offer, isOpen, onClose }: { offer: OfferOption; isOpen: bo
                             <div className="w-6 h-6 rounded-full bg-primary/10 flex items-center justify-center flex-shrink-0">
                                 <Check className="w-4 h-4 text-primary" />
                             </div>
-                            <span className="text-gray-700">{perk}</span>
+                            <span className="text-brand-black">{perk}</span>
                         </li>
                     ))}
                 </ul>
@@ -211,7 +211,7 @@ const OfferCard = ({ offer, index }: { offer: OfferOption; index: number }) => {
             <div
                 id={`offer-${offer.id}`}
                 className={cn(
-                    "bg-[#0b434a] border border-gray-700 rounded-2xl p-8 hover-lift shadow-lg",
+                    "bg-[#0b434a] border border-brand-black/20 rounded-2xl p-8 hover-lift shadow-lg",
                     "scroll-mt-32",
                     "flex flex-col gap-6",
                     index % 2 === 0 ? "lg:flex-row" : "lg:flex-row-reverse"
@@ -304,9 +304,9 @@ const SellingOptions = () => {
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8 text-center" data-aos="fade-down"
                         data-aos-duration="500">
                         <div className="w-20 h-20 rounded-2xl bg-accent/10 flex items-center justify-center mx-auto mb-8 animate-fade-in">
-                            <Home className="w-10 h-10 text-accent" />
+                            <Home className="w-10 h-10 text-brand-black" />
                         </div>
-                        <h1 className="text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 tracking-tight">
+                        <h1 className="text-4xl md:text-7xl font-extrabold text-brand-black mb-6 tracking-tight">
                             Explore Your <span className="text-accent relative inline-block">
                                 Home Selling Options
                                 <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -314,8 +314,8 @@ const SellingOptions = () => {
                                 </svg>
                             </span> In Indiana
                         </h1>
-                        <p className="text-xl md:text-2xl text-accent font-medium mb-6">Choose the path that's best for you!</p>
-                        <p className="text-gray-600 max-w-4xl mx-auto text-lg md:text-xl leading-relaxed">
+
+                        <p className="text-brand-black/80 max-w-4xl mx-auto text-lg md:text-xl leading-relaxed">
                             Compare our fast cash offers to listing on the market. At HudREI, we provide homeowners in Indiana with multiple ways to sell, ensuring you get the best result for your specific situation. Whether you need speed, convenience, or the absolute highest price, we have a solution.
                         </p>
                         <div className="mt-10">
@@ -330,15 +330,15 @@ const SellingOptions = () => {
                 <section className="py-24 bg-white">
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center mb-16">
-                            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+                            <h2 className="text-3xl md:text-5xl font-bold text-brand-black mb-6">
                                 Professional Home Buyer <span className="text-accent">vs.</span> Traditional Agent
                             </h2>
-                            <p className="max-w-2xl text-gray-600 text-xl mx-auto">
+                            <p className="max-w-2xl text-brand-black/80 text-xl mx-auto">
                                 See how the numbers stack up and which option puts more control in your hands.
                             </p>
                         </div>
 
-                        <div className="max-w-5xl mx-auto overflow-hidden rounded-3xl shadow-xl border border-gray-100 bg-white">
+                        <div className="max-w-5xl mx-auto overflow-hidden rounded-3xl shadow-xl border border-brand-black/20 bg-white">
                             {/* Mobile View (Cards) */}
                             <div className="md:hidden space-y-4">
                                 {[
@@ -378,14 +378,14 @@ const SellingOptions = () => {
                                         hudrei: "NONE – We buy as-is"
                                     }
                                 ].map((item, i) => (
-                                    <div key={i} className="bg-white rounded-2xl p-6 shadow-md border border-gray-100" data-aos="fade-up" data-aos-delay={i * 50}>
-                                        <h3 className="text-lg font-bold text-gray-900 mb-4 border-b border-gray-100 pb-2">
+                                    <div key={i} className="bg-white rounded-2xl p-6 shadow-md border border-brand-black/20" data-aos="fade-up" data-aos-delay={i * 50}>
+                                        <h3 className="text-lg font-bold text-brand-black mb-4 border-b border-brand-black/10 pb-2">
                                             {item.feature}
                                         </h3>
                                         <div className="grid grid-cols-2 gap-4">
                                             <div>
-                                                <p className="text-xs text-gray-400 uppercase font-bold mb-1 tracking-wider">Traditional Agent</p>
-                                                <p className="text-gray-600 text-sm font-medium">{item.agent}</p>
+                                                <p className="text-xs text-brand-black/60 uppercase font-bold mb-1 tracking-wider">Traditional Agent</p>
+                                                <p className="text-brand-black/80 text-sm font-medium">{item.agent}</p>
                                             </div>
                                             <div className="bg-accent/5 -m-2 p-2 rounded-lg">
                                                 <p className="text-xs text-accent uppercase font-bold mb-1 tracking-wider">HudREI</p>
@@ -443,9 +443,9 @@ const SellingOptions = () => {
                                             hudrei: "NONE – We buy as-is"
                                         }
                                     ].map((item, i) => (
-                                        <tr key={i} className="border-b border-gray-100">
-                                            <td className="p-6 font-semibold text-gray-900">{item.feature}</td>
-                                            <td className="p-6 text-gray-600">{item.agent}</td>
+                                        <tr key={i} className="border-b border-brand-black/10">
+                                            <td className="p-6 font-semibold text-brand-black">{item.feature}</td>
+                                            <td className="p-6 text-brand-black/80">{item.agent}</td>
                                             <td className="p-6 font-bold text-accent bg-accent/5">{item.hudrei}</td>
                                         </tr>
                                     ))}
@@ -458,16 +458,16 @@ const SellingOptions = () => {
                 {/* iBuyer section */}
                 <section className="py-24 bg-gray-50">
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                        <div className="max-w-4xl mx-auto bg-white rounded-[2.5rem] p-10 md:p-16 shadow-lg border border-gray-100">
-                            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8 text-center">
+                        <div className="max-w-4xl mx-auto bg-white rounded-[2.5rem] p-10 md:p-16 shadow-lg border border-brand-black/20">
+                            <h2 className="text-3xl md:text-4xl font-bold text-brand-black mb-8 text-center">
                                 HudREI vs. <span className="text-accent">Large iBuyers</span> (Zillow, OpenDoor)
                             </h2>
-                            <div className="space-y-6 text-gray-600 text-lg leading-relaxed">
+                            <div className="space-y-6 text-brand-black/80 text-lg leading-relaxed">
                                 <p>
                                     Large corporate iBuyers often use "bait and switch" tactics. They make a high initial offer to get you in the door, then slowly chip away at it with "convenience fees," inspection repair requests, and service charges that can total 10-15% of the sale price.
                                 </p>
                                 <p>
-                                    As a local Indiana company, HudREI offers <span className="font-bold text-gray-900">transparency</span>. Our offer doesn't come with hidden service fees or surprise inspection deductions. What we offer is what you get at the closing table. plus, you get the personal service of a local team, not a call center in another state.
+                                    As a local Indiana company, HudREI offers <span className="font-bold text-brand-black">transparency</span>. Our offer doesn't come with hidden service fees or surprise inspection deductions. What we offer is what you get at the closing table. plus, you get the personal service of a local team, not a call center in another state.
                                 </p>
                             </div>
                         </div>
@@ -477,29 +477,29 @@ const SellingOptions = () => {
                 {/* When to Choose Section */}
                 <section className="py-24 bg-white">
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-                        <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-16 text-center">
+                        <h2 className="text-3xl md:text-5xl font-bold text-brand-black mb-16 text-center">
                             When to <span className="text-accent">Choose Each Option</span>
                         </h2>
                         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-                            <div className="p-8 rounded-3xl bg-gray-50 border border-gray-100">
-                                <h3 className="text-xl font-bold text-gray-900 mb-4">Choose Cash Offer if...</h3>
-                                <ul className="space-y-3 text-black">
+                            <div className="p-8 rounded-3xl bg-gray-50 border border-brand-black/10">
+                                <h3 className="text-xl font-bold text-brand-black mb-4">Choose Cash Offer if...</h3>
+                                <ul className="space-y-3 text-brand-black">
                                     <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> Speed is your priority</li>
                                     <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> The house needs major repairs</li>
                                     <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> You want a guaranteed sale</li>
                                 </ul>
                             </div>
-                            <div className="p-8 rounded-3xl bg-gray-50 border border-gray-100">
-                                <h3 className="text-xl font-bold text-gray-900 mb-4">Choose Become the Bank if...</h3>
-                                <ul className="space-y-3 text-black">
+                            <div className="p-8 rounded-3xl bg-gray-50 border border-brand-black/10">
+                                <h3 className="text-xl font-bold text-brand-black mb-4">Choose Become the Bank if...</h3>
+                                <ul className="space-y-3 text-brand-black">
                                     <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> You want passive monthly income</li>
                                     <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> You want to defer capital gains</li>
                                     <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> You don't need all the cash at once</li>
                                 </ul>
                             </div>
-                            <div className="p-8 rounded-3xl bg-gray-50 border border-gray-100">
-                                <h3 className="text-xl font-bold text-gray-900 mb-4">Choose List w/ HudREI if...</h3>
-                                <ul className="space-y-3 text-black">
+                            <div className="p-8 rounded-3xl bg-gray-50 border border-brand-black/10">
+                                <h3 className="text-xl font-bold text-brand-black mb-4">Choose List w/ HudREI if...</h3>
+                                <ul className="space-y-3 text-brand-black">
                                     <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> The house is in great condition</li>
                                     <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> You have time to wait for top dollar</li>
                                     <li className="flex gap-3"><Check className="w-5 h-5 text-accent flex-shrink-0" /> You want maximum market exposure</li>
@@ -513,11 +513,11 @@ const SellingOptions = () => {
                 <section id="offers" className="py-24 bg-gray-50">
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8">
                         <div className="text-center mb-20">
-                            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6" data-aos="fade-up"
+                            <h2 className="text-3xl md:text-5xl font-bold text-brand-black mb-6" data-aos="fade-up"
                                 data-aos-duration="900">
                                 Detailed Selling Solutions
                             </h2>
-                            <p className="max-w-2xl text-gray-600 text-xl mx-auto leading-relaxed" data-aos="fade-down"
+                            <p className="max-w-2xl text-brand-black/80 text-xl mx-auto leading-relaxed" data-aos="fade-down"
                                 data-aos-duration="900">
                                 Explore how we can help you solve your specific real estate problem in Indiana.
                             </p>
@@ -537,22 +537,22 @@ const SellingOptions = () => {
                     <div className="container mx-auto px-4 sm:px-6 lg:px-8 " data-aos="fade-up"
                         data-aos-duration="500">
                         <div className="text-center mb-20">
-                            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">
+                            <h2 className="text-3xl md:text-5xl font-bold text-brand-black mb-4">
                                 It's Easy With Us...
                             </h2>
-                            <p className="text-gray-600 text-xl">How it works in 5 easy steps.</p>
+                            <p className="text-brand-black/80 text-xl">How it works in 5 easy steps.</p>
                         </div>
 
                         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 justify-center" data-aos="fade-in"
                             data-aos-duration="500">
                             {steps.map((step, index) => (
                                 <div key={step.number} className="relative group">
-                                    <div className="bg-white border border-gray-100 rounded-2xl p-8 text-center h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
-                                        <div className="w-14 h-14 rounded-full bg-accent text-white font-bold text-xl flex items-center justify-center mx-auto mb-6 shadow-md group-hover:scale-110 transition-transform">
+                                    <div className="bg-white border border-brand-black/20 rounded-2xl p-8 text-center h-full hover:shadow-xl transition-all duration-300 hover:-translate-y-1">
+                                        <div className="w-14 h-14 rounded-full bg-brand-black text-white font-bold text-xl flex items-center justify-center mx-auto mb-6 shadow-md group-hover:scale-110 transition-transform">
                                             {step.number}
                                         </div>
-                                        <h3 className="text-lg font-bold text-gray-900 mb-3">{step.title}</h3>
-                                        <p className="text-sm text-gray-600 leading-relaxed">{step.description}</p>
+                                        <h3 className="text-lg font-bold text-brand-black mb-3">{step.title}</h3>
+                                        <p className="text-sm text-brand-black/80 leading-relaxed">{step.description}</p>
                                     </div>
                                     {index < steps.length - 1 && (
                                         <div className="hidden md:block absolute top-1/2 -right-4 transform -translate-y-1/2 text-gray-300 z-10 bg-white p-1 rounded-full">
@@ -565,8 +565,8 @@ const SellingOptions = () => {
 
                         <div className="mt-20 text-center" data-aos="fade-up"
                             data-aos-duration="500">
-                            <p className="text-2xl text-gray-900 font-bold mb-4">That's It!</p>
-                            <p className="text-gray-600 mb-10 text-lg">Some customers can even stay in the home after closing!</p>
+                            <p className="text-2xl text-brand-black font-bold mb-4">That's It!</p>
+                            <p className="text-brand-black/80 mb-10 text-lg">Some customers can even stay in the home after closing!</p>
                             <div className="inline-block bg-accent/5 border border-accent/20 rounded-2xl px-10 py-6">
                                 <p className="text-xl md:text-2xl font-bold text-accent">Nothing Hidden. Full Transparency. No Hassle!</p>
                             </div>
@@ -605,3 +605,6 @@ function ArrowRight(props: any) {
 
 
 export default SellingOptions;
+
+
+

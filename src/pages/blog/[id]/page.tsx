@@ -28,12 +28,12 @@ const BlogPostPage = () => {
                 // Assuming /api/blogs/:id is supported or we fetch all and find one.
                 // Based on typical REST, let's try strict ID fetch first.
                 // If the user's API is strict list-only, I'd fetch all and find. 
-                // But let's assume standard intuitive ID fetch: http://localhost:5000/api/blogs/id 
+                // But let's assume standard intuitive ID fetch: ${import.meta.env.VITE_API_URL}/api/blogs/id 
                 // OR strictly query by ID if the previous response structure suggests it.
                 // The user showed "data": [ ... ] which implies a list response.
 
                 // Let's try fetching the specific ID.
-                const response = await fetch(`http://localhost:5000/api/blogs/${id}`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/blogs/${id}`);
 
                 if (!response.ok) {
                     throw new Error("Post not found");

@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from "react";
-import { Landmark, Zap, ShieldCheck, Check, Wallet, ChevronRight, Building } from "lucide-react";
+import { Landmark, Zap, ShieldCheck, Check, Wallet, ChevronRight, Building, Users, Handshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import SEO from "@/components/SEO";
@@ -62,24 +62,23 @@ const Wholesalers = () => {
                                 <Landmark className="w-4 h-4" />
                                 <span>Verified Cash Buyer // IN</span>
                             </div>
-                            <h1 className="text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight" data-aos="fade-up">
-                                Your Reliable <span className="text-accent relative inline-block">
-                                    End Buyer
+                            <h1 className="text-4xl md:text-7xl font-extrabold text-brand-black mb-6 leading-tight tracking-tight" data-aos="fade-up">
+                                Your Joint Venture <span className="text-accent relative inline-block">
+                                    (JV) Growth Partners
                                     <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
                                         <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
                                     </svg>
                                 </span>
                             </h1>
-                            <p className="text-xl text-gray-600 mb-8 leading-relaxed" data-aos="fade-up" data-aos-delay="100">
-                                Tired of Daisy chains and buyers who back out? HudREI is a legitimate cash buyer with proof of funds.
-                                We look for win-win relationships with local wholesalers.
+                            <p className="text-xl text-brand-black/80 mb-8 leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+                                Get an offer in 24-72 hours. Access our network of 5,000+ vetted buyers and find your next big deal. Let's scale your wholesale business together through reliable Joint Ventures.
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4" data-aos="fade-up" data-aos-delay="200">
                                 <Button asChild size="lg" className="rounded-xl px-8 py-7 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
                                     <a href="#partner-form">Send Us A Deal</a>
                                 </Button>
-                                <Button asChild size="lg" className="rounded-xl px-8 py-7 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all bg-[#00767e] hover:bg-[#0b434a]">
+                                <Button asChild size="lg" className="rounded-xl px-8 py-7 text-lg font-bold bg-[#00767e] text-white hover:bg-[#0b434a] transition-all hover:shadow-xl hover:-translate-y-0.5">
                                     <a href="#criteria">View Buy Box</a>
                                 </Button>
                             </div>
@@ -105,42 +104,72 @@ const Wholesalers = () => {
                 <section id="criteria" className="py-24 bg-gray-50">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-16" data-aos="fade-up">
-                            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Wholesalers Choose Us</h2>
-                            <p className="text-gray-600 text-lg">We solve the cash-flow and reliability problems.</p>
+                            <h2 className="text-3xl font-bold text-brand-black mb-4">Why Wholesalers Choose Us</h2>
+                            <p className="text-brand-black/80 text-lg">We solve the cash-flow and reliability problems.</p>
                         </div>
 
-                        <div className="grid md:grid-cols-3 gap-8">
+                        <div className="grid md:grid-cols-3 gap-8 mb-16">
                             {/* Card 1 */}
                             <div className="bg-white p-8 rounded-2xl shadow-sm border-t-4 border-[#062f33] hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="0">
                                 <div className="w-14 h-14 bg-[#062f33]/10 rounded-xl flex items-center justify-center mb-6">
                                     <Zap className="w-7 h-7 text-[#062f33]" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">24h Decisions</h3>
-                                <p className="text-gray-600">
-                                    We analyze deals fast. You'll get a solid yes or no within 24 hours. No stringing along.
+                                <h3 className="text-xl font-bold text-brand-black mb-3">24-72h Offers</h3>
+                                <p className="text-brand-black/80">
+                                    We analyze deals fast. You'll get a solid offer within 24-72 hours. Our efficiency is your competitive advantage.
                                 </p>
                             </div>
 
                             {/* Card 2 */}
                             <div className="bg-white p-8 rounded-2xl shadow-sm border-t-4 border-[#062f33] hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="100">
                                 <div className="w-14 h-14 bg-[#062f33]/10 rounded-xl flex items-center justify-center mb-6">
-                                    <ShieldCheck className="w-7 h-7 text-[#062f33]" />
+                                    <Users className="w-7 h-7 text-[#062f33]" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">Proof Of Funds</h3>
-                                <p className="text-gray-600">
-                                    Verifiable cash. We close on your timeline, protecting your assignment fee and your reputation.
+                                <h3 className="text-xl font-bold text-brand-black mb-3">5,000+ Buyers</h3>
+                                <p className="text-brand-black/80">
+                                    Access our deeply vetted network of active investors. We don't just buy; we help you find the best exit strategy for every deal.
                                 </p>
                             </div>
 
                             {/* Card 3 */}
                             <div className="bg-white p-8 rounded-2xl shadow-sm border-t-4 border-[#062f33] hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1" data-aos="fade-up" data-aos-delay="200">
                                 <div className="w-14 h-14 bg-[#062f33]/10 rounded-xl flex items-center justify-center mb-6">
-                                    <Landmark className="w-7 h-7 text-[#062f33]" />
+                                    <Handshake className="w-7 h-7 text-[#062f33]" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">Repeat Buyer</h3>
-                                <p className="text-gray-600">
-                                    We buy in volume. Bring us a good deal, and we'll be your go-to buyer for the long haul.
+                                <h3 className="text-xl font-bold text-brand-black mb-3">Reliable JV</h3>
+                                <p className="text-brand-black/80">
+                                    No daisy chains. We operate with integrity to protect your fees and ensure every partnership results in a successful close.
                                 </p>
+                            </div>
+                        </div>
+
+                        {/* Credibility / Transaction Volume Section */}
+                        <div className="bg-[#062f33] rounded-3xl p-8 md:p-12 text-white shadow-2xl relative overflow-hidden" data-aos="zoom-in">
+                            <div className="absolute top-0 right-0 w-64 h-64 bg-accent/10 rounded-full blur-3xl -mr-32 -mt-32" />
+                            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-12">
+                                <div className="md:w-1/2">
+                                    <h2 className="text-3xl font-bold mb-4">Trusted Across Indiana</h2>
+                                    <p className="text-gray-300 text-lg mb-6"> Our volume speaks for itself. We've built the most active investment hub in the state.</p>
+                                    <div className="grid grid-cols-2 gap-6">
+                                        <div className="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/10 text-center">
+                                            <div className="text-3xl font-black text-accent mb-1">$50M+</div>
+                                            <div className="text-xs uppercase tracking-widest text-gray-400">Total Transaction Volume</div>
+                                        </div>
+                                        <div className="bg-white/10 p-4 rounded-xl backdrop-blur-sm border border-white/10 text-center">
+                                            <div className="text-3xl font-black text-accent mb-1">1,200+</div>
+                                            <div className="text-xs uppercase tracking-widest text-gray-400">Deals Closed in IN</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="md:w-1/2 flex justify-center">
+                                    <div className="relative">
+                                        <div className="absolute inset-0 bg-accent/20 blur-xl rounded-full" />
+                                        <Building className="w-48 h-48 text-white/10 relative z-10" />
+                                        <div className="absolute bottom-4 right-4 bg-accent text-brand-black font-bold px-4 py-2 rounded-full shadow-lg text-sm animate-bounce">
+                                            Active in Indiana
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -177,14 +206,14 @@ const Wholesalers = () => {
                             </div>
 
                             {/* The Form */}
-                            <div className="md:w-1/2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-10 text-gray-900" data-aos="zoom-in-up">
+                            <div className="md:w-1/2 w-full bg-white rounded-2xl shadow-xl border border-brand-black/10 p-8 md:p-10 text-brand-black" data-aos="zoom-in-up">
                                 {submitted ? (
                                     <div className="h-full flex flex-col items-center justify-center text-center py-20">
                                         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
                                             <Check className="w-10 h-10 text-green-600" />
                                         </div>
                                         <h3 className="text-2xl font-bold mb-2">Information Received!</h3>
-                                        <p className="text-gray-600 mb-8">We've got your info. Expect to hear from us shortly.</p>
+                                        <p className="text-brand-black/80 mb-8">We've got your info. Expect to hear from us shortly.</p>
                                         <Button onClick={() => setSubmitted(false)} className="rounded-xl px-8 py-3 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">Reset Form</Button>
                                     </div>
                                 ) : (
@@ -204,14 +233,14 @@ const Wholesalers = () => {
                                             <button
                                                 type="button"
                                                 onClick={() => toggleTab("submit-deal")}
-                                                className={`relative z-10 py-3 rounded-lg font-medium text-sm transition-colors duration-200 ${activeTab === 'submit-deal' ? 'text-[#062f33]' : 'text-gray-500 hover:text-gray-700'}`}
+                                                className={`relative z-10 py-3 rounded-lg font-medium text-sm transition-colors duration-200 ${activeTab === 'submit-deal' ? 'text-[#062f33]' : 'text-brand-black/70 hover:text-brand-black'}`}
                                             >
                                                 Submit A Deal
                                             </button>
                                             <button
                                                 type="button"
                                                 onClick={() => toggleTab("join-list")}
-                                                className={`relative z-10 py-3 rounded-lg font-medium text-sm transition-colors duration-200 ${activeTab === 'join-list' ? 'text-[#062f33]' : 'text-gray-500 hover:text-gray-700'}`}
+                                                className={`relative z-10 py-3 rounded-lg font-medium text-sm transition-colors duration-200 ${activeTab === 'join-list' ? 'text-[#062f33]' : 'text-brand-black/70 hover:text-brand-black'}`}
                                             >
                                                 Join Buyers List
                                             </button>
@@ -275,7 +304,7 @@ const SubmitDealForm = ({ onSuccess }: { onSuccess: () => void }) => {
 
     const onSubmit = async (data: SubmitDealData) => {
         try {
-            const url = "http://localhost:5000/api/wholesalers/submit-deal";
+            const url = `${import.meta.env.VITE_API_URL}/api/wholesalers/submit-deal`;
             const payload = {
                 contactName: data.name,
                 phone: data.phone,
@@ -307,14 +336,14 @@ const SubmitDealForm = ({ onSuccess }: { onSuccess: () => void }) => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
                 <FormField label="Contact Name" error={errors.name?.message} required>
-                    <Input {...register("name")} placeholder="Name" className="bg-white border-accent/30 focus:border-accent text-black" />
+                    <Input {...register("name")} placeholder="Name" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                 </FormField>
                 <FormField label="Phone" error={errors.phone?.message} required>
-                    <Input {...register("phone")} placeholder="Phone" type="tel" className="bg-white border-accent/30 focus:border-accent text-black" />
+                    <Input {...register("phone")} placeholder="Phone" type="tel" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                 </FormField>
             </div>
             <FormField label="Email" error={errors.email?.message} required>
-                <Input {...register("email")} placeholder="Email" type="email" className="bg-white border-accent/30 focus:border-accent text-black" />
+                <Input {...register("email")} placeholder="Email" type="email" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
             </FormField>
 
             <FormField label="Property Address" error={errors.address?.message} required>
@@ -331,7 +360,7 @@ const SubmitDealForm = ({ onSuccess }: { onSuccess: () => void }) => {
                             setAddressQuery(e.target.value);
                         }}
                         placeholder="123 Main St..."
-                        className="bg-white border-accent/30 focus:border-accent text-black"
+                        className="bg-white border-accent/30 focus:border-accent text-brand-black"
                     />
                     <AddressAutocompletePortal
                         anchorRef={inputRef}
@@ -348,14 +377,14 @@ const SubmitDealForm = ({ onSuccess }: { onSuccess: () => void }) => {
 
             <div className="grid grid-cols-2 gap-4">
                 <FormField label="Asking Price" error={errors.price?.message} required>
-                    <Input {...register("price")} placeholder="$" className="bg-white border-accent/30 focus:border-accent text-black" />
+                    <Input {...register("price")} placeholder="$" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                 </FormField>
                 <FormField label="Estimated ARV" error={errors.arv?.message} required>
-                    <Input {...register("arv")} placeholder="$" className="bg-white border-accent/30 focus:border-accent text-black" />
+                    <Input {...register("arv")} placeholder="$" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                 </FormField>
             </div>
             <FormField label="Link to Photos" error={errors.link?.message} required>
-                <Input {...register("link")} placeholder="https://..." className="bg-white border-accent/30 focus:border-accent text-black" />
+                <Input {...register("link")} placeholder="https://..." className="bg-white border-accent/30 focus:border-accent text-brand-black" />
             </FormField>
 
             <Button type="submit" disabled={isSubmitting} className="w-full rounded-xl py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
@@ -372,7 +401,7 @@ const JoinListForm = ({ onSuccess }: { onSuccess: () => void }) => {
 
     const onSubmit = async (data: JoinListData) => {
         try {
-            const url = "http://localhost:5000/api/wholesalers/join";
+            const url = `${import.meta.env.VITE_API_URL}/api/wholesalers/join`;
             const payload = {
                 contactName: data.name,
                 phone: data.phone,
@@ -401,20 +430,20 @@ const JoinListForm = ({ onSuccess }: { onSuccess: () => void }) => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
             <div className="grid grid-cols-2 gap-4">
                 <FormField label="Contact Name" error={errors.name?.message} required>
-                    <Input {...register("name")} placeholder="Name" className="bg-white border-accent/30 focus:border-accent text-black" />
+                    <Input {...register("name")} placeholder="Name" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                 </FormField>
                 <FormField label="Phone" error={errors.phone?.message} required>
-                    <Input {...register("phone")} placeholder="Phone" type="tel" className="bg-white border-accent/30 focus:border-accent text-black" />
+                    <Input {...register("phone")} placeholder="Phone" type="tel" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                 </FormField>
             </div>
             <FormField label="Email" error={errors.email?.message} required>
-                <Input {...register("email")} placeholder="Email" type="email" className="bg-white border-accent/30 focus:border-accent text-black" />
+                <Input {...register("email")} placeholder="Email" type="email" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
             </FormField>
             <FormField label="Company Name" error={errors.company?.message} required>
-                <Input {...register("company")} placeholder="Your Co." className="bg-white border-accent/30 focus:border-accent text-black" />
+                <Input {...register("company")} placeholder="Your Co." className="bg-white border-accent/30 focus:border-accent text-brand-black" />
             </FormField>
             <FormField label="Markets Served" error={errors.markets?.message} required>
-                <Input {...register("markets")} placeholder="Areas..." className="bg-white border-accent/30 focus:border-accent text-black" />
+                <Input {...register("markets")} placeholder="Areas..." className="bg-white border-accent/30 focus:border-accent text-brand-black" />
             </FormField>
 
             <Button type="submit" disabled={isSubmitting} className="w-full rounded-xl py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
@@ -425,3 +454,6 @@ const JoinListForm = ({ onSuccess }: { onSuccess: () => void }) => {
 };
 
 export default Wholesalers;
+
+
+

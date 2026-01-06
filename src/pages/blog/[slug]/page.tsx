@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import DOMPurify from 'dompurify';
 import { useParams, Link } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Header from "@/components/Header";
@@ -35,7 +36,7 @@ const BlogPost = () => {
         const fetchPost = async () => {
             try {
                 // Fetch Single Blog by Slug
-                const response = await fetch(`http://localhost:5000/api/blogs/slug/${slug}`);
+                const response = await fetch(`${import.meta.env.VITE_API_URL}/api/blogs/slug/${slug}`);
                 if (!response.ok) throw new Error("Failed to fetch");
 
                 const json = await response.json();
@@ -142,7 +143,7 @@ const BlogPost = () => {
                                 </p>
                             )}
 
-                            <div dangerouslySetInnerHTML={{ __html: post.rawHTML || post.html || "" }} />
+                            <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.rawHTML || post.html || "") }} />
                         </div>
 
                         {/* Social Share / Footer of Card */}

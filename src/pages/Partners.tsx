@@ -18,15 +18,15 @@ const PartnerCard = ({
     delay: number;
 }) => (
     <div
-        className="bg-white rounded-2xl p-8 shadow-sm border border-gray-100 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
+        className="bg-white rounded-2xl p-8 shadow-sm border border-brand-black/10 hover:shadow-xl hover:-translate-y-1 transition-all duration-300 group"
         data-aos="fade-up"
         data-aos-delay={delay}
     >
         <div className="w-14 h-14 bg-[#062f33]/5 rounded-2xl flex items-center justify-center mb-6 text-[#062f33] group-hover:bg-[#062f33] group-hover:text-white transition-colors duration-300">
             <Icon className="w-7 h-7" />
         </div>
-        <h3 className="text-2xl font-bold text-gray-900 mb-3">{title}</h3>
-        <p className="text-gray-600 mb-6 leading-relaxed">
+        <h3 className="text-2xl font-bold text-brand-black mb-3">{title}</h3>
+        <p className="text-brand-black/80 mb-6 leading-relaxed">
             {desc}
         </p>
         <Link
@@ -99,9 +99,9 @@ const Partners = () => {
                         </div>
 
                         <div className="mt-20 text-center">
-                            <div className="bg-white p-8 rounded-3xl inline-block shadow-lg border border-gray-100 max-w-2xl">
-                                <h3 className="text-2xl font-bold text-gray-900 mb-4">Don't fit into these categories?</h3>
-                                <p className="text-gray-600 mb-6">
+                            <div className="bg-white p-8 rounded-3xl inline-block shadow-lg border border-brand-black/10 max-w-2xl">
+                                <h3 className="text-2xl font-bold text-brand-black mb-4">Don't fit into these categories?</h3>
+                                <p className="text-brand-black/80 mb-6">
                                     We are always open to new connections with contractors, lenders, and other industry professionals.
                                 </p>
                                 <Button asChild size="lg" className="rounded-xl px-8 py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
@@ -119,3 +119,6 @@ const Partners = () => {
 };
 
 export default Partners;
+
+
+

@@ -61,7 +61,7 @@ const HeroSection = () => {
             <div className="space-y-6">
 
 
-              <h2 className="text-4xl md:text-7xl font-extrabold text-black mb-6 leading-tight tracking-tight">
+              <h2 className="text-4xl md:text-7xl font-extrabold text-brand-black mb-6 leading-tight tracking-tight">
                 We Buy Houses in Indiana Sell Your House <span className="text-accent relative inline-block">
                   Fast with Cash
                   <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -69,7 +69,7 @@ const HeroSection = () => {
                   </svg>
                 </span>
               </h2>
-              <div className="space-y-6 text-xl text-black leading-relaxed font-medium">
+              <div className="space-y-6 text-xl text-brand-black leading-relaxed font-medium">
                 <p>Need to sell your house fast in Indiana? <br />
 
                   At HudREI is a local, family-owned company that buys houses in any condition throughout the Hoosier State. <br />
@@ -188,3 +188,6 @@ const HeroSection = () => {
 };
 
 export default HeroSection;
+
+
+

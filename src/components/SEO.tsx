@@ -21,3 +21,6 @@ const SEO = ({ title, description, canonical }: SEOProps) => {
 };
 
 export default SEO;
+
+
+

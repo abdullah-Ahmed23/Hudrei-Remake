@@ -30,7 +30,7 @@ const ListingDetails = () => {
         const fetchDetails = async () => {
             try {
                 // Fetch ALL listings and find locally (Fallback for missing GET /:id)
-                const res = await fetch(`http://localhost:5000/api/listings`);
+                const res = await fetch(`${import.meta.env.VITE_API_URL}/api/listings`);
                 if (res.ok) {
                     const data: ListingType[] = await res.json();
                     const found = data.find(l => l.id.toString() === id);
@@ -61,7 +61,7 @@ const ListingDetails = () => {
     if (!listing) {
         return (
             <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center">
-                <h2 className="text-2xl font-bold text-gray-900 mb-4">Listing Not Found</h2>
+                <h2 className="text-2xl font-bold text-brand-black mb-4">Listing Not Found</h2>
                 <Link to="/listing">
                     <Button>Back to Listings</Button>
                 </Link>
@@ -80,7 +80,7 @@ const ListingDetails = () => {
 
                 {/* Navigation Breadcrumb */}
                 <div className="container mx-auto px-4 mb-8">
-                    <Link to="/listing" className="inline-flex items-center text-gray-500 hover:text-accent transition-colors">
+                    <Link to="/listing" className="inline-flex items-center text-brand-black/70 hover:text-accent transition-colors">
                         <ArrowLeft className="w-4 h-4 mr-2" /> Back to Inventory
                     </Link>
                 </div>
@@ -100,7 +100,7 @@ const ListingDetails = () => {
                                 {listing.imageUrl ? (
                                     <img src={listing.imageUrl} alt={listing.address} className="w-full h-full object-cover" />
                                 ) : (
-                                    <div className="w-full h-full bg-gray-200 flex items-center justify-center text-gray-400">No Image</div>
+                                    <div className="w-full h-full bg-gray-200 flex items-center justify-center text-brand-black/60">No Image</div>
                                 )}
                                 <div className="absolute top-6 left-6">
                                     <Badge className={`
@@ -114,35 +114,35 @@ const ListingDetails = () => {
                             </motion.div>
 
                             {/* Property Specs Grid (Mobile/Desktop) */}
-                            <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100 flex flex-wrap justify-between gap-6 text-center divide-x divide-gray-100">
+                            <div className="bg-white rounded-3xl p-8 shadow-sm border border-brand-black/10 flex flex-wrap justify-between gap-6 text-center divide-x divide-gray-100">
                                 <div className="flex-1 px-2">
-                                    <div className="text-gray-400 text-xs uppercase font-bold tracking-wider mb-2">Price</div>
+                                    <div className="text-brand-black/60 text-xs uppercase font-bold tracking-wider mb-2">Price</div>
                                     <div className="text-2xl md:text-3xl font-extrabold text-accent">{listing.price}</div>
                                 </div>
                                 <div className="flex-1 px-2">
-                                    <div className="text-gray-400 text-xs uppercase font-bold tracking-wider mb-2">Bedrooms</div>
-                                    <div className="text-2xl font-bold text-gray-900 flex justify-center gap-1">
+                                    <div className="text-brand-black/60 text-xs uppercase font-bold tracking-wider mb-2">Bedrooms</div>
+                                    <div className="text-2xl font-bold text-brand-black flex justify-center gap-1">
                                         {listing.beds} <Bed className="w-5 h-5 mt-1 text-gray-300" />
                                     </div>
                                 </div>
                                 <div className="flex-1 px-2">
-                                    <div className="text-gray-400 text-xs uppercase font-bold tracking-wider mb-2">Bathrooms</div>
-                                    <div className="text-2xl font-bold text-gray-900 flex justify-center gap-1">
+                                    <div className="text-brand-black/60 text-xs uppercase font-bold tracking-wider mb-2">Bathrooms</div>
+                                    <div className="text-2xl font-bold text-brand-black flex justify-center gap-1">
                                         {listing.baths} <Bath className="w-5 h-5 mt-1 text-gray-300" />
                                     </div>
                                 </div>
                                 <div className="flex-1 px-2">
-                                    <div className="text-gray-400 text-xs uppercase font-bold tracking-wider mb-2">Square Fet</div>
-                                    <div className="text-2xl font-bold text-gray-900 flex justify-center gap-1">
+                                    <div className="text-brand-black/60 text-xs uppercase font-bold tracking-wider mb-2">Square Fet</div>
+                                    <div className="text-2xl font-bold text-brand-black flex justify-center gap-1">
                                         {listing.sqft} <Ruler className="w-5 h-5 mt-1 text-gray-300" />
                                     </div>
                                 </div>
                             </div>
 
                             {/* Description */}
-                            <div className="bg-white rounded-3xl p-8 shadow-sm border border-gray-100">
-                                <h2 className="text-2xl font-bold text-gray-900 mb-4">About this Property</h2>
-                                <p className="text-gray-600 leading-relaxed text-lg">
+                            <div className="bg-white rounded-3xl p-8 shadow-sm border border-brand-black/10">
+                                <h2 className="text-2xl font-bold text-brand-black mb-4">About this Property</h2>
+                                <p className="text-brand-black/80 leading-relaxed text-lg">
                                     {listing.description}
                                 </p>
                             </div>
@@ -154,27 +154,23 @@ const ListingDetails = () => {
                             <div className="sticky top-32 space-y-6">
 
                                 {/* Summary Card */}
-                                <div className="bg-white rounded-3xl p-8 shadow-lg border border-gray-100">
-                                    <h1 className="text-2xl font-bold text-gray-900 mb-2 leading-tight">{listing.address}</h1>
-                                    <div className="flex items-center text-gray-500 mb-6">
+                                <div className="bg-white rounded-3xl p-8 shadow-lg border border-brand-black/10">
+                                    <h1 className="text-2xl font-bold text-brand-black mb-2 leading-tight">{listing.address}</h1>
+                                    <div className="flex items-center text-brand-black/70 mb-6">
                                         <MapPin className="w-4 h-4 mr-2" /> {listing.address}
                                     </div>
 
-                                    <hr className="border-gray-100 my-6" />
+                                    <hr className="border-brand-black/10 my-6" />
 
-                                    <div className="space-y-4">
-                                        <Button className="w-full bg-accent hover:bg-accent/90 text-lg py-6 shadow-xl shadow-accent/20">
-                                            <Calendar className="w-5 h-5 mr-2" /> Schedule a Tour
-                                        </Button>
-                                        <Button variant="outline" className="w-full py-6 border-2">
-                                            <Mail className="w-5 h-5 mr-2" /> Request Info
-                                        </Button>
-                                    </div>
-
-                                    <div className="mt-8 flex justify-center gap-4 text-gray-400">
-                                        <button className="hover:text-accent transition-colors"><Share2 className="w-5 h-5" /></button>
-                                        <button className="hover:text-accent transition-colors"><Printer className="w-5 h-5" /></button>
-                                    </div>
+                                    {listing.photosLink && (
+                                        <div className="space-y-4">
+                                            <a href={listing.photosLink} target="_blank" rel="noreferrer">
+                                                <Button className="w-full bg-accent hover:bg-accent/90 text-lg py-6 shadow-xl shadow-accent/20">
+                                                    <Images className="w-5 h-5 mr-2" /> View More Photos
+                                                </Button>
+                                            </a>
+                                        </div>
+                                    )}
                                 </div>
 
                                 {/* Agent Card */}
@@ -183,11 +179,13 @@ const ListingDetails = () => {
                                     <p className="text-gray-300 mb-6">Contact our sales team directly to get more information or make an offer.</p>
                                     <div className="flex items-center gap-3">
                                         <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center">
-                                            <Phone className="w-6 h-6" />
+                                            <a href="tel:3177951990" className="text-white hover:text-accent transition-colors">
+                                                <Phone className="w-6 h-6" />
+                                            </a>
                                         </div>
                                         <div>
-                                            <div className="text-xs text-gray-400 uppercase tracking-wider font-bold">Call Us 24/7</div>
-                                            <div className="text-lg font-bold">(555) 123-4567</div>
+                                            <div className="text-xs text-brand-black/60 uppercase tracking-wider font-bold">Call Us 24/7</div>
+                                            <div className="text-lg font-bold">(317) 795-1990</div>
                                         </div>
                                     </div>
                                 </div>
@@ -204,3 +202,6 @@ const ListingDetails = () => {
 };
 
 export default ListingDetails;
+
+
+

@@ -66,7 +66,7 @@ const CTASection = () => {
                     >
                         <FormField error={errors.address?.message} className="space-y-2">
                             <div className="relative">
-                                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-black" />
+                                <MapPin className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-black" />
 
                                 <Input
                                     {...register("address")}
@@ -79,7 +79,7 @@ const CTASection = () => {
                                         register("address").onChange(e);
                                     }}
                                     placeholder="Enter your address..."
-                                    className="h-16 pl-12 pr-40 text-lg bg-white text-black rounded-2xl border border-gray-300 focus:ring-2 focus:ring-accent focus:border-accent w-full font-bold placeholder:text-gray-500 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)]"
+                                    className="h-16 pl-12 pr-40 text-lg bg-white text-brand-black rounded-2xl border border-brand-black/30 focus:ring-2 focus:ring-accent focus:border-accent w-full font-bold placeholder:text-brand-black/70 shadow-[0_4px_20px_-4px_rgba(0,0,0,0.1)]"
                                 />
 
                                 <Button
@@ -117,3 +117,6 @@ const CTASection = () => {
 };
 
 export default CTASection;
+
+
+

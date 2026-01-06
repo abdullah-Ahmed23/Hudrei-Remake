@@ -83,7 +83,7 @@ const HowItWorks = () => {
                         transition={{ duration: 0.6 }}
                         className="text-center mb-24"
                     >
-                        <h1 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                        <h1 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-brand-black mb-6 md:mb-8 tracking-tight">
                             Selling Your Indiana House in <span className="text-accent relative inline-block">
                                 3 Easy Steps
                                 <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -91,7 +91,7 @@ const HowItWorks = () => {
                                 </svg>
                             </span>
                         </h1>
-                        <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+                        <p className="text-xl text-brand-black/80 max-w-3xl mx-auto">
                             A simple, transparent process designed to help you sell your home quickly and stress-free.
                         </p>
                     </motion.div>
@@ -142,8 +142,8 @@ const HowItWorks = () => {
                                         </motion.div>
 
                                         {/* CARD */}
-                                        <div className="bg-white border border-gray-200 rounded-3xl p-8 sm:p-10 shadow-sm">
-                                            <span className="text-sm font-semibold tracking-widest text-gray-500">
+                                        <div className="bg-white border border-brand-black/20 rounded-3xl p-8 sm:p-10 shadow-sm">
+                                            <span className="text-sm font-semibold tracking-widest text-brand-black/70">
                                                 STEP {item.step}
                                             </span>
 
@@ -151,7 +151,7 @@ const HowItWorks = () => {
                                                 {item.title}
                                             </h3>
 
-                                            <p className="text-lg text-gray-700 max-w-3xl">
+                                            <p className="text-lg text-brand-black max-w-3xl">
                                                 {item.desc}
                                             </p>
 
@@ -166,7 +166,7 @@ const HowItWorks = () => {
                                                         transition={{ duration: isMobile ? 0 : 0.35 }}
                                                         className="overflow-hidden"
                                                     >
-                                                        <p className="text-lg text-gray-700 mt-4 max-w-3xl">
+                                                        <p className="text-lg text-brand-black mt-4 max-w-3xl">
                                                             {item.more}
                                                         </p>
                                                     </motion.div>
@@ -176,7 +176,7 @@ const HowItWorks = () => {
                                             {/* TOGGLE */}
                                             <button
                                                 onClick={() => setOpenIndex(isOpen ? null : i)}
-                                                className="mt-6 text-sm font-semibold text-black underline underline-offset-4 hover:opacity-70 transition"
+                                                className="mt-6 text-sm font-semibold text-brand-black underline underline-offset-4 hover:opacity-70 transition"
                                             >
                                                 {isOpen ? "Read less" : "Read more"}
                                             </button>
@@ -205,3 +205,6 @@ const HowItWorks = () => {
 };
 
 export default HowItWorks;
+
+
+

@@ -101,28 +101,28 @@ const AddressAutocompletePortal = ({
         width: position.width,
         zIndex: 99999,
       }}
-      className="bg-white rounded-xl shadow-2xl border border-gray-100 overflow-hidden animate-in fade-in zoom-in-95 duration-200"
+      className="bg-white rounded-xl shadow-2xl border border-brand-black/10 overflow-hidden animate-in fade-in zoom-in-95 duration-200"
     >
       <div className="max-h-72 overflow-y-auto py-2">
         {results.map((item, index) => (
           <div
             key={item.place_id}
             onClick={() => onSelect(item.display_name)}
-            className="flex items-start gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50 transition-colors border-b border-gray-50 last:border-0 group"
+            className="flex items-start gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50 transition-colors border-b border-brand-black/10 last:border-0 group"
           >
-            <MapPin className="w-4 h-4 text-gray-400 mt-1 group-hover:text-[#062f33] transition-colors" />
+            <MapPin className="w-4 h-4 text-brand-black/60 mt-1 group-hover:text-[#062f33] transition-colors" />
             <div className="flex flex-col text-left">
-              <span className="text-gray-900 font-medium text-sm leading-snug">
+              <span className="text-brand-black font-medium text-sm leading-snug">
                 {item.display_name.split(",")[0]}
               </span>
-              <span className="text-gray-500 text-xs mt-0.5">
+              <span className="text-brand-black/70 text-xs mt-0.5">
                 {item.display_name.split(",").slice(1).join(", ")}
               </span>
             </div>
           </div>
         ))}
       </div>
-      <div className="bg-gray-50 px-4 py-2 text-[10px] text-gray-400 text-center uppercase tracking-wider font-medium border-t border-gray-100">
+      <div className="bg-gray-50 px-4 py-2 text-[10px] text-brand-black/60 text-center uppercase tracking-wider font-medium border-t border-brand-black/10">
         USA Search Results
       </div>
     </div>,
@@ -131,3 +131,6 @@ const AddressAutocompletePortal = ({
 };
 
 export default AddressAutocompletePortal;
+
+
+

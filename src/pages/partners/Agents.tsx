@@ -59,7 +59,7 @@ const Agents = () => {
 
     const onSubmit = async (data: AgentFormData) => {
         try {
-            const response = await fetch("http://localhost:5000/api/realtors", {
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/realtors`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({
@@ -107,24 +107,23 @@ const Agents = () => {
                                 <Users className="w-4 h-4" />
                                 <span>For Real Estate Agents</span>
                             </div>
-                            <h1 className="text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 leading-tight tracking-tight" data-aos="fade-up">
-                                Turn Dead Leads Into <span className="text-accent relative inline-block">
-                                    Commissions
+                            <h1 className="text-4xl md:text-7xl font-extrabold text-brand-black mb-6 leading-tight tracking-tight" data-aos="fade-up">
+                                Your Strategic Partner <span className="text-accent relative inline-block">
+                                    Before You List
                                     <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
                                         <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
                                     </svg>
                                 </span>
                             </h1>
-                            <p className="text-xl text-gray-600 mb-8 leading-relaxed" data-aos="fade-up" data-aos-delay="100">
-                                Have a listing that's expiring? A seller who can't afford repairs?
-                                We buy properties as-is, so you can save the deal and keep your client happy.
+                            <p className="text-xl text-brand-black/80 mb-8 leading-relaxed" data-aos="fade-up" data-aos-delay="100">
+                                Stop wasting time on hard-to-sell listings. Bring us the deal <strong>before</strong> it hits the MLS and get your commission in 30 days without showings or cleanings.
                             </p>
 
                             <div className="flex flex-col sm:flex-row gap-4" data-aos="fade-up" data-aos-delay="200">
                                 <Button asChild size="lg" className="rounded-xl px-8 py-7 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
                                     <a href="#refer-form">Refer a Listing</a>
                                 </Button>
-                                <Button asChild variant="outline" size="lg" className="rounded-full px-8 py-7 text-lg border-gray-200 bg-[#00767e] hover:bg-[#0b434a] transition-transform hover:scale-105">
+                                <Button asChild variant="outline" size="lg" className="rounded-xl px-8 py-7 text-lg border-brand-black/20 bg-[#00767e] text-white hover:bg-[#0b434a] hover:text-white transition-all hover:shadow-xl hover:-translate-y-0.5">
                                     <a href="tel:3177951990">Call Us (317) 795-1990</a>
                                 </Button>
                             </div>
@@ -150,8 +149,8 @@ const Agents = () => {
                 <section className="py-24 bg-gray-50">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-16" data-aos="fade-up">
-                            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Agents Love Us</h2>
-                            <p className="text-gray-600 text-lg">We solve the problems that kill traditional listings.</p>
+                            <h2 className="text-3xl font-bold text-brand-black mb-4">Why Agents Love Us</h2>
+                            <p className="text-brand-black/80 text-lg">We solve the problems that kill traditional listings.</p>
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-8">
@@ -160,9 +159,9 @@ const Agents = () => {
                                 <div className="w-14 h-14 bg-[#062f33]/10 rounded-xl flex items-center justify-center mb-6">
                                     <DollarSign className="w-7 h-7 text-[#062f33]" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">Protected Commissions</h3>
-                                <p className="text-gray-600">
-                                    Don't lose a deal because the house won't qualify for financing. We pay cash, and your commission is guaranteed on the HUD.
+                                <h3 className="text-xl font-bold text-brand-black mb-3">Speed & Convenience</h3>
+                                <p className="text-brand-black/80">
+                                    Get your commission in 30 days. No showings, no cleaning, and no staging required. We close fast so you can move on to the next deal.
                                 </p>
                             </div>
 
@@ -171,8 +170,8 @@ const Agents = () => {
                                 <div className="w-14 h-14 bg-[#062f33]/10 rounded-xl flex items-center justify-center mb-6">
                                     <CheckCircle2 className="w-7 h-7 text-[#062f33]" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">Buy As-Is</h3>
-                                <p className="text-gray-600">
+                                <h3 className="text-xl font-bold text-brand-black mb-3">Buy As-Is</h3>
+                                <p className="text-brand-black/80">
                                     No repair requests, no cleaning, no staging. We take the house exactly as it sits, saving you hours of coordination.
                                 </p>
                             </div>
@@ -182,8 +181,8 @@ const Agents = () => {
                                 <div className="w-14 h-14 bg-[#062f33]/10 rounded-xl flex items-center justify-center mb-6">
                                     <Clock className="w-7 h-7 text-[#062f33]" />
                                 </div>
-                                <h3 className="text-xl font-bold text-gray-900 mb-3">Guaranteed Close</h3>
-                                <p className="text-gray-600">
+                                <h3 className="text-xl font-bold text-brand-black mb-3">Guaranteed Close</h3>
+                                <p className="text-brand-black/80">
                                     When we sign, we close. Don't risk your reputation on flaky investor buyers who back out during inspection.
                                 </p>
                             </div>
@@ -223,14 +222,14 @@ const Agents = () => {
                             </div>
 
                             {/* The Form */}
-                            <div className="md:w-1/2 w-full bg-white rounded-2xl shadow-xl border border-gray-100 p-8 md:p-10 text-gray-900" data-aos="zoom-in-up">
+                            <div className="md:w-1/2 w-full bg-white rounded-2xl shadow-xl border border-brand-black/10 p-8 md:p-10 text-brand-black" data-aos="zoom-in-up">
                                 {submitted ? (
                                     <div className="h-full flex flex-col items-center justify-center text-center py-20">
                                         <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
                                             <CheckCircle2 className="w-10 h-10 text-green-600" />
                                         </div>
                                         <h3 className="text-2xl font-bold mb-2">Details Received!</h3>
-                                        <p className="text-gray-600 mb-8">We'll review your property and reach out typically within 2 hours.</p>
+                                        <p className="text-brand-black/80 mb-8">We'll review your property and reach out typically within 2 hours.</p>
                                         <Button onClick={() => setSubmitted(false)} className="rounded-xl px-8 py-3 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">Submit Another</Button>
                                     </div>
                                 ) : (
@@ -239,19 +238,19 @@ const Agents = () => {
 
                                         <div className="grid grid-cols-2 gap-4">
                                             <FormField label="Agent Name" error={errors.name?.message} required>
-                                                <Input {...register("name")} placeholder="John Doe" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                                <Input {...register("name")} placeholder="John Doe" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                                             </FormField>
                                             <FormField label="Phone" error={errors.phone?.message} required>
-                                                <Input {...register("phone")} placeholder="(317) 000-0000" type="tel" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                                <Input {...register("phone")} placeholder="(317) 000-0000" type="tel" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                                             </FormField>
                                         </div>
 
                                         <FormField label="Email" error={errors.email?.message} required>
-                                            <Input {...register("email")} placeholder="john@brokerage.com" type="email" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                            <Input {...register("email")} placeholder="john@brokerage.com" type="email" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                                         </FormField>
 
                                         <FormField label="Brokerage Name" error={errors.brokerage?.message} required>
-                                            <Input {...register("brokerage")} placeholder="e.g. Century 21" className="bg-white border-accent/30 focus:border-accent text-black" />
+                                            <Input {...register("brokerage")} placeholder="e.g. Century 21" className="bg-white border-accent/30 focus:border-accent text-brand-black" />
                                         </FormField>
 
                                         <FormField label="Property Address" error={errors.property?.message} required>
@@ -268,7 +267,7 @@ const Agents = () => {
                                                         setAddressQuery(e.target.value);
                                                     }}
                                                     placeholder="123 Main St, Indianapolis, IN"
-                                                    className="bg-white border-accent/30 focus:border-accent text-black"
+                                                    className="bg-white border-accent/30 focus:border-accent text-brand-black"
                                                 />
                                                 <AddressAutocompletePortal
                                                     anchorRef={inputRef}
@@ -284,7 +283,7 @@ const Agents = () => {
                                         </FormField>
 
                                         <FormField label="Notes / Situation" error={errors.notes?.message} required>
-                                            <Textarea {...register("notes")} placeholder="Needs foundation repair, owner relocating, etc..." className="bg-white border-accent/30 focus:border-accent text-black min-h-[100px]" />
+                                            <Textarea {...register("notes")} placeholder="Needs foundation repair, owner relocating, etc..." className="bg-white border-accent/30 focus:border-accent text-brand-black min-h-[100px]" />
                                         </FormField>
 
                                         <Button type="submit" disabled={isSubmitting} className="w-full rounded-xl py-6 text-lg font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
@@ -308,3 +307,6 @@ const Agents = () => {
 };
 
 export default Agents;
+
+
+

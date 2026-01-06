@@ -1,6 +1,6 @@
-import { Phone, Mail, MapPin, Facebook, Twitter, Instagram, Linkedin, ChevronRight } from "lucide-react";
+import { Phone, MapPin, Facebook, Instagram, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import hudReiLogo1 from "@/assets/w2.png";
+import hudReiLogo1 from "@/assets/2.png";
 import { Button } from "@/components/ui/button";
 
 const Footer = () => {
@@ -44,18 +44,38 @@ const Footer = () => {
               <img
                 src={hudReiLogo1}
                 alt="HudREI"
-                className="h-14 w-auto"
+                className="h-20 w-auto"
               />
             </Link>
-            <p className="text-gray-400 text-lg leading-relaxed">
+            <p className="text-white/80 text-lg leading-relaxed">
               Helping Indiana homeowners sell their properties with dignity, transparency, and speed. Your local, family-owned solution.
             </p>
             <div className="flex gap-4">
-              {[Facebook, Twitter, Instagram, Linkedin].map((Icon, i) => (
-                <a key={i} href="#" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-accent hover:text-white transition-all duration-300 group shadow-lg">
-                  <Icon className="w-5 h-5 opacity-70 group-hover:opacity-100" />
-                </a>
-              ))}
+              <a href="https://www.facebook.com/p/Hudrei-61562781720104/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-accent hover:text-white transition-all duration-300 group shadow-lg">
+                <Facebook className="w-5 h-5 opacity-70 group-hover:opacity-100" />
+              </a>
+              <a href="https://www.instagram.com/hud_rei/" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-accent hover:text-white transition-all duration-300 group shadow-lg">
+                <Instagram className="w-5 h-5 opacity-70 group-hover:opacity-100" />
+              </a>
+              <a href="https://www.tiktok.com/@hud_rei" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center hover:bg-accent hover:text-white transition-all duration-300 group shadow-lg">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="w-5 h-5 opacity-70 group-hover:opacity-100 lucide lucide-music-2"
+                >
+                  <path d="M9 18V5l12-2v13" />
+                  <circle cx="6" cy="18" r="3" />
+                  <circle cx="18" cy="16" r="3" />
+                </svg>
+                {/* TikTok Icon Placeholder */}
+              </a>
             </div>
           </div>
 
@@ -68,7 +88,7 @@ const Footer = () => {
             <ul className="space-y-4">
               {footerLinks.company.map((link, i) => (
                 <li key={i}>
-                  <Link to={link.path} className="text-gray-400 hover:text-accent flex items-center gap-2 group transition-colors">
+                  <Link to={link.path} className="text-white/80 hover:text-white flex items-center gap-2 group transition-colors">
                     <ChevronRight className="w-4 h-4 text-accent transform group-hover:translate-x-1 transition-transform" />
                     <span className="font-medium">{link.label}</span>
                   </Link>
@@ -86,7 +106,7 @@ const Footer = () => {
             <ul className="space-y-4">
               {footerLinks.resources.map((link, i) => (
                 <li key={i}>
-                  <Link to={link.path} className="text-gray-400 hover:text-accent flex items-center gap-2 group transition-colors">
+                  <Link to={link.path} className="text-white/80 hover:text-white flex items-center gap-2 group transition-colors">
                     <ChevronRight className="w-4 h-4 text-accent transform group-hover:translate-x-1 transition-transform" />
                     <span className="font-medium">{link.label}</span>
                   </Link>
@@ -107,7 +127,7 @@ const Footer = () => {
                   <Phone className="w-6 h-6 text-accent" />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">Call Directly</p>
+                  <p className="text-xs text-white/50 font-bold uppercase tracking-wider">Call Directly</p>
                   <p className="text-lg font-bold text-white">(317) 795-1990</p>
                 </div>
               </a>
@@ -116,7 +136,7 @@ const Footer = () => {
                   <MapPin className="w-6 h-6 text-primary" />
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400 font-bold uppercase tracking-wider">Location</p>
+                  <p className="text-xs text-white/50 font-bold uppercase tracking-wider">Location</p>
                   <p className="text-lg font-bold text-white">Avon, IN</p>
                 </div>
               </div>
@@ -129,12 +149,12 @@ const Footer = () => {
 
         {/* Bottom Bar */}
         <div className="pt-12 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-6">
-          <p className="text-gray-500 font-medium">
+          <p className="text-white/60 font-medium">
             © {currentYear} HudREI. Real Estate Reimagined. Built with pride in Indiana.
           </p>
-          <div className="flex items-center gap-2 text-gray-500">
+          <div className="flex items-center gap-2 text-white/70">
             <span className="w-2 h-2 rounded-full bg-accent animate-pulse" />
-            <p className="font-bold uppercase text-xs tracking-widest text-gray-400">Serving all of Indiana</p>
+            <p className="font-bold uppercase text-xs tracking-widest text-white/50">Serving all of Indiana</p>
           </div>
         </div>
       </div>
@@ -143,3 +163,6 @@ const Footer = () => {
 };
 
 export default Footer;
+
+
+

@@ -172,8 +172,8 @@ const PartnerDetail = () => {
                 <section className="py-24 bg-gray-50">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-16">
-                            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Partner With HudREI?</h2>
-                            <p className="text-gray-600">Building relationships based on trust and performance.</p>
+                            <h2 className="text-3xl font-bold text-brand-black mb-4">Why Partner With HudREI?</h2>
+                            <p className="text-brand-black/80">Building relationships based on trust and performance.</p>
                         </div>
 
                         <div className="grid md:grid-cols-3 gap-8">
@@ -184,13 +184,13 @@ const PartnerDetail = () => {
                                     whileInView={{ opacity: 1, y: 0 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: idx * 0.1 }}
-                                    className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
+                                    className="bg-white p-8 rounded-2xl shadow-sm border border-brand-black/10 hover:shadow-lg transition-all duration-300 hover:-translate-y-1"
                                 >
                                     <div className="w-12 h-12 bg-accent/10 rounded-full flex items-center justify-center mb-6">
                                         <CheckCircle2 className="w-6 h-6 text-accent" />
                                     </div>
-                                    <h3 className="text-xl font-bold text-gray-900 mb-3">{benefit.title}</h3>
-                                    <p className="text-gray-600 leading-relaxed">{benefit.desc}</p>
+                                    <h3 className="text-xl font-bold text-brand-black mb-3">{benefit.title}</h3>
+                                    <p className="text-brand-black/80 leading-relaxed">{benefit.desc}</p>
                                 </motion.div>
                             ))}
                         </div>
@@ -229,3 +229,6 @@ const PartnerDetail = () => {
 };
 
 export default PartnerDetail;
+
+
+

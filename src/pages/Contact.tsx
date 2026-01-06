@@ -1,32 +1,29 @@
 import { Helmet } from "react-helmet";
-import { Phone, Mail, CheckCircle2, ArrowRight, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/hooks/use-toast";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import QuestionsSection from "@/components/QuestionsSection";
-import hudReiLogo from "@/assets/hudrei-logo.png";
-import contactbg from "@/assets/bg-contact.webp";
-import { useLocation } from "react-router-dom";
-import { useEffect, useRef, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
-import { useAddressAutocomplete } from "@/hooks/useAddressAutocomplete";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useState, useEffect, useRef } from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
-import FormField from "@/components/FormField";
+import { motion, AnimatePresence } from "framer-motion";
+import { useLocation, Link } from "react-router-dom";
+import { ChevronRight, ChevronLeft, Check, Loader2, Phone, Mail, MapPin } from "lucide-react";
 
+import { Button } from "@/components/ui/button";
+import hudReiLogo from "@/assets/2.png";
+import { Input } from "@/components/ui/input";
+import { useToast } from "@/hooks/use-toast";
+import AddressAutocompletePortal from "@/components/AddressAutocompletePortal.tsx";
+import { useAddressAutocomplete } from "@/hooks/useAddressAutocomplete";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+
+// --- Schema Definition ---
 const contactSchema = z.object({
     fullName: z.string().min(1, "Full name is required"),
     phone: z.string().min(10, "Valid phone number is required"),
     email: z.string().email("Valid email address is required"),
-    streetAddress: z.string().optional(),
-    city: z.string().optional(),
-    state: z.string().optional(),
-    timeline: z.string().optional(),
+    streetAddress: z.string().min(1, "Street Address is required"),
+    city: z.string().min(1, "City is required"),
+    state: z.string().min(1, "State is required"),
+    timeline: z.string().min(1, "Timeline is required"),
     consent: z.boolean().refine((val) => val === true, {
         message: "You must agree to be contacted",
     }),
@@ -34,79 +31,103 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
+// Steps Configuration
+const STEPS = [
+    { id: "intro", title: "Welcome", field: "fullName" }, // Ask Name
+    { id: "phone", title: "Contact Info", field: "phone" }, // Ask Phone
+    { id: "email", title: "Email", field: "email" }, // Ask Email
+    { id: "address", title: "Property", field: ["streetAddress", "city", "state"] }, // Ask Address elements
+    { id: "timeline", title: "Timeline", field: "timeline" }, // Ask Timeline
+    { id: "submit", title: "Review", field: "consent" }, // Review & Consent
+];
 
 const Contact = () => {
     const { toast } = useToast();
     const location = useLocation();
-    const incoming = location.state as any;
-    const formRef = useRef<HTMLDivElement | null>(null);
-    const addressInputRef = useRef<HTMLInputElement>(null);
 
+    // Setup Form
     const {
         register,
         handleSubmit,
         setValue,
         watch,
         control,
-        reset,
+        trigger,
         formState: { errors, isSubmitting },
     } = useForm<ContactFormData>({
         resolver: zodResolver(contactSchema),
         defaultValues: {
-            fullName: incoming?.fullName || "",
-            phone: incoming?.phone || "",
-            email: incoming?.email || "",
-            streetAddress: incoming?.streetAddress || "",
-            city: incoming?.city || "",
-            state: incoming?.state || "",
-            timeline: incoming?.timeline || "",
+            fullName: "",
+            phone: "",
+            email: "",
+            streetAddress: "",
+            city: "",
+            state: "IN", // Default state
+            timeline: "",
             consent: false,
         },
     });
 
     const streetAddress = watch("streetAddress");
+    const [currentStep, setCurrentStep] = useState(0);
     const [submitted, setSubmitted] = useState(false);
-    const [addressQuery, setAddressQuery] = useState(streetAddress || "");
+
+    // Address Autocomplete Logic
+    const [addressQuery, setAddressQuery] = useState("");
     const { results, clearResults } = useAddressAutocomplete(addressQuery);
+    const addressInputRef = useRef<HTMLInputElement>(null);
 
-    const API_URL = "http://localhost:5000/api/contact";
-
+    // Sync address query with form
     useEffect(() => {
-        if (incoming && formRef.current) {
-            formRef.current.scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-            });
-        }
-    }, [incoming]);
-
-    // Update query when internal state changes (e.g. from location)
-    useEffect(() => {
-        if (streetAddress && streetAddress !== addressQuery) {
+        if (streetAddress !== addressQuery) {
             setAddressQuery(streetAddress || "");
         }
     }, [streetAddress]);
 
+    // 🔗 Auto-fill Logic from Home Page
+    useEffect(() => {
+        if (location.state?.streetAddress) {
+            setValue("streetAddress", location.state.streetAddress);
+            setAddressQuery(location.state.streetAddress);
+            // Optional: You could auto-advance, but user might want to confirm details.
+            // Let's just create a nice starting state.
+        }
+    }, [location.state, setValue]);
+
+    // Navigation Handlers
+    const nextStep = async () => {
+        const fieldsToValidate = STEPS[currentStep].field;
+
+        let isValid = false;
+        if (Array.isArray(fieldsToValidate)) {
+            isValid = await trigger(fieldsToValidate as any);
+        } else {
+            isValid = await trigger(fieldsToValidate as any);
+        }
+
+        if (isValid) {
+            setCurrentStep((prev) => Math.min(prev + 1, STEPS.length - 1));
+        }
+    };
+
+    const prevStep = () => {
+        setCurrentStep((prev) => Math.max(prev - 1, 0));
+    };
+
+    // Submission Handler
     const onSubmit = async (data: ContactFormData) => {
         try {
+            const API_URL = `${import.meta.env.VITE_API_URL}/api/contact`;
             const response = await fetch(API_URL, {
                 method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                    ...data,
-                    source: "HudREI Website",
-                }),
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ ...data, source: "HudREI Website - Wizard" }),
             });
 
             const result = await response.json();
 
             if (result.success) {
                 setSubmitted(true);
-                // toast({ ... }); // Removed toast in favor of inline success
-                reset();
-                setAddressQuery("");
             } else {
                 throw new Error(result.error || "Submission failed");
             }
@@ -120,511 +141,297 @@ const Contact = () => {
         }
     };
 
-    const steps = [
-        {
-            number: "1",
-            text: "Contact Us: Fill out our simple form or call us directly. Tell us about your property and your situation.",
-        },
-        {
-            number: "2",
-            text: "Free Consultation: A specialist would give you a call, understand your situation and goals so we can present an offer that fits your needs.",
-        },
-        {
-            number: "3",
-            text: "Get Your Cash Offer: If we are a good fit, we present a fair cash offer that actually closes.",
-        },
-        {
-            number: "4",
-            text: "Close on Your Timeline: If you accept the cash offer. We work with a local title company to handle all the paperwork. You choose the closing date whether that's next week or next month, And we pay all closing costs.",
-        },
-    ];
-
-    const promises = [
-        "As-Is Purchase – No repairs, cleaning, or showings required",
-        "Fast Offers – Usually within 24 hour",
-        "Flexible Closings – You choose the date that works best for you",
-        "No Hidden Costs – We cover the closing fee",
-    ];
-
-
-    // 🔗 Get address from Hero
-    useEffect(() => {
-        if (location.state?.streetAddress) {
-            setValue("streetAddress", location.state.streetAddress, { shouldValidate: true });
-            setAddressQuery(location.state.streetAddress);
-
-            setTimeout(() => {
-                formRef.current?.scrollIntoView({ behavior: "smooth" });
-            }, 300);
+    // Enter key support
+    const handleKeyDown = (e: React.KeyboardEvent) => {
+        if (e.key === 'Enter' && currentStep < STEPS.length - 1) {
+            e.preventDefault();
+            nextStep();
         }
-    }, [location.state, setValue]);
+    };
 
-    const [isComparisonOpen, setIsComparisonOpen] = useState(false);
+    // --- Render Wizard Steps ---
+    const renderStepContent = () => {
+        switch (currentStep) {
+            case 0: // Name
+                return (
+                    <div className="space-y-10 py-4">
+                        <div className="text-center space-y-3">
+                            <h2 className="text-3xl md:text-4xl font-bold text-[#01313c]">Let's get started.</h2>
+                            <p className="text-lg md:text-xl text-gray-400 font-medium">What is your full name?</p>
+                        </div>
+                        <div className="max-w-xl mx-auto">
+                            <Input
+                                {...register("fullName")}
+                                autoFocus
+                                placeholder="Type your full name..."
+                                className="h-16 text-xl px-6 rounded-2xl border-2 border-[#01313c]/40 focus-visible:ring-0 focus-visible:border-[#01313c] bg-white transition-all"
+                            />
+                            {errors.fullName && <p className="text-red-500 mt-3 text-center font-medium">{errors.fullName.message}</p>}
+                        </div>
+                    </div>
+                );
+            case 1: // Phone
+                return (
+                    <div className="space-y-10 py-4">
+                        <div className="text-center space-y-3">
+                            <h2 className="text-3xl md:text-4xl font-bold text-[#01313c]">Nice to meet you!</h2>
+                            <p className="text-lg md:text-xl text-gray-400 font-medium">What's the best number to reach you?</p>
+                        </div>
+                        <div className="max-w-xl mx-auto">
+                            <Input
+                                {...register("phone")}
+                                autoFocus
+                                type="tel"
+                                placeholder="(555) 555-5555"
+                                className="h-16 text-xl px-6 rounded-2xl border-2 border-[#01313c]/40 focus-visible:ring-0 focus-visible:border-[#01313c] bg-white transition-all"
+                            />
+                            {errors.phone && <p className="text-red-500 mt-3 text-center font-medium">{errors.phone.message}</p>}
+                        </div>
+                    </div>
+                );
+            case 2: // Email
+                return (
+                    <div className="space-y-10 py-4">
+                        <div className="text-center space-y-3">
+                            <h2 className="text-3xl md:text-4xl font-bold text-[#01313c]">Almost there.</h2>
+                            <p className="text-lg md:text-xl text-gray-400 font-medium">What is your email address?</p>
+                        </div>
+                        <div className="max-w-xl mx-auto">
+                            <Input
+                                {...register("email")}
+                                autoFocus
+                                type="email"
+                                placeholder="name@example.com"
+                                className="h-16 text-xl px-6 rounded-2xl border-2 border-[#01313c]/40 focus-visible:ring-0 focus-visible:border-[#01313c] bg-white transition-all"
+                            />
+                            {errors.email && <p className="text-red-500 mt-3 text-center font-medium">{errors.email.message}</p>}
+                        </div>
+                    </div>
+                );
+            case 3: // Address
+                return (
+                    <div className="space-y-12 py-8">
+                        <div className="text-center space-y-4">
+                            <h2 className="text-4xl md:text-5xl font-black text-[#01313c] tracking-tight">Property Details</h2>
+                            <p className="text-2xl md:text-3xl text-gray-400 font-medium tracking-tight">Where is the house located?</p>
+                        </div>
+                        <div className="max-w-lg mx-auto space-y-4">
+                            <div className="relative">
+                                <Input
+                                    {...register("streetAddress")}
+                                    ref={(e) => {
+                                        register("streetAddress").ref(e);
+                                        // @ts-ignore
+                                        addressInputRef.current = e;
+                                    }}
+                                    onChange={(e) => {
+                                        register("streetAddress").onChange(e);
+                                        setAddressQuery(e.target.value);
+                                    }}
+                                    placeholder="Street Address"
+                                    className="h-16 text-lg px-6 rounded-xl border-2 border-[#01313c]/40 focus-visible:ring-0 focus-visible:border-[#01313c] bg-white transition-all"
+                                />
+                                <AddressAutocompletePortal
+                                    anchorRef={addressInputRef}
+                                    results={results}
+                                    onSelect={(val) => {
+                                        setValue("streetAddress", val, { shouldValidate: true });
+                                        setAddressQuery(val);
+                                        clearResults();
+                                    }}
+                                    onClose={clearResults}
+                                />
+                                {errors.streetAddress && <p className="text-red-500 mt-1">{errors.streetAddress.message}</p>}
+                            </div>
 
-    const comparisonData = [
-        { label: "Commissions / Fees:", agent: "6% on average is paid by you, the seller", hudrei: "NONE" },
-        { label: "Who Pays Closing Costs?:", agent: "2% on average is paid by you, the seller", hudrei: "NONE – We pay all costs" },
-        { label: "Inspection & Financing Contingency*:", agent: "Yes, sales can fall through", hudrei: "NONE" },
-        { label: "Appraisal Needed:", agent: "Yes, the sale is often subject to appraisal", hudrei: "NONE – We make cash offers" },
-        { label: "Average Days Until Sold:", agent: "+/- 91 Days", hudrei: "IMMEDIATE CASH OFFER" },
-        { label: "Number of Showings:", agent: "It Depends", hudrei: "1 (Just Us)" },
-        { label: "Closing Date:", agent: "30-60 +/- days after accepting buyers offer", hudrei: "The Date Of YOUR CHOICE" },
-        { label: "Who Pays For Repairs?:", agent: "Negotiated During Inspection Period", hudrei: "NONE – We pay for all repairs" },
-    ];
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <Input
+                                        {...register("city")}
+                                        placeholder="City"
+                                        className="h-16 text-lg px-6 rounded-xl border-2 border-[#01313c]/40 focus-visible:ring-0 focus-visible:border-[#01313c] bg-white transition-all"
+                                    />
+                                    {errors.city && <p className="text-red-500 mt-1">{errors.city.message}</p>}
+                                </div>
+                                <div>
+                                    <Input
+                                        {...register("state")}
+                                        placeholder="State"
+                                        className="h-16 text-lg px-6 rounded-xl border-2 border-[#01313c]/40 focus-visible:ring-0 focus-visible:border-[#01313c] bg-white transition-all"
+                                    />
+                                    {errors.state && <p className="text-red-500 mt-1">{errors.state.message}</p>}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                );
+            case 4: // Timeline
+                return (
+                    <div className="space-y-12 py-8">
+                        <div className="text-center space-y-4">
+                            <h2 className="text-4xl md:text-5xl font-black text-[#01313c] tracking-tight">One last thing.</h2>
+                            <p className="text-2xl md:text-3xl text-gray-400 font-medium tracking-tight">How soon are you looking to sell?</p>
+                        </div>
+                        <div className="max-w-md mx-auto">
+                            <Controller
+                                name="timeline"
+                                control={control}
+                                render={({ field }) => (
+                                    <Select value={field.value} onValueChange={field.onChange}>
+                                        <SelectTrigger className="h-16 text-lg px-6 rounded-2xl border-2 border-[#01313c]/40 focus-visible:ring-0 focus-visible:border-[#01313c] bg-white transition-all">
+                                            <SelectValue placeholder="Select your timeline..." />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem className="text-white" value="asap">As soon as possible (1-2 weeks)</SelectItem>
+                                            <SelectItem className="text-white" value="30days">Within 30 days</SelectItem>
+                                            <SelectItem className="text-white" value="60days">Within 60-90 days</SelectItem>
+                                            <SelectItem className="text-white" value="JustExploring">Just Exploring options</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                )}
+                            />
+                            {errors.timeline && <p className="text-red-500 mt-2 text-center">{errors.timeline.message}</p>}
+                        </div>
+                    </div>
+                );
+            case 5: // Submit
+                return (
+                    <div className="space-y-8">
+                        <div className="text-center space-y-3">
+                            <div className="w-16 h-16 bg-accent/10 text-accent rounded-full flex items-center justify-center mx-auto mb-4">
+                                <Check className="w-8 h-8" />
+                            </div>
+                            <h2 className="text-3xl md:text-4xl font-bold text-[#01313c]">You're All Set!</h2>
+                            <p className="text-lg md:text-xl text-gray-400 font-medium">Ready to get your cash offer?</p>
+                        </div>
 
+                        <div className="max-w-md mx-auto bg-white p-8 rounded-3xl border-2 border-brand-black/5 shadow-sm">
+                            <div className="flex items-start gap-4">
+                                <input
+                                    {...register("consent")}
+                                    type="checkbox"
+                                    id="consent-check"
+                                    className="mt-1 w-5 h-5 accent-[#01313c]"
+                                />
+                                <label htmlFor="consent-check" className="text-sm text-brand-black/60 cursor-pointer select-none leading-relaxed">
+                                    I agree to be contacted by HudREI via phone, email, or SMS about my property. I can opt out at any time.
+                                </label>
+                            </div>
+                            {errors.consent && <p className="text-red-500 mt-4 text-center font-medium">{errors.consent.message}</p>}
 
+                            <Button
+                                onClick={handleSubmit(onSubmit)}
+                                disabled={isSubmitting}
+                                className="w-full mt-8 rounded-2xl py-7 text-xl font-bold bg-[#01313c] text-white hover:bg-[#01313c]/90 shadow-xl hover:scale-[1.02] active:scale-[0.98] transition-all"
+                            >
+                                {isSubmitting ? <Loader2 className="animate-spin w-7 h-7" /> : "Get My Cash Offer Now"}
+                            </Button>
+                        </div>
+                    </div>
+                );
+            default:
+                return null;
+        }
+    }
 
     return (
         <>
             <Helmet>
-                <title>Contact HudREI | Get Your Cash Offer Today - We Buy Houses Indiana</title>
-                <meta
-                    name="description"
-                    content="Ready to sell your house fast in Indiana? Contact HudREI for a fair cash offer within 24 hours. Call (317) 795-1990 or fill out our form."
-                />
-                <link rel="canonical" href="https://hudrei.com/contact" />
+                <title>Contact HudREI | Get Your Cash Offer Today</title>
+                <meta name="description" content="Sell your house fast in Indiana. Get a fair cash offer from HudREI." />
             </Helmet>
-            <Header />
-            <div className="min-h-screen bg-white">
-
-
-                {/* Hero Section */}
-                <section className="relative min-h-[500px] py-20 flex items-center overflow-hidden">
-                    <div className=" inset-0  bg-cover bg-center" >
-                        {/* Overlay */}
-                        <div className="absolute inset-0 bg-[#012b3a]" />
-                    </div>
-
-
-                    <div className="container mx-auto px-4 py-20 relative z-10">
-                        <div className="grid lg:grid-cols-2 gap-12 items-center">
-                            {/* Left Content */}
-                            <div className="text-white flex flex-col " data-aos="fade-right">
-                                <h1 className="text-4xl md:text-7xl  font-extrabold mb-6 tracking-tight text-white">
-                                    Contact HudREI: <span className="text-accent relative inline-block">
-
-                                        <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
-                                            <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
-                                        </svg>
-                                    </span> Get Your
-                                    <span className="text-accent relative inline-block">
-                                        Cash Offer{" "}  Today
-                                        <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
-                                            <path d="M0,5 Q25,0 50,5 T100,5" fill="none" stroke="currentColor" strokeWidth="6" />
-                                        </svg>
-                                    </span>
-                                </h1>
-                                <p className="text-lg text-white/90 mb-4">
-                                    You deserve peace of mind when making a big decision.
-                                </p>
-                                <p className="text-white/80 mb-4">
-                                    Our job is to listen first, then guide you through every option so you can move
-                                    forward with clarity and confidence.
-                                </p>
-                                <p className="text-white/80 mb-4">
-                                    Fill out the form or give us a call. We're ready to answer your questions and help you explore your selling options in Indiana.
-                                </p>
-
-                            </div>
-
-                            {/* Right - Direct Contact Card */}
-                            <div
-                                className="bg-white/10 backdrop-blur-md border-2 border-white/30 rounded-2xl p-8 animate-fade-in"
-                                data-aos="fade-left"
-                            >
-                                <div className="text-center mb-6">
-                                    <p className="text-white text-lg font-medium mb-2">Direct contact</p>
-                                    <div className="">
-                                        <img src={hudReiLogo} alt="HudREI" className=" w-32 h-32 mx-auto bg-white rounded-lg flex items-center justify-center mb-4" />
-                                    </div>
-                                </div>
-                                <div className="space-y-4">
-                                    <a
-                                        href="tel:3177951990"
-                                        className="flex items-center justify-center gap-3 bg-primary/90 hover:bg-primary text-white py-3 px-6 rounded-lg transition-all"
-                                    >
-                                        <Phone className="w-5 h-5" />
-                                        (317) 795-1990
-                                    </a>
-                                    <a
-                                        href="mailto:office@hudrei.com"
-                                        className="flex items-center justify-center gap-3 bg-gray-800/80 hover:bg-gray-800 text-white py-3 px-6 rounded-lg transition-all"
-                                    >
-                                        <Mail className="w-5 h-5" />
-                                        Email Us Directly
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                {/* Process & Form Section */}
-                <section className="py-20 bg-white" >
-                    <div className="container mx-auto px-4" >
-                        <div className="flex flex-col gap-8 lg:grid lg:grid-cols-2 lg:gap-16 items-start">
-
-                            {/* LEFT COLUMN CONTENT */}
-                            {/* Mobile: Interleaved via 'contents' + 'order' | Desktop: Standard Column */}
-                            <div className="contents lg:block lg:space-y-8">
-
-                                {/* 1. Title/Intro (Mobile Order 1) */}
-                                <div className="order-1 lg:order-none">
-                                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-8" data-aos="fade-down">
-                                        What's our process look like?
-                                    </h2>
-
-                                    <div className="mb-0">
-                                        <h3 className="text-xl font-bold text-gray-900 mb-4" data-aos="zoom-in">
-                                            Selling Your Indiana Home Made Simple
-                                        </h3>
-                                        <p className="text-gray-600 mb-4" data-aos="zoom-in">
-                                            Tired of the stress, repairs, or endless waiting that come with selling a
-                                            house? At HudREI, our mission is to Reimagine how smart sellers today sell
-                                            their home. We buy properties exactly as they are no matter the condition, no
-                                            matter the location.
-                                        </p>
-                                        <p className="text-gray-600 mb-0" data-aos="zoom-in">
-                                            You can trust us to handle everything quickly, respectfully, and without the
-                                            usual headaches. Say goodbye to the burden of selling and hello to a simple,
-                                            hassle-free experience.
-                                        </p>
-                                    </div>
-                                </div>
-
-                                {/* 3. How It Works (Mobile Order 3) */}
-                                <div className="order-3 lg:order-none">
-                                    <div className="bg-gray-50 rounded-2xl p-8 border border-gray-100 shadow-sm" data-aos="fade-up">
-                                        <h4 className="text-2xl font-bold text-gray-900 mb-6">How It Works</h4>
-                                        <div className="space-y-6">
-                                            {steps.map((step, index) => (
-                                                <div
-                                                    key={index}
-                                                    className="flex gap-4 items-start"
-                                                    style={{ animationDelay: `${index * 0.1}s` }}
-                                                >
-                                                    <div className="flex-shrink-0 w-10 h-10 bg-accent text-white rounded-full flex items-center justify-center text-lg font-bold shadow-md">
-                                                        {step.number}
-                                                    </div>
-                                                    <p className="text-gray-700 font-medium pt-1 leading-relaxed">{step.text}</p>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </div>
-
-                                {/* 4. Our Promise (Mobile Order 4) */}
-                                <div className="order-4 lg:order-none">
-                                    <div className="bg-[#0b434a] text-white rounded-2xl p-8 shadow-md relative overflow-hidden" data-aos="fade-up">
-                                        <div className="absolute top-0 right-0 w-32 h-32 bg-white/5 rounded-full blur-3xl" />
-                                        <h4 className="text-2xl font-bold text-white mb-6 relative z-10">Our Promise</h4>
-                                        <div className="space-y-4 relative z-10">
-                                            {promises.map((promise, index) => (
-                                                <div key={index} className="flex items-start gap-3">
-                                                    <div className="flex-shrink-0 w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center mt-0.5">
-                                                        <CheckCircle2 className="w-4 h-4 text-accent" />
-                                                    </div>
-                                                    <span className="text-white/90 font-medium">{promise}</span>
-                                                </div>
-                                            ))}
-                                        </div>
-                                        <div className="mt-8 pt-6 border-t border-white/10 relative z-10">
-                                            <p className="text-white/80 italic text-sm mb-4">
-                                                "Sometimes we can even have a check in your hand the very same day."
-                                            </p>
-                                            <p className="text-white/90 text-sm">
-                                                Take the first step now. Call{" "}
-                                                <a href="tel:3177951990" className="text-accent font-bold hover:text-accent/80 transition-colors">
-                                                    (317) 795-1990
-                                                </a>{" "}
-                                                or fill out the form for your offer.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-
-                            </div>
-
-
-                            {/* RIGHT COLUMN CONTENT */}
-                            {/* Mobile: Interleaved via 'contents' + 'order' | Desktop: Standard Column */}
-                            <div className="contents lg:block lg:space-y-8">
-
-                                {/* 2. Contact Form (Mobile Order 2) */}
-                                <div className="order-2 lg:order-none w-full">
-                                    <div
-                                        id="contact-form"
-                                        ref={formRef}
-                                        className="bg-white rounded-2xl shadow-xl border border-gray-100 p-8 scroll-mt-32"
-                                        data-aos="zoom-in"
-                                    >
-                                        {submitted ? (
-                                            <div className="flex flex-col items-center justify-center text-center py-10">
-                                                <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mb-6">
-                                                    <CheckCircle2 className="w-10 h-10 text-green-600" />
-                                                </div>
-                                                <h3 className="text-2xl font-bold mb-2">Request Received!</h3>
-                                                <p className="text-gray-600 mb-8">We'll review your property and contact you within 24 hours with your cash offer.</p>
-                                                {/* User asked for consistent button style ("glow-button" usually) */}
-                                                <Button onClick={() => setSubmitted(false)} className="rounded-xl px-8 py-3 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all">
-                                                    Return Home
-                                                </Button>
-                                            </div>
-                                        ) : (
-                                            <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-                                                <FormField label="Full Name" error={errors.fullName?.message} required>
-                                                    <Input
-                                                        {...register("fullName")}
-                                                        placeholder="Full Name"
-                                                        className="border-accent/30 focus:border-accent text-black bg-white"
-                                                    />
-                                                </FormField>
-
-                                                <FormField label="Phone" error={errors.phone?.message} required>
-                                                    <Input
-                                                        {...register("phone")}
-                                                        type="tel"
-                                                        placeholder="Phone"
-                                                        className="border-accent/30 focus:border-accent text-black bg-white"
-                                                    />
-                                                </FormField>
-
-                                                <FormField label="Email" error={errors.email?.message} required>
-                                                    <Input
-                                                        {...register("email")}
-                                                        type="email"
-                                                        placeholder="Email"
-                                                        className="border-accent/30 focus:border-accent text-black bg-white"
-                                                    />
-                                                </FormField>
-
-                                                <FormField label="Street Address" error={errors.streetAddress?.message} required>
-                                                    <div className="relative">
-                                                        <Input
-                                                            {...register("streetAddress")}
-                                                            ref={(e) => {
-                                                                register("streetAddress").ref(e);
-                                                                // @ts-ignore
-                                                                addressInputRef.current = e;
-                                                            }}
-                                                            onChange={(e) => {
-                                                                register("streetAddress").onChange(e);
-                                                                setAddressQuery(e.target.value);
-                                                            }}
-                                                            placeholder="Street Address"
-                                                            className="text-black bg-white border-accent/30 focus:border-accent"
-                                                        />
-                                                        <AddressAutocompletePortal
-                                                            anchorRef={addressInputRef}
-                                                            results={results}
-                                                            onSelect={(val) => {
-                                                                setValue("streetAddress", val, { shouldValidate: true });
-                                                                setAddressQuery(val);
-                                                                clearResults();
-                                                            }}
-                                                            onClose={clearResults}
-                                                        />
-                                                    </div>
-                                                </FormField>
-
-                                                <div className="grid grid-cols-2 gap-4">
-                                                    <FormField label="City" error={errors.city?.message} required>
-                                                        <Input
-                                                            {...register("city")}
-                                                            placeholder="City"
-                                                            className="border-accent/30 focus:border-accent text-black bg-white"
-                                                        />
-                                                    </FormField>
-                                                    <FormField label="State" error={errors.state?.message} required>
-                                                        <Input
-                                                            {...register("state")}
-                                                            placeholder="State"
-                                                            className="border-accent/30 focus:border-accent text-black bg-white"
-                                                        />
-                                                    </FormField>
-                                                </div>
-
-                                                <FormField label="How Soon Do You Want To Sell?" error={errors.timeline?.message} required>
-                                                    <Controller
-                                                        name="timeline"
-                                                        control={control}
-                                                        render={({ field }) => (
-                                                            <Select
-                                                                value={field.value}
-                                                                onValueChange={field.onChange}
-                                                            >
-                                                                <SelectTrigger className="w-full h-10 bg-white border-accent/30 focus:border-accent text-black">
-                                                                    <SelectValue placeholder="Select timeline" />
-                                                                </SelectTrigger>
-                                                                <SelectContent>
-                                                                    <SelectItem value="asap">As soon as possible</SelectItem>
-                                                                    <SelectItem value="30days">Within 30 days</SelectItem>
-                                                                    <SelectItem value="60days">Within 60-90 days</SelectItem>
-                                                                    <SelectItem value="JustExploring">Just Exploring</SelectItem>
-                                                                </SelectContent>
-                                                            </Select>
-                                                        )}
-                                                    />
-                                                </FormField>
-
-                                                <div className="space-y-1">
-                                                    <div className="flex items-start gap-2 text-sm text-gray-500">
-                                                        <input
-                                                            {...register("consent")}
-                                                            type="checkbox"
-                                                            className="mt-1 accent-accent"
-                                                        />
-                                                        <span>
-                                                            Free offer, no pressure. Your info stays private. Submit to be contactedopt out anytime.
-                                                        </span>
-                                                    </div>
-                                                    {errors.consent && (
-                                                        <p className="text-accent text-xs font-medium">{errors.consent.message}</p>
-                                                    )}
-                                                </div>
-
-                                                <Button
-                                                    type="submit"
-                                                    disabled={isSubmitting}
-                                                    className="w-full rounded-xl py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
-                                                >
-                                                    {isSubmitting ? "Submitting..." : "Get My Offer Now!"}
-                                                </Button>
-
-                                                <div className="text-center text-sm text-gray-500">
-                                                    <a href="#" className="hover:underline">
-                                                        Privacy Policy
-                                                    </a>{" "}
-                                                    |{" "}
-                                                    <a href="#" className="hover:underline">
-                                                        Terms of Service
-                                                    </a>
-                                                </div>
-                                            </form>
-                                        )}
-                                    </div>
-                                </div>
-
-                                {/* 5. Comparison Card (Mobile Order 5) */}
-                                <div className="order-5 lg:order-none">
-                                    <div className="bg-gradient-to-br from-primary to-emerald-600 rounded-2xl p-8 text-white relative overflow-hidden" data-aos="fade-up">
-                                        <h3 className="text-2xl font-bold mb-4 relative z-10">Listing vs. Selling To Us</h3>
-                                        <p className="text-white/90 mb-6 relative z-10">
-                                            Which route is quicker?
-                                            <br />
-                                            Puts more cash in your pocket?
-                                            <br />
-                                            Has less hassle?
-                                        </p>
-                                        <Button
-                                            className="w-full relative z-10 rounded-xl py-6 text-base font-bold bg-white text-primary hover:bg-gray-100 glow-button shadow-lg transition-all"
-                                            onClick={() => setIsComparisonOpen(true)}
-                                        >
-                                            See The Difference
-                                            <ArrowRight className="w-4 h-4 ml-2" />
-                                        </Button>
-
-                                        {/* Decoration */}
-                                        <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-white/10 rounded-full blur-3xl pointer-events-none" />
-                                    </div>
-
-                                    {/* Comparison Modal */}
-                                    <AnimatePresence>
-                                        {isComparisonOpen && (
-                                            <motion.div
-                                                initial={{ opacity: 0 }}
-                                                animate={{ opacity: 1 }}
-                                                exit={{ opacity: 0 }}
-                                                className="fixed inset-0 space-y-0  backdrop-blur-sm  z-50 flex items-center justify-center p-4"
-                                                onClick={() => setIsComparisonOpen(false)}
-                                            >
-                                                <motion.div
-                                                    initial={{ opacity: 0, scale: 0.9, y: 20 }}
-                                                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                                                    exit={{ opacity: 0, scale: 0.9, y: 20 }}
-                                                    transition={{ type: "spring", damping: 25, stiffness: 300 }}
-                                                    className="bg-white rounded-2xl shadow-2xl  w-full max-h-[90vh] overflow-auto"
-                                                    onClick={(e) => e.stopPropagation()}
-                                                >
-                                                    {/* Modal Header */}
-                                                    <div className="flex items-center justify-between p-6 border-b border-gray-200">
-                                                        <h3 className="text-2xl font-bold text-gray-900">
-                                                            Listing vs. Selling To HudREI
-                                                        </h3>
-                                                        <button
-                                                            onClick={() => setIsComparisonOpen(false)}
-                                                            className="p-2 hover:bg-gray-100 rounded-full transition-colors"
-                                                        >
-                                                            <X className="w-6 h-6 text-gray-500" />
-                                                        </button>
-                                                    </div>
-
-                                                    {/* Comparison Table */}
-                                                    <div className="p-6">
-                                                        <div className="overflow-x-auto">
-                                                            <table className="w-full">
-                                                                <thead>
-                                                                    <tr className="border-b-2 border-gray-200">
-                                                                        <th className="text-left py-4 px-4 font-bold text-gray-900"></th>
-                                                                        <th className="text-left py-4 px-4 font-bold text-gray-700">
-                                                                            Selling w/ An Agent
-                                                                        </th>
-                                                                        <th className="text-left py-4 px-4">
-                                                                            <div className="flex flex-col items-start">
-                                                                                <span className="text-sm text-gray-500 font-medium">SOLD To</span>
-                                                                                <span className="text-2xl font-bold text-primary">HudREI</span>
-                                                                            </div>
-                                                                        </th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    {comparisonData.map((row, index) => (
-                                                                        <motion.tr
-                                                                            key={index}
-                                                                            initial={{ opacity: 0, x: -20 }}
-                                                                            animate={{ opacity: 1, x: 0 }}
-                                                                            transition={{ delay: index * 0.05 }}
-                                                                            className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
-                                                                        >
-                                                                            <td className="py-4 px-4 font-semibold text-gray-900">
-                                                                                {row.label}
-                                                                            </td>
-                                                                            <td className="py-4 px-4 text-gray-600 italic">
-                                                                                {row.agent}
-                                                                            </td>
-                                                                            <td className="py-4 px-4 text-primary font-medium">
-                                                                                {row.hudrei}
-                                                                            </td>
-                                                                        </motion.tr>
-                                                                    ))}
-                                                                </tbody>
-                                                            </table>
-                                                        </div>
-
-                                                        {/* CTA */}
-                                                        <div className="mt-8 text-center">
-                                                            <Button
-                                                                onClick={() => setIsComparisonOpen(false)}
-                                                                className="rounded-xl px-8 py-6 text-base font-bold glow-button shadow-lg shadow-primary/20 hover:shadow-xl hover:-translate-y-0.5 transition-all"
-                                                            >
-                                                                Get My Cash Offer Now!
-                                                            </Button>
-                                                        </div>
-                                                    </div>
-                                                </motion.div>
-                                            </motion.div>
-                                        )}
-                                    </AnimatePresence>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <QuestionsSection />
-
+            <div className="absolute top-6 left-6 z-50">
+                <Link to="/">
+                    <img src={hudReiLogo} alt="HudREI" className="h-12 w-auto" />
+                </Link>
             </div>
 
+            <div className="min-h-screen relative flex flex-col pt-20 bg-gray-50">
+                {/* Background Pattern */}
+                <div className="absolute inset-0 z-0 overflow-hidden text-transparent">
+                    <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[100px] -mr-32 -mt-32" />
+                    <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[100px] -ml-32 -mb-32" />
+                </div>
+
+                {/* Main Content */}
+                <div className="relative z-10 container mx-auto px-4 flex-grow flex flex-col justify-center py-12">
+
+                    <div className="text-center mb-12">
+                        <h1 className="text-4xl md:text-6xl font-extrabold text-brand-black mb-4 tracking-tight">
+                            Contact HudREI: <br className="hidden md:block" />
+                            Get Your <span className="text-accent">Cash Offer Today</span>
+                        </h1>
+                        <p className="text-brand-black/70 text-lg">It only takes 30 seconds to get started.</p>
+                    </div>
+
+                    {submitted ? (
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            animate={{ opacity: 1, scale: 1 }}
+                            className="bg-white rounded-3xl shadow-2xl p-12 max-w-2xl mx-auto w-full text-center"
+                        >
+                            <div className="w-24 h-24 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8">
+                                <Check className="w-12 h-12 text-green-600" />
+                            </div>
+                            <h2 className="text-4xl font-bold text-brand-black mb-4">Request Received!</h2>
+                            <p className="text-xl text-brand-black/70 mb-8 leading-relaxed">
+                                Thanks {watch("fullName").split(" ")[0]}! We've received your details and are already reviewing your property. A specialist will reach out to you within 24 hours.
+                            </p>
+                            <Button asChild className="rounded-xl px-8 py-4 text-lg">
+                                <Link to="/">Return to Home</Link>
+                            </Button>
+                        </motion.div>
+                    ) : (
+                        <div className="bg-white rounded-[2.5rem] shadow-2xl border border-white/20 overflow-hidden max-w-2xl mx-auto w-full min-h-[500px] flex flex-col">
+                            {/* Progress Bar */}
+                            <div className="h-2 bg-gray-100 w-full rounded">
+                                <div
+                                    className="h-full bg-accent transition-all duration-500 ease-out"
+                                    style={{ width: `${(currentStep / (STEPS.length - 1)) * 100}%` }}
+                                />
+                            </div>
+
+                            {/* Wizard Body */}
+                            <div className="flex-grow p-8 md:p-12 flex flex-col justify-center" onKeyDown={handleKeyDown}>
+                                <AnimatePresence mode="wait">
+                                    <motion.div
+                                        key={currentStep}
+                                        initial={{ opacity: 0, x: 20 }}
+                                        animate={{ opacity: 1, x: 0 }}
+                                        exit={{ opacity: 0, x: -20 }}
+                                        transition={{ duration: 0.3 }}
+                                        className="w-full"
+                                    >
+                                        {renderStepContent()}
+                                    </motion.div>
+                                </AnimatePresence>
+                            </div>
+
+                            {/* Footer / Navigation */}
+                            <div className="p-8 md:p-12 bg-white flex justify-between items-center relative z-20">
+                                {currentStep > 0 ? (
+                                    <Button
+                                        variant="ghost"
+                                        onClick={prevStep}
+                                        className="text-brand-black/60 hover:text-brand-black hover:bg-transparent px-0 font-bold"
+                                    >
+                                        <ChevronLeft className="w-5 h-5 mr-1" /> Back
+                                    </Button>
+                                ) : <div />}
+
+                                {currentStep < STEPS.length - 1 && (
+                                    <Button
+                                        onClick={nextStep}
+                                        className="rounded-xl px-10 py-7 text-lg font-bold bg-[#01313c] text-white hover:bg-[#01313c]/90 shadow-lg hover:shadow-xl hover:-translate-y-0.5 transition-all flex items-center gap-3"
+                                    >
+                                        Next Step <ChevronRight className="w-5 h-5" />
+                                    </Button>
+                                )}
+                            </div>
+                        </div>
+                    )}
+                </div>
+            </div>
         </>
     );
 };

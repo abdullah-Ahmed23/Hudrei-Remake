@@ -45,7 +45,7 @@ const TrustSection = () => {
           data-aos="fade-up"
           data-aos-duration="900"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+          <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-brand-black mb-6 md:mb-8 tracking-tight">
             Why Sell to <span className="text-accent relative inline-block">
               HudREI?
               <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -53,7 +53,7 @@ const TrustSection = () => {
               </svg>
             </span>
           </h2>
-          <p className="text-3xl sm:text-4xl lg:text-2xl text-black max-w-2xl mx-auto">
+          <p className="text-3xl sm:text-4xl lg:text-2xl text-brand-black max-w-2xl mx-auto">
             We make selling your home simple, fast, and stress-free.
             Here's what makes us different.
           </p>
@@ -131,3 +131,6 @@ const TrustSection = () => {
 };
 
 export default TrustSection;
+
+
+

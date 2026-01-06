@@ -22,11 +22,7 @@ import SEO from "@/components/SEO";
 import { useIsMobile } from "@/hooks/use-mobile";
 
 const careers = [
-    {
-        title: "Cold Caller",
-        icon: Phone,
-        desc: "Professional outreach to potential sellers. Requires excellent communication and persistence.",
-    },
+
     {
         title: "Acquisitions Property Specialist",
         icon: Briefcase,
@@ -51,6 +47,11 @@ const careers = [
         title: "Marketing Developer",
         icon: Briefcase,
         desc: "Execute marketing strategies, manage digital presence, and generate high-quality leads for the acquisitions team.",
+    },
+    {
+        title: "Cold Caller",
+        icon: Phone,
+        desc: "Professional outreach to potential sellers. Requires excellent communication and persistence.",
     },
 ];
 
@@ -93,7 +94,7 @@ const CareersSection = () => {
                             <Search className="w-4 h-4" />
                             <span>We Are Hiring</span>
                         </div>
-                        <h1 className="text-4xl md:text-7xl font-extrabold mb-6 text-gray-900 leading-tight tracking-tight">
+                        <h1 className="text-4xl md:text-7xl font-extrabold mb-6 text-brand-black leading-tight tracking-tight">
                             Build Your Future at <span className="text-accent relative inline-block">
                                 HudREI
                                 <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -101,7 +102,7 @@ const CareersSection = () => {
                                 </svg>
                             </span>
                         </h1>
-                        <p className="text-xl text-gray-600 leading-relaxed">
+                        <p className="text-xl text-brand-black/80 leading-relaxed">
                             Join a fast-growing Indiana real estate investment company focused on transparency, innovation, and helping our community. We're looking for driven individuals to help us reimagine the home selling experience.
                         </p>
                     </motion.div>
@@ -122,17 +123,17 @@ const CareersSection = () => {
                                 variants={isMobile ? undefined : item}
                                 data-aos={isMobile ? "fade-up" : undefined}
                                 data-aos-delay={isMobile ? i * 100 : undefined}
-                                className="group bg-white p-8 rounded-2xl border border-gray-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
+                                className="group bg-white p-8 rounded-2xl border border-brand-black/10 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
                             >
                                 <div className="w-14 h-14 mb-8 rounded-2xl bg-accent/10 flex items-center justify-center group-hover:bg-accent group-hover:scale-110 transition-all duration-300">
                                     <role.icon className="w-7 h-7 text-accent group-hover:text-white transition-colors" />
                                 </div>
 
-                                <h3 className="text-2xl font-bold text-gray-900 mb-4 group-hover:text-accent transition-colors">
+                                <h3 className="text-2xl font-bold text-brand-black mb-4 group-hover:text-accent transition-colors">
                                     {role.title}
                                 </h3>
 
-                                <p className="text-gray-600 mb-8 leading-relaxed flex-grow">
+                                <p className="text-brand-black/80 mb-8 leading-relaxed flex-grow">
                                     {role.desc}
                                 </p>
 
@@ -157,28 +158,28 @@ const CareersSection = () => {
                         <div className="grid lg:grid-cols-5 gap-16 items-center">
                             {/* Info Side (2 cols) */}
                             <div className="lg:col-span-2" data-aos="fade-right">
-                                <h2 className="text-3xl md:text-5xl font-bold mb-8 text-gray-900 leading-tight">
+                                <h2 className="text-3xl md:text-5xl font-bold mb-8 text-brand-black leading-tight">
                                     Apply To <span className="text-accent">Join HudREI</span>
                                 </h2>
 
                                 <div className="space-y-8">
-                                    <div className="flex gap-4 p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                                    <div className="flex gap-4 p-6 bg-white rounded-2xl border border-brand-black/10 shadow-sm hover:shadow-md transition-all">
                                         <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
                                             <Briefcase className="w-6 h-6 text-accent" />
                                         </div>
                                         <div>
-                                            <h4 className="text-lg font-bold text-gray-900 mb-1">Modern Culture</h4>
-                                            <p className="text-sm text-gray-600">Strategic systems, automated workflows, and high-performance teams.</p>
+                                            <h4 className="text-lg font-bold text-brand-black mb-1">Modern Culture</h4>
+                                            <p className="text-sm text-brand-black/80">Strategic systems, automated workflows, and high-performance teams.</p>
                                         </div>
                                     </div>
 
-                                    <div className="flex gap-4 p-6 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all">
+                                    <div className="flex gap-4 p-6 bg-white rounded-2xl border border-brand-black/10 shadow-sm hover:shadow-md transition-all">
                                         <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
                                             <Globe className="w-6 h-6 text-accent" />
                                         </div>
                                         <div>
-                                            <h4 className="text-lg font-bold text-gray-900 mb-1">Impactful Work</h4>
-                                            <p className="text-sm text-gray-600">Help Indiana families move forward with confidence and integrity.</p>
+                                            <h4 className="text-lg font-bold text-brand-black mb-1">Impactful Work</h4>
+                                            <p className="text-sm text-brand-black/80">Help Indiana families move forward with confidence and integrity.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -192,14 +193,14 @@ const CareersSection = () => {
                                         <div className="w-10 h-10 rounded-full bg-accent flex items-center justify-center font-bold text-white">H</div>
                                         <div>
                                             <p className="font-bold">HudREI Leadership</p>
-                                            <p className="text-xs text-gray-400 uppercase tracking-widest">Est. Quality</p>
+                                            <p className="text-xs text-brand-black/60 uppercase tracking-widest">Est. Quality</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
                             {/* CTA Side (3 cols) - Replaces Form */}
-                            <div className="lg:col-span-3 bg-white rounded-[2.5rem] shadow-2xl border border-gray-100 p-8 md:p-12 text-center relative overflow-hidden group" data-aos="fade-left">
+                            <div className="lg:col-span-3 bg-white rounded-[2.5rem] shadow-2xl border border-brand-black/10 p-8 md:p-12 text-center relative overflow-hidden group" data-aos="fade-left">
                                 {/* Decorative Background */}
                                 <div className="absolute top-0 right-0 w-[300px] h-[300px] bg-accent/5 rounded-full blur-[80px] -mr-32 -mt-32 transition-all duration-700 group-hover:bg-accent/10" />
 
@@ -207,8 +208,8 @@ const CareersSection = () => {
                                     <div className="w-24 h-24 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse">
                                         <Send className="w-10 h-10 text-accent" />
                                     </div>
-                                    <h3 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">Ready To Make An Impact?</h3>
-                                    <p className="text-gray-600 mb-10 text-xl leading-relaxed max-w-lg mx-auto">
+                                    <h3 className="text-3xl md:text-4xl font-bold text-brand-black mb-6">Ready To Make An Impact?</h3>
+                                    <p className="text-brand-black/80 mb-10 text-xl leading-relaxed max-w-lg mx-auto">
                                         We use a secure external portal to manage our applications efficiently. Click the button below to start your journey with us.
                                     </p>
 
@@ -226,7 +227,7 @@ const CareersSection = () => {
                                         </a>
                                     </Button>
 
-                                    <p className="text-sm text-gray-400 mt-8 font-medium">
+                                    <p className="text-sm text-brand-black/60 mt-8 font-medium">
                                         Takes less than 5 minutes to complete
                                     </p>
                                 </div>
@@ -242,3 +243,6 @@ const CareersSection = () => {
 };
 
 export default CareersSection;
+
+
+

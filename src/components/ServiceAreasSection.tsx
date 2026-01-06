@@ -53,8 +53,8 @@ const ServiceAreasSection = () => {
                     {type === 'city' ? <Globe className="text-accent w-6 h-6 md:w-8 md:h-8" /> : <Map className="text-primary w-6 h-6 md:w-8 md:h-8" />}
                 </div>
                 <div>
-                    <h3 className="text-2xl md:text-3xl font-bold text-gray-900">{title}</h3>
-                    <p className="text-sm md:text-base text-gray-500 font-medium">{subtitle}</p>
+                    <h3 className="text-2xl md:text-3xl font-bold text-brand-black">{title}</h3>
+                    <p className="text-sm md:text-base text-brand-black/70 font-medium">{subtitle}</p>
                 </div>
             </div>
 
@@ -71,7 +71,7 @@ const ServiceAreasSection = () => {
                             to={`/we-buy-houses/${item.toLowerCase().replace(/\s+/g, "-")}`}
                             className={cn(
                                 "flex items-center justify-center text-center px-4 py-3 md:px-6 md:py-3 rounded-xl md:rounded-2xl text-xs md:text-base font-bold transition-all duration-300 w-full md:w-auto",
-                                "bg-white text-gray-800 border border-gray-100",
+                                "bg-white text-brand-black border border-brand-black/10",
                                 type === 'city'
                                     ? "hover:bg-accent hover:text-white hover:border-accent hover:shadow-accent/20"
                                     : "hover:bg-primary hover:text-white hover:border-primary hover:shadow-primary/20",
@@ -101,7 +101,7 @@ const ServiceAreasSection = () => {
                         viewport={{ once: true }}
                         transition={{ duration: 0.6 }}
                     >
-                        <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                        <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-brand-black mb-6 md:mb-8 tracking-tight">
                             We Buy Houses <span className="text-accent relative inline-block">
                                 Throughout Indiana
                                 <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -109,7 +109,7 @@ const ServiceAreasSection = () => {
                                 </svg>
                             </span>
                         </h2>
-                        <p className="text-base md:text-xl text-gray-600 leading-relaxed font-medium px-2">
+                        <p className="text-base md:text-xl text-brand-black/80 leading-relaxed font-medium px-2">
                             HudREI is proud to be a local Indiana leader. Whether your property is in a major metro or a quiet rural community, we provide fair, fast solutions for homeowners across the state.
                         </p>
                     </motion.div>
@@ -130,7 +130,7 @@ const ServiceAreasSection = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.3 }}
-                                    className="bg-white/60 backdrop-blur-md rounded-[2.5rem] p-6 border border-gray-100 shadow-xl"
+                                    className="bg-white/60 backdrop-blur-md rounded-[2.5rem] p-6 border border-brand-black/10 shadow-xl"
                                 >
                                     <CardContent title="Cities" subtitle="Major metro areas" items={cities} type="city" />
                                 </motion.div>
@@ -141,7 +141,7 @@ const ServiceAreasSection = () => {
                                     animate={{ opacity: 1, y: 0 }}
                                     exit={{ opacity: 0, y: -10 }}
                                     transition={{ duration: 0.3 }}
-                                    className="bg-white/60 backdrop-blur-md rounded-[2.5rem] p-6 border border-gray-100 shadow-xl"
+                                    className="bg-white/60 backdrop-blur-md rounded-[2.5rem] p-6 border border-brand-black/10 shadow-xl"
                                 >
                                     <CardContent title="Counties" subtitle="Regional coverage" items={counties} type="county" />
                                 </motion.div>
@@ -157,7 +157,7 @@ const ServiceAreasSection = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="bg-white/40 backdrop-blur-md rounded-[3rem] p-12 border border-gray-100 shadow-2xl shadow-black/5 hover:shadow-black/10 transition-all duration-700"
+                        className="bg-white/40 backdrop-blur-md rounded-[3rem] p-12 border border-brand-black/10 shadow-2xl shadow-black/5 hover:shadow-black/10 transition-all duration-700"
                     >
                         <CardContent title="Cities" subtitle="Major metro areas we serve" items={cities} type="city" />
                     </motion.div>
@@ -167,7 +167,7 @@ const ServiceAreasSection = () => {
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="bg-white/40 backdrop-blur-md rounded-[3rem] p-12 border border-gray-100 shadow-2xl shadow-black/5 hover:shadow-black/10 transition-all duration-700"
+                        className="bg-white/40 backdrop-blur-md rounded-[3rem] p-12 border border-brand-black/10 shadow-2xl shadow-black/5 hover:shadow-black/10 transition-all duration-700"
                     >
                         <CardContent title="Counties" subtitle="Regional coverage across Indiana" items={counties} type="county" />
                     </motion.div>
@@ -180,7 +180,7 @@ const ServiceAreasSection = () => {
                     transition={{ delay: 0.4 }}
                     className="mt-12 md:mt-20 text-center"
                 >
-                    <p className="text-gray-600 mb-8 md:mb-10 text-lg md:text-xl font-medium max-w-3xl mx-auto px-4">
+                    <p className="text-brand-black/80 mb-8 md:mb-10 text-lg md:text-xl font-medium max-w-3xl mx-auto px-4">
                         Don't see your area listed? No worries. We buy houses in <span className="text-accent font-bold">all 92 Indiana counties</span>. Contact us today to see if we can help you.
                     </p>
 
@@ -197,3 +197,6 @@ const ServiceAreasSection = () => {
 };
 
 export default ServiceAreasSection;
+
+
+

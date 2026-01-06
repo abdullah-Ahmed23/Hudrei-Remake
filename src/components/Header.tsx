@@ -124,7 +124,7 @@ const Header = () => {
                       "px-4 py-2 text-sm font-medium rounded-full transition-all duration-300",
                       isActive
                         ? "text-primary bg-primary/10"
-                        : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                        : "text-brand-black hover:text-brand-black hover:bg-gray-100"
                     )
                   }
                 >
@@ -144,7 +144,7 @@ const Header = () => {
                     "flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-full transition-all duration-300",
                     learnOpen
                       ? "text-primary bg-primary/10"
-                      : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                      : "text-brand-black hover:text-brand-black hover:bg-gray-100"
                   )}
                 >
                   Learn
@@ -165,7 +165,7 @@ const Header = () => {
                       : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
                   )}
                 >
-                  <div className="bg-white rounded-2xl shadow-xl shadow-black/10 border border-gray-100 p-2 overflow-hidden">
+                  <div className="bg-white rounded-2xl shadow-xl shadow-black/10 border border-brand-black/10 p-2 overflow-hidden">
                     {learnDropdown.map((item, idx) => (
                       <button
                         key={item.to}
@@ -177,10 +177,10 @@ const Header = () => {
                           <item.icon className="w-5 h-5 text-primary" />
                         </div>
                         <div>
-                          <div className="text-sm font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                          <div className="text-sm font-semibold text-brand-black group-hover:text-primary transition-colors">
                             {item.label}
                           </div>
-                          <div className="text-xs text-gray-500 mt-0.5">
+                          <div className="text-xs text-brand-black/70 mt-0.5">
                             {item.desc}
                           </div>
                         </div>
@@ -201,7 +201,7 @@ const Header = () => {
                     "flex items-center gap-1 px-4 py-2 text-sm font-medium rounded-full transition-all duration-300",
                     partnersOpen
                       ? "text-primary bg-primary/10"
-                      : "text-gray-700 hover:text-gray-900 hover:bg-gray-100"
+                      : "text-brand-black hover:text-brand-black hover:bg-gray-100"
                   )}
                 >
                   Partners
@@ -222,7 +222,7 @@ const Header = () => {
                       : "opacity-0 scale-95 -translate-y-2 pointer-events-none"
                   )}
                 >
-                  <div className="bg-white rounded-2xl shadow-xl shadow-black/10 border border-gray-100 p-2 overflow-hidden">
+                  <div className="bg-white rounded-2xl shadow-xl shadow-black/10 border border-brand-black/10 p-2 overflow-hidden">
                     {partnersDropdown.map((item, idx) => (
                       <button
                         key={item.to}
@@ -234,10 +234,10 @@ const Header = () => {
                           <item.icon className="w-5 h-5 text-primary" />
                         </div>
                         <div>
-                          <div className="text-sm font-semibold text-gray-900 group-hover:text-primary transition-colors">
+                          <div className="text-sm font-semibold text-brand-black group-hover:text-primary transition-colors">
                             {item.label}
                           </div>
-                          <div className="text-xs text-gray-500 mt-0.5">
+                          <div className="text-xs text-brand-black/70 mt-0.5">
                             {item.desc}
                           </div>
                         </div>
@@ -252,7 +252,7 @@ const Header = () => {
             <div className="hidden lg:flex items-center gap-3">
               <a
                 href="tel:317-795-1990"
-                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 hover:text-primary transition-colors duration-300"
+                className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-brand-black hover:text-primary transition-colors duration-300"
               >
                 <Phone className="w-4 h-4" />
                 <span>317-795-1990</span>
@@ -278,7 +278,7 @@ const Header = () => {
                 onClick={() => setIsMenuOpen(true)}
                 className="p-2 rounded-full hover:bg-gray-100 transition-colors"
               >
-                <Menu className="w-6 h-6 text-gray-700" />
+                <Menu className="w-6 h-6 text-brand-black" />
               </button>
             </div>
           </div>
@@ -316,13 +316,13 @@ const Header = () => {
         >
           <div className="flex flex-col h-full">
             {/* Header */}
-            <div className="flex items-center justify-between p-4 border-b border-gray-100">
+            <div className="flex items-center justify-between p-4 border-b border-brand-black/10">
               <img src={hudReiLogo} alt="Logo" className="h-8" />
               <button
                 onClick={() => setIsMenuOpen(false)}
                 className="p-2 rounded-full hover:bg-gray-100 transition-colors"
               >
-                <X className="w-6 h-6 text-gray-700" />
+                <X className="w-6 h-6 text-brand-black" />
               </button>
             </div>
 
@@ -333,7 +333,7 @@ const Header = () => {
                   key={l.to}
                   onClick={() => go(l.to)}
                   className={cn(
-                    "w-full text-left px-4 py-3 text-base font-medium text-gray-700 rounded-xl hover:bg-gray-50 transition-all duration-300",
+                    "w-full text-left px-4 py-3 text-base font-medium text-brand-black rounded-xl hover:bg-gray-50 transition-all duration-300",
                     isMenuOpen && "animate-fade-in"
                   )}
                   style={{ animationDelay: `${idx * 100}ms` }}
@@ -346,7 +346,7 @@ const Header = () => {
               <div className="pt-2">
                 <button
                   onClick={() => setMobileLearnOpen((p) => !p)}
-                  className="w-full flex items-center justify-between px-4 py-3 text-base font-medium text-gray-700 rounded-xl hover:bg-gray-50 transition-all"
+                  className="w-full flex items-center justify-between px-4 py-3 text-base font-medium text-brand-black rounded-xl hover:bg-gray-50 transition-all"
                 >
                   Learn
                   <ChevronDown
@@ -367,7 +367,7 @@ const Header = () => {
                       <button
                         key={item.to}
                         onClick={() => go(item.to)}
-                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-600 rounded-xl hover:bg-gray-50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-brand-black/80 rounded-xl hover:bg-gray-50 transition-colors"
                       >
                         <item.icon className="w-5 h-5 text-primary" />
                         {item.label}
@@ -381,7 +381,7 @@ const Header = () => {
               <div>
                 <button
                   onClick={() => setMobilePartnersOpen((p) => !p)}
-                  className="w-full flex items-center justify-between px-4 py-3 text-base font-medium text-gray-700 rounded-xl hover:bg-gray-50 transition-all"
+                  className="w-full flex items-center justify-between px-4 py-3 text-base font-medium text-brand-black rounded-xl hover:bg-gray-50 transition-all"
                 >
                   Partners
                   <ChevronDown
@@ -402,7 +402,7 @@ const Header = () => {
                       <button
                         key={item.to}
                         onClick={() => go(item.to)}
-                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-gray-600 rounded-xl hover:bg-gray-50 transition-colors"
+                        className="w-full flex items-center gap-3 px-4 py-3 text-sm text-brand-black/80 rounded-xl hover:bg-gray-50 transition-colors"
                       >
                         <item.icon className="w-5 h-5 text-primary" />
                         {item.label}
@@ -414,10 +414,10 @@ const Header = () => {
             </div>
 
             {/* Footer CTA */}
-            <div className="p-4 border-t border-gray-100 space-y-3">
+            <div className="p-4 border-t border-brand-black/10 space-y-3">
               <a
                 href="tel:317-795-1990"
-                className="flex items-center justify-center gap-2 py-3 text-gray-700 font-medium rounded-xl border border-gray-200 hover:bg-gray-50 transition-colors"
+                className="flex items-center justify-center gap-2 py-3 text-brand-black font-medium rounded-xl border border-brand-black/20 hover:bg-gray-50 transition-colors"
               >
                 <Phone className="w-5 h-5" />
                 317-795-1990
@@ -436,3 +436,5 @@ const Header = () => {
 };
 
 export default Header;
+
+

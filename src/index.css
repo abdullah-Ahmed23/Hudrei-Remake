@@ -8,13 +8,13 @@
     :root {
         /* Monochromatic Teal Palette based on logo */
         --background: 170 40% 6%;
-        --foreground: 170 20% 95%;
+        --foreground: 189 97% 12%;
 
         --card: 170 35% 10%;
-        --card-foreground: 170 20% 95%;
+        --card-foreground: 189 97% 12%;
 
         --popover: 170 35% 10%;
-        --popover-foreground: 170 20% 95%;
+        --popover-foreground: 189 97% 12%;
 
         --primary: 170 45% 35%;
         --primary-foreground: 170 20% 98%;
@@ -23,10 +23,10 @@
         --secondary-foreground: 170 20% 90%;
 
         --muted: 170 25% 12%;
-        --muted-foreground: 170 15% 60%;
+        --muted-foreground: 189 50% 30%;
 
-        --accent: 170 50% 45%;
-        --accent-foreground: 170 40% 6%;
+        --accent: 172 100% 24%;
+        --accent-foreground: 170 20% 98%;
 
         --destructive: 0 84.2% 60.2%;
         --destructive-foreground: 210 40% 98%;
@@ -199,9 +199,9 @@
 
 /* Global Glow Button Style */
 .glow-button {
-    background-color: #318174;
+    background-color: #007b6b;
     color: white;
-    box-shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.39);
+    box-shadow: 0 4px 14px 0 rgba(0, 123, 107, 0.39);
     transition: all 0.3s ease-in-out;
     animation: colorPulse 3s ease-in-out infinite;
 }
@@ -232,7 +232,7 @@
 /* Mimics @tailwindcss/typography since proper plugin is missing */
 .blog-content {
     /* Base styles */
-    color: #000;
+    color: #01313c;
     line-height: 1.75;
 }
 
@@ -242,7 +242,7 @@
     margin-top: 2.5rem;
     margin-bottom: 1.5rem;
     line-height: 1.2;
-    color: #111;
+    color: #01313c;
 }
 
 .blog-content h2 {
@@ -250,7 +250,7 @@
     font-weight: 700;
     margin-top: 2rem;
     margin-bottom: 1rem;
-    color: #111;
+    color: #01313c;
 }
 
 .blog-content h3 {
@@ -258,13 +258,13 @@
     font-weight: 600;
     margin-top: 1.5rem;
     margin-bottom: 0.75rem;
-    color: #111;
+    color: #01313c;
 }
 
 .blog-content p {
     margin-bottom: 1.25rem;
     font-size: 1.125rem;
-    color: #333;
+    color: #01313c;
 }
 
 .blog-content a {
@@ -288,7 +288,7 @@
 
 .blog-content li {
     margin-bottom: 0.5rem;
-    color: #333;
+    color: #01313c;
 }
 
 .blog-content blockquote {

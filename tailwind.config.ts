@@ -63,6 +63,7 @@ export default {
           dark: "hsl(var(--teal-dark))",
         },
         cream: "hsl(var(--cream))",
+        "brand-black": "#01313c",
       },
       borderRadius: {
         lg: "var(--radius)",

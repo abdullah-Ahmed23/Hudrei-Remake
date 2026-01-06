@@ -51,12 +51,12 @@ const FAQItem = ({
       onClick={onClick}
       className={`w-full text-left p-6 rounded-2xl transition-all duration-300 ${isOpen
         ? "bg-[#062f33] text-white shadow-lg shadow-gray-900/20"
-        : "bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-gray-300"
+        : "bg-gray-50 hover:bg-gray-100 border border-brand-black/20 hover:border-brand-black/30"
         }`}
     >
       <div className="flex items-start justify-between gap-4">
         <span
-          className={`text-lg font-semibold pr-4 ${isOpen ? "text-white" : "text-gray-900"
+          className={`text-lg font-semibold pr-4 ${isOpen ? "text-white" : "text-brand-black"
             }`}
         >
           {question}
@@ -65,7 +65,7 @@ const FAQItem = ({
         <div
           className={`flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${isOpen
             ? "bg-white/20 text-white"
-            : "text-gray-900 group-hover:bg-gray-900/20"
+            : "text-brand-black group-hover:bg-gray-900/20"
             }`}
         >
           {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
@@ -82,7 +82,7 @@ const FAQItem = ({
           transition={{ duration: 0.3, ease: "easeInOut" }}
           className="overflow-hidden"
         >
-          <div className="px-6 py-5 text-black leading-relaxed bg-gray-50 rounded-b-2xl -mt-4 pt-8">
+          <div className="px-6 py-5 text-brand-black leading-relaxed bg-gray-50 rounded-b-2xl -mt-4 pt-8">
             {answer}
           </div>
         </motion.div>
@@ -111,10 +111,10 @@ const HomeFAQSection = () => {
           transition={{ duration: 0.6 }}
           className="text-center max-w-3xl mx-auto mb-14"
         >
-          <h2 className="text-4xl sm:text-5xl font-bold text-gray-900 mb-4">
+          <h2 className="text-4xl sm:text-5xl font-bold text-brand-black mb-4">
             Frequently Asked <span className="text-primary">Questions</span>
           </h2>
-          <p className="text-lg text-gray-600">
+          <p className="text-lg text-brand-black/80">
             Quick answers to common questions about selling your home with HudREI.
           </p>
         </motion.div>
@@ -151,3 +151,6 @@ const HomeFAQSection = () => {
 };
 
 export default HomeFAQSection;
+
+
+

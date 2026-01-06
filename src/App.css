@@ -1,9 +1,10 @@
 #root {
 
-  margin: 0 ;
+  margin: 0;
   padding: 0;
   background-color: #f5f5f5;
 }
+
 html {
   scroll-behavior: smooth;
 }
@@ -15,37 +16,46 @@ html {
 .read-the-docs {
   color: #888;
 }
-.main{
+
+.main {
   background-color: #ffffff;
 
 }
-.Trust{
+
+.Trust {
   background-color: #faf9f5;
 }
-.card-gg{
+
+.card-gg {
   cursor: pointer;
 }
-@media only screen and (max-width: 1024px)  {
-  .main{
-  padding-top:50px ;
 
+@media only screen and (max-width: 1024px) {
+  .main {
+    padding-top: 50px;
+
+  }
 }
-}
-::placeholder{
-  color: black;
-}
-.inputs{
+
+color: #01313c;
+
+.inputs {
   background-color: #f8f8f8;
 }
-.footer{
+
+.footer {
   background-color: #091513;
 }
+
 @keyframes mega-glow {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 0.7;
     filter: blur(18px);
     transform: scale(1);
   }
+
   50% {
     opacity: 1;
     filter: blur(28px);
@@ -56,15 +66,18 @@ html {
 .animate-mega-glow {
   animation: mega-glow 2.5s ease-in-out infinite;
 }
+
 @keyframes starPulse {
   0% {
     transform: scale(1);
     opacity: 0.6;
   }
+
   50% {
     transform: scale(1.25);
     opacity: 1;
   }
+
   100% {
     transform: scale(1);
     opacity: 0.9;
@@ -74,11 +87,13 @@ html {
 .animate-starPulse {
   animation: starPulse 0.6s ease-in-out forwards;
 }
+
 @keyframes draw {
   from {
     stroke-dasharray: 1000;
     stroke-dashoffset: 1000;
   }
+
   to {
     stroke-dasharray: 1000;
     stroke-dashoffset: 0;
@@ -104,9 +119,11 @@ html {
   0% {
     transform: translateY(0px);
   }
+
   50% {
     transform: translateY(-12px);
   }
+
   100% {
     transform: translateY(0px);
   }
@@ -115,6 +132,7 @@ html {
 .animate-float {
   animation: float 12s ease-in-out infinite;
 }
-.btnsQ{
+
+.btnsQ {
   align-items: center;
 }

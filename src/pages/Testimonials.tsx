@@ -153,7 +153,7 @@ const Testimonials = () => {
                             <Star className="w-4 h-4 fill-accent" />
                             <span>Rated 5/5 on Google Reviews</span>
                         </div>
-                        <h1 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                        <h1 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-brand-black mb-6 md:mb-8 tracking-tight">
                             What Our <span className="text-accent relative inline-block">
                                 Clients Say
                                 <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -161,7 +161,7 @@ const Testimonials = () => {
                                 </svg>
                             </span>
                         </h1>
-                        <p className="text-xl text-gray-600 leading-relaxed mb-10 max-w-2xl mx-auto">
+                        <p className="text-xl text-brand-black/80 leading-relaxed mb-10 max-w-2xl mx-auto">
                             We're proud to have a 5-star rating on Google. Here's what Indiana homeowners have to say about their experience working with HudREI to sell their homes fast for cash.
                         </p>
                     </div>
@@ -176,7 +176,7 @@ const Testimonials = () => {
                                 initial={{ opacity: 0, y: 20 }}
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ delay: index * 0.1 }}
-                                className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 flex flex-col group"
+                                className="bg-white p-8 rounded-2xl shadow-sm border border-brand-black/10 hover:shadow-xl transition-all duration-300 flex flex-col group"
                                 data-aos="fade-up"
                                 data-aos-delay={index * 50}
                             >
@@ -186,25 +186,25 @@ const Testimonials = () => {
                                             <Star key={i} className="w-4 h-4 fill-yellow-400" />
                                         ))}
                                     </div>
-                                    <span className="text-xs font-semibold px-3 py-1 bg-gray-100 text-gray-600 rounded-full group-hover:bg-accent group-hover:text-white transition-colors duration-300">
+                                    <span className="text-xs font-semibold px-3 py-1 bg-gray-100 text-brand-black/80 rounded-full group-hover:bg-accent group-hover:text-white transition-colors duration-300">
                                         {testimonial.tag}
                                     </span>
                                 </div>
 
                                 <div className="relative mb-6">
                                     <Quote className="absolute -top-2 -left-2 w-8 h-8 text-accent/10" />
-                                    <p className="text-gray-700 leading-relaxed relative z-10 italic">
+                                    <p className="text-brand-black leading-relaxed relative z-10 italic">
                                         "{testimonial.text}"
                                     </p>
                                 </div>
 
-                                <div className="mt-auto flex items-center gap-4 pt-6 border-t border-gray-50">
+                                <div className="mt-auto flex items-center gap-4 pt-6 border-t border-brand-black/10">
                                     <div className="w-12 h-12 rounded-full bg-accent/10 flex items-center justify-center">
                                         <User className="w-6 h-6 text-accent" />
                                     </div>
                                     <div>
-                                        <h4 className="font-bold text-gray-900">{testimonial.name}</h4>
-                                        <p className="text-sm text-gray-500">{testimonial.location}</p>
+                                        <h4 className="font-bold text-brand-black">{testimonial.name}</h4>
+                                        <p className="text-sm text-brand-black/70">{testimonial.location}</p>
                                     </div>
                                 </div>
                             </motion.div>
@@ -233,18 +233,18 @@ const Testimonials = () => {
                                 </a>
                             </div>
 
-                            <div className="mt-12 flex flex-wrap justify-center gap-8 text-sm text-gray-400">
+                            <div className="mt-12 flex flex-wrap justify-center gap-8 text-sm text-brand-black/60">
                                 <div className="flex items-center gap-2">
                                     <CheckCircle2 className="w-4 h-4 text-accent" />
-                                    <span>No Fees</span>
+                                    <span className="text-white">No Fees</span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <CheckCircle2 className="w-4 h-4 text-accent" />
-                                    <span>No Repairs</span>
+                                    <span className="text-white">No Repairs</span>
                                 </div>
                                 <div className="flex items-center gap-2">
                                     <CheckCircle2 className="w-4 h-4 text-accent" />
-                                    <span>Fast Closing</span>
+                                    <span className="text-white">Fast Closing</span>
                                 </div>
                             </div>
                         </div>
@@ -259,3 +259,6 @@ const Testimonials = () => {
 };
 
 export default Testimonials;
+
+
+

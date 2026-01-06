@@ -68,12 +68,13 @@ const teamLeaders = [
 ];
 
 const careers = [
-    { title: "Cold Caller", icon: Phone },
-    { title: "Acquisition Property Specialist", icon: Briefcase },
+
+    { title: "Property Acquisition Specialist", icon: Briefcase },
     { title: "Executive Office Assistant", icon: Users },
     { title: "Property Disposition Specialist", icon: Target },
     { title: "Transaction Co-ordinator", icon: Heart },
     { title: "Marketing Developer", icon: Briefcase },
+    { title: "Cold Caller", icon: Phone },
 ];
 
 const WhoWeAre = () => {
@@ -121,11 +122,11 @@ const WhoWeAre = () => {
                                 animate={{ opacity: 1, y: 0 }}
                                 transition={{ duration: isMobile ? 0 : 0.8 }}
                             >
-                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 text-accent font-bold text-sm mb-8 uppercase tracking-widest">
+                                <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-brand-black/20 text-brand-black font-bold text-sm mb-8 uppercase tracking-widest">
                                     <Award className="w-4 h-4" />
                                     <span>Indiana's Most Trusted Home Buyers</span>
                                 </div>
-                                <h1 className="text-4xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                                <h1 className="text-4xl sm:text-4xl md:text-7xl font-extrabold text-brand-black mb-6 md:mb-8 tracking-tight">
                                     Local Experts with a <span className="text-accent relative inline-block">
                                         Mission
                                         <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -133,7 +134,7 @@ const WhoWeAre = () => {
                                         </svg>
                                     </span>
                                 </h1>
-                                <p className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed font-medium">
+                                <p className="text-xl md:text-2xl text-brand-black/80 mb-12 leading-relaxed font-medium">
                                     HudREI is a family-owned, values-driven real estate company based right here in Indianapolis. We specialize in providing fair, fast solutions for homeowners across Indiana.
                                 </p>
                                 <div className="flex flex-col sm:flex-row items-center justify-center gap-6">
@@ -144,7 +145,7 @@ const WhoWeAre = () => {
                                     >
                                         <Link to="/contact">Get My Cash Offer</Link>
                                     </Button>
-                                    <a href="#team" className="text-gray-500 font-semibold hover:text-accent transition-colors flex items-center gap-2 group">
+                                    <a href="#team" className="text-brand-black/70 font-semibold hover:text-accent transition-colors flex items-center gap-2 group">
                                         Meet our small but mighty team
                                         <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                                     </a>
@@ -158,12 +159,12 @@ const WhoWeAre = () => {
                             <motion.a
                                 whileHover={{ y: -5, scale: 1.02 }}
                                 href="https://www.google.com/search?q=hudrei"
-                                className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-xl shadow-black/5 border border-gray-100 min-w-[240px]"
+                                className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-xl shadow-black/5 border border-brand-black/20 min-w-[240px]"
                             >
                                 <img src="https://www.gstatic.com/images/branding/product/1x/gsa_512dp.png" alt="Google" className="w-8 h-8" />
                                 <div>
                                     <div className="flex text-yellow-500 mb-1">{"★★★★★"}</div>
-                                    <div className="text-sm font-bold text-gray-900 leading-none">4.9/5 Google Rated</div>
+                                    <div className="text-sm font-bold text-brand-black leading-none">4.9/5 Google Rated</div>
                                 </div>
                             </motion.a>
 
@@ -171,25 +172,25 @@ const WhoWeAre = () => {
                             <motion.a
                                 whileHover={{ y: -5, scale: 1.02 }}
                                 href="https://www.youtube.com/@HudREI"
-                                className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-xl shadow-black/5 border border-gray-100 min-w-[240px]"
+                                className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-xl shadow-black/5 border border-brand-black/20 min-w-[240px]"
                             >
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/YouTube_Logo_2017.svg" alt="YouTube" className="w-12" />
                                 <div>
-                                    <div className="text-sm font-bold text-gray-900 leading-none">Watch Our Process</div>
-                                    <div className="text-xs text-gray-400 mt-1 uppercase tracking-wider font-bold">Subscribe Now</div>
+                                    <div className="text-sm font-bold text-brand-black leading-none">Watch Our Process</div>
+                                    <div className="text-xs text-brand-black/60 mt-1 uppercase tracking-wider font-bold">Subscribe Now</div>
                                 </div>
                             </motion.a>
 
                             {/* Facebook */}
                             <motion.a
                                 whileHover={{ y: -5, scale: 1.02 }}
-                                href="https://www.facebook.com/profile.php?id=61562781720104"
-                                className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-xl shadow-black/5 border border-gray-100 min-w-[240px]"
+                                href="https://www.facebook.com/p/Hudrei-61562781720104/"
+                                className="flex items-center gap-4 bg-white p-5 rounded-2xl shadow-xl shadow-black/5 border border-brand-black/10 min-w-[240px]"
                             >
                                 <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" className="w-8 h-8" />
                                 <div>
                                     <div className="flex text-yellow-500 mb-1">{"★★★★★"}</div>
-                                    <div className="text-sm font-bold text-gray-900 leading-none">Join Our Community</div>
+                                    <div className="text-sm font-bold text-brand-black leading-none">Join Our Community</div>
                                 </div>
                             </motion.a>
                         </div>
@@ -212,7 +213,7 @@ const WhoWeAre = () => {
                                     <div className="w-8 h-px bg-primary" />
                                     The HudREI Story
                                 </div>
-                                <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                                <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-brand-black mb-6 md:mb-8 tracking-tight">
                                     Born and Raised in <span className="text-accent relative inline-block">
                                         Indiana
                                         <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -220,14 +221,14 @@ const WhoWeAre = () => {
                                         </svg>
                                     </span>
                                 </h2>
-                                <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
+                                <div className="space-y-6 text-lg text-brand-black/80 leading-relaxed">
                                     <p>
                                         At HudREI, our story isn’t about numbers or skyscrapers—it’s about neighborhood streets and kitchen tables. Growing up in Indiana, we saw first-hand how much a home means, but also how much of a burden it can become when life throws a curveball.
                                     </p>
                                     <p>
                                         We realized that the traditional real estate market wasn’t built for everyone. Homeowners facing probate, financial distress, or property damage were often left with zero good options. That's why we founded HudREI.
                                     </p>
-                                    <p className="font-semibold text-gray-900">
+                                    <p className="font-semibold text-brand-black">
                                         Today, we are proud to be the small, local team that people call when they need a fair, no-nonsense solution. We aren't just buying houses; we're helping our neighbors move forward.
                                     </p>
                                 </div>
@@ -237,8 +238,8 @@ const WhoWeAre = () => {
                                             <CheckCircle2 className="w-6 h-6" />
                                         </div>
                                         <div>
-                                            <div className="font-bold text-gray-900">500+</div>
-                                            <div className="text-sm text-gray-500">Indiana Sellers Helped</div>
+                                            <div className="font-bold text-brand-black">500+</div>
+                                            <div className="text-sm text-brand-black/70">Indiana Sellers Helped</div>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-3">
@@ -246,8 +247,8 @@ const WhoWeAre = () => {
                                             <Shield className="w-6 h-6" />
                                         </div>
                                         <div>
-                                            <div className="font-bold text-gray-900">100% Local</div>
-                                            <div className="text-sm text-gray-500">Family Owned & Operated</div>
+                                            <div className="font-bold text-brand-black">100% Local</div>
+                                            <div className="text-sm text-brand-black/70">Family Owned & Operated</div>
                                         </div>
                                     </div>
                                 </div>
@@ -286,7 +287,7 @@ const WhoWeAre = () => {
                             className="max-w-4xl mx-auto text-center mb-24 px-4"
 
                         >
-                            <h2 className="text-6xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                            <h2 className="text-6xl sm:text-4xl md:text-7xl font-extrabold text-brand-black mb-6 md:mb-8 tracking-tight">
                                 Values That <span className="text-accent relative inline-block">
                                     Define Us
                                     <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -294,7 +295,7 @@ const WhoWeAre = () => {
                                     </svg>
                                 </span>
                             </h2>
-                            <p className="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-2xl mx-auto">
+                            <p className="text-xl md:text-2xl text-brand-black/80 leading-relaxed max-w-2xl mx-auto">
                                 The core principles that guide every single homeowner conversation and every decision we make.
                             </p>
                         </div>
@@ -341,7 +342,7 @@ const WhoWeAre = () => {
                                 <motion.div
                                     key={isMobile ? `m-${i}` : `d-${i}`}
                                     className={cn(
-                                        "group bg-white p-12 rounded-[3rem] border border-gray-100 transition-all duration-700",
+                                        "group bg-white p-12 rounded-[3rem] border border-brand-black/20 transition-all duration-700",
                                         "hover:shadow-[0_30px_60px_-12px_rgba(0,0,0,0.12)] hover:-translate-y-3",
                                         val.borderColor,
                                         "relative overflow-hidden will-change-transform"
@@ -357,12 +358,12 @@ const WhoWeAre = () => {
                                             "group-hover:scale-110 group-hover:rotate-3",
                                             val.iconBg
                                         )}>
-                                            <val.icon className="w-10 h-10 text-black" />
+                                            <val.icon className="w-10 h-10 text-brand-black group-hover:text-accent transition-colors" />
                                         </div>
-                                        <h3 className="text-3xl font-bold text-gray-900 mb-6 group-hover:text-accent transition-colors">
+                                        <h3 className="text-3xl font-bold text-brand-black mb-6 group-hover:text-accent transition-colors">
                                             {val.title}
                                         </h3>
-                                        <p className="text-lg text-gray-600 leading-relaxed font-medium">
+                                        <p className="text-lg text-brand-black/80 leading-relaxed font-medium">
                                             {val.desc}
                                         </p>
                                     </div>
@@ -379,7 +380,7 @@ const WhoWeAre = () => {
                 <section id="team" className="py-32 bg-gray-50 overflow-hidden">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-20">
-                            <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                            <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-brand-black mb-6 md:mb-8 tracking-tight">
                                 Meet the <span className="text-accent relative inline-block">
                                     HudREI
                                     <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -387,21 +388,21 @@ const WhoWeAre = () => {
                                     </svg>
                                 </span> Family
                             </h2>
-                            <p className="text-xl text-gray-600 max-w-2xl mx-auto">Real people. Real conversations. Helping real Hoosiers move forward.</p>
+                            <p className="text-xl text-brand-black/80 max-w-2xl mx-auto">Real people. Real conversations. Helping real Hoosiers move forward.</p>
                         </div>
 
                         <div className="relative max-w-7xl mx-auto px-4">
                             {/* Navigation Buttons */}
                             <button
                                 onClick={prevSlide}
-                                className="absolute left-0 top-1/2 -translate-y-1/2 z-40 p-5 rounded-full bg-white shadow-2xl border border-gray-100 text-gray-900 hover:bg-accent hover:text-white transition-all duration-500 lg:-ml-12 hover:scale-110 active:scale-95 group/btn"
+                                className="absolute left-0 top-1/2 -translate-y-1/2 z-40 p-5 rounded-full bg-white shadow-2xl border border-brand-black/20 text-brand-black hover:bg-accent hover:text-white transition-all duration-500 lg:-ml-12 hover:scale-110 active:scale-95 group/btn"
                                 aria-label="Previous team member"
                             >
                                 <ChevronLeft className="w-8 h-8 group-hover/btn:-translate-x-1 transition-transform" />
                             </button>
                             <button
                                 onClick={nextSlide}
-                                className="absolute right-0 top-1/2 -translate-y-1/2 z-40 p-5 rounded-full bg-white shadow-2xl border border-gray-100 text-gray-900 hover:bg-accent hover:text-white transition-all duration-500 lg:-mr-12 hover:scale-110 active:scale-95 group/btn"
+                                className="absolute right-0 top-1/2 -translate-y-1/2 z-40 p-5 rounded-full bg-white shadow-2xl border border-brand-black/10 text-brand-black hover:bg-accent hover:text-white transition-all duration-500 lg:-mr-12 hover:scale-110 active:scale-95 group/btn"
                                 aria-label="Next team member"
                             >
                                 <ChevronRight className="w-8 h-8 group-hover/btn:translate-x-1 transition-transform" />
@@ -440,7 +441,7 @@ const WhoWeAre = () => {
                                                         if (isRight) nextSlide();
                                                     }}
                                                 >
-                                                    <div className={`relative w-full h-full bg-white rounded-[3rem] overflow-hidden shadow-2xl border-4 transition-colors duration-500 ${isCenter ? 'border-accent' : 'border-transparent'}`}>
+                                                    <div className={`relative w-full h-full bg-white rounded-[3rem] overflow-hidden shadow-2xl border-4 transition-colors duration-500 ${isCenter ? 'border-brand-black' : 'border-transparent'}`}>
                                                         <div className="h-full overflow-hidden group/card relative">
                                                             <img
                                                                 src={member.image}
@@ -453,7 +454,7 @@ const WhoWeAre = () => {
                                                                 <h3 className={`text-3xl font-bold mb-2 transition-all duration-500 ${isCenter ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
                                                                     {member.name}
                                                                 </h3>
-                                                                <div className={`inline-block px-4 py-1 rounded-full bg-accent/90 text-white font-bold text-xs uppercase tracking-wider transition-all duration-700 delay-100 ${isCenter ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
+                                                                <div className={`inline-block px-4 py-1 rounded-full bg-brand-black text-white font-bold text-xs uppercase tracking-wider transition-all duration-700 delay-100 ${isCenter ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'}`}>
                                                                     {member.role}
                                                                 </div>
                                                             </div>
@@ -475,7 +476,7 @@ const WhoWeAre = () => {
                                             setDirection(i > currentIndex ? 1 : -1);
                                             setCurrentIndex(i);
                                         }}
-                                        className={`h-3 rounded-full transition-all duration-700 ${i === currentIndex ? 'w-16 bg-accent' : 'w-4 bg-gray-200 hover:bg-gray-400'}`}
+                                        className={`h-3 rounded-full transition-all duration-700 ${i === currentIndex ? 'w-16 bg-brand-black' : 'w-4 bg-gray-200 hover:bg-gray-400'}`}
                                         aria-label={`Go to slide ${i + 1}`}
                                     />
                                 ))}
@@ -488,7 +489,7 @@ const WhoWeAre = () => {
                 <section id="careers" className="py-10 bg-white overflow-hidden">
                     <div className="container mx-auto px-4">
                         <div className="text-center mb-16">
-                            <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-gray-900 mb-6 md:mb-8 tracking-tight">
+                            <h2 className="text-3xl sm:text-4xl md:text-7xl font-extrabold text-brand-black mb-6 md:mb-8 tracking-tight">
                                 Build Your <span className="text-accent relative inline-block">
                                     Future
                                     <svg className="absolute -bottom-1 md:-bottom-2 left-0 w-full h-2 md:h-3 text-accent/20" viewBox="0 0 100 10" preserveAspectRatio="none">
@@ -496,27 +497,27 @@ const WhoWeAre = () => {
                                     </svg>
                                 </span> Here
                             </h2>
-                            <p className="text-xl text-gray-600 max-w-2xl mx-auto">We're always looking for world-class talent to join our mission of helping Indiana homeowners.</p>
+                            <p className="text-xl text-brand-black/80 max-w-2xl mx-auto">We're always looking for world-class talent to join our mission of helping Indiana homeowners.</p>
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto mb-16" data-aos="zoom-in">
                             {careers.map((career, index) => (
                                 <motion.div
                                     key={isMobile ? `m-${career.title}` : `d-${career.title}`}
-                                    className="group bg-white p-8 rounded-3xl shadow-xl shadow-black/5 border border-gray-100 hover:border-accent/40 hover:scale-[1.02] transition-all duration-300"
+                                    className="group bg-white p-8 rounded-3xl shadow-xl shadow-black/5 border border-brand-black/10 hover:border-accent/40 hover:scale-[1.02] transition-all duration-300"
                                     initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                                     whileInView={isMobile ? undefined : { opacity: 1, scale: 1 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: isMobile ? 0 : index * 0.05 }}
                                 >
                                     <div className="flex items-center gap-5 mb-4">
-                                        <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-primary group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                                        <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-brand-black group-hover:bg-primary group-hover:text-white transition-all duration-300">
                                             <career.icon className="w-6 h-6" />
                                         </div>
-                                        <h3 className="text-xl font-bold text-gray-900">{career.title}</h3>
+                                        <h3 className="text-xl font-bold text-brand-black">{career.title}</h3>
                                     </div>
-                                    <p className="text-gray-500 text-sm leading-relaxed mb-6">Join our fast-paced environment where your work directly impacts families in our community.</p>
-                                    <Link to="/contact" className="text-accent font-bold text-sm tracking-widest uppercase flex items-center gap-2 hover:gap-3 transition-all">
+                                    <p className="text-brand-black/70 text-sm leading-relaxed mb-6">Join our fast-paced environment where your work directly impacts families in our community.</p>
+                                    <Link to="/contact" className="text-brand-black font-bold text-sm tracking-widest uppercase flex items-center gap-2 hover:gap-3 transition-all">
                                         Learn More <ArrowRight className="w-4 h-4" />
                                     </Link>
                                 </motion.div>
@@ -544,3 +545,6 @@ const WhoWeAre = () => {
 };
 
 export default WhoWeAre;
+
+
+
