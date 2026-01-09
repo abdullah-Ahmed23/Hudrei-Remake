@@ -176,6 +176,7 @@ const Blog = () => {
                 onClick={() => setSearchQuery("")}
                 className="rounded-full"
               >
+                Test
                 Clear Search
               </Button>
             </div>
