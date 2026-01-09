@@ -67,7 +67,7 @@ const Blog = () => {
   return (
     <>
       <Helmet>
-        <title>HudREIi Real Estate Blog - Tips for Selling Your House in Indiana</title>
+        <title>HudREI Real Estate Blog - Tips for Selling Your House in Indiana</title>
         <meta name="description" content="Read expert articles on selling your house fast in Indiana, avoiding foreclosure, probate sales, and calculating your home's cash value." />
       </Helmet>
 
