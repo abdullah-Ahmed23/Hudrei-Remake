@@ -1,4 +1,5 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/hudrrcoi/public_html
-    - /bin/cp -R * $DEPLOYPATH
+    - /bin/rm -rf $DEPLOYPATH/*
+    - /bin/cp -R dist/* $DEPLOYPATH
