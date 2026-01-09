@@ -146,16 +146,7 @@ const BlogPost = () => {
                             <div dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(post.rawHTML || post.html || "") }} />
                         </div>
 
-                        {/* Social Share / Footer of Card */}
-                        <div className="mt-16 pt-8 border-t border-gray-100 flex items-center justify-between">
-                            <div className="text-sm font-bold text-gray-400">
-                                Share this article
-                            </div>
-                            <div className="flex gap-2">
-                                <Button size="icon" variant="ghost" className="rounded-full hover:bg-gray-50 hover:text-accent"><Share2 className="w-4 h-4" /></Button>
-                                <Button size="icon" variant="ghost" className="rounded-full hover:bg-gray-50 hover:text-accent"><Printer className="w-4 h-4" /></Button>
-                            </div>
-                        </div>
+
 
                     </div>
 
@@ -172,7 +163,7 @@ const BlogPost = () => {
 
                 </motion.div>
             </article>
-            <Footer />
+
         </>
     );
 };

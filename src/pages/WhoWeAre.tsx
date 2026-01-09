@@ -36,7 +36,7 @@ const teamLeaders = [
         image: png3,
     },
     {
-        name: "Samar",
+        name: "Samar Oladapo",
         role: "COO And Partner",
         image: png2,
     },
@@ -46,12 +46,12 @@ const teamLeaders = [
         image: png7,
     },
     {
-        name: "Abdullah Tarek",
+        name: "Adam Tarek",
         role: "Lead Manger",
         image: png6,
     },
     {
-        name: "Omar Lorenzo",
+        name: "Omar Nasseh",
         role: "Marketing Specialist",
         image: png1,
     },
@@ -61,7 +61,7 @@ const teamLeaders = [
         image: png5,
     },
     {
-        name: "Hamid Nosir",
+        name: "Victor Nosir",
         role: "Acquisition Manager",
         image: png4,
     },
@@ -279,8 +279,8 @@ const WhoWeAre = () => {
                 {/* --- PREMIUM VALUES GRID --- */}
                 <section id="values" className="py-25 pt-15 bg-white relative ">
                     {/* Background Accents */}
-                    <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-accent/5 rounded-full blur-[120px] -mr-64 -mt-64" />
-                    <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-primary/5 rounded-full blur-[120px] -ml-64 -mb-64" />
+                    <div className="absolute top-0 right-0 w-[100%] h-[100%] md:w-[600px] md:h-[600px] bg-accent/5 rounded-full blur-[120px]  -mt-64" />
+                    <div className="absolute bottom-0 left-0 w-[100%] h-[100%] md:w-[600px] md:h-[600px] bg-primary/5 rounded-full blur-[120px]  -mb-64" />
 
                     <div className="container mx-auto py-20 px-4 relative z-10">
                         <div
@@ -358,9 +358,9 @@ const WhoWeAre = () => {
                                             "group-hover:scale-110 group-hover:rotate-3",
                                             val.iconBg
                                         )}>
-                                            <val.icon className="w-10 h-10 text-brand-black group-hover:text-accent transition-colors" />
+                                            <val.icon className="w-10 h-10 text-brand-black group-hover:text-[#01313c]  transition-colors" />
                                         </div>
-                                        <h3 className="text-3xl font-bold text-brand-black mb-6 group-hover:text-accent transition-colors">
+                                        <h3 className="text-3xl font-bold text-brand-black mb-6 group-hover:text-[#01313c] transition-colors">
                                             {val.title}
                                         </h3>
                                         <p className="text-lg text-brand-black/80 leading-relaxed font-medium">
@@ -504,14 +504,14 @@ const WhoWeAre = () => {
                             {careers.map((career, index) => (
                                 <motion.div
                                     key={isMobile ? `m-${career.title}` : `d-${career.title}`}
-                                    className="group bg-white p-8 rounded-3xl shadow-xl shadow-black/5 border border-brand-black/10 hover:border-accent/40 hover:scale-[1.02] transition-all duration-300"
+                                    className="group bg-white p-8 rounded-3xl shadow-xl shadow-black/5 border border-brand-black/10 hover:border-[#01313c]/40 hover:scale-[1.02] transition-all duration-300"
                                     initial={isMobile ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0.9 }}
                                     whileInView={isMobile ? undefined : { opacity: 1, scale: 1 }}
                                     viewport={{ once: true }}
                                     transition={{ delay: isMobile ? 0 : index * 0.05 }}
                                 >
                                     <div className="flex items-center gap-5 mb-4">
-                                        <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-brand-black group-hover:bg-primary group-hover:text-white transition-all duration-300">
+                                        <div className="w-14 h-14 bg-primary/10 rounded-2xl flex items-center justify-center text-brand-black group-hover:bg-[#01313c] group-hover:text-white transition-all duration-300">
                                             <career.icon className="w-6 h-6" />
                                         </div>
                                         <h3 className="text-xl font-bold text-brand-black">{career.title}</h3>

@@ -24,7 +24,7 @@ import { useIsMobile } from "@/hooks/use-mobile";
 const careers = [
 
     {
-        title: "Acquisitions Property Specialist",
+        title: "Property Acquisitions Specialist",
         icon: Briefcase,
         desc: "Analyze properties, negotiate offers with sellers, and secure contracts aligned with company investment goals.",
     },
@@ -125,11 +125,11 @@ const CareersSection = () => {
                                 data-aos-delay={isMobile ? i * 100 : undefined}
                                 className="group bg-white p-8 rounded-2xl border border-brand-black/10 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 flex flex-col"
                             >
-                                <div className="w-14 h-14 mb-8 rounded-2xl bg-accent/10 flex items-center justify-center group-hover:bg-accent group-hover:scale-110 transition-all duration-300">
+                                <div className="w-14 h-14 mb-8 rounded-2xl bg-accent/10 flex items-center justify-center group-hover:bg-[#01313c] group-hover:scale-110 transition-all duration-300">
                                     <role.icon className="w-7 h-7 text-accent group-hover:text-white transition-colors" />
                                 </div>
 
-                                <h3 className="text-2xl font-bold text-brand-black mb-4 group-hover:text-accent transition-colors">
+                                <h3 className="text-2xl font-bold text-brand-black mb-4 group-hover:text-[#01313c] transition-colors">
                                     {role.title}
                                 </h3>
 
@@ -139,7 +139,7 @@ const CareersSection = () => {
 
                                 <Button
                                     variant="ghost"
-                                    className="p-0 h-auto font-bold text-accent hover:text-primary group/btn flex items-center justify-start gap-2 hover:bg-transparent"
+                                    className="p-0 h-auto font-bold text-[#01313c] hover:text-primary group/btn flex items-center justify-start gap-2 hover:bg-transparent"
                                     onClick={() => {
                                         document.getElementById('application-CTA')?.scrollIntoView({ behavior: 'smooth' });
                                     }}
@@ -164,8 +164,8 @@ const CareersSection = () => {
 
                                 <div className="space-y-8">
                                     <div className="flex gap-4 p-6 bg-white rounded-2xl border border-brand-black/10 shadow-sm hover:shadow-md transition-all">
-                                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
-                                            <Briefcase className="w-6 h-6 text-accent" />
+                                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[#01313c] flex items-center justify-center">
+                                            <Briefcase className="w-6 h-6 text-white" />
                                         </div>
                                         <div>
                                             <h4 className="text-lg font-bold text-brand-black mb-1">Modern Culture</h4>
@@ -174,8 +174,8 @@ const CareersSection = () => {
                                     </div>
 
                                     <div className="flex gap-4 p-6 bg-white rounded-2xl border border-brand-black/10 shadow-sm hover:shadow-md transition-all">
-                                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-accent/10 flex items-center justify-center">
-                                            <Globe className="w-6 h-6 text-accent" />
+                                        <div className="flex-shrink-0 w-12 h-12 rounded-xl bg-[#01313c] flex items-center justify-center">
+                                            <Globe className="w-6 h-6 text-white" />
                                         </div>
                                         <div>
                                             <h4 className="text-lg font-bold text-brand-black mb-1">Impactful Work</h4>
@@ -206,7 +206,7 @@ const CareersSection = () => {
 
                                 <div className="relative z-10">
                                     <div className="w-24 h-24 bg-accent/10 rounded-full flex items-center justify-center mx-auto mb-8 animate-pulse">
-                                        <Send className="w-10 h-10 text-accent" />
+                                        <Send className="w-10 h-10 text-[#01313c]" />
                                     </div>
                                     <h3 className="text-3xl md:text-4xl font-bold text-brand-black mb-6">Ready To Make An Impact?</h3>
                                     <p className="text-brand-black/80 mb-10 text-xl leading-relaxed max-w-lg mx-auto">

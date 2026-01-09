@@ -71,7 +71,7 @@ const Blog = () => {
         <meta name="description" content="Read expert articles on selling your house fast in Indiana, avoiding foreclosure, probate sales, and calculating your home's cash value." />
       </Helmet>
 
-      <main className="bg-white min-h-screen pt-32 pb-40" >
+      <main className="bg-white min-h-screen pt-32" >
         <div className="container mx-auto px-4 max-w-7xl">
 
           {/* Minimalist Header */}

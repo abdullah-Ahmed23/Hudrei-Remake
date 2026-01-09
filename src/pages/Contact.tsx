@@ -127,6 +127,10 @@ const Contact = () => {
             const result = await response.json();
 
             if (result.success) {
+                // Track Lead Event
+                if ((window as any).fbq) {
+                    (window as any).fbq('track', 'Lead');
+                }
                 setSubmitted(true);
             } else {
                 throw new Error(result.error || "Submission failed");
@@ -340,11 +344,7 @@ const Contact = () => {
                 <title>Contact HudREI | Get Your Cash Offer Today</title>
                 <meta name="description" content="Sell your house fast in Indiana. Get a fair cash offer from HudREI." />
             </Helmet>
-            <div className="absolute top-6 left-6 z-50">
-                <Link to="/">
-                    <img src={hudReiLogo} alt="HudREI" className="h-12 w-auto" />
-                </Link>
-            </div>
+
 
             <div className="min-h-screen relative flex flex-col pt-20 bg-gray-50">
                 {/* Background Pattern */}

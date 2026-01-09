@@ -13,6 +13,7 @@ import {
   Landmark,
   Home,
   ArrowRight,
+  Store,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import hudReiLogo from "@/assets/hudrei-logo.png";
@@ -31,6 +32,7 @@ const mainLinks = [
 ];
 
 const learnDropdown = [
+  { label: "Market Place", to: "/listing", icon: Store, desc: "Browse available properties" },
   { label: "FAQ", to: "/faq", icon: HelpCircle, desc: "Common questions answered" },
   { label: "Blog", to: "/blog", icon: BookOpen, desc: "Latest news & insights" },
   { label: "Careers", to: "/careers", icon: Briefcase, desc: "Join our team" },

@@ -40,6 +40,10 @@ const HeroV2 = () => {
     const { results, clearResults } = useAddressAutocomplete(addressQuery);
 
     const onSubmit = (data: FormData) => {
+        // Track Search Event
+        if ((window as any).fbq) {
+            (window as any).fbq('track', 'Search', { search_string: data.address });
+        }
         navigate("/contact#contact-form", {
             state: { streetAddress: data.address },
         });

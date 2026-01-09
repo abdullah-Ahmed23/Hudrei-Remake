@@ -294,9 +294,9 @@ const Dashboard = () => {
                     <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
                     Listings Manager
                 </h2>
-                <div className="flex gap-4">
-                    <Button variant="outline" onClick={() => window.open('/', '_blank')}>
-                        <Eye className="w-4 h-4 mr-2" /> View Site
+                <div className="flex gap-4 ">
+                    <Button className="bg-[#01313c] text-white" onClick={() => window.open('/listing', '_blank')}>
+                        <Eye className="w-4 h-4 mr-2 text-white" /> View Site
                     </Button>
                     <Button variant="ghost" className="text-red-500 hover:text-red-600 hover:bg-red-50" onClick={handleLogout}>
                         Logout
@@ -452,7 +452,7 @@ const Dashboard = () => {
                         {listings.length === 0 && (
                             <div className="col-span-full text-center py-20 bg-white rounded-xl border border-dashed border-brand-black/30">
                                 <p className="text-brand-black/70 mb-4">No listings found.</p>
-                                <Button onClick={() => setIsAdding(true)} variant="outline">Create your first listing</Button>
+                                <Button className="bg-accent text-white" onClick={() => setIsAdding(true)} variant="outline">Create your first listing</Button>
                             </div>
                         )}
                     </div>

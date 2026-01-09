@@ -16,6 +16,17 @@ export default defineConfig(({ mode }) => ({
       }
     }
   },
+  preview: {
+    host: "::",
+    port: 8081,
+    proxy: {
+      '/api': {
+        target: 'https://api.hudrei.com',
+        changeOrigin: true,
+        secure: false,
+      }
+    }
+  },
   plugins: [react(), mode === "development" && componentTagger()].filter(Boolean),
   resolve: {
     alias: {

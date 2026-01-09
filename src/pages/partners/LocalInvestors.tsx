@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Building, TrendingUp, Share2, MessageSquare, Check, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -23,6 +24,19 @@ type InvestorFormData = z.infer<typeof investorSchema>;
 
 const LocalInvestors = () => {
     const [submitted, setSubmitted] = useState(false);
+    const { hash } = useLocation();
+
+    useEffect(() => {
+        if (hash) {
+            const element = document.getElementById(hash.replace("#", ""));
+            if (element) {
+                // Small timeout to ensure DOM is ready
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: "smooth" });
+                }, 100);
+            }
+        }
+    }, [hash]);
 
     const {
         register,
